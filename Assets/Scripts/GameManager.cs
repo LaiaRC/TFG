@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        foreach (KeyValuePair<string, int> inventoryResource in Data.Instance.INVERTORY)
+        foreach (KeyValuePair<string, int> inventoryResource in Data.Instance.INVENTORY)
         {
             info += "\n -" + inventoryResource.Key + ": " + inventoryResource.Value;
         }

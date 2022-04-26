@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
                         if (!terrenoSelected.hasBuilding)
                         {
                             shopUI.SetActive(false);
-                        }                     
+                        }                    
                     }
                     else
                     {

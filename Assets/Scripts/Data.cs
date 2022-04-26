@@ -6,7 +6,7 @@ public class Data : MonoBehaviour
 {
     public Dictionary<string, GameObject> BUILDINGS = new Dictionary<string, GameObject>();
     public Dictionary<string, Resource> RESOURCES = new Dictionary<string, Resource>();
-    public Dictionary<string, int> INVERTORY = new Dictionary<string, int>();
+    public Dictionary<string, int> INVENTORY = new Dictionary<string, int>();
 
 
     #region RESOURCES KEYS
@@ -105,7 +105,7 @@ public class Data : MonoBehaviour
 
     public void updateInventory(string key, int quantity)
     {
-        INVERTORY.Remove(key);
-        INVERTORY.Add(key, quantity);
+        INVENTORY.Remove(key);
+        INVENTORY.Add(key, quantity);
     }
 }

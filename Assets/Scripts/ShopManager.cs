@@ -37,7 +37,7 @@ public class ShopManager : MonoBehaviour
                     foreach (Requirement requeriment in building.GetComponent<Building>().production_cost)
                     {
                         enoughResource = false;
-                        if (Data.Instance.INVERTORY.TryGetValue(requeriment.resourceNameKey, out int quantity))
+                        if (Data.Instance.INVENTORY.TryGetValue(requeriment.resourceNameKey, out int quantity))
                         {
                             if (quantity >= requeriment.quantity)
                             {
@@ -52,7 +52,7 @@ public class ShopManager : MonoBehaviour
                     {
                         foreach (Requirement requeriment in building.GetComponent<Building>().production_cost)
                         {
-                            if (Data.Instance.INVERTORY.TryGetValue(requeriment.resourceNameKey, out int quantity))
+                            if (Data.Instance.INVENTORY.TryGetValue(requeriment.resourceNameKey, out int quantity))
                             {
                                 if (quantity >= requeriment.quantity)
                                 {

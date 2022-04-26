@@ -1291,14 +1291,29 @@ MonoBehaviour:
   production_cost:
   - resourceNameKey: bone
     quantity: 5
+  upgrade_cost:
+  - list:
+    - resourceNameKey: bone
+      quantity: 3
+  - list:
+    - resourceNameKey: rottenFlesh
+      quantity: 3
+  - list:
+    - resourceNameKey: rottenFlesh
+      quantity: 5
+    - resourceNameKey: coffin
+      quantity: 3
   resources:
   - coffin
   level: 1
   isProducing: 1
-  maxLevel: 1
+  maxLevel: 3
   initialActiveResource: coffin
   buildingInterior: {fileID: 8372092907797576419}
   isSelected: 0
+  upgradeText: {fileID: 6103992320491261592}
+  resourceTimeText: {fileID: 1998847777032956937}
+  pauseText: {fileID: 7959407267563935779}
 --- !u!1 &2615441776759922720
 GameObject:
   m_ObjectHideFlags: 0
@@ -2088,7 +2103,7 @@ GameObject:
   - component: {fileID: 8547188264452952458}
   - component: {fileID: 1998847777032956937}
   m_Layer: 5
-  m_Name: prodTime
+  m_Name: resourceTime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
