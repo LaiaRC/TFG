@@ -7,14 +7,19 @@ public class Player : MonoBehaviour
     public GameObject shopUI;
     public bool isOnCanvas;
     public ShopManager shop;
+    public float velocity; 
+
+    private Camera cam;
 
     void Start()
     {
         shopUI.SetActive(false);
+        cam = Camera.main;
     }
 
     void Update()
     {
+        #region DETECTAR OBJECTE CLICAT
         //Detectar quin objecte cliquem
         if (Input.GetMouseButtonDown(0) && !isOnCanvas)
         {
@@ -57,6 +62,16 @@ public class Player : MonoBehaviour
                 shopUI.SetActive(false);
             }
         }
+        #endregion
+
+        #region CAMERA CONTROLS
+        float xAxis = Input.GetAxis("Horizontal");
+        float yAxis = Input.GetAxis("Vertical");
+        cam.transform.Translate(new Vector3(xAxis, yAxis));
+
+
+
+        #endregion
     }
 
     public void pointerEnter()
