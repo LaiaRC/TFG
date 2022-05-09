@@ -6,6 +6,10 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     public TextMeshProUGUI debugInventoryInfo;
+    public Animator buildModeAnimator;
+    public bool isbuildingMode = false;
+    public bool isOnCanvas;
+
 
     private string info = "";
 
@@ -47,5 +51,27 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void toggleBuildMode()
+    {
+        if (isbuildingMode){
+            buildModeAnimator.Play("buildPanelClosing");
+            isbuildingMode = false;
+        }
+        else
+        {
+            buildModeAnimator.Play("buildPanelOpening");
+            isbuildingMode = true;
+        }
+    }
+
+    public void pointerEnter()
+    {
+        isOnCanvas = true;
+    }
+
+    public void pointerExit()
+    {
+        isOnCanvas = false;
+    }
 
 }

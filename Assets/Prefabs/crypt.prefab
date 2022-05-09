@@ -1287,7 +1287,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a94697345af8aa646a2423a7cb3889c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  building_name: crypt
+  building_name: Crypt
+  id: crypt
   production_cost:
   - resourceNameKey: bone
     quantity: 5
@@ -1305,6 +1306,7 @@ MonoBehaviour:
       quantity: 3
   resources:
   - coffin
+  spriteResources: []
   level: 1
   isProducing: 1
   maxLevel: 3

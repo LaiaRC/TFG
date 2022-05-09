@@ -5,24 +5,20 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public GameObject shopUI;
-    public bool isOnCanvas;
     public ShopManager shop;
-    public float velocity; 
-
-    private Camera cam;
+    public float velocity;
 
     void Start()
     {
         shopUI.SetActive(false);
-        cam = Camera.main;
     }
 
     void Update()
     {
-        #region DETECTAR OBJECTE CLICAT
         //Detectar quin objecte cliquem
-        if (Input.GetMouseButtonDown(0) && !isOnCanvas)
+        if (Input.GetMouseButtonDown(0) && !GameManager.Instance.isOnCanvas)
         {
+            #region DETECTAR OBJ CLICAT
             TerrenoEdificable[] terrenos = FindObjectsOfType<TerrenoEdificable>();
             RaycastHit2D hit = Physics2D.Raycast(new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y), Vector2.zero, 0f);
             if (hit.collider != null)
@@ -61,26 +57,22 @@ public class Player : MonoBehaviour
                 }
                 shopUI.SetActive(false);
             }
+            #endregion
         }
-        #endregion
 
-        #region CAMERA CONTROLS
-        float xAxis = Input.GetAxis("Horizontal");
-        float yAxis = Input.GetAxis("Vertical");
-        cam.transform.Translate(new Vector3(xAxis, yAxis));
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if(Time.timeScale == 1)
+            {
+                Time.timeScale = 100;
+            }
+            else
+            {
+                Time.timeScale = 1;
+            }
+        }
 
-
-
-        #endregion
     }
 
-    public void pointerEnter()
-    {
-        isOnCanvas = true;
-    }
-
-    public void pointerExit()
-    {
-        isOnCanvas = false;
-    }
+    
 }

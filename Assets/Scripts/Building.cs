@@ -20,6 +20,7 @@ public class Building : MonoBehaviour
 {
     
     public string building_name; //nom del building
+    public string id;
     public List<Requirement> production_cost;
     public List<RequirementList> upgrade_cost;
     public List<string> resources; //Llista dels recursos que produeix el building
@@ -230,7 +231,7 @@ public class Building : MonoBehaviour
         if (level < maxLevel)
         {
             //Check if has all the requirements
-            if(Data.Instance.BUILDINGS.TryGetValue(building_name, out GameObject building)){
+            if(Data.Instance.BUILDINGS.TryGetValue(id, out GameObject building)){
                 bool enoughResource = false;
                 foreach (Requirement requirement in building.GetComponent<Building>().upgrade_cost[level - 1].list)
                 {
