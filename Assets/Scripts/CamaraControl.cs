@@ -12,7 +12,7 @@ public class CamaraControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.Instance.isOnCanvas)
+        if (!GameManager.Instance.isOnCanvas && !GameManager.Instance.draggingFromShop)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -44,5 +44,5 @@ public class CamaraControl : MonoBehaviour
     void zoom(float increment)
     {
         Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - increment, zoomOutMin, zoomOutMax);
-    }
+    }    
 }

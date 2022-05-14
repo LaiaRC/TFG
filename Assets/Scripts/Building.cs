@@ -35,6 +35,9 @@ public class Building : MonoBehaviour
     public TextMeshProUGUI resourceTimeText;
     public TextMeshProUGUI pauseText;
 
+    public bool placed { get; private set; }
+    public BoundsInt area;
+
     private string activeResource; //Quina resource s'esta produïnt
     private float activeResourceTime;
     private float timeToNextItem = 0;
@@ -42,6 +45,7 @@ public class Building : MonoBehaviour
     private string upgradeTextAux2 = "";
     private string resourceTimeAux = "";
     private float timeLeft;
+    private Vector3 origin;
 
     private void Start()
     {
@@ -266,4 +270,44 @@ public class Building : MonoBehaviour
             }
         }
     }
+
+    #region Building Methods
+
+    public bool canBePlaced()
+    {
+        Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(transform.position);
+        BoundsInt areaTemp = area;
+        areaTemp.position = positionInt;
+
+        if (GridBuildingSystem.current.canTakeArea(areaTemp))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public void place()
+    {
+        Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(transform.position);
+        BoundsInt areaTemp = area;
+        areaTemp.position = positionInt;
+        placed = true;
+        GridBuildingSystem.current.takeArea(areaTemp);
+    }
+
+    public void checkPlacement()
+    {
+        if (canBePlaced())
+        {
+            place();
+            origin = transform.position;
+        }
+        else
+        {
+            Destroy(transform.gameObject);
+        }
+        GameManager.Instance.openShop();
+    }
+       
+    #endregion
 }

@@ -2,13 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
     public TextMeshProUGUI debugInventoryInfo;
     public Animator buildModeAnimator;
-    public bool isbuildingMode = false;
+    public bool isOnBuildingMode = false;
     public bool isOnCanvas;
+    public GameObject canvas;
+    public bool dragging;
+    public bool draggingFromShop = false;
+
+    public GameObject shop;
 
 
     private string info = "";
@@ -23,8 +29,11 @@ public class GameManager : MonoBehaviour
             return;
         }
         Instance = this;
+
+        ShopItemDrag.canvas = canvas.GetComponent<Canvas>();
     }
     #endregion
+
 
     private void Update()
     {
@@ -32,8 +41,26 @@ public class GameManager : MonoBehaviour
         {
             info += "\n -" + inventoryResource.Key + ": " + inventoryResource.Value;
         }
-        debugInventoryInfo.text = info;
+        debugInventoryInfo.SetText("Dragging: " + dragging + "\n" + "OnCanvas: " + isOnCanvas + "\n" + "onBuild: " + isOnBuildingMode + "\n" + "draggingShop: " + draggingFromShop + "\n");
+        //debugInventoryInfo.text = info;
         info = "";
+    }
+
+
+    public void OnBeginDrag()
+    {
+        dragging = true;
+        
+    }
+
+    public void OnEndDrag()
+    {
+        Invoke("endDrag", 0.05f);
+    }
+
+    private void endDrag()
+    {
+        dragging = false;
     }
 
     public bool buildBuilding(Building building, TerrenoEdificable terrenoEdificable)
@@ -53,15 +80,32 @@ public class GameManager : MonoBehaviour
 
     public void toggleBuildMode()
     {
-        if (isbuildingMode){
+        if (isOnBuildingMode){
             buildModeAnimator.Play("buildPanelClosing");
-            isbuildingMode = false;
+            isOnBuildingMode = false;
+            Invoke("hideShop", 0.05f);
         }
         else
         {
             buildModeAnimator.Play("buildPanelOpening");
-            isbuildingMode = true;
+            isOnBuildingMode = true;
+            shop.SetActive(true);
         }
+    }
+    public void hideShop()
+    {
+        shop.SetActive(false);
+    }
+
+
+    public void openShop()
+    {
+        buildModeAnimator.Play("buildPanelOpening");
+    }
+
+    public void closeShop()
+    {
+        buildModeAnimator.Play("buildPanelClosing");
     }
 
     public void pointerEnter()
@@ -73,5 +117,4 @@ public class GameManager : MonoBehaviour
     {
         isOnCanvas = false;
     }
-
 }
