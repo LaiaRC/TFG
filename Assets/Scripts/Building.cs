@@ -37,6 +37,7 @@ public class Building : MonoBehaviour
 
     public bool placed { get; private set; }
     public BoundsInt area;
+    public GameObject confirmUI;
 
     private string activeResource; //Quina resource s'esta produïnt
     private float activeResourceTime;
@@ -46,9 +47,12 @@ public class Building : MonoBehaviour
     private string resourceTimeAux = "";
     private float timeLeft;
     private Vector3 origin;
+    private bool showUI = false;
+    
 
     private void Start()
     {
+        isSelected = false;
         activeResource = initialActiveResource;
         if(Data.Instance.RESOURCES.TryGetValue(activeResource, out Resource resource))
         {
@@ -59,68 +63,73 @@ public class Building : MonoBehaviour
 
     void Update()
     {
-        if(Time.time >= timeToNextItem && isProducing)
-        {
-            produce();
-        }
-        if (isSelected)
-        {
-            showBuildingInterior();
-        }
-        else
-        {
-            hideBuildingInterior();
-        }       
 
-        //Requirements to update building
-        foreach (Requirement requirement in upgrade_cost[level - 1].list)
+        if (placed)
         {
-            if(Data.Instance.RESOURCES.TryGetValue(requirement.resourceNameKey, out Resource resource))
+            if (Time.time >= timeToNextItem && isProducing)
             {
-                if(Data.Instance.INVENTORY.TryGetValue(requirement.resourceNameKey, out int quantity))
-                {
-                    if(level < maxLevel)
-                    {
-                        upgradeTextAux2 = "Level " + level + " -> " + (level + 1) + "\n";
-                        upgradeTextAux += quantity + "/" + requirement.quantity + " " + resource.resourceName + "\n";
-                    }
-                    else
-                    {
-                        upgradeTextAux2 = " Level " + level + "\nMax level";
-                    }
-                }
-                else
-                {
-                    if (level < maxLevel)
-                    {
-                        upgradeTextAux2 = "Level " + level + " -> " + (level + 1) + "\n";
-                        upgradeTextAux += "0/" + requirement.quantity + " " + resource.resourceName + "\n";
-                    }
-                    else
-                    {
-                        upgradeTextAux2 = " Level " + level + "\nMax level";
-                    }
-                }
-            }            
-        }
-        upgradeText.text = upgradeTextAux2 + upgradeTextAux;
-        upgradeTextAux = "";
-        upgradeTextAux2 = "";
+                produce();
+            }
 
-        //Show resource producing and time to next
-        if (Data.Instance.RESOURCES.TryGetValue(activeResource, out Resource aResource))
-        {
-            if ((timeToNextItem - Time.time) >= 0 && isProducing)
+            if (isSelected)
             {
-                resourceTimeAux = aResource.resourceName + " - " + (timeToNextItem - Time.time).ToString("F0");
+                showBuildingInterior();
             }
             else
             {
-                resourceTimeAux = aResource.resourceName + " - -";
+                hideBuildingInterior();
             }
+
+            //Requirements to update building
+            foreach (Requirement requirement in upgrade_cost[level - 1].list)
+            {
+                if (Data.Instance.RESOURCES.TryGetValue(requirement.resourceNameKey, out Resource resource))
+                {
+                    if (Data.Instance.INVENTORY.TryGetValue(requirement.resourceNameKey, out int quantity))
+                    {
+                        if (level < maxLevel)
+                        {
+                            upgradeTextAux2 = "Level " + level + " -> " + (level + 1) + "\n";
+                            upgradeTextAux += quantity + "/" + requirement.quantity + " " + resource.resourceName + "\n";
+                        }
+                        else
+                        {
+                            upgradeTextAux2 = " Level " + level + "\nMax level";
+                        }
+                    }
+                    else
+                    {
+                        if (level < maxLevel)
+                        {
+                            upgradeTextAux2 = "Level " + level + " -> " + (level + 1) + "\n";
+                            upgradeTextAux += "0/" + requirement.quantity + " " + resource.resourceName + "\n";
+                        }
+                        else
+                        {
+                            upgradeTextAux2 = " Level " + level + "\nMax level";
+                        }
+                    }
+                }
+            }
+            upgradeText.text = upgradeTextAux2 + upgradeTextAux;
+            upgradeTextAux = "";
+            upgradeTextAux2 = "";
+
+            //Show resource producing and time to next
+            if (Data.Instance.RESOURCES.TryGetValue(activeResource, out Resource aResource))
+            {
+                if ((timeToNextItem - Time.time) >= 0 && isProducing)
+                {
+                    resourceTimeAux = aResource.resourceName + " - " + (timeToNextItem - Time.time).ToString("F0");
+                }
+                else
+                {
+                    resourceTimeAux = aResource.resourceName + " - -";
+                }
+            }
+            resourceTimeText.text = resourceTimeAux;
+            resourceTimeAux = "";
         }
-        resourceTimeText.text = resourceTimeAux;
-        resourceTimeAux = "";
     }
 
     public void produce()
@@ -288,11 +297,32 @@ public class Building : MonoBehaviour
 
     public void place()
     {
-        Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(transform.position);
-        BoundsInt areaTemp = area;
-        areaTemp.position = positionInt;
-        placed = true;
-        GridBuildingSystem.current.takeArea(areaTemp);
+        confirmUI.SetActive(true);
+    }
+
+    public void confirmBuilding()
+    {
+        if (canBePlaced())
+        {
+            Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(transform.position);
+            BoundsInt areaTemp = area;
+            areaTemp.position = positionInt;
+            placed = true;
+            GridBuildingSystem.current.takeArea(areaTemp);
+            confirmUI.SetActive(false);
+            GameManager.Instance.detected = false;
+            GameManager.Instance.showAllShop();
+            GameManager.Instance.draggingItemShop = false;
+            GameManager.Instance.pointerEnter();
+        }
+    }
+
+    public void cancelBuilding()
+    {
+        GameManager.Instance.detected = false;
+        GameManager.Instance.draggingItemShop = false;
+        GameManager.Instance.showAllShop();
+        Destroy(gameObject);
     }
 
     public void checkPlacement()

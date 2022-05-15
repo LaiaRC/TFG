@@ -13,8 +13,11 @@ public class GameManager : MonoBehaviour
     public GameObject canvas;
     public bool dragging;
     public bool draggingFromShop = false;
+    public bool draggingItemShop = false;
+    public bool detected = false;
 
     public GameObject shop;
+    public GameObject allShop;
 
 
     private string info = "";
@@ -41,8 +44,8 @@ public class GameManager : MonoBehaviour
         {
             info += "\n -" + inventoryResource.Key + ": " + inventoryResource.Value;
         }
-        debugInventoryInfo.SetText("Dragging: " + dragging + "\n" + "OnCanvas: " + isOnCanvas + "\n" + "onBuild: " + isOnBuildingMode + "\n" + "draggingShop: " + draggingFromShop + "\n");
-        //debugInventoryInfo.text = info;
+        //debugInventoryInfo.SetText("Dragging: " + dragging + "\n" + "OnCanvas: " + isOnCanvas + "\n" + "onBuild: " + isOnBuildingMode + "\n" + "draggingShop: " + draggingFromShop + "\n");
+        debugInventoryInfo.text = info;
         info = "";
     }
 
@@ -61,6 +64,16 @@ public class GameManager : MonoBehaviour
     private void endDrag()
     {
         dragging = false;
+    }
+
+    public void OnBeginDragFromShop()
+    {
+        draggingFromShop = true;
+    }
+
+    public void OnEndDragFromShop()
+    {
+        draggingFromShop = false;
     }
 
     public bool buildBuilding(Building building, TerrenoEdificable terrenoEdificable)
@@ -91,6 +104,29 @@ public class GameManager : MonoBehaviour
             isOnBuildingMode = true;
             shop.SetActive(true);
         }
+    }
+
+    public void hideAllShop()
+    {
+        if (isOnBuildingMode)
+        {
+            buildModeAnimator.Play("buildPanelClosing");
+            isOnBuildingMode = false;            
+            Invoke("hideShop", 0.05f);
+            Invoke("hideFullShop", 0.05f);
+        }
+    }
+
+    public void showAllShop()
+    {
+        if (!isOnBuildingMode)
+        {
+            allShop.SetActive(true);
+        }
+    }
+    public void hideFullShop()
+    {
+        allShop.SetActive(false);
     }
     public void hideShop()
     {

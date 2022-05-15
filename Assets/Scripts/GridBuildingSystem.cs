@@ -1,5 +1,6 @@
  using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
@@ -15,12 +16,14 @@ public class GridBuildingSystem : MonoBehaviour
     public Tile redTile;
     public Tile whiteTile;
     public TileBase takenTile;
+    public TextMeshProUGUI debugText;
    
     private static Dictionary<TileType, TileBase> tileBases = new Dictionary<TileType, TileBase>();
     private Building temp;
     private Vector3 prevPos;
     private BoundsInt prevArea;
-    
+    private Touch touch;
+
     #region Unity Method
 
     private void Awake()
@@ -39,22 +42,27 @@ public class GridBuildingSystem : MonoBehaviour
 
     private void Update()
     {
+
         if (!temp)
         {
+            ClearArea();
             return;
         }
-        if (Input.GetMouseButtonDown(0))
+        
+        if(Input.touchCount == 1)
         {
-            if (EventSystem.current.IsPointerOverGameObject(0))
+            touch = Input.GetTouch(0);
+        }
+
+        if (!temp.placed)
+        {
+            //en el if -> || touch.phase == TouchPhase.Stationary (per fer que vagi on cliqui, pero no si clica buttons)
+            if (touch.phase == TouchPhase.Moved)
             {
-                return;
-            }
-            if (!temp.placed)
-            {
-                Vector2 touchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 touchPos = Camera.main.ScreenToWorldPoint(touch.position);
                 Vector3Int cellPos = gridLayout.LocalToCell(touchPos);
 
-                if(prevPos != cellPos)
+                if (prevPos != cellPos)
                 {
                     temp.transform.localPosition = gridLayout.CellToLocalInterpolated(cellPos
                         + new Vector3(.5f, .5f, 0f));
@@ -62,16 +70,13 @@ public class GridBuildingSystem : MonoBehaviour
                     FollowBuilding();
                 }
             }
-        }else if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (temp.canBePlaced())
+
+            if (touch.phase == TouchPhase.Ended)
             {
-                temp.place();
+
+                 temp.place();
+                
             }
-        }else if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            ClearArea();
-            Destroy(temp.gameObject);
         }
     }
     #endregion
@@ -112,19 +117,41 @@ public class GridBuildingSystem : MonoBehaviour
 
     #region Building Placement
 
-    public void InitializeWithBuilding(GameObject building, Vector3 pos)
+    public void InitializeWithBuilding(GameObject building)
     {
-        /*temp = Instantiate(building, Vector3.zero, Quaternion.identity).GetComponent<Building>();
-        FollowBuilding();*/
+        Vector3 position = new Vector3(0, 0, 0);
+        
+        if(Input.touchCount == 1)
+        {
+            Touch touch = Input.GetTouch(0);
+            position = new Vector3(touch.position.x, touch.position.y, 0);
+        }
+        
 
-        pos.z = 0;
-        pos.y -= building.GetComponent<Tilemap>().cellBounds.size.y / 2f;
+        temp = Instantiate(building, Camera.main.ScreenToWorldPoint(position), Quaternion.identity).GetComponent<Building>();
+        FollowBuilding();
+
+        /*pos.z = 0;
+        pos.y -= building.transform.position.y / 2f;
         Vector3Int cellPos = gridLayout.WorldToCell(pos);
         Vector3 position = gridLayout.CellToLocalInterpolated(cellPos);
 
         GameObject obj = Instantiate(building, position, Quaternion.identity);
         Building temp = obj.transform.GetComponent<Building>();
+        temp.gameObject.AddComponent<ObjectDrag>();*/
+    }
+
+    public void initializeWithObject(GameObject building, Vector3 pos)
+    {
+        pos.z = 0;
+        pos.y -= building.transform.position.y / 2f;
+        Vector3Int cellPos = gridLayout.WorldToCell(pos);
+        Vector3 position = gridLayout.CellToLocalInterpolated(cellPos);
+
+        temp = Instantiate(building, position, Quaternion.identity).GetComponent<Building>();
         temp.gameObject.AddComponent<ObjectDrag>();
+        Debug.Log("Initialized in position: " + position);
+        FollowBuilding();
     }
     private void ClearArea()
     {

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class ShopItemDrag : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
+    
     public static Canvas canvas;
 
     private RectTransform rt;
@@ -13,7 +14,9 @@ public class ShopItemDrag : MonoBehaviour, IBeginDragHandler, IEndDragHandler, I
     private Image img;
 
     private Vector3 originPos;
-    private bool drag;   
+    private bool drag;
+    private ShopItem Item;
+    private bool detected = false;
 
     private void Awake()
     {
@@ -31,7 +34,7 @@ public class ShopItemDrag : MonoBehaviour, IBeginDragHandler, IEndDragHandler, I
         drag = true;
         cg.blocksRaycasts = false;
         img.maskable = false;
-        GameManager.Instance.draggingFromShop = true;
+        GameManager.Instance.draggingItemShop = true;
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -40,7 +43,7 @@ public class ShopItemDrag : MonoBehaviour, IBeginDragHandler, IEndDragHandler, I
         cg.blocksRaycasts = true;
         img.maskable = false;
         rt.anchoredPosition = originPos;
-        GameManager.Instance.draggingFromShop = false;
+        GameManager.Instance.draggingItemShop = false;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -48,13 +51,25 @@ public class ShopItemDrag : MonoBehaviour, IBeginDragHandler, IEndDragHandler, I
         rt.anchoredPosition += eventData.delta / canvas.scaleFactor;
     }
 
+    public void initialize(ShopItem item)
+    {
+        Item = item;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameManager.Instance.toggleBuildMode();
+        if (!GameManager.Instance.detected)
+        {
+            GameManager.Instance.detected = true;
+            GameManager.Instance.hideAllShop();            
 
-        Color c = img.color;
-        c.a = 0f;
-        img.color = c;
+            Color c = img.color;
+            c.a = 0f;
+            img.color = c;
+
+
+            GridBuildingSystem.current.InitializeWithBuilding(Item.prefab);
+        }        
     }
 
     private void OnEnable()

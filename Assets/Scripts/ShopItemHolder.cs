@@ -31,7 +31,7 @@ public class ShopItemHolder : MonoBehaviour
 
     public void unlockItem()
     {
-        iconImage.gameObject.AddComponent<ShopItemDrag>();
+        iconImage.gameObject.AddComponent<ShopItemDrag>().initialize(Item);
         //iconImage.color = new Color(255,255,255,255);
     }
 }
