@@ -147,6 +147,11 @@ public class Building : MonoBehaviour
                         return;
                     }
                 }
+                else
+                {
+                    //Player don't have the requirement resource to produce 
+                    return;
+                }
             }
             #endregion
 
@@ -304,16 +309,35 @@ public class Building : MonoBehaviour
     {
         if (canBePlaced())
         {
-            Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(transform.position);
-            BoundsInt areaTemp = area;
-            areaTemp.position = positionInt;
-            placed = true;
-            GridBuildingSystem.current.takeArea(areaTemp);
-            confirmUI.SetActive(false);
-            GameManager.Instance.detected = false;
-            GameManager.Instance.showAllShop();
-            GameManager.Instance.draggingItemShop = false;
-            GameManager.Instance.pointerEnter();
+            //Check requirements
+            if (GameManager.Instance.checkRequirements(id))
+            {
+                //Apply cost and update inventory
+                GameManager.Instance.buy(id);
+
+                //Build building gameObject
+                Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(transform.position);
+                BoundsInt areaTemp = area;
+                areaTemp.position = positionInt;
+                placed = true;
+                GridBuildingSystem.current.takeArea(areaTemp);
+                confirmUI.SetActive(false);
+                GameManager.Instance.detected = false;
+                GameManager.Instance.showAllShop();
+                GameManager.Instance.draggingItemShop = false;
+                GameManager.Instance.pointerEnter();
+
+                //Update amount of buildings in inventory of buildings
+                if(Data.Instance.BUILDING_INVENTORY.TryGetValue(id, out int quantity)){
+                    quantity += 1;
+                    Data.Instance.BUILDING_INVENTORY[id] = quantity;
+                }
+                else
+                {
+                    //It's the first building (of this type)
+                    Data.Instance.BUILDING_INVENTORY.Add(id, 1);
+                }
+            }
         }
     }
 

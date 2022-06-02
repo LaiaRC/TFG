@@ -7,6 +7,7 @@ public class Data : MonoBehaviour
     public Dictionary<string, GameObject> BUILDINGS = new Dictionary<string, GameObject>();
     public Dictionary<string, Resource> RESOURCES = new Dictionary<string, Resource>();
     public Dictionary<string, int> INVENTORY = new Dictionary<string, int>();
+    public Dictionary<string, int> BUILDING_INVENTORY = new Dictionary<string, int>();
 
 
     #region RESOURCES KEYS

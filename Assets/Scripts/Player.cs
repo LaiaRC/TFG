@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     public GameObject shopUI;
     public ShopManager shop;
     public float velocity;
+    public Button buttonTime;
+    public TextMeshProUGUI buttonTimeText;
 
     void Start()
     {
@@ -59,20 +63,22 @@ public class Player : MonoBehaviour
             }
             #endregion
         }
-
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            if(Time.timeScale == 1)
-            {
-                Time.timeScale = 100;
-            }
-            else
-            {
-                Time.timeScale = 1;
-            }
-        }
-
     }
 
+    public void toggleTimeEscale()
+    {
+        if (Time.timeScale == 1)
+        {
+            Time.timeScale = 100;
+            buttonTimeText.text = "Time x100";
+            buttonTime.GetComponent<Image>().color = new Color(0, 1, 0, 1);
+        }
+        else
+        {
+            Time.timeScale = 1;
+            buttonTimeText.text = "Time x1";
+            buttonTime.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+        }
+    }
     
 }

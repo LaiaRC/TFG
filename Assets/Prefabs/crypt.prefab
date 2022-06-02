@@ -1292,6 +1292,8 @@ MonoBehaviour:
   production_cost:
   - resourceNameKey: bone
     quantity: 5
+  - resourceNameKey: rottenFlesh
+    quantity: 3
   upgrade_cost:
   - list:
     - resourceNameKey: bone
@@ -1316,6 +1318,10 @@ MonoBehaviour:
   upgradeText: {fileID: 6103992320491261592}
   resourceTimeText: {fileID: 1998847777032956937}
   pauseText: {fileID: 7959407267563935779}
+  area:
+    m_Position: {x: 0, y: 0, z: 0}
+    m_Size: {x: 0, y: 0, z: 0}
+  confirmUI: {fileID: 0}
 --- !u!1 &2615441776759922720
 GameObject:
   m_ObjectHideFlags: 0

@@ -52,7 +52,7 @@ public class ShopManager2 : MonoBehaviour
     }
     private void Update()
     {        
-        if (!GameManager.Instance.isOnCanvas && !GameManager.Instance.dragging && Input.GetMouseButtonUp(0))
+        if (!GameManager.Instance.isOnCanvas && !GameManager.Instance.dragging && Input.GetMouseButtonUp(0) && !GameManager.Instance.isDialogOpen)
         {
             GameManager.Instance.toggleBuildMode();
         }  
@@ -86,7 +86,5 @@ public class ShopManager2 : MonoBehaviour
                 itemObject.GetComponent<ShopItemHolder>().initialize(item);
             }
         }
-    }
-
-    
+    }    
 }

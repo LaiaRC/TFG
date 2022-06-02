@@ -12,7 +12,7 @@ public class CamaraControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.Instance.isOnCanvas && !GameManager.Instance.draggingFromShop && !GameManager.Instance.draggingItemShop)
+        if (!GameManager.Instance.isOnCanvas && !GameManager.Instance.draggingFromShop && !GameManager.Instance.draggingItemShop && !GameManager.Instance.isDialogOpen)
         {
             if (Input.GetMouseButtonDown(0))
             {

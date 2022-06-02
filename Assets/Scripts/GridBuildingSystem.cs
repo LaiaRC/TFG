@@ -150,7 +150,6 @@ public class GridBuildingSystem : MonoBehaviour
 
         temp = Instantiate(building, position, Quaternion.identity).GetComponent<Building>();
         temp.gameObject.AddComponent<ObjectDrag>();
-        Debug.Log("Initialized in position: " + position);
         FollowBuilding();
     }
     private void ClearArea()

@@ -35,6 +35,9 @@ public class ShopItemDrag : MonoBehaviour, IBeginDragHandler, IEndDragHandler, I
         cg.blocksRaycasts = false;
         img.maskable = false;
         GameManager.Instance.draggingItemShop = true;
+
+
+        bool hasRequirements = GameManager.Instance.checkRequirements(Item.id);
     }
 
     public void OnEndDrag(PointerEventData eventData)
