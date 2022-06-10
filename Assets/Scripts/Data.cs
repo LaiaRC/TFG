@@ -25,7 +25,7 @@ public class Data : MonoBehaviour
     public static string FROGLEG = "frogLeg";
     public static string DEADFISH = "deadFish";
     public static string BATWING = "batWing";
-    public static string NAIL = "nail";
+    public static string RUSTYNAIL = "rustyNail";
     public static string BANDAGES = "bandages";
     public static string EYE = "eye";
     public static string BLOOD = "blood";
@@ -199,7 +199,7 @@ public class Data : MonoBehaviour
         //Nail (clavo)
         Requirement[] requirements15;
         requirements15 = new Requirement[0];
-        RESOURCES.Add(NAIL, new Resource("Nail", NAIL, true, 40, false, requirements15));
+        RESOURCES.Add(RUSTYNAIL, new Resource("Rusty nail", RUSTYNAIL, true, 40, false, requirements15));
         #endregion
 
         #region ABANDONED HOSPITAL
@@ -232,7 +232,7 @@ public class Data : MonoBehaviour
         requirement18A.quantity = 3;
         requirements18[0] = requirement18A;
 
-        requirement18B.resourceNameKey = NAIL;
+        requirement18B.resourceNameKey = RUSTYNAIL;
         requirement18B.quantity = 15;
         requirements18[1] = requirement18B;
 
@@ -331,7 +331,7 @@ public class Data : MonoBehaviour
 
         requirements24 = new Requirement[2];
 
-        requirement24A.resourceNameKey = NAIL;
+        requirement24A.resourceNameKey = RUSTYNAIL;
         requirement24A.quantity = 15;
         requirements24[0] = requirement24A;
 

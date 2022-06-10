@@ -22,6 +22,7 @@ public class ShopItem : MonoBehaviour
     public Sprite produces1;
     public Sprite produces2;
     public Sprite produces3;
+    public int order;
 }
 
 public enum ObjectType

@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 2545819794617544517}
   - component: {fileID: 3233074414995182345}
   m_Layer: 0
-  m_Name: ShopItem1 1
+  m_Name: 9wellShop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2545819794617544517
 Transform:
   m_ObjectHideFlags: 0
@@ -43,17 +43,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef958bbf2b2368e43b925d534027d411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Forest
-  id: forest
+  name: Well
+  id: well
   description: idk
-  resourceText1: 15
-  resourceText2: 
-  resource1Icon: {fileID: 21300000, guid: f3b77c3f639aa7847ade1511384e628c, type: 3}
-  resource2Icon: {fileID: 0}
+  resourceText1: 50
+  resourceText2: 500
+  resource1Icon: {fileID: 21300000, guid: bbb33cd0fe171094c8831757a8ceaae0, type: 3}
+  resource2Icon: {fileID: 21300000, guid: d22a524154e65514d9f0c1c7977b8164, type: 3}
   maxQuantity: 3
   type: 0
-  icon: {fileID: -1194999455540069253, guid: ca94a167d3e13fa48b06865fb9703a22, type: 3}
-  prefab: {fileID: 2000697655669412042, guid: a7ef0698a8ba5cb4c89be36532b1fc54, type: 3}
-  produces1: {fileID: 21300000, guid: f3b77c3f639aa7847ade1511384e628c, type: 3}
-  produces2: {fileID: 21300000, guid: ec11db212ab94ff4d883b1de0d3751ea, type: 3}
-  produces3: {fileID: 21300000, guid: ec11db212ab94ff4d883b1de0d3751ea, type: 3}
+  icon: {fileID: 21300000, guid: 81f2cf74b6dcb0343aa4aa8350a2d587, type: 3}
+  prefab: {fileID: 2000697655669412042, guid: 19cfe43f32a69e04ebdedd086384d2c3, type: 3}
+  produces1: {fileID: 21300000, guid: 81f2cf74b6dcb0343aa4aa8350a2d587, type: 3}
+  produces2: {fileID: 21300000, guid: 7674e71564054e54c84fb02df2aba2f4, type: 3}
+  produces3: {fileID: 21300000, guid: 584f2dd50ca4450478bac5265e9c9d92, type: 3}
+  order: 9

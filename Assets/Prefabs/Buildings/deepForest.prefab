@@ -939,7 +939,7 @@ GameObject:
   - component: {fileID: 290167122890808503}
   - component: {fileID: 7450831901430826459}
   m_Layer: 0
-  m_Name: graveyard
+  m_Name: deepForest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -960,6 +960,7 @@ Transform:
   - {fileID: 737886092570155380}
   - {fileID: 1862841559043156590}
   - {fileID: 6500873542712374988}
+  - {fileID: 5726876816279883245}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -975,29 +976,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a94697345af8aa646a2423a7cb3889c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  building_name: Graveyard
-  id: graveyard
-  production_cost: []
+  building_name: Deep Forest
+  id: deepForest
+  production_cost:
+  - resourceNameKey: plasma
+    quantity: 1000
+  - resourceNameKey: broomstick
+    quantity: 200
   upgrade_cost:
   - list:
-    - resourceNameKey: poisonIvy
-      quantity: 10
+    - resourceNameKey: blackRose
+      quantity: 500
   - list:
-    - resourceNameKey: blackCatHair
-      quantity: 400
-    - resourceNameKey: rottenFlesh
-      quantity: 3
+    - resourceNameKey: blood
+      quantity: 250
   resources:
-  - bone
-  - rottenFlesh
-  - tombstone
+  - poisonApple
+  - fang
+  - wolfClaw
   spriteResources:
   - {fileID: 3267518251217408819}
   - {fileID: 3979056501392526175}
+  - {fileID: 7493696591839079958}
   level: 1
   isProducing: 1
   maxLevel: 3
-  initialActiveResource: bone
+  initialActiveResource: poisonApple
   buildingInterior: {fileID: 1599240196378649155}
   isSelected: 1
   upgradeText: {fileID: 6970974143266469527}
@@ -1373,7 +1377,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3267518251217408819}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.39487, y: 1.29, z: 0}
+  m_LocalPosition: {x: 1.39487, y: 1.24, z: 0}
   m_LocalScale: {x: 0.6268842, y: 0.74050486, z: 0.21593125}
   m_Children: []
   m_Father: {fileID: 1384341458226974199}
@@ -1419,12 +1423,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 20
-  m_Sprite: {fileID: 21300000, guid: f3b77c3f639aa7847ade1511384e628c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2fe41bbba57d96e448afa98404b4ad25, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.16, y: 0.16}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1878,7 +1882,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 20
-  m_Sprite: {fileID: 21300000, guid: ec11db212ab94ff4d883b1de0d3751ea, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b0a12c17e7b22c5408e37ee9a763230a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.29411766}
   m_FlipX: 0
   m_FlipY: 0
@@ -3319,6 +3323,88 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
+--- !u!1 &7493696591839079958
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5726876816279883245}
+  - component: {fileID: 5948169724369919872}
+  m_Layer: 0
+  m_Name: ResourceIcon3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5726876816279883245
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7493696591839079958}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.16, y: 1.23, z: 0}
+  m_LocalScale: {x: 0.6268842, y: 0.74050486, z: 0.21593125}
+  m_Children: []
+  m_Father: {fileID: 1384341458226974199}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &5948169724369919872
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7493696591839079958}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 20
+  m_Sprite: {fileID: 21300000, guid: 5492d2de862ab814fa5ec3745cce8858, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.29411766}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &7734852860158214438
 GameObject:
   m_ObjectHideFlags: 0

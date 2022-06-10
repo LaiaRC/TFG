@@ -12,12 +12,12 @@ public class ShopManager : MonoBehaviour
     public int coins;
     public TextMeshProUGUI coinsTxt;
     private TerrenoEdificable terreno_selected;
-    public List<GameObject> buildings;
+    //public List<GameObject> buildings;
 
 
     void Start()
     {
-        Data.Instance.setBuildings(buildings);
+        //Data.Instance.setBuildings(buildings);
     }
 
     void Update()

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2545819794617544517}
   - component: {fileID: 3233074414995182345}
   m_Layer: 0
-  m_Name: ShopItem1 2
+  m_Name: 10magicWorkshopShop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,17 +43,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef958bbf2b2368e43b925d534027d411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Crypt
-  id: crypt
+  name: Magic Workshop
+  id: magicWorkshop
   description: idk
-  resourceText1: 5
-  resourceText2: 3
-  resource1Icon: {fileID: 21300000, guid: f3b77c3f639aa7847ade1511384e628c, type: 3}
-  resource2Icon: {fileID: 21300000, guid: ec11db212ab94ff4d883b1de0d3751ea, type: 3}
+  resourceText1: 500
+  resourceText2: 2000
+  resource1Icon: {fileID: 21300000, guid: 81f2cf74b6dcb0343aa4aa8350a2d587, type: 3}
+  resource2Icon: {fileID: 21300000, guid: 4610e5b9c2e3902458c05c481dce2611, type: 3}
   maxQuantity: 3
   type: 0
-  icon: {fileID: 21300000, guid: f3b77c3f639aa7847ade1511384e628c, type: 3}
-  prefab: {fileID: 2000697655669412042, guid: 5c03e3a1bc4751e428c0114d02da76c7, type: 3}
-  produces1: {fileID: 21300000, guid: f3b77c3f639aa7847ade1511384e628c, type: 3}
-  produces2: {fileID: 21300000, guid: f3b77c3f639aa7847ade1511384e628c, type: 3}
-  produces3: {fileID: 21300000, guid: f3b77c3f639aa7847ade1511384e628c, type: 3}
+  icon: {fileID: 21300000, guid: c311d646f5e2b3e4aad3e507779ef5d7, type: 3}
+  prefab: {fileID: 2000697655669412042, guid: 7596ba48b581b3845bb2be07e7a3c4c6, type: 3}
+  produces1: {fileID: 21300000, guid: c311d646f5e2b3e4aad3e507779ef5d7, type: 3}
+  produces2: {fileID: 21300000, guid: 73ad2fd8487cb70439e937b582800764, type: 3}
+  produces3: {fileID: 21300000, guid: 1ad5419d91c38914a97e30c94c72b8f2, type: 3}
+  order: 10

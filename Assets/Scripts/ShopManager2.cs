@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 public class ShopManager2 : MonoBehaviour
 {
     public static ShopManager2 current;
-    //public List<GameObject> buildings;
+    public List<GameObject> buildings;
     //public List<ShopItem> items;
 
 
@@ -29,7 +29,7 @@ public class ShopManager2 : MonoBehaviour
         current = this;
 
         rt = GetComponent<RectTransform>();
-        prt = transform.parent.GetComponent<RectTransform>();
+        prt = transform.parent.GetComponent<RectTransform>();        
     }
 
     private void Start()
@@ -61,9 +61,10 @@ public class ShopManager2 : MonoBehaviour
     private void load()
     {
         //carregar buildings a la bbdd
-        //Data.Instance.setBuildings(buildings);
+        Data.Instance.setBuildings(buildings);
 
         ShopItem[] items = Resources.LoadAll<ShopItem>("Shop");
+        System.Array.Sort(items, delegate (ShopItem x, ShopItem y) { return x.order.CompareTo(y.order); });
 
         shopItems.Add(ObjectType.Buildings, new List<ShopItem>());
         shopItems.Add(ObjectType.BoostDecorations, new List<ShopItem>());
@@ -71,7 +72,7 @@ public class ShopManager2 : MonoBehaviour
         shopItems.Add(ObjectType.DarkMarketItem, new List<ShopItem>());
 
         foreach (var item in items)
-        {
+        {            
             shopItems[item.type].Add(item);
         }
     }
