@@ -80,21 +80,6 @@ public class GameManager : MonoBehaviour
         draggingFromShop = false;
     }
 
-    public bool buildBuilding(Building building, TerrenoEdificable terrenoEdificable)
-    {
-        if (!terrenoEdificable.hasBuilding)
-        {
-            terrenoEdificable.building = building;
-            terrenoEdificable.building_prefab = building.gameObject;
-            terrenoEdificable.hasBuilding = true;
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
     public void toggleBuildMode()
     {
         if (isOnBuildingMode){
@@ -249,5 +234,17 @@ public class GameManager : MonoBehaviour
         descriptionDialog.GetComponent<Transform>().Find("IconResource1").GetComponent<Image>().sprite = iconResource1;
         descriptionDialog.GetComponent<Transform>().Find("IconResource2").GetComponent<Image>().sprite = iconResource2;
         descriptionDialog.GetComponent<Transform>().Find("IconResource3").GetComponent<Image>().sprite = iconResource3;
+    }
+
+    public void addInventory()
+    {
+        foreach (KeyValuePair<string, Resource> resource in Data.Instance.RESOURCES)
+        {
+            if(Data.Instance.INVENTORY.ContainsKey(resource.Key))
+            {
+                Data.Instance.INVENTORY.Remove(resource.Key);
+            }
+            Data.Instance.INVENTORY.Add(resource.Key, 99999);
+        }
     }
 }

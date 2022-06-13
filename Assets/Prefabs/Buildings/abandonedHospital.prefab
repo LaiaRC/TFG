@@ -1002,8 +1002,6 @@ MonoBehaviour:
   isProducing: 1
   maxLevel: 3
   initialActiveResource: bandages
-  buildingInterior: {fileID: 1599240196378649155}
-  isSelected: 1
   upgradeText: {fileID: 6970974143266469527}
   resourceTimeText: {fileID: 6564057047422509906}
   pauseText: {fileID: 851110312144139550}
@@ -1011,6 +1009,7 @@ MonoBehaviour:
     m_Position: {x: 0, y: 0, z: 0}
     m_Size: {x: 3, y: 6, z: 1}
   confirmUI: {fileID: 1688311054014621016}
+  buildingUI: {fileID: 1599240196378649155}
 --- !u!60 &7450831901430826459
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -2923,7 +2922,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 290167122890808503}
         m_TargetAssemblyTypeName: Building, Assembly-CSharp
-        m_MethodName: exitBuildingInterior
+        m_MethodName: hideBuildingInterior
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

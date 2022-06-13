@@ -7,10 +7,12 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     public GameObject shopUI;
-    public ShopManager shop;
     public float velocity;
     public Button buttonTime;
     public TextMeshProUGUI buttonTimeText;
+
+    Vector3 touchPosWorld;
+    TouchPhase touchPhase = TouchPhase.Ended;
 
     void Start()
     {
@@ -19,49 +21,27 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        //Detectar quin objecte cliquem
-        if (Input.GetMouseButtonDown(0) && !GameManager.Instance.isOnCanvas)
+        //Detectar objecte clicat (mobile)
+        if(Input.touchCount > 0 && Input.GetTouch(0).phase == touchPhase)
         {
-            #region DETECTAR OBJ CLICAT
-            TerrenoEdificable[] terrenos = FindObjectsOfType<TerrenoEdificable>();
-            RaycastHit2D hit = Physics2D.Raycast(new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y), Vector2.zero, 0f);
-            if (hit.collider != null)
-            {
-                if (hit.transform.gameObject.GetComponent<TerrenoEdificable>())
+            touchPosWorld = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+            Vector2 touchPosWorld2D = new Vector2(touchPosWorld.x, touchPosWorld.y);
+
+            RaycastHit2D hitInformation = Physics2D.Raycast(touchPosWorld2D, Camera.main.transform.forward);
+            if (hitInformation.collider != null)
+            {                
+                //We should have hit something with a 2D Physics collider!
+                GameObject touchedObject = hitInformation.transform.gameObject;
+
+                if(touchedObject.GetComponent<Building>() != null)
                 {
-                    TerrenoEdificable terrenoSelected = hit.transform.gameObject.GetComponent<TerrenoEdificable>();
-                    if (terrenoSelected.isSelected)
+                    //Building touched
+                    if (touchedObject.GetComponent<Building>().placed)
                     {
-                        terrenoSelected.isSelected = false;
-                        if (!terrenoSelected.hasBuilding)
-                        {
-                            shopUI.SetActive(false);
-                        }                    
+                        touchedObject.GetComponent<Building>().showBuildingInterior();
                     }
-                    else
-                    {
-                        foreach (TerrenoEdificable terreno in terrenos)
-                        {
-                                terreno.isSelected = false;
-                        }
-                        terrenoSelected.isSelected = true;
-                        if (!terrenoSelected.hasBuilding)
-                        {
-                            shopUI.SetActive(true);
-                            shop.setTerrenoEdificable(terrenoSelected);
-                        }                        
-                    }
-                }                
+                }     
             }
-            else
-            {
-                foreach (TerrenoEdificable terreno in terrenos)
-                {
-                    terreno.isSelected = false;
-                }
-                shopUI.SetActive(false);
-            }
-            #endregion
         }
     }
 

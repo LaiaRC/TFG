@@ -29,8 +29,6 @@ public class Building : MonoBehaviour
     public bool isProducing = false; 
     public int maxLevel;
     public string initialActiveResource;
-    public GameObject buildingInterior;
-    public bool isSelected;
     public TextMeshProUGUI upgradeText;
     public TextMeshProUGUI resourceTimeText;
     public TextMeshProUGUI pauseText;
@@ -38,6 +36,7 @@ public class Building : MonoBehaviour
     public bool placed { get; private set; }
     public BoundsInt area;
     public GameObject confirmUI;
+    public GameObject buildingUI;
 
     private string activeResource; //Quina resource s'esta produïnt
     private float activeResourceTime;
@@ -52,13 +51,12 @@ public class Building : MonoBehaviour
 
     private void Start()
     {
-        isSelected = false;
         activeResource = initialActiveResource;
         if(Data.Instance.RESOURCES.TryGetValue(activeResource, out Resource resource))
         {
             activeResourceTime = resource.time;
         }
-        buildingInterior.SetActive(false);
+        buildingUI.SetActive(false);
     }
 
     void Update()
@@ -69,15 +67,6 @@ public class Building : MonoBehaviour
             if (Time.time >= timeToNextItem && isProducing)
             {
                 produce();
-            }
-
-            if (isSelected)
-            {
-                showBuildingInterior();
-            }
-            else
-            {
-                hideBuildingInterior();
             }
 
             //Requirements to update building
@@ -212,17 +201,12 @@ public class Building : MonoBehaviour
 
     public void showBuildingInterior()
     {
-        buildingInterior.SetActive(true);
+        buildingUI.SetActive(true);
     }
 
     public void hideBuildingInterior()
     {
-        buildingInterior.SetActive(false);
-    }
-
-    public void exitBuildingInterior()
-    {
-        isSelected = false;
+        buildingUI.SetActive(false);
     }
 
     public void togglePause()
