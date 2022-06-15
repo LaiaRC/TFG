@@ -61,18 +61,21 @@ public class ShopItemDrag : MonoBehaviour, IBeginDragHandler, IEndDragHandler, I
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!GameManager.Instance.detected)
+        if (collision.tag == "borderCollider")
         {
-            GameManager.Instance.detected = true;
-            GameManager.Instance.hideAllShop();            
+            if (!GameManager.Instance.detected)
+            {
+                GameManager.Instance.detected = true;
+                GameManager.Instance.hideAllShop();
 
-            Color c = img.color;
-            c.a = 0f;
-            img.color = c;
+                Color c = img.color;
+                c.a = 0f;
+                img.color = c;
 
 
-            GridBuildingSystem.current.InitializeWithBuilding(Item.prefab);
-        }        
+                GridBuildingSystem.current.InitializeWithBuilding(Item.prefab);
+            }
+        }
     }
 
     private void OnEnable()

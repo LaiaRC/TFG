@@ -10,9 +10,9 @@ public class Player : MonoBehaviour
     public float velocity;
     public Button buttonTime;
     public TextMeshProUGUI buttonTimeText;
+    public bool dragged = false;
 
     Vector3 touchPosWorld;
-    TouchPhase touchPhase = TouchPhase.Ended;
 
     void Start()
     {
@@ -21,8 +21,13 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.dragging)
+        {
+            dragged = true;
+        }
+
         //Detectar objecte clicat (mobile)
-        if(Input.touchCount > 0 && Input.GetTouch(0).phase == touchPhase)
+        if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
         {
             touchPosWorld = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
             Vector2 touchPosWorld2D = new Vector2(touchPosWorld.x, touchPosWorld.y);
@@ -33,7 +38,7 @@ public class Player : MonoBehaviour
                 //We should have hit something with a 2D Physics collider!
                 GameObject touchedObject = hitInformation.transform.gameObject;
 
-                if(touchedObject.GetComponent<Building>() != null)
+                if(touchedObject.GetComponent<Building>() != null && !dragged)
                 {
                     //Building touched
                     if (touchedObject.GetComponent<Building>().placed)
@@ -42,6 +47,10 @@ public class Player : MonoBehaviour
                     }
                 }     
             }
+        }
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+            dragged = false;
         }
     }
 

@@ -9,6 +9,8 @@ public class Data : MonoBehaviour
     public Dictionary<string, int> INVENTORY = new Dictionary<string, int>();
     public Dictionary<string, int> BUILDING_INVENTORY = new Dictionary<string, int>();
 
+    public List<Sprite> resourcesIcons;
+
 
     #region RESOURCES KEYS
     public static string BONE = "bone";
@@ -40,10 +42,10 @@ public class Data : MonoBehaviour
     public static string WITCHHAT = "witchHat";
     public static string SKULL = "skull";
     public static string HORNS = "horns";
-    public static string HELLFIRE = "hellFire";
+    public static string HELLFIRE = "hellfire";
     public static string DIVINATIONBALL = "divinationBall";
     public static string IMMORTALITYELIXIR = "immortalityElixir";
-    public static string SPELLBOOK = "spellBook";
+    public static string SPELLBOOK = "spellbook";
     public static string POISONAPPLE = "poisonApple";
     public static string FANG = "fang";
     public static string WOLFCLAW = "wolfClaw";
@@ -66,6 +68,8 @@ public class Data : MonoBehaviour
         }
         Instance = this;
 
+        this.resourcesIcons = GameManager.Instance.resourcesIcons;
+
         #region RESOURCES 
 
         #region GRAVEYARD
@@ -73,7 +77,7 @@ public class Data : MonoBehaviour
         //Bone
         Requirement[] requirements1;
         requirements1 = new Requirement[0];
-        RESOURCES.Add(BONE, new Resource("Bone", BONE, true, 5, true, requirements1));
+        RESOURCES.Add(BONE, new Resource("Bone", BONE, true, 5, true, requirements1, resourcesIcons[5]));
 
         //Rotten Flesh
         Requirement[] requirements2;
@@ -85,7 +89,7 @@ public class Data : MonoBehaviour
         requirement2.quantity = 4;
         requirements2[0] = requirement2;
 
-        RESOURCES.Add(ROTTEN_FLESH, new Resource("Rotten flesh", ROTTEN_FLESH, false, 12, false, requirements2));
+        RESOURCES.Add(ROTTEN_FLESH, new Resource("Rotten flesh", ROTTEN_FLESH, false, 12, false, requirements2, resourcesIcons[26]));
 
         //Tombstone
         Requirement[] requirements3;
@@ -102,7 +106,7 @@ public class Data : MonoBehaviour
         requirement3B.quantity = 8;
         requirements3[1] = requirement3B;
 
-        RESOURCES.Add(TOMBSTONE, new Resource("Tombstone", TOMBSTONE, false, 60, false, requirements3));
+        RESOURCES.Add(TOMBSTONE, new Resource("Tombstone", TOMBSTONE, false, 60, false, requirements3, resourcesIcons[33]));
         #endregion
 
         #region FOREST
@@ -116,7 +120,7 @@ public class Data : MonoBehaviour
         requirement4.quantity = 2;
         requirements4[0] = requirement4;
 
-        RESOURCES.Add(SPIDERWEB, new Resource("Spiderweb", SPIDERWEB, false, 8, false, requirements4));
+        RESOURCES.Add(SPIDERWEB, new Resource("Spiderweb", SPIDERWEB, false, 8, false, requirements4, resourcesIcons[30]));
 
         //Lantern
         Requirement[] requirements5;
@@ -128,7 +132,7 @@ public class Data : MonoBehaviour
         requirement5.quantity = 6;
         requirements5[0] = requirement2;
 
-        RESOURCES.Add(LANTERN, new Resource("Lantern", LANTERN, false, 15, false, requirements5));
+        RESOURCES.Add(LANTERN, new Resource("Lantern", LANTERN, false, 15, false, requirements5, resourcesIcons[19]));
 
         //Dead tree branch
         Requirement[] requirements6;
@@ -145,7 +149,7 @@ public class Data : MonoBehaviour
         requirement6B.quantity = 30;
         requirements6[1] = requirement3B;
 
-        RESOURCES.Add(DEADTREEBRANCH, new Resource("Dead tree branch", DEADTREEBRANCH, false, 90, false, requirements6));
+        RESOURCES.Add(DEADTREEBRANCH, new Resource("Dead tree branch", DEADTREEBRANCH, false, 90, false, requirements6, resourcesIcons[9]));
         #endregion
 
         #region VEGETABLE PATCH
@@ -153,17 +157,17 @@ public class Data : MonoBehaviour
         //Poison Ivy
         Requirement[] requirements7;
         requirements7 = new Requirement[0];
-        RESOURCES.Add(POISONIVY, new Resource("Poison ivy", POISONIVY, true, 5, false, requirements7));
+        RESOURCES.Add(POISONIVY, new Resource("Poison ivy", POISONIVY, true, 5, false, requirements7, resourcesIcons[24]));
 
         //Pumpkin
         Requirement[] requirements8;
         requirements8 = new Requirement[0];
-        RESOURCES.Add(PUMPKIN, new Resource("Pumpkin", PUMPKIN, true, 25, false, requirements8));
+        RESOURCES.Add(PUMPKIN, new Resource("Pumpkin", PUMPKIN, true, 25, false, requirements8, resourcesIcons[25]));
 
         //Black Rose
         Requirement[] requirements9;
         requirements9 = new Requirement[0];
-        RESOURCES.Add(BLACKROSE, new Resource("Black rose", BLACKROSE, true, 50, false, requirements9));
+        RESOURCES.Add(BLACKROSE, new Resource("Black rose", BLACKROSE, true, 50, false, requirements9, resourcesIcons[3]));
         #endregion
 
         #region SWAMP
@@ -171,17 +175,17 @@ public class Data : MonoBehaviour
         //Mud
         Requirement[] requirements10;
         requirements10 = new Requirement[0];
-        RESOURCES.Add(MUD, new Resource("Mud", MUD, true, 10, false, requirements10));
+        RESOURCES.Add(MUD, new Resource("Mud", MUD, true, 10, false, requirements10, resourcesIcons[20]));
 
         //Swamp water
         Requirement[] requirements11;
         requirements11 = new Requirement[0];
-        RESOURCES.Add(SWAMPWATER, new Resource("Swamp water", SWAMPWATER, true, 30, false, requirements11));
+        RESOURCES.Add(SWAMPWATER, new Resource("Swamp water", SWAMPWATER, true, 30, false, requirements11, resourcesIcons[32]));
 
         //Frog leg
         Requirement[] requirements12;
         requirements12 = new Requirement[0];
-        RESOURCES.Add(FROGLEG, new Resource("Frog leg", FROGLEG, true, 90, false, requirements12));
+        RESOURCES.Add(FROGLEG, new Resource("Frog leg", FROGLEG, true, 90, false, requirements12, resourcesIcons[14]));
         #endregion
 
         #region WELL
@@ -189,17 +193,17 @@ public class Data : MonoBehaviour
         //Dead fish
         Requirement[] requirements13;
         requirements13 = new Requirement[0];
-        RESOURCES.Add(DEADFISH, new Resource("Dead fish", DEADFISH, true, 8, false, requirements13));
+        RESOURCES.Add(DEADFISH, new Resource("Dead fish", DEADFISH, true, 8, false, requirements13, resourcesIcons[8]));
 
         //Bat wing
         Requirement[] requirements14;
         requirements14 = new Requirement[0];
-        RESOURCES.Add(BATWING, new Resource("Bat wing", BATWING, true, 20, false, requirements14));
+        RESOURCES.Add(BATWING, new Resource("Bat wing", BATWING, true, 20, false, requirements14, resourcesIcons[1]));
 
-        //Nail (clavo)
+        //Rusty Nail (clavo)
         Requirement[] requirements15;
         requirements15 = new Requirement[0];
-        RESOURCES.Add(RUSTYNAIL, new Resource("Rusty nail", RUSTYNAIL, true, 40, false, requirements15));
+        RESOURCES.Add(RUSTYNAIL, new Resource("Rusty nail", RUSTYNAIL, true, 40, false, requirements15, resourcesIcons[27]));
         #endregion
 
         #region ABANDONED HOSPITAL
@@ -207,7 +211,7 @@ public class Data : MonoBehaviour
         //Bandages
         Requirement[] requirements16;
         requirements16 = new Requirement[0];
-        RESOURCES.Add(BANDAGES, new Resource("Bandages", BANDAGES, true, 10, false, requirements16));
+        RESOURCES.Add(BANDAGES, new Resource("Bandages", BANDAGES, true, 10, false, requirements16, resourcesIcons[0]));
 
         //Eye
         Requirement[] requirements17;
@@ -219,7 +223,7 @@ public class Data : MonoBehaviour
         requirement17.quantity = 10;
         requirements17[0] = requirement17;
 
-        RESOURCES.Add(EYE, new Resource("Eye", EYE, false, 25, false, requirements17));
+        RESOURCES.Add(EYE, new Resource("Eye", EYE, false, 25, false, requirements17, resourcesIcons[12]));
 
         //Blood
         Requirement[] requirements18;
@@ -236,7 +240,7 @@ public class Data : MonoBehaviour
         requirement18B.quantity = 15;
         requirements18[1] = requirement18B;
 
-        RESOURCES.Add(BLOOD, new Resource("Blood", BLOOD, false, 180, false, requirements18));
+        RESOURCES.Add(BLOOD, new Resource("Blood", BLOOD, false, 180, false, requirements18, resourcesIcons[4]));
         #endregion
 
         #region HAUNTED HOUSE
@@ -256,7 +260,7 @@ public class Data : MonoBehaviour
         requirement19B.quantity = 6;
         requirements19[1] = requirement19B;
 
-        RESOURCES.Add(PLASMA, new Resource("Plasma", PLASMA, false, 20, false, requirements19));
+        RESOURCES.Add(PLASMA, new Resource("Plasma", PLASMA, false, 20, false, requirements19, resourcesIcons[22]));
 
         //Ouija Board
         Requirement[] requirements20;
@@ -268,7 +272,7 @@ public class Data : MonoBehaviour
         requirement20.quantity = 3;
         requirements20[0] = requirement20;
 
-        RESOURCES.Add(OUIJABOARD, new Resource("Ouija board", OUIJABOARD, false, 20, false, requirements20));
+        RESOURCES.Add(OUIJABOARD, new Resource("Ouija board", OUIJABOARD, false, 20, false, requirements20, resourcesIcons[21]));
 
         //Spirit soul
         Requirement[] requirements21;
@@ -285,7 +289,7 @@ public class Data : MonoBehaviour
         requirement21B.quantity = 15;
         requirements21[1] = requirement21B;
 
-        RESOURCES.Add(SPIRITSOUL, new Resource("Spirit soul", SPIRITSOUL, false, 20, false, requirements21));
+        RESOURCES.Add(SPIRITSOUL, new Resource("Spirit soul", SPIRITSOUL, false, 20, false, requirements21, resourcesIcons[31]));
         #endregion
 
         #region CRYPT
@@ -305,7 +309,7 @@ public class Data : MonoBehaviour
         requirement22B.quantity = 20;
         requirements22[1] = requirement22B;
 
-        RESOURCES.Add(GARGOYLESTONE, new Resource("Gargoyle stone", GARGOYLESTONE, false, 20, false, requirements22));
+        RESOURCES.Add(GARGOYLESTONE, new Resource("Gargoyle stone", GARGOYLESTONE, false, 20, false, requirements22, resourcesIcons[15]));
 
         //Death essence
         Requirement[] requirements23;
@@ -322,7 +326,7 @@ public class Data : MonoBehaviour
         requirement23B.quantity = 10;
         requirements23[1] = requirement23B;
 
-        RESOURCES.Add(DEATHESSENCE, new Resource("Death essence", DEATHESSENCE, false, 20, false, requirements23));
+        RESOURCES.Add(DEATHESSENCE, new Resource("Death essence", DEATHESSENCE, false, 20, false, requirements23, resourcesIcons[10]));
 
         //Coffin
         Requirement[] requirements24;
@@ -339,7 +343,7 @@ public class Data : MonoBehaviour
         requirement24B.quantity = 10;
         requirements24[1] = requirement24B;
 
-        RESOURCES.Add(COFFIN, new Resource("Coffin", COFFIN, false, 20, false, requirements24));
+        RESOURCES.Add(COFFIN, new Resource("Coffin", COFFIN, false, 20, false, requirements24, resourcesIcons[7]));
         #endregion
 
         #region WITCH COVEN
@@ -359,7 +363,7 @@ public class Data : MonoBehaviour
         requirement25B.quantity = 2;
         requirements25[1] = requirement25B;
 
-        RESOURCES.Add(BLACKCATHAIR, new Resource("Black cat hair", BLACKCATHAIR, false, 20, false, requirements25));
+        RESOURCES.Add(BLACKCATHAIR, new Resource("Black cat hair", BLACKCATHAIR, false, 20, false, requirements25, resourcesIcons[2]));
 
         //Broomstick
         Requirement[] requirements26;
@@ -376,7 +380,7 @@ public class Data : MonoBehaviour
         requirement26B.quantity = 5;
         requirements26[1] = requirement26B;
 
-        RESOURCES.Add(BROOMSTICK, new Resource("Broomstick", BROOMSTICK, false, 40, false, requirements26));
+        RESOURCES.Add(BROOMSTICK, new Resource("Broomstick", BROOMSTICK, false, 40, false, requirements26, resourcesIcons[6]));
 
         //Witch hat
         Requirement[] requirements27;
@@ -393,7 +397,7 @@ public class Data : MonoBehaviour
         requirement27B.quantity = 6;
         requirements27[1] = requirement27B;
 
-        RESOURCES.Add(WITCHHAT, new Resource("Witch hat", WITCHHAT, false, 240, false, requirements27));
+        RESOURCES.Add(WITCHHAT, new Resource("Witch hat", WITCHHAT, false, 240, false, requirements27, resourcesIcons[34]));
         #endregion
 
         #region HELL ISLAND
@@ -413,7 +417,7 @@ public class Data : MonoBehaviour
         requirement28B.quantity = 5;
         requirements28[1] = requirement28B;
 
-        RESOURCES.Add(SKULL, new Resource("Skull", SKULL, false, 30, false, requirements28));
+        RESOURCES.Add(SKULL, new Resource("Skull", SKULL, false, 30, false, requirements28, resourcesIcons[28]));
 
         //Horns
         Requirement[] requirements29;
@@ -430,7 +434,7 @@ public class Data : MonoBehaviour
         requirement29B.quantity = 3;
         requirements29[1] = requirement29B;
 
-        RESOURCES.Add(HORNS, new Resource("Horns", HORNS, false, 60, false, requirements29));
+        RESOURCES.Add(HORNS, new Resource("Horns", HORNS, false, 60, false, requirements29, resourcesIcons[17]));
 
         //Hell fire
         Requirement[] requirements30;
@@ -447,7 +451,7 @@ public class Data : MonoBehaviour
         requirement30B.quantity = 80;
         requirements30[1] = requirement30B;
 
-        RESOURCES.Add(HELLFIRE, new Resource("Hell fire", HELLFIRE, false, 270, false, requirements30));
+        RESOURCES.Add(HELLFIRE, new Resource("Hell fire", HELLFIRE, false, 270, false, requirements30, resourcesIcons[16]));
         #endregion
 
         #region MAGIC WORKSHOP
@@ -462,7 +466,7 @@ public class Data : MonoBehaviour
         requirement31.quantity = 3;
         requirements31[0] = requirement31;
 
-        RESOURCES.Add(DIVINATIONBALL, new Resource("Divination ball", DIVINATIONBALL, false, 20, false, requirements31));
+        RESOURCES.Add(DIVINATIONBALL, new Resource("Divination ball", DIVINATIONBALL, false, 20, false, requirements31, resourcesIcons[11]));
 
         //Immortality elixir
         Requirement[] requirements32;
@@ -474,7 +478,7 @@ public class Data : MonoBehaviour
         requirement32.quantity = 10;
         requirements32[0] = requirement32;
 
-        RESOURCES.Add(IMMORTALITYELIXIR, new Resource("Immortality elixir", IMMORTALITYELIXIR, false, 20, false, requirements32));
+        RESOURCES.Add(IMMORTALITYELIXIR, new Resource("Immortality elixir", IMMORTALITYELIXIR, false, 20, false, requirements32, resourcesIcons[18]));
 
         //Spellbook
         Requirement[] requirements33;
@@ -491,7 +495,7 @@ public class Data : MonoBehaviour
         requirement33B.quantity = 9;
         requirements33[1] = requirement33B;
 
-        RESOURCES.Add(SPELLBOOK, new Resource("Spellbook", SPELLBOOK, false, 20, false, requirements33));
+        RESOURCES.Add(SPELLBOOK, new Resource("Spellbook", SPELLBOOK, false, 20, false, requirements33, resourcesIcons[29]));
         #endregion
 
         #region DEEP FOREST
@@ -506,7 +510,7 @@ public class Data : MonoBehaviour
         requirement34.quantity = 10;
         requirements34[0] = requirement34;
 
-        RESOURCES.Add(POISONAPPLE, new Resource("Poison apple", POISONAPPLE, false, 3, false, requirements34));
+        RESOURCES.Add(POISONAPPLE, new Resource("Poison apple", POISONAPPLE, false, 3, false, requirements34, resourcesIcons[23]));
 
         //Fang
         Requirement[] requirements35;
@@ -518,7 +522,7 @@ public class Data : MonoBehaviour
         requirement35.quantity = 8;
         requirements35[0] = requirement35;
 
-        RESOURCES.Add(FANG, new Resource("Fang", FANG, false, 12, false, requirements35));
+        RESOURCES.Add(FANG, new Resource("Fang", FANG, false, 12, false, requirements35, resourcesIcons[13]));
 
         //Wolf's claw
         Requirement[] requirements36;
@@ -530,7 +534,7 @@ public class Data : MonoBehaviour
         requirement36.quantity = 20;
         requirements36[0] = requirement36;
 
-        RESOURCES.Add(WOLFCLAW, new Resource("Wolf's claw", WOLFCLAW, false, 30, false, requirements36));
+        RESOURCES.Add(WOLFCLAW, new Resource("Wolf's claw", WOLFCLAW, false, 30, false, requirements36, resourcesIcons[35]));
         #endregion
 
         #endregion

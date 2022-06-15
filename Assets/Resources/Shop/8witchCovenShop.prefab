@@ -53,7 +53,7 @@ MonoBehaviour:
   maxQuantity: 3
   type: 0
   icon: {fileID: 21300000, guid: 0c9ced9baf767c34db115531e4fe1795, type: 3}
-  prefab: {fileID: 2000697655669412042, guid: 7489b6de3e62f47498b3aec6ef9047b0, type: 3}
+  prefab: {fileID: 2000697655669412042, guid: 14f1c2591246c734d843123537223ae7, type: 3}
   produces1: {fileID: 21300000, guid: d22a524154e65514d9f0c1c7977b8164, type: 3}
   produces2: {fileID: 21300000, guid: 7eb37df7e4daf854f88563f1cc163417, type: 3}
   produces3: {fileID: 21300000, guid: 0c9ced9baf767c34db115531e4fe1795, type: 3}

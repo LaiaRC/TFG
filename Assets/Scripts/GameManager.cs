@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public bool isOnBuildingMode = false;
     public bool isOnCanvas;
     public GameObject canvas;
-    public bool dragging;
+    public bool dragging;    
     public bool draggingFromShop = false;
     public bool draggingItemShop = false;
     public bool detected = false;
@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
     public GameObject shop;
     public GameObject allShop;
     public GameObject descriptionDialog;
+    public List<Sprite> resourcesIcons;
+
+    public Camera mainCamera;
 
 
     private string info = "";
@@ -52,8 +55,6 @@ public class GameManager : MonoBehaviour
         debugInventoryInfo.text = info;
         info = "";
     }
-
-
     public void OnBeginDrag()
     {
         dragging = true;
@@ -89,6 +90,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            isOnCanvas = true;
             buildModeAnimator.Play("buildPanelOpening");
             isOnBuildingMode = true;
             shop.SetActive(true);
@@ -100,9 +102,9 @@ public class GameManager : MonoBehaviour
         if (isOnBuildingMode)
         {
             buildModeAnimator.Play("buildPanelClosing");
-            isOnBuildingMode = false;            
+            isOnBuildingMode = false;
             Invoke("hideShop", 0.4f);
-            Invoke("hideFullShop", 0.4f);
+            Invoke("hideFullShop", 0.4f);            
         }
     }
 
