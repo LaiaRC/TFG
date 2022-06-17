@@ -6,8 +6,12 @@ public class Data : MonoBehaviour
 {
     public Dictionary<string, GameObject> BUILDINGS = new Dictionary<string, GameObject>();
     public Dictionary<string, Resource> RESOURCES = new Dictionary<string, Resource>();
-    public Dictionary<string, int> INVENTORY = new Dictionary<string, int>();
     public Dictionary<string, int> BUILDING_INVENTORY = new Dictionary<string, int>();
+
+    /*********************DICTIONARIES SAVED****************************/
+    public Dictionary<string, int> INVENTORY = new Dictionary<string, int>();
+    public Dictionary<string, float[]> CONSTRUCTIONS = new Dictionary<string, float[]>(); //x i y posicio i la z el level del building (x no fer 2 diccionaris)
+    public Dictionary<string, int> PLAYER = new Dictionary<string, int>();
 
     public List<Sprite> resourcesIcons;
 
@@ -537,6 +541,12 @@ public class Data : MonoBehaviour
         RESOURCES.Add(WOLFCLAW, new Resource("Wolf's claw", WOLFCLAW, false, 30, false, requirements36, resourcesIcons[35]));
         #endregion
 
+        #endregion
+
+        #region PLAYER
+        PLAYER.Add("Hour", GameManager.Instance.localDate.Hour);
+        PLAYER.Add("Minute", GameManager.Instance.localDate.Minute);
+        PLAYER.Add("Second", GameManager.Instance.localDate.Second);
         #endregion
     }
     #endregion

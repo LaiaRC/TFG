@@ -28,7 +28,7 @@ public class Building : MonoBehaviour
     public List<string> resources; //Llista dels recursos que produeix el building
     public List<GameObject> resourcesButtons; //Llista amb els sprites de cada resource 
     public List<Image> resourceButtonsIcons;
-    public int level; //nivell de millora del building -> new resource unlocked
+    public int level = 1; //nivell de millora del building -> new resource unlocked
     public bool isProducing = false; 
     public int maxLevel;
     public string initialActiveResource;
@@ -49,25 +49,37 @@ public class Building : MonoBehaviour
     public Image level3Background;
     public Tilemap level2Tilemap;
     public Tilemap level3Tilemap;
+    public Vector3 position;
+    public BoundsInt tempArea;
+    public string activeResource; //Quina resource s'esta produïnt
+    public int numTypeBuildings = 0;
+    public float timeLeft;
 
-    public bool placed { get; private set; }
+    public bool placed;
     public BoundsInt area;
     public GameObject confirmUI;
     public GameObject canvasInterior;
 
-    private string activeResource; //Quina resource s'esta produïnt
-    private float activeResourceTime = 0;
-    private float timeToNextItem = 0;
-    private string resourceTimeAux = "";
-    private float timeLeft;
+    public float activeResourceTime = 0;   //temps que triga a fer-se el active resource
     private Vector3 origin;
     private bool showUI = false;
+    public float time = 0; //comptador de temps fins el activeResourceTime
     
 
     private void Start()
     {
-        level = 1;
-        activeResource = initialActiveResource;
+        if (level == 1)
+        {
+            activeResource = initialActiveResource;
+
+            resourcesButtons[0].GetComponent<Image>().color = new Color(1, 1, 1, 1);
+            resourcesButtons[1].GetComponent<Image>().color = new Color(0.25f, 0.25f, 0.25f, 0.5f);
+            resourcesButtons[2].GetComponent<Image>().color = new Color(0.25f, 0.25f, 0.25f, 0.5f);
+
+            resourceButtonsIcons[0].GetComponent<Image>().color = new Color(1, 1, 1, 1);
+            resourceButtonsIcons[1].GetComponent<Image>().color = new Color(0.25f, 0.25f, 0.25f, 0.5f);
+            resourceButtonsIcons[2].GetComponent<Image>().color = new Color(0.25f, 0.25f, 0.25f, 0.5f);
+        }
         if(Data.Instance.RESOURCES.TryGetValue(activeResource, out Resource resource))
         {
             activeResourceTime = resource.time;
@@ -78,35 +90,40 @@ public class Building : MonoBehaviour
         timeBar.minValue = 0;
         timeBar.maxValue = activeResourceTime;
 
-        level1Background.gameObject.SetActive(true);
+       /*level1Background.gameObject.SetActive(true);
         level2Background.gameObject.SetActive(false);
-        level3Background.gameObject.SetActive(false);
+        level3Background.gameObject.SetActive(false);*/
 
-        //set resources buttons disabled
-        /*resourcesButtons[0].gameObject.SetActive(true);
-        resourcesButtons[1].gameObject.SetActive(true);
-        resourcesButtons[2].gameObject.SetActive(true);
-        resourceButtonsIcons[0].gameObject.SetActive(true);
-        resourceButtonsIcons[1].gameObject.SetActive(true);
-        resourceButtonsIcons[2].gameObject.SetActive(true);*/
-
-        resourcesButtons[0].GetComponent<Image>().color = new Color(1, 1, 1, 1);
-        resourcesButtons[1].GetComponent<Image>().color = new Color(0.25f, 0.25f, 0.25f, 0.5f);
-        resourcesButtons[2].GetComponent<Image>().color = new Color(0.25f, 0.25f, 0.25f, 0.5f);
-
-        resourceButtonsIcons[0].GetComponent<Image>().color = new Color(1, 1, 1, 1);
-        resourceButtonsIcons[1].GetComponent<Image>().color = new Color(0.25f, 0.25f, 0.25f, 0.5f);
-        resourceButtonsIcons[2].GetComponent<Image>().color = new Color(0.25f, 0.25f, 0.25f, 0.5f);
+        //Save building position
+        position = transform.position;
     }
 
     void Update()
     {
         if (placed)
         {
-
-            if (Time.time >= timeToNextItem && isProducing)
+            if (isProducing)
             {
-                produce();
+                if (playButton.gameObject.activeInHierarchy)
+                {
+                    playButton.gameObject.SetActive(false);
+                    pauseButton.gameObject.SetActive(true);
+                }
+                time += Time.deltaTime;
+                timeLeft = activeResourceTime - time;
+                if (timeLeft <= 0)
+                {
+                    produce();
+                }
+            }
+            else
+            {
+                if (pauseButton.gameObject.activeInHierarchy)
+                {
+                    playButton.gameObject.SetActive(true);
+                    pauseButton.gameObject.SetActive(false);
+                    timeBar.value = timeLeft;
+                }
             }
 
             //Update requirements to update building (inventory)
@@ -117,7 +134,14 @@ public class Building : MonoBehaviour
                     if (quantity > 1000)
                     {
                         string[] aux = (quantity / 1000f).ToString().Split(',');
-                        upgradeText1.text = aux[0] + "." + aux[1].ToCharArray()[0] + "k/" + upgrade_cost[level - 1].list[0].quantity;
+                        if (aux.Length > 1)
+                        {
+                            upgradeText1.text = aux[0] + "." + aux[1].ToCharArray()[0] + "k/" + upgrade_cost[level - 1].list[0].quantity;
+                        }
+                        else
+                        {
+                            upgradeText1.text = aux[0] + "k/" + upgrade_cost[level - 1].list[0].quantity;
+                        }
                     }
                     else
                     {
@@ -156,22 +180,20 @@ public class Building : MonoBehaviour
             if (Data.Instance.RESOURCES.TryGetValue(activeResource, out Resource aResource))
             {
 
-                if ((timeToNextItem - Time.time) >= 0 && isProducing)
+                if (isProducing)
                 {
-                    resourceTimeAux = (timeToNextItem - Time.time).ToString("F0");
+                    resourceTimeText.SetText(timeLeft.ToString("F0"));
                 }
                 else
                 {
-                    resourceTimeAux = "-";
+                    resourceTimeText.SetText("-");
                 }
             }
-            resourceTimeText.text = resourceTimeAux;
-            resourceTimeAux = "";
 
             //Slider config
             if (isProducing)
             {
-                timeBar.value = timeToNextItem - Time.time;
+                timeBar.value = timeLeft;
             }
         }
     }
@@ -254,7 +276,6 @@ public class Building : MonoBehaviour
             }
 
             #endregion
-            timeToNextItem = Time.time + activeResourceTime;
             if (Data.Instance.INVENTORY.TryGetValue(activeResource, out int quantity))
             {
                 quantity += 1;
@@ -264,6 +285,7 @@ public class Building : MonoBehaviour
             {
                 Data.Instance.INVENTORY.Add(activeResource, 1);
             }
+            time = 0;
         }
     }
     public void setActiveResource(string activeResource)
@@ -280,8 +302,7 @@ public class Building : MonoBehaviour
                         activeResourceTime = resource.time;
                     }
                     //Reset time to produce
-                    timeToNextItem = Time.time + activeResourceTime;
-                    timeLeft = activeResourceTime;
+                    time = 0;
 
                     //Change sprite
                     switch (level)
@@ -324,6 +345,12 @@ public class Building : MonoBehaviour
 
                     //Slider config
                     timeBar.maxValue = activeResourceTime;
+
+                    //Play when changing resource
+                    if (!isProducing)
+                    {
+                        play();
+                    }
                 }
             }            
         }
@@ -331,8 +358,10 @@ public class Building : MonoBehaviour
 
     public void showBuildingInterior()
     {
+
         if (!GameManager.Instance.isOnCanvas)
         {
+
             canvasInterior.SetActive(true);
             GameManager.Instance.isOnCanvas = true;
         }
@@ -341,23 +370,23 @@ public class Building : MonoBehaviour
     public void hideBuildingInterior()
     {
         canvasInterior.SetActive(false);
+        Invoke("isOnCanvasOff", 0.1f);
+    }
+
+    void isOnCanvasOff()
+    {
         GameManager.Instance.isOnCanvas = false;
     }
 
     public void pause()
     {
         isProducing = false;
-        timeLeft = timeToNextItem - Time.time;
-        playButton.gameObject.SetActive(true);
-        pauseButton.gameObject.SetActive(false);
+        timeBar.value = timeLeft;
     }
 
     public void play()
     {
         isProducing = true;
-        timeToNextItem = Time.time + timeLeft;
-        pauseButton.gameObject.SetActive(true);
-        playButton.gameObject.SetActive(false);
     }
 
     public void upgrade()
@@ -396,38 +425,69 @@ public class Building : MonoBehaviour
                         }
                     }
                     this.level++;
-                    resourcesButtons[level-1].GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
-                    resourceButtonsIcons[level-1].GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
+                    resourcesButtons[level - 1].GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
+                    resourceButtonsIcons[level - 1].GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
+                }
+            }
+        }
+        updateUI();
+    }
 
-                    //Change upgrade icons 
-                    if (level < maxLevel)
-                    {
-                        if (Data.Instance.RESOURCES.TryGetValue(upgrade_cost[level - 1].list[0].resourceNameKey, out Resource resource))
-                        {
-                            upgradeIcon1.sprite = resource.icon;
-                        }
-                        if (upgrade_cost[level - 1].list.Count > 1)
-                        {
-                            if (Data.Instance.RESOURCES.TryGetValue(upgrade_cost[level - 1].list[1].resourceNameKey, out Resource resource2))
-                            {
-                                upgradeIcon2.sprite = resource2.icon;
-                            }
-                        }
-                    }
+    public int getNumActiveResource()
+    {
+        int num = 0;
+        for (int i = 0; i < resources.Count; i++)
+        {
+            if (activeResource.Equals(resources[i]))
+            {
+                num = i;
+            }
+        }
+        //Debug.Log("num resource: " + num);
+        return num;
+    }
 
-                    //Upgrade level text
-                    levelText.SetText(level.ToString());
+    public void updateUI()
+    {
+        //Change upgrade icons 
+        if (level < maxLevel)
+        {
+            if (Data.Instance.RESOURCES.TryGetValue(upgrade_cost[level - 1].list[0].resourceNameKey, out Resource resource))
+            {
+                upgradeIcon1.sprite = resource.icon;
+            }
+            if (upgrade_cost[level - 1].list.Count > 1)
+            {
+                if (Data.Instance.RESOURCES.TryGetValue(upgrade_cost[level - 1].list[1].resourceNameKey, out Resource resource2))
+                {
+                    upgradeIcon2.sprite = resource2.icon;
                 }
             }
         }
 
-        if(level == 2)
+        if (isProducing)
+        {
+            play();
+        }
+        else
+        {
+            pause();
+        }
+
+        timeBar.value = timeLeft;
+
+        //Upgrade level text
+        levelText.SetText(level.ToString());
+               
+
+        if (level == 2)
         {
             level1Background.gameObject.SetActive(false);
             level2Background.gameObject.SetActive(true);
             level3Background.gameObject.SetActive(false);
 
             level2Tilemap.gameObject.SetActive(true);
+            level3Tilemap.gameObject.SetActive(false);
         }
         if (level == maxLevel)
         {
@@ -442,7 +502,30 @@ public class Building : MonoBehaviour
             level2Background.gameObject.SetActive(false);
             level3Background.gameObject.SetActive(true);
 
+            level2Tilemap.gameObject.SetActive(true);
             level3Tilemap.gameObject.SetActive(true);
+        }
+
+        for (int i = 0; i < resources.Count; i++)
+        {
+            if (i < level)
+            {
+                if (activeResource.Equals(resources[i]))
+                {
+                    resourcesButtons[i].GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                    resourceButtonsIcons[i].GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                }
+                else
+                {
+                    resourcesButtons[i].GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
+                    resourceButtonsIcons[i].GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
+                }
+            }
+            else
+            {
+                resourcesButtons[i].GetComponent<Image>().color = new Color(0.25f, 0.25f, 0.25f, 0.5f);
+                resourceButtonsIcons[i].GetComponent<Image>().color = new Color(0.25f, 0.25f, 0.25f, 0.5f);
+            }
         }
     }
 
@@ -464,6 +547,7 @@ public class Building : MonoBehaviour
     public void place()
     {
         confirmUI.SetActive(true);
+        GameManager.Instance.isOnCanvas = true;
     }
 
     public void confirmBuilding()
@@ -482,22 +566,32 @@ public class Building : MonoBehaviour
                 areaTemp.position = positionInt;
                 placed = true;
                 GridBuildingSystem.current.takeArea(areaTemp);
+                tempArea = areaTemp;
                 confirmUI.SetActive(false);
                 GameManager.Instance.detected = false;
                 GameManager.Instance.showAllShop();
                 GameManager.Instance.draggingItemShop = false;
-                GameManager.Instance.pointerEnter();
+                Invoke("isOnCanvasOff", 0.1f);
 
                 //Update amount of buildings in inventory of buildings
-                if(Data.Instance.BUILDING_INVENTORY.TryGetValue(id, out int quantity)){
+                if (Data.Instance.BUILDING_INVENTORY.TryGetValue(id, out int quantity)) {
                     quantity += 1;
                     Data.Instance.BUILDING_INVENTORY[id] = quantity;
+                    numTypeBuildings = quantity;
                 }
                 else
                 {
                     //It's the first building (of this type)
                     Data.Instance.BUILDING_INVENTORY.Add(id, 1);
+                    numTypeBuildings = 1;
                 }
+
+                //Save building in dictionary
+                if (!Data.Instance.CONSTRUCTIONS.ContainsKey(id + numTypeBuildings))
+                {
+                    Data.Instance.CONSTRUCTIONS.Add(id + numTypeBuildings, new float[] { transform.position.x, transform.position.y, level, getNumActiveResource(), timeLeft, isProducing ? 1 : 0, numTypeBuildings, activeResourceTime });
+                }
+                GameManager.Instance.constructionsBuilt.Add(this.gameObject);
             }
         }
     }

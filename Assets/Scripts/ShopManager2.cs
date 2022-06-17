@@ -8,7 +8,6 @@ using UnityEngine.EventSystems;
 public class ShopManager2 : MonoBehaviour
 {
     public static ShopManager2 current;
-    public List<GameObject> buildings;
     //public List<ShopItem> items;
 
 
@@ -60,9 +59,6 @@ public class ShopManager2 : MonoBehaviour
 
     private void load()
     {
-        //carregar buildings a la bbdd
-        Data.Instance.setBuildings(buildings);
-
         ShopItem[] items = Resources.LoadAll<ShopItem>("Shop");
         System.Array.Sort(items, delegate (ShopItem x, ShopItem y) { return x.order.CompareTo(y.order); });
 

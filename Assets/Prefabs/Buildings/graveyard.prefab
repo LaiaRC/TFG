@@ -1006,11 +1006,21 @@ MonoBehaviour:
   level3Background: {fileID: 4460226560711756619}
   level2Tilemap: {fileID: 5842455406773973953}
   level3Tilemap: {fileID: 6093485870902350481}
+  position: {x: 0, y: 0, z: 0}
+  tempArea:
+    m_Position: {x: 0, y: 0, z: 0}
+    m_Size: {x: 0, y: 0, z: 0}
+  activeResource: 
+  numTypeBuildings: 0
+  timeLeft: 0
+  placed: 0
   area:
     m_Position: {x: 0, y: 0, z: 0}
     m_Size: {x: 3, y: 6, z: 1}
   confirmUI: {fileID: 1688311054014621016}
   canvasInterior: {fileID: 1362195048390551837}
+  activeResourceTime: 0
+  time: 0
 --- !u!61 &983532502411858490
 BoxCollider2D:
   m_ObjectHideFlags: 0

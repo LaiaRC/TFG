@@ -29,15 +29,11 @@ public class GridBuildingSystem : MonoBehaviour
     private void Awake()
     {
         current = this;
-    }
-
-    private void Start()
-    {
         string tilePath = @"Sprites\Palettes\";
         tileBases.Add(TileType.Empty, null);
         tileBases.Add(TileType.White, whiteTile);
         tileBases.Add(TileType.Green, greenTile);
-        tileBases.Add(TileType.Red,redTile);
+        tileBases.Add(TileType.Red, redTile);
     }
 
     private void Update()
@@ -100,7 +96,7 @@ public class GridBuildingSystem : MonoBehaviour
 
     private static void FillTiles(TileBase[] arr, TileType type)
     {
-        for(int i = 0; i < arr.Length; i++)
+        for (int i = 0; i < arr.Length; i++)
         {
             arr[i] = tileBases[type];
         }
