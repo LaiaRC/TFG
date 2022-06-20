@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
     {
         if (Time.timeScale == 1)
         {
-            Time.timeScale = 100;
+            Time.timeScale = 100; //600
             buttonTimeText.text = "Time x100";
             buttonTime.GetComponent<Image>().color = new Color(0, 1, 0, 1);
         }

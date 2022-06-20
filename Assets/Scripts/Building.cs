@@ -54,6 +54,8 @@ public class Building : MonoBehaviour
     public string activeResource; //Quina resource s'esta produïnt
     public int numTypeBuildings = 0;
     public float timeLeft;
+    public float time = 0; //comptador de temps fins el activeResourceTime
+    public bool isPaused = false;
 
     public bool placed;
     public BoundsInt area;
@@ -63,7 +65,7 @@ public class Building : MonoBehaviour
     public float activeResourceTime = 0;   //temps que triga a fer-se el active resource
     private Vector3 origin;
     private bool showUI = false;
-    public float time = 0; //comptador de temps fins el activeResourceTime
+    private bool enoughResources = false;
     
 
     private void Start()
@@ -109,20 +111,40 @@ public class Building : MonoBehaviour
                     playButton.gameObject.SetActive(false);
                     pauseButton.gameObject.SetActive(true);
                 }
+                
                 time += Time.deltaTime;
                 timeLeft = activeResourceTime - time;
+               
                 if (timeLeft <= 0)
                 {
                     produce();
+                    if (enoughResources)
+                    {
+                        time = 0;
+                    }
+                    else
+                    {
+                        isProducing = false;
+                    }
                 }
             }
             else
             {
-                if (pauseButton.gameObject.activeInHierarchy)
+
+                timeBar.value = timeLeft;
+                resourceTimeText.SetText("-");
+                if (isPaused)
                 {
                     playButton.gameObject.SetActive(true);
                     pauseButton.gameObject.SetActive(false);
-                    timeBar.value = timeLeft;
+                }
+                else
+                {
+                    //Was producing but ran out of requirements to produce
+                    if (checkRequirementsToProduce())
+                    {
+                        isProducing = true;
+                    }
                 }
             }
 
@@ -238,54 +260,88 @@ public class Building : MonoBehaviour
         #endregion
     }
 
+    public bool checkRequirementsToProduce()
+    {
+        bool hasRequirements = false;
+        if (Data.Instance.RESOURCES.TryGetValue(activeResource, out Resource resource))
+        {
+
+            #region CHECK REQUIREMENTS
+
+            //Check if it has requirements or it's free
+            if (resource.requirements.Length > 0)
+            {
+                foreach (Requirement requirement in resource.requirements)
+                {
+                    if (Data.Instance.INVENTORY.TryGetValue(requirement.resourceNameKey, out int requirementQuantity))
+                    {
+                        if (requirementQuantity < requirement.quantity)
+                        {
+                            enoughResources = false;
+                            return false;
+                        }
+                        else
+                        {
+                            enoughResources = true;
+                            hasRequirements = true;
+                        }
+                    }
+                    else
+                    {
+                        //Player don't have the requirement resource to produce 
+                        enoughResources = false;
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                //The resource is free
+                enoughResources = true;
+                hasRequirements = true;
+            }
+            #endregion
+
+            
+        }
+        return hasRequirements;
+    }
+
     public void produce()
     {
         if (Data.Instance.RESOURCES.TryGetValue(activeResource, out Resource resource))
         {
 
-            #region CHECK REQUIREMENTS
-            foreach (Requirement requirement in resource.requirements)
+            if (checkRequirementsToProduce())
             {
-                if(Data.Instance.INVENTORY.TryGetValue(requirement.resourceNameKey, out int requirementQuantity))
+                #region PAY REQUIREMENTS
+
+                foreach (Requirement requirement in resource.requirements)
                 {
-                    if(requirementQuantity < requirement.quantity)
+                    if (Data.Instance.INVENTORY.TryGetValue(requirement.resourceNameKey, out int requirementQuantity))
                     {
-                        return;
+                        if (requirementQuantity >= requirement.quantity)
+                        {
+                            requirementQuantity -= requirement.quantity;
+                            Data.Instance.updateInventory(requirement.resourceNameKey, requirementQuantity);
+                        }
                     }
+                }
+
+                #endregion
+
+                #region ADD TO INVENTORY
+                if (Data.Instance.INVENTORY.TryGetValue(activeResource, out int quantity))
+                {
+                    quantity += 1;
+                    Data.Instance.updateInventory(activeResource, quantity);
                 }
                 else
                 {
-                    //Player don't have the requirement resource to produce 
-                    return;
+                    Data.Instance.INVENTORY.Add(activeResource, 1);
                 }
+                #endregion
             }
-            #endregion
-
-            #region PAY REQUIREMENTS
-
-            foreach (Requirement requirement in resource.requirements)
-            {
-                if (Data.Instance.INVENTORY.TryGetValue(requirement.resourceNameKey, out int requirementQuantity))
-                {
-                    if (requirementQuantity >= requirement.quantity)
-                    {
-                        requirementQuantity -= requirement.quantity;
-                        Data.Instance.updateInventory(requirement.resourceNameKey, requirementQuantity);
-                    }
-                }
-            }
-
-            #endregion
-            if (Data.Instance.INVENTORY.TryGetValue(activeResource, out int quantity))
-            {
-                quantity += 1;
-                Data.Instance.updateInventory(activeResource, quantity);
-            }
-            else
-            {
-                Data.Instance.INVENTORY.Add(activeResource, 1);
-            }
-            time = 0;
         }
     }
     public void setActiveResource(string activeResource)
@@ -359,7 +415,7 @@ public class Building : MonoBehaviour
     public void showBuildingInterior()
     {
 
-        if (!GameManager.Instance.isOnCanvas)
+        if (!GameManager.Instance.isOnCanvas && !GameManager.Instance.isDialogOpen)
         {
 
             canvasInterior.SetActive(true);
@@ -381,12 +437,14 @@ public class Building : MonoBehaviour
     public void pause()
     {
         isProducing = false;
+        isPaused = true;
         timeBar.value = timeLeft;
     }
 
     public void play()
     {
         isProducing = true;
+        isPaused = false;
     }
 
     public void upgrade()
@@ -443,7 +501,6 @@ public class Building : MonoBehaviour
                 num = i;
             }
         }
-        //Debug.Log("num resource: " + num);
         return num;
     }
 
@@ -589,7 +646,7 @@ public class Building : MonoBehaviour
                 //Save building in dictionary
                 if (!Data.Instance.CONSTRUCTIONS.ContainsKey(id + numTypeBuildings))
                 {
-                    Data.Instance.CONSTRUCTIONS.Add(id + numTypeBuildings, new float[] { transform.position.x, transform.position.y, level, getNumActiveResource(), timeLeft, isProducing ? 1 : 0, numTypeBuildings, activeResourceTime });
+                    Data.Instance.CONSTRUCTIONS.Add(id + numTypeBuildings, new float[] { transform.position.x, transform.position.y, level, getNumActiveResource(), timeLeft, isProducing ? 1 : 0, isPaused ? 1 : 0, numTypeBuildings, activeResourceTime });
                 }
                 GameManager.Instance.constructionsBuilt.Add(this.gameObject);
             }

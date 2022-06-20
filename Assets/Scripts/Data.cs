@@ -547,6 +547,9 @@ public class Data : MonoBehaviour
         PLAYER.Add("Hour", GameManager.Instance.localDate.Hour);
         PLAYER.Add("Minute", GameManager.Instance.localDate.Minute);
         PLAYER.Add("Second", GameManager.Instance.localDate.Second);
+        PLAYER.Add("Day", GameManager.Instance.localDate.Day);
+        PLAYER.Add("Month", GameManager.Instance.localDate.Month);
+        PLAYER.Add("Year", GameManager.Instance.localDate.Year);
         #endregion
     }
     #endregion

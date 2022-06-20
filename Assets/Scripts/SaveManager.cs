@@ -46,6 +46,7 @@ public class SaveManager : MonoBehaviour
             oldValue[GameManager.ACTIVE_RESOURCE] = construction.GetComponent<Building>().getNumActiveResource();
             oldValue[GameManager.TIME_LEFT] = (construction.GetComponent<Building>().timeLeft);
             oldValue[GameManager.PRODUCING] = construction.GetComponent<Building>().isProducing ? 1 : 0;
+            oldValue[GameManager.PAUSED] = construction.GetComponent<Building>().isPaused ? 1 : 0;
             oldValue[GameManager.NUM_TYPE] = construction.GetComponent<Building>().numTypeBuildings;
             oldValue[GameManager.ACTIVE_RESOURCE_TIME] = construction.GetComponent<Building>().activeResourceTime;
             /*Debug.Log(oldValue[GameManager.POS_X]);
@@ -64,7 +65,12 @@ public class SaveManager : MonoBehaviour
         Data.Instance.PLAYER["Hour"] = GameManager.Instance.localDate.Hour;
         Data.Instance.PLAYER["Minute"] = GameManager.Instance.localDate.Minute;
         Data.Instance.PLAYER["Second"] = GameManager.Instance.localDate.Second;
+        Data.Instance.PLAYER["Day"] = GameManager.Instance.localDate.Day;
+        Data.Instance.PLAYER["Month"] = GameManager.Instance.localDate.Month;
+        Data.Instance.PLAYER["Year"] = GameManager.Instance.localDate.Year;
 
+        Delete();
+        
         var outputStreamInventory = new FileStream(pathInventory, FileMode.Create);
         var outputStreamConstructions = new FileStream(pathConstructions, FileMode.Create);      
         var outputStreamPlayer = new FileStream(pathPlayer, FileMode.Create);      
@@ -78,6 +84,10 @@ public class SaveManager : MonoBehaviour
         outputStreamPlayer.Position = 0;
 
         GameManager.Instance.saved = true;
+
+        outputStreamInventory.Close();
+        outputStreamConstructions.Close();
+        outputStreamPlayer.Close();
     }
 
     public void Load()
@@ -86,6 +96,7 @@ public class SaveManager : MonoBehaviour
         {
             FileStream inputStreamInventory = new FileStream(pathInventory, FileMode.Open);
             Data.Instance.INVENTORY = MsgPack.Deserialize(typeof(Dictionary<string, int>), inputStreamInventory) as Dictionary<string, int>;
+            inputStreamInventory.Close();
         }
         if (File.Exists(pathConstructions))
         {
@@ -93,14 +104,16 @@ public class SaveManager : MonoBehaviour
             Data.Instance.CONSTRUCTIONS = MsgPack.Deserialize(typeof(Dictionary<string, float[]>), inputStreamConstructions) as Dictionary<string, float[]>;
 
             GameManager.Instance.buildConstructions();
+            inputStreamConstructions.Close();
         }
         if (File.Exists(pathPlayer))
         {
             FileStream inputStreamPlayer = new FileStream(pathPlayer, FileMode.Open);
             Data.Instance.PLAYER = MsgPack.Deserialize(typeof(Dictionary<string, int>), inputStreamPlayer) as Dictionary<string, int>;
-
-            GameManager.Instance.calculateOfflineTime();
+            
+            inputStreamPlayer.Close();
         }
+        GameManager.Instance.calculateOfflineTime();
         GameManager.Instance.saved = false;
     }
 
@@ -113,9 +126,28 @@ public class SaveManager : MonoBehaviour
         if (File.Exists(pathConstructions))
         {
             File.Delete(pathConstructions);
-            GameManager.Instance.constructionsBuilt.Clear();
-            Data.Instance.CONSTRUCTIONS.Clear();
-            Data.Instance.INVENTORY.Clear();
         }
+        if (File.Exists(pathPlayer))
+        {
+            File.Delete(pathPlayer);
+        }
+    }
+    public void DeleteDebug() //Nomes per debug, eventualment es pot borrar i utilitzar l'altre
+    {
+        if (File.Exists(pathInventory))
+        {
+            File.Delete(pathInventory);
+        }
+        if (File.Exists(pathConstructions))
+        {
+            File.Delete(pathConstructions);
+        }
+        if (File.Exists(pathPlayer))
+        {
+            File.Delete(pathPlayer);
+        }
+        GameManager.Instance.constructionsBuilt.Clear();
+        Data.Instance.CONSTRUCTIONS.Clear();
+        Data.Instance.INVENTORY.Clear();
     }
 }

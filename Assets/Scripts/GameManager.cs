@@ -21,16 +21,20 @@ public class GameManager : MonoBehaviour
     public bool saved = false;
     public bool isPaused = false;
     public DateTime localDate;
-    public int offlineTime = 0;
+    public float offlineTime = 0;
+    public int offlineBoostMultiplier = 100; //600
+    public float offlineBoostTime = 0;
 
     public GameObject shop;
     public GameObject allShop;
     public GameObject descriptionDialog;
+    public GameObject offlineDialog;
     public List<Sprite> resourcesIcons;
     public List<GameObject> buildings;
     public List<GameObject> constructionsBuilt;
     public TextMeshProUGUI saveText;
     public TextMeshProUGUI loadText;
+    public Button boostTimeButton;
 
     public Camera mainCamera;
 
@@ -41,16 +45,21 @@ public class GameManager : MonoBehaviour
     public static int ACTIVE_RESOURCE = 3;
     public static int TIME_LEFT = 4;
     public static int PRODUCING = 5;
-    public static int NUM_TYPE = 6;
-    public static int ACTIVE_RESOURCE_TIME = 7;
+    public static int PAUSED = 6;
+    public static int NUM_TYPE = 7;
+    public static int ACTIVE_RESOURCE_TIME = 8;
 
     //Player dictionary
     public static int HOUR = 0;
     public static int MIN = 1;
     public static int SEC = 2;
+    public static int DAY = 3;
+    public static int MONTH = 4;
+    public static int YEAR = 5;
 
 
     private string info = "";
+    private bool offlineBoostApplied = false;
 
     #region SINGLETON PATTERN
     public static GameManager Instance;
@@ -90,6 +99,7 @@ public class GameManager : MonoBehaviour
         if (isPaused)
         {
             SaveManager.Instance.Load();
+            //produceOfflineResources();
             isPaused = false;
         }
     }
@@ -205,6 +215,22 @@ public class GameManager : MonoBehaviour
         Invoke("setDialogOpen", 0.05f);
     }
 
+    public void showOfflineDialog()
+    {
+        isDialogOpen = true;
+        canvas.GetComponent<Transform>().Find("BlackPanel").gameObject.SetActive(true);
+        canvas.GetComponent<Transform>().Find("OfflineDialog").gameObject.SetActive(true);
+        canvas.GetComponent<Transform>().Find("UIBlock").gameObject.SetActive(false);
+    }
+
+    public void hideOfflineDialog()
+    {
+        canvas.GetComponent<Transform>().Find("OfflineDialog").gameObject.SetActive(false);
+        canvas.GetComponent<Transform>().Find("BlackPanel").gameObject.SetActive(false);
+        canvas.GetComponent<Transform>().Find("UIBlock").gameObject.SetActive(true);
+        Invoke("setDialogOpen", 0.05f);
+    }
+
     public void setDialogOpen()
     {
         //Must me done with a few seconds of delay or shop closes too when pressing dialog close button
@@ -290,6 +316,12 @@ public class GameManager : MonoBehaviour
         descriptionDialog.GetComponent<Transform>().Find("IconResource3").GetComponent<Image>().sprite = iconResource3;
     }
 
+    public void fillOfflineDialog(string description, string boostTimeText)
+    {
+        offlineDialog.GetComponent<Transform>().Find("Description").GetComponent<TextMeshProUGUI>().text = description;
+        offlineDialog.GetComponent<Transform>().Find("BoostTimeText").GetComponent<TextMeshProUGUI>().text = boostTimeText;
+    }
+
     public void addInventory()
     {
         foreach (KeyValuePair<string, Resource> resource in Data.Instance.RESOURCES)
@@ -312,68 +344,88 @@ public class GameManager : MonoBehaviour
                 {
                     //Instantiate building prefab
                     Vector3 constructionPosition = new Vector3(construction.Value[POS_X], construction.Value[POS_Y], 0);
-                    GameObject obj = Instantiate(buildings[i], constructionPosition, Quaternion.identity);
-                    Building temp = obj.GetComponent<Building>();
 
-                    //set building values
-                    temp.level = (int)construction.Value[LEVEL];
-                    temp.placed = true;
-                    temp.activeResource = temp.resources[(int)construction.Value[ACTIVE_RESOURCE]];                   
-                    if(construction.Value[PRODUCING] == 0){
-                        temp.isProducing = false;
-                       temp.pause();
-                    }
-                    else
+                    Vector3Int positionIntAux = GridBuildingSystem.current.gridLayout.LocalToCell(constructionPosition);
+                    BoundsInt areaTempAux = buildings[i].GetComponent<Building>().area;
+                    areaTempAux.position = positionIntAux;
+
+                    if (GridBuildingSystem.current.canTakeArea(areaTempAux))
                     {
-                        temp.isProducing = true;
-                        temp.play();
-                    }
-
-                    temp.time = construction.Value[ACTIVE_RESOURCE_TIME]  - construction.Value[TIME_LEFT];
-                    temp.timeLeft = construction.Value[TIME_LEFT];
-                    
-                    temp.numTypeBuildings = (int)construction.Value[NUM_TYPE];
-                    temp.activeResourceTime = construction.Value[ACTIVE_RESOURCE_TIME];
-                    temp.updateUI();                    
-
-                    Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(constructionPosition);
-                    BoundsInt areaTemp = temp.area;
-                    areaTemp.position = positionInt;
-
-                    /*Debug.Log(
-                        "-----------Construction--------" + "\nx: " +
-                        construction.Value[GameManager.POS_X] + "\ny: " +
-                        construction.Value[GameManager.POS_Y] + "\nlvl: " +
-                        construction.Value[GameManager.LEVEL] + "\nar: " +
-                        construction.Value[GameManager.ACTIVE_RESOURCE] + "\ntl: " +
-                        construction.Value[GameManager.TIME_LEFT] + "\nip: " +
-                        construction.Value[GameManager.PRODUCING] + "\nart: " +
-                        construction.Value[GameManager.ACTIVE_RESOURCE_TIME] + "\n" +
-                        "-----------temp------------\nx: " +
-                        temp.transform.position.x + "\ny: "+
-                        temp.transform.position.y + "\nlvl: " +
-                        temp.level + "\naR: " +
-                       temp.activeResource + "\ntl: " +
-                       temp.timeLeft + "\nt: " +
-                       temp.time + "\nip: " +
-                       temp.isProducing + "\nart: " +
-                       temp.activeResourceTime + "\n");*/
-
-                    GridBuildingSystem.current.takeArea(areaTemp);
 
 
-                    //Add building to built constructions list
-                    constructionsBuilt.Add(obj);
+                        GameObject obj = Instantiate(buildings[i], constructionPosition, Quaternion.identity);
+                        Building temp = obj.GetComponent<Building>();
 
-                    //Add building to building_inventory dictionary
-                    if (Data.Instance.BUILDING_INVENTORY.TryGetValue(buildings[i].GetComponent<Building>().id, out int quantity))
-                    {
-                        Data.Instance.BUILDING_INVENTORY[buildings[i].GetComponent<Building>().id] = quantity + 1;
-                    }
-                    else
-                    {
-                        //First building of that type
-                        Data.Instance.BUILDING_INVENTORY.Add(buildings[i].GetComponent<Building>().id, 1);
+                        //set building values
+                        temp.level = (int)construction.Value[LEVEL];
+                        temp.placed = true;
+                        temp.activeResource = temp.resources[(int)construction.Value[ACTIVE_RESOURCE]];
+                        if (construction.Value[PRODUCING] == 0)
+                        {
+                            temp.isProducing = false;
+                        }
+                        else
+                        {
+                            temp.isProducing = true;
+                        }
+
+                        if (construction.Value[PAUSED] == 0)
+                        {
+                            temp.isPaused = false;
+                            temp.play();
+                        }
+                        else
+                        {
+                            temp.isPaused = true;
+                            temp.pause();
+                        }
+
+                        temp.time = construction.Value[ACTIVE_RESOURCE_TIME] - construction.Value[TIME_LEFT];
+                        temp.timeLeft = construction.Value[TIME_LEFT];
+
+                        temp.numTypeBuildings = (int)construction.Value[NUM_TYPE];
+                        temp.activeResourceTime = construction.Value[ACTIVE_RESOURCE_TIME];
+                        temp.updateUI();
+
+                        Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(constructionPosition);
+                        BoundsInt areaTemp = temp.area;
+                        areaTemp.position = positionInt;
+
+                        /*Debug.Log(
+                            "-----------Construction--------" + "\nx: " +
+                            construction.Value[GameManager.POS_X] + "\ny: " +
+                            construction.Value[GameManager.POS_Y] + "\nlvl: " +
+                            construction.Value[GameManager.LEVEL] + "\nar: " +
+                            construction.Value[GameManager.ACTIVE_RESOURCE] + "\ntl: " +
+                            construction.Value[GameManager.TIME_LEFT] + "\nip: " +
+                            construction.Value[GameManager.PRODUCING] + "\nart: " +
+                            construction.Value[GameManager.ACTIVE_RESOURCE_TIME] + "\n" +
+                            "-----------temp------------\nx: " +
+                            temp.transform.position.x + "\ny: "+
+                            temp.transform.position.y + "\nlvl: " +
+                            temp.level + "\naR: " +
+                           temp.activeResource + "\ntl: " +
+                           temp.timeLeft + "\nt: " +
+                           temp.time + "\nip: " +
+                           temp.isProducing + "\nart: " +
+                           temp.activeResourceTime + "\n");*/
+
+                        GridBuildingSystem.current.takeArea(areaTemp);
+
+
+                        //Add building to built constructions list
+                        constructionsBuilt.Add(obj);
+
+                        //Add building to building_inventory dictionary
+                        if (Data.Instance.BUILDING_INVENTORY.TryGetValue(buildings[i].GetComponent<Building>().id, out int quantity))
+                        {
+                            Data.Instance.BUILDING_INVENTORY[buildings[i].GetComponent<Building>().id] = quantity + 1;
+                        }
+                        else
+                        {
+                            //First building of that type
+                            Data.Instance.BUILDING_INVENTORY.Add(buildings[i].GetComponent<Building>().id, 1);
+                        }
                     }
                 }
             }          
@@ -382,12 +434,99 @@ public class GameManager : MonoBehaviour
 
     public void calculateOfflineTime()
     {
-        int previousTimeSeconds = Data.Instance.PLAYER["Hour"] * 3600 + Data.Instance.PLAYER["Minute"] * 60 + Data.Instance.PLAYER["Second"];
+        DateTime previousDateTime = new DateTime(Data.Instance.PLAYER["Year"], Data.Instance.PLAYER["Month"], Data.Instance.PLAYER["Day"], Data.Instance.PLAYER["Hour"], Data.Instance.PLAYER["Minute"], Data.Instance.PLAYER["Second"]);
 
         updateLocalDate();
 
-        int currentTimeSeconds = localDate.Hour * 3600 + localDate.Minute * 60 + localDate.Second;
+        offlineTime = (float)(localDate - previousDateTime).TotalSeconds;
 
-        offlineTime = currentTimeSeconds - previousTimeSeconds;
+        float maxTimeOut = 18000;
+
+        if(offlineTime > maxTimeOut)
+        {
+            offlineTime = maxTimeOut;
+        }
+
+        offlineBoostTime = offlineTime;
+
+        if (offlineBoostTime >= 1) {
+
+            //Show offline dialog
+            TimeSpan offlineTimeAux = localDate - previousDateTime; //in hours, min, etc
+            calculateOfflineDialogText(offlineTimeAux);
+            showOfflineDialog();
+
+            boostTimeButton.gameObject.SetActive(true);
+            boostTimeButton.GetComponentInChildren<TextMeshProUGUI>().SetText("Apply boost " + (offlineBoostTime/offlineBoostMultiplier).ToString("F2") + "s");
+        }
+    }
+
+    public void calculateOfflineDialogText(TimeSpan offlineTimeAux)
+    {
+        if (offlineTimeAux.Hours > 0)
+        {
+            if (offlineTimeAux.Minutes > 0)
+            {
+                if (offlineTimeAux.Seconds > 0)
+                {
+                    fillOfflineDialog("You stayed away for " + offlineTimeAux.Hours + "h " + offlineTimeAux.Minutes + "min " + offlineTimeAux.Seconds + "s", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
+                }
+                else
+                {
+                    fillOfflineDialog("You stayed away for " + offlineTimeAux.Hours + "h " + offlineTimeAux.Minutes + "min", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
+                }
+            }
+            else
+            {
+                if (offlineTimeAux.Seconds > 0)
+                {
+                    fillOfflineDialog("You stayed away for " + offlineTimeAux.Hours + "h " + offlineTimeAux.Seconds + "s", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
+
+                }
+                else
+                {
+                    fillOfflineDialog("You stayed away for " + offlineTimeAux.Hours + "h", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
+
+                }
+            }
+        }
+        else
+        {
+            if (offlineTimeAux.Minutes > 0)
+            {
+                if (offlineTimeAux.Seconds > 0)
+                {
+                    fillOfflineDialog("You stayed away for " + offlineTimeAux.Minutes + "min " + offlineTimeAux.Seconds + "s", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
+
+                }
+                else
+                {
+                    fillOfflineDialog("You stayed away for " + offlineTimeAux.Minutes + "min", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
+
+                }
+            }
+            else
+            {
+                fillOfflineDialog("You stayed away for " + offlineTimeAux.Seconds + "s", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
+
+            }
+        }
+    }
+
+    public void applyBoostTime()
+    {
+        if (!offlineBoostApplied)
+        {
+            Time.timeScale = offlineBoostMultiplier;
+            Invoke("stopOfflineProduction", offlineBoostTime);
+        }
+    }
+
+    public void stopOfflineProduction()
+    {
+        boostTimeButton.GetComponentInChildren<TextMeshProUGUI>().SetText("Boosted");
+        boostTimeButton.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
+        Time.timeScale = 1;
+        offlineBoostApplied = true;
     }
 }
