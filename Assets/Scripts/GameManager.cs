@@ -386,7 +386,6 @@ public class GameManager : MonoBehaviour
                         temp.numTypeBuildings = (int)construction.Value[NUM_TYPE];
                         temp.activeResourceTime = construction.Value[ACTIVE_RESOURCE_TIME];
                         temp.updateUI();
-
                         Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(constructionPosition);
                         BoundsInt areaTemp = temp.area;
                         areaTemp.position = positionInt;

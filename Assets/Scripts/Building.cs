@@ -49,6 +49,12 @@ public class Building : MonoBehaviour
     public Image level3Background;
     public Tilemap level2Tilemap;
     public Tilemap level3Tilemap;
+    public Image requirementIcon;
+    public Image requirementIcon1;
+    public Image requirementIcon2;
+    public TextMeshProUGUI requirementText;
+    public TextMeshProUGUI requirement1Text;
+    public TextMeshProUGUI requirement2Text;
     public Vector3 position;
     public BoundsInt tempArea;
     public string activeResource; //Quina resource s'esta produïnt
@@ -148,82 +154,100 @@ public class Building : MonoBehaviour
                 }
             }
 
-            //Update requirements to update building (inventory)
-            if (level != maxLevel)
+            #region UPDATE UI
+
+            if (canvasInterior.activeInHierarchy)
             {
-                if(Data.Instance.INVENTORY.TryGetValue(upgrade_cost[level - 1].list[0].resourceNameKey, out int quantity))
+                //Update requirements to update building (inventory)
+                if (level != maxLevel)
                 {
-                    if (quantity > 1000)
+                    if (Data.Instance.INVENTORY.TryGetValue(upgrade_cost[level - 1].list[0].resourceNameKey, out int quantity))
                     {
-                        string[] aux = (quantity / 1000f).ToString().Split(',');
-                        if (aux.Length > 1)
+                        if (quantity > 1000)
                         {
-                            upgradeText1.text = aux[0] + "." + aux[1].ToCharArray()[0] + "k/" + upgrade_cost[level - 1].list[0].quantity;
+                            string[] aux = (quantity / 1000f).ToString().Split(',');
+                            if (aux.Length > 1)
+                            {
+                                upgradeText1.text = aux[0] + "." + aux[1].ToCharArray()[0] + "k/" + upgrade_cost[level - 1].list[0].quantity;
+                            }
+                            else
+                            {
+                                upgradeText1.text = aux[0] + "k/" + upgrade_cost[level - 1].list[0].quantity;
+                            }
                         }
                         else
                         {
-                            upgradeText1.text = aux[0] + "k/" + upgrade_cost[level - 1].list[0].quantity;
+                            upgradeText1.text = quantity + "/" + upgrade_cost[level - 1].list[0].quantity;
                         }
-                    }
-                    else
-                    {
-                        upgradeText1.text = quantity + "/" + upgrade_cost[level - 1].list[0].quantity;
-                    }
-                }
-                else
-                {
-                    //Set to 0
-                    upgradeText1.text = "0/" + upgrade_cost[level - 1].list[0].quantity;
-                }
-
-                if (upgrade_cost[level - 1].list.Count > 1)
-                {
-                    //Set upgrade requirement 2
-                    if (Data.Instance.INVENTORY.TryGetValue(upgrade_cost[level - 1].list[1].resourceNameKey, out int quantity2))
-                    {
-                        upgradeText2.text = quantity2 + "/" + upgrade_cost[level - 1].list[1].quantity;
                     }
                     else
                     {
                         //Set to 0
-                        upgradeText2.text = "0/" + upgrade_cost[level - 1].list[1].quantity;
+                        upgradeText1.text = "0/" + upgrade_cost[level - 1].list[0].quantity;
                     }
-                }
-                else
-                {
-                    if (upgradeText2.isActiveAndEnabled)
+
+                    if (upgrade_cost[level - 1].list.Count > 1)
                     {
-                        upgradeText2.gameObject.SetActive(false);
+                        //Set upgrade requirement 2
+                        if (Data.Instance.INVENTORY.TryGetValue(upgrade_cost[level - 1].list[1].resourceNameKey, out int quantity2))
+                        {
+                            upgradeText2.text = quantity2 + "/" + upgrade_cost[level - 1].list[1].quantity;
+                        }
+                        else
+                        {
+                            //Set to 0
+                            upgradeText2.text = "0/" + upgrade_cost[level - 1].list[1].quantity;
+                        }
+                    }
+                    else
+                    {
+                        if (upgradeText2.isActiveAndEnabled)
+                        {
+                            upgradeText2.gameObject.SetActive(false);
+                        }
                     }
                 }
-            }         
 
-            //Show resource producing and time to next
-            if (Data.Instance.RESOURCES.TryGetValue(activeResource, out Resource aResource))
-            {
+                //Show resource producing and time to next
+                if (Data.Instance.RESOURCES.TryGetValue(activeResource, out Resource aResource))
+                {
 
+                    if (isProducing)
+                    {
+                        int minutes = (int)timeLeft / 60;
+                        int secondsLeft =(int) timeLeft - (minutes * 60);
+                        if(minutes > 0)
+                        {
+                            resourceTimeText.SetText(minutes.ToString() + "m " + secondsLeft + "s");
+                        }
+                        else
+                        {
+                            resourceTimeText.SetText(timeLeft.ToString("F0") + "s");
+                        }
+                    }
+                    else
+                    {
+                        resourceTimeText.SetText("-");
+                    }
+                }
+
+                //Slider config
                 if (isProducing)
                 {
-                    resourceTimeText.SetText(timeLeft.ToString("F0"));
+                    timeBar.value = timeLeft;
                 }
-                else
-                {
-                    resourceTimeText.SetText("-");
-                }
-            }
 
-            //Slider config
-            if (isProducing)
-            {
-                timeBar.value = timeLeft;
+                //Update requirements to produce resource (inventory)
+                updateUITimeGroup();
             }
+            #endregion
         }
     }
 
     public void setCanvasInterior()
     {
         #region UPGRADE
-
+        
         //Update requirement 1
         upgradeText1.text = "0/" + upgrade_cost[0].list[0].quantity;
         if (Data.Instance.RESOURCES.TryGetValue(upgrade_cost[0].list[0].resourceNameKey, out Resource resource))
@@ -246,6 +270,22 @@ public class Building : MonoBehaviour
             upgradeText2.gameObject.SetActive(false);
             upgradeIcon2.gameObject.SetActive(false);
         }
+
+        //Change upgrade icons 
+        if (level < maxLevel)
+        {
+            if (Data.Instance.RESOURCES.TryGetValue(upgrade_cost[level - 1].list[0].resourceNameKey, out Resource resource4))
+            {
+                upgradeIcon1.sprite = resource4.icon;
+            }
+            if (upgrade_cost[level - 1].list.Count > 1)
+            {
+                if (Data.Instance.RESOURCES.TryGetValue(upgrade_cost[level - 1].list[1].resourceNameKey, out Resource resource5))
+                {
+                    upgradeIcon2.sprite = resource5.icon;
+                }
+            }
+        }
         #endregion
 
         #region LEVEL
@@ -256,8 +296,69 @@ public class Building : MonoBehaviour
         if(Data.Instance.RESOURCES.TryGetValue(activeResource, out Resource resource3))
         {
             activeResourceIcon.sprite = resource3.icon;
+
+            if(resource3.requirements.Length > 0)
+            {               
+                //1 requirement
+                    
+                if(Data.Instance.RESOURCES.TryGetValue(resource3.requirements[0].resourceNameKey, out Resource requirement1Resource))
+                {
+                    requirementIcon1.sprite = requirement1Resource.icon;
+                }
+                requirementIcon1.gameObject.SetActive(true);
+                requirementIcon.gameObject.SetActive(false);
+                requirementIcon2.gameObject.SetActive(false);
+
+                if(Data.Instance.INVENTORY.TryGetValue(resource3.requirements[0].resourceNameKey, out int quantity))
+                {
+                    requirement1Text.SetText(quantity + "/" + resource3.requirements[0].quantity);
+                }
+                else
+                {
+                    requirementText.SetText("0/" + resource3.requirements[0].quantity);
+                }
+                requirementText.gameObject.SetActive(false);
+                requirement1Text.gameObject.SetActive(true);
+                requirement2Text.gameObject.SetActive(false);
+
+                if (resource3.requirements.Length > 1)
+                {
+                    //Has 2 requirements
+                    requirementIcon2.gameObject.SetActive(true);
+
+                    if (Data.Instance.RESOURCES.TryGetValue(resource3.requirements[1].resourceNameKey, out Resource requirement2Resource))
+                    {
+                        requirementIcon2.sprite = requirement2Resource.icon;
+                    }
+
+                    if (Data.Instance.INVENTORY.TryGetValue(resource3.requirements[1].resourceNameKey, out int quantity2))
+                    {
+                        requirementText.SetText(quantity2 + "/" + resource3.requirements[1].quantity);
+                    }
+                    else
+                    {
+                        requirementText.SetText("0/" + resource3.requirements[1].quantity);
+                    }
+                    requirement2Text.gameObject.SetActive(true);
+                }
+
+            }
+            else
+            {
+                //It's free
+                requirementIcon.gameObject.SetActive(false);
+                requirementIcon1.gameObject.SetActive(false);
+                requirementIcon2.gameObject.SetActive(false);
+
+                requirementText.SetText("free");
+                requirementText.gameObject.SetActive(true);
+                requirement1Text.gameObject.SetActive(false);
+                requirement2Text.gameObject.SetActive(false);
+            }
         }
         #endregion
+
+        
     }
 
     public bool checkRequirementsToProduce()
@@ -407,6 +508,9 @@ public class Building : MonoBehaviour
                     {
                         play();
                     }
+
+                    //Update UI
+                    updateUI();
                 }
             }            
         }
@@ -584,6 +688,101 @@ public class Building : MonoBehaviour
                 resourceButtonsIcons[i].GetComponent<Image>().color = new Color(0.25f, 0.25f, 0.25f, 0.5f);
             }
         }
+
+        //Update time group
+        updateUITimeGroup();
+    }
+
+    public void updateUITimeGroup()
+    {
+        //Update time group
+        #region TIME GROUP
+        if (Data.Instance.RESOURCES.TryGetValue(activeResource, out Resource resource3))
+        {
+            activeResourceIcon.sprite = resource3.icon;
+
+            if (resource3.requirements.Length > 0)
+            {
+                if (resource3.requirements.Length > 1)
+                {
+                    //Has 2 requirements
+
+                    //requirement 1
+
+                    if (Data.Instance.RESOURCES.TryGetValue(resource3.requirements[0].resourceNameKey, out Resource requirement1Resourceaux))
+                    {
+                        requirementIcon1.sprite = requirement1Resourceaux.icon;
+                    }
+
+                    if (Data.Instance.RESOURCES.TryGetValue(resource3.requirements[1].resourceNameKey, out Resource requirement2Resource))
+                    {
+                        requirementIcon2.sprite = requirement2Resource.icon;
+                    }
+                    requirementIcon1.gameObject.SetActive(true);
+                    requirementIcon.gameObject.SetActive(false);
+                    requirementIcon2.gameObject.SetActive(true);
+
+                    if (Data.Instance.INVENTORY.TryGetValue(resource3.requirements[0].resourceNameKey, out int quantity3))
+                    {
+                        requirement1Text.SetText(quantity3 + "/" + resource3.requirements[0].quantity);
+                    }
+                    else
+                    {
+                        requirement1Text.SetText("0/" + resource3.requirements[0].quantity);
+                    }
+
+                    if (Data.Instance.INVENTORY.TryGetValue(resource3.requirements[1].resourceNameKey, out int quantity2))
+                    {
+                        requirement2Text.SetText(quantity2 + "/" + resource3.requirements[1].quantity);
+                    }
+                    else
+                    {
+                        requirement2Text.SetText("0/" + resource3.requirements[1].quantity);
+                    }
+                    requirementText.gameObject.SetActive(false);
+                    requirement1Text.gameObject.SetActive(true);
+                    requirement2Text.gameObject.SetActive(true);
+                }
+                else
+                {
+                    //Only 1 requirement
+
+                    if (Data.Instance.RESOURCES.TryGetValue(resource3.requirements[0].resourceNameKey, out Resource requirement1Resource))
+                    {
+                        requirementIcon.sprite = requirement1Resource.icon;
+                    }
+                    requirementIcon.gameObject.SetActive(true);
+                    requirementIcon1.gameObject.SetActive(false);
+                    requirementIcon2.gameObject.SetActive(false);
+
+                    if (Data.Instance.INVENTORY.TryGetValue(resource3.requirements[0].resourceNameKey, out int quantity))
+                    {
+                        requirementText.SetText(quantity + "/" + resource3.requirements[0].quantity);
+                    }
+                    else
+                    {
+                        requirementText.SetText("0/" + resource3.requirements[0].quantity);
+                    }
+                    requirementText.gameObject.SetActive(true);
+                    requirement1Text.gameObject.SetActive(false);
+                    requirement2Text.gameObject.SetActive(false);
+                }
+
+            }
+            else
+            {
+                //It's free
+                requirementIcon.gameObject.SetActive(false);
+                requirementIcon1.gameObject.SetActive(false);
+                requirementIcon2.gameObject.SetActive(false);
+
+                requirementText.SetText("free");
+                requirementText.gameObject.SetActive(true);
+                requirement1Text.gameObject.SetActive(false);
+                requirement2Text.gameObject.SetActive(false);
+            }
+        }
+        #endregion
     }
 
     #region Building Methods
