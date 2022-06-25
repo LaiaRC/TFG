@@ -48,7 +48,9 @@ public class Building : MonoBehaviour
     public Image level2Background;
     public Image level3Background;
     public Tilemap level2Tilemap;
+    public Tilemap level2Decoration;
     public Tilemap level3Tilemap;
+    public Tilemap level3Decoration;
     public Image requirementIcon;
     public Image requirementIcon1;
     public Image requirementIcon2;
@@ -648,7 +650,9 @@ public class Building : MonoBehaviour
             level3Background.gameObject.SetActive(false);
 
             level2Tilemap.gameObject.SetActive(true);
+            level2Decoration.gameObject.SetActive(true);
             level3Tilemap.gameObject.SetActive(false);
+            level3Decoration.gameObject.SetActive(false);
         }
         if (level == maxLevel)
         {
@@ -664,7 +668,9 @@ public class Building : MonoBehaviour
             level3Background.gameObject.SetActive(true);
 
             level2Tilemap.gameObject.SetActive(true);
+            level2Decoration.gameObject.SetActive(true);
             level3Tilemap.gameObject.SetActive(true);
+            level3Decoration.gameObject.SetActive(true);
         }
 
         for (int i = 0; i < resources.Count; i++)
@@ -873,6 +879,12 @@ public class Building : MonoBehaviour
         }
         GameManager.Instance.openShop();
     }
-       
+
     #endregion
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(area.position, area.size);
+    }
 }

@@ -8,6 +8,11 @@ TagManager:
   - confirm
   - cancel
   - borderCollider
+  - spawnableGround
+  - sewer
+  - tomb
+  - obstacle
+  - walkableGround
   layers:
   - Default
   - TransparentFX

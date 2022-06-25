@@ -468,23 +468,23 @@ public class GameManager : MonoBehaviour
             {
                 if (offlineTimeAux.Seconds > 0)
                 {
-                    fillOfflineDialog("You stayed away for " + offlineTimeAux.Hours + "h " + offlineTimeAux.Minutes + "min " + offlineTimeAux.Seconds + "s", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
+                    fillOfflineDialog("You were away for " + offlineTimeAux.Hours + "h " + offlineTimeAux.Minutes + "min " + offlineTimeAux.Seconds + "s", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
                 }
                 else
                 {
-                    fillOfflineDialog("You stayed away for " + offlineTimeAux.Hours + "h " + offlineTimeAux.Minutes + "min", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
+                    fillOfflineDialog("You were away for " + offlineTimeAux.Hours + "h " + offlineTimeAux.Minutes + "min", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
                 }
             }
             else
             {
                 if (offlineTimeAux.Seconds > 0)
                 {
-                    fillOfflineDialog("You stayed away for " + offlineTimeAux.Hours + "h " + offlineTimeAux.Seconds + "s", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
+                    fillOfflineDialog("You were away for " + offlineTimeAux.Hours + "h " + offlineTimeAux.Seconds + "s", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
 
                 }
                 else
                 {
-                    fillOfflineDialog("You stayed away for " + offlineTimeAux.Hours + "h", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
+                    fillOfflineDialog("You were away for " + offlineTimeAux.Hours + "h", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
 
                 }
             }
@@ -495,18 +495,18 @@ public class GameManager : MonoBehaviour
             {
                 if (offlineTimeAux.Seconds > 0)
                 {
-                    fillOfflineDialog("You stayed away for " + offlineTimeAux.Minutes + "min " + offlineTimeAux.Seconds + "s", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
+                    fillOfflineDialog("You were away for " + offlineTimeAux.Minutes + "min " + offlineTimeAux.Seconds + "s", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
 
                 }
                 else
                 {
-                    fillOfflineDialog("You stayed away for " + offlineTimeAux.Minutes + "min", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
+                    fillOfflineDialog("You were away for " + offlineTimeAux.Minutes + "min", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
 
                 }
             }
             else
             {
-                fillOfflineDialog("You stayed away for " + offlineTimeAux.Seconds + "s", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
+                fillOfflineDialog("You were away for " + offlineTimeAux.Seconds + "s", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
 
             }
         }

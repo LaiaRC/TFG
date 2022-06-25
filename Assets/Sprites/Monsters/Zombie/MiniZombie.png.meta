@@ -1,0 +1,1248 @@
+fileFormatVersion: 2
+guid: c19313b2451060a40932bd698d64ffd0
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6603747539854551855
+    second: MiniZombie_3
+  - first:
+      213: 7448741792605954959
+    second: MiniZombie_4
+  - first:
+      213: 717798128008948400
+    second: MiniZombie_5
+  - first:
+      213: -2259116910847196240
+    second: MiniZombie_6
+  - first:
+      213: 4752794738828593551
+    second: MiniZombie_7
+  - first:
+      213: -6496002064008451984
+    second: MiniZombie_8
+  - first:
+      213: -8143161635635843047
+    second: MiniZombie_9
+  - first:
+      213: -902191258434366396
+    second: MiniZombie_10
+  - first:
+      213: -5682642391215575190
+    second: MiniZombie_11
+  - first:
+      213: 6289721928227424984
+    second: MiniZombie_12
+  - first:
+      213: -7823668704556615751
+    second: MiniZombie_13
+  - first:
+      213: -5505263605537265515
+    second: MiniZombie_14
+  - first:
+      213: 1204490921326467240
+    second: MiniZombie_15
+  - first:
+      213: -7636019474418769349
+    second: MiniZombie_16
+  - first:
+      213: 6350914945430119664
+    second: MiniZombie_17
+  - first:
+      213: 7339690978949212174
+    second: MiniZombie_18
+  - first:
+      213: -5917434210411391063
+    second: MiniZombie_19
+  - first:
+      213: -9147702923424447728
+    second: MiniZombie_20
+  - first:
+      213: 2145583641993618619
+    second: MiniZombie_21
+  - first:
+      213: -770113898529499874
+    second: MiniZombie_22
+  - first:
+      213: -2718579132875918775
+    second: MiniZombie_23
+  - first:
+      213: 7979006237747581690
+    second: MiniZombie_24
+  - first:
+      213: -3722565655399331221
+    second: MiniZombie_25
+  - first:
+      213: -7391246420682775581
+    second: MiniZombie_26
+  - first:
+      213: 4343580773152752975
+    second: MiniZombie_27
+  - first:
+      213: -5965541057428140137
+    second: MiniZombie_28
+  - first:
+      213: -5505597601759236098
+    second: MiniZombie_29
+  - first:
+      213: 6892433811837668384
+    second: MiniZombie_30
+  - first:
+      213: -6878758647548201763
+    second: MiniZombie_31
+  - first:
+      213: 4871880338131378088
+    second: MiniZombie_32
+  - first:
+      213: 2991865764384545122
+    second: MiniZombie_33
+  - first:
+      213: -5911637440763443154
+    second: MiniZombie_34
+  - first:
+      213: 4531863211446611830
+    second: MiniZombie_35
+  - first:
+      213: 6522238994017593614
+    second: MiniZombie_36
+  - first:
+      213: 2322742235652550038
+    second: MiniZombie_37
+  - first:
+      213: 69790035731814872
+    second: MiniZombie_38
+  - first:
+      213: -8323266627413349648
+    second: MiniZombie_39
+  - first:
+      213: 7163610852361764442
+    second: MiniZombie_40
+  - first:
+      213: 7083014149776691204
+    second: MiniZombie_41
+  - first:
+      213: -6736980972465702253
+    second: MiniZombie_42
+  - first:
+      213: -6787411081055179556
+    second: MiniZombie_43
+  - first:
+      213: 3261156520481590895
+    second: MiniZombie_44
+  - first:
+      213: 1370275395079301446
+    second: MiniZombie_0
+  - first:
+      213: -6454408753533190571
+    second: MiniZombie_45
+  - first:
+      213: 9029594281186194547
+    second: MiniZombie_1
+  - first:
+      213: -6832334608925480324
+    second: MiniZombie_46
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: tvOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: MiniZombie_3
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 257
+        width: 9
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2be36b366935ab50800000000000000
+      internalID: 6603747539854551855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_4
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 257
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8362ebf13f3f5760800000000000000
+      internalID: 7448741792605954959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_5
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 257
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0bae968289126f900800000000000000
+      internalID: 717798128008948400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_6
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 257
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b300ee832106a0e0800000000000000
+      internalID: -2259116910847196240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_7
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 257
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f89493232a155f140800000000000000
+      internalID: 4752794738828593551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_8
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 225
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07862924a8099d5a0800000000000000
+      internalID: -6496002064008451984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_9
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 193
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 910365ff2adadfe80800000000000000
+      internalID: -8143161635635843047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_10
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 193
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4449e8994d5ca73f0800000000000000
+      internalID: -902191258434366396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_11
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 193
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6fe4066ad23321b0800000000000000
+      internalID: -5682642391215575190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_12
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 193
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8da0bf3f4c4994750800000000000000
+      internalID: 6289721928227424984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_13
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 193
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b7ff88c3cebc6390800000000000000
+      internalID: -7823668704556615751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_14
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 193
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 598a01d3bef5993b0800000000000000
+      internalID: -5505263605537265515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_15
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 162
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a8d8dc7c1637b010800000000000000
+      internalID: 1204490921326467240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_16
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 162
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b32ed41deb8670690800000000000000
+      internalID: -7636019474418769349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_17
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 162
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f4e4198e7bf22850800000000000000
+      internalID: 6350914945430119664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_18
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 161
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e082869de02dbd560800000000000000
+      internalID: 7339690978949212174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_19
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 161
+        width: 14
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a75fa200fc01eda0800000000000000
+      internalID: -5917434210411391063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_20
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 161
+        width: 16
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 013cb7268a4dc0180800000000000000
+      internalID: -9147702923424447728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_21
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 129
+        width: 16
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb42be064f4a6cd10800000000000000
+      internalID: 2145583641993618619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_22
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 129
+        width: 15
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e15de815d710055f0800000000000000
+      internalID: -770113898529499874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_23
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 129
+        width: 13
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 942342baeaaa54ad0800000000000000
+      internalID: -2718579132875918775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_24
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 129
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af2129d06ef1bbe60800000000000000
+      internalID: 7979006237747581690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_25
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 129
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6a8ad8624ac65cc0800000000000000
+      internalID: -3722565655399331221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_26
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 97
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e363d77a840d6990800000000000000
+      internalID: -7391246420682775581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_27
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 97
+        width: 15
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f458cfc23bf774c30800000000000000
+      internalID: 4343580773152752975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_28
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 97
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79fccfad304263da0800000000000000
+      internalID: -5965541057428140137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_29
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 97
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: effe5eea6203893b0800000000000000
+      internalID: -5505597601759236098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_30
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 65
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02cc970c808d6af50800000000000000
+      internalID: 6892433811837668384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_31
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 65
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd43e3d847db980a0800000000000000
+      internalID: -6878758647548201763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_32
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 65
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8afd78eea556c9340800000000000000
+      internalID: 4871880338131378088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_33
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 68
+        width: 4
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2691bc5af0e358920800000000000000
+      internalID: 2991865764384545122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_34
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 65
+        width: 16
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e28456e9115a5fda0800000000000000
+      internalID: -5911637440763443154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_35
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 65
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67fafe8749964ee30800000000000000
+      internalID: 4531863211446611830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_36
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 65
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e09ae9a0fc5a38a50800000000000000
+      internalID: 6522238994017593614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_37
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 33
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69dedd4c1c90c3020800000000000000
+      internalID: 2322742235652550038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_38
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 33
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d918a0faa1f7f000800000000000000
+      internalID: 69790035731814872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_39
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 1
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0fae926d911dd7c80800000000000000
+      internalID: -8323266627413349648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_40
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 1
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5ef724ad124a6360800000000000000
+      internalID: 7163610852361764442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_41
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 1
+        width: 16
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 400518087dbeb4260800000000000000
+      internalID: 7083014149776691204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_42
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 1
+        width: 16
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39abd95ef7f6182a0800000000000000
+      internalID: -6736980972465702253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_43
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 225
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cdce72145954ec1a0800000000000000
+      internalID: -6787411081055179556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_44
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 257
+        width: 12
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6e0148b394f14d20800000000000000
+      internalID: 3261156520481590895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_0
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 225
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 649e8283632340310800000000000000
+      internalID: 1370275395079301446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_45
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 256
+        width: 12
+        height: 3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55e7b728f655d66a0800000000000000
+      internalID: -6454408753533190571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_1
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 225
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 374700c68209f4d70800000000000000
+      internalID: 9029594281186194547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniZombie_46
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 256
+        width: 13
+        height: 3
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7aa3685fdbae21a0800000000000000
+      internalID: -6832334608925480324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
