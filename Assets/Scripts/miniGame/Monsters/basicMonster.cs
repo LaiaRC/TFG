@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Skeleton : Monster
+public class basicMonster : Monster
 {
     // Start is called before the first frame update
     void Start()
     {
-
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         agent.speed = velocity;
-        //agent.areaMask = NavMesh.GetAreaFromName("Walkable");
+        agent.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
 
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
@@ -24,6 +23,5 @@ public class Skeleton : Monster
     void Update()
     {
         move();
-        healthBar.setValue(health); //Aqui sera el take damage        
     }
 }

@@ -57,7 +57,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 0.1
   m_BaseOffset: 0
-  m_WalkableMask: 1
+  m_WalkableMask: 17
   m_ObstacleAvoidanceType: 4
 --- !u!95 &6042833894438546362
 Animator:
@@ -289,7 +289,8 @@ MonoBehaviour:
   level: 1
   range: 6
   currentState: 
-  attacks: 0
+  canAttack: 0
+  isAttacking: 0
   isScared: 0
   type: child
   runningTime: 1
@@ -311,6 +312,7 @@ MonoBehaviour:
   fillColor: {r: 1, g: 0, b: 0, a: 1}
   backgroundColor: {r: 1, g: 0.39215687, b: 0.39215687, a: 1}
   canvas: {fileID: 0}
+  agent: {fileID: 6042833894438546361}
 --- !u!58 &7045903752699435639
 CircleCollider2D:
   m_ObjectHideFlags: 0

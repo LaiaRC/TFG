@@ -15,13 +15,16 @@ public class Villager : MonoBehaviour
     public int level;
     public float range;
     public string currentState;
-    public bool attacks;
+    public bool canAttack;
+    public bool canMove = true;
+    public bool isAttacking;
     public bool isScared;
     public string type; //type of villager
     public float runningTime;
     public float runningSpeed;
     public float scareSpeed; //speed when someone near is scared
     public float attackRate;
+    public bool isStunned = false;
 
     public Animator animator;
     public AudioSource audioSource;
@@ -35,9 +38,11 @@ public class Villager : MonoBehaviour
 
     public RectTransform canvas;
 
-    protected NavMeshAgent agent;
+    public NavMeshAgent agent;
     protected float attackTime = 0;
     protected bool isRunning = false;
+    protected bool isOnLink = false;
+    protected float linkSpeed = 0.1f;
 
     protected List<Transform> route = new List<Transform>();
     protected int currentWaypointIndex;
@@ -57,7 +62,7 @@ public class Villager : MonoBehaviour
     protected static int NUM_WAYPOINTS = 10;
 
     //Time Scared
-    protected static float TIME_SCARED = 0.5f;
+    protected static float TIME_SCARED = 1f;
 
     public void die()
     {        
@@ -77,6 +82,7 @@ public class Villager : MonoBehaviour
         audioSource.clip = sounds[SPAWN];
         audioSource.Play();
         Instantiate(spawnParticles, transform.position, Quaternion.identity);
+        canMove = true;
 
         //Create villager route 
         if (miniGameManager.Instance.waypoints != null)
@@ -89,7 +95,7 @@ public class Villager : MonoBehaviour
 
         currentWaypointIndex = 0;
 
-        agent.stoppingDistance = 2;
+        agent.stoppingDistance = 3;
 
         scareBar = Instantiate(scareBar, canvas);
         scareBar.setTarget(transform);
@@ -122,7 +128,12 @@ public class Villager : MonoBehaviour
         scareBar.setValue(currentScarePoints);
         isScared = true;
         Invoke("resetIsScared", TIME_SCARED);
-        run(runningSpeed);
+
+        //not run when scared, only nearby villagers run
+        /*if (canMove)
+        {
+            run(runningSpeed);
+        }*/
         if (currentScarePoints >= maxScarePoints)
         {
             die();
@@ -134,11 +145,14 @@ public class Villager : MonoBehaviour
         isScared = false;
     }
 
-    public void run(float speed)
+    public virtual void run(float speed)
     {
-        isRunning = true;
-        agent.speed = speed;
-        Invoke("setOriginalSpeed", runningTime);
+        if (canMove)
+        {
+            isRunning = true;
+            agent.speed = speed;
+            Invoke("setOriginalSpeed", runningTime);
+        }
     }
     public void setOriginalSpeed()
     {
@@ -155,7 +169,10 @@ public class Villager : MonoBehaviour
             {
                 if (collision.GetComponent<Villager>().isScared)
                 {
-                    run(scareSpeed);
+                    if (canMove)
+                    {
+                        run(scareSpeed);
+                    }
                 }
             }
         }
@@ -169,22 +186,19 @@ public class Villager : MonoBehaviour
 
     public virtual void move()
     {
-        if (miniGameManager.Instance.waypoints != null)
+        if (miniGameManager.Instance.waypoints != null && canMove)
         {
-            //Debug.Log("Distance: " + (transform.position - route[currentWaypointIndex].position).magnitude);
             if ((transform.position - route[currentWaypointIndex].position).magnitude <= agent.stoppingDistance + 0.2f)
             {
                 //check if it's last waypoint
                 if (currentWaypointIndex >= route.Count - 1)
                 {
-                    //set new route
-                    //Create villager route 
+                    //set new villager route
                     route.Clear();
                     for (int i = 0; i < NUM_WAYPOINTS; i++)
                     {
                         route.Add(miniGameManager.Instance.waypoints[Random.Range(0, miniGameManager.Instance.waypoints.Count)]);
                     }
-
                     currentWaypointIndex = 0;
                 }
                 else
@@ -197,6 +211,22 @@ public class Villager : MonoBehaviour
                 //keep moving to waypoint
                 agent.SetDestination(route[currentWaypointIndex].position);
             }
+        }
+    }
+
+    public void checkIsOnLink()
+    {
+        //check if it's on offmesh link
+        if (agent.isOnOffMeshLink && isOnLink == false)
+        {
+            isOnLink = true;
+            agent.speed = agent.speed * linkSpeed;
+        }
+        else if (agent.isOnNavMesh && isOnLink == true)
+        {
+            isOnLink = false;
+            agent.velocity = Vector3.zero;
+            agent.speed = velocity;
         }
     }
 }

@@ -5,6 +5,11 @@ using UnityEngine.AI;
 
 public class Mom : Villager
 {
+    public float childDetectionRange;
+
+    protected bool isProtecting = false;
+    protected Vector3 childPosition = Vector3.zero; //avoid that mom never gets to target because child is dead
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -19,9 +24,13 @@ public class Mom : Villager
     // Update is called once per frame
     void Update()
     {
-        takeAction();
-        scareBar.setValue(currentScarePoints); //Aqui sera el take scare
-        checkNearScares();
+        if (!isStunned)
+        {
+            takeAction();
+            checkNearScares();
+            checkIsOnLink();
+        }
+        scareBar.setValue(currentScarePoints); //Aqui sera el take scare        
     }
 
     override 
@@ -39,7 +48,7 @@ public class Mom : Villager
                     {
                         if (monster.GetComponent<Monster>())
                         {
-                            if(monster.GetComponent<Monster>().level > 1)
+                            if(monster.GetComponent<Monster>().level > level)
                             {
                                 run(scareSpeed);
                             }
@@ -50,13 +59,64 @@ public class Mom : Villager
         }
     }
 
+    public bool checkScaredChild()
+    {
+        //check if scared child in range
+        Collider2D[] collisions = Physics2D.OverlapCircleAll(transform.position, childDetectionRange);
+        foreach (Collider2D collision in collisions)
+        {
+            if (collision.GetComponent<PasiveVillager>() && collision.GetComponent<PasiveVillager>().type.Equals("child") && collision.GetComponent<PasiveVillager>().isScared)
+            {
+                isProtecting = true;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Transform getScaredChild()
+    {
+        Collider2D[] collisions = Physics2D.OverlapCircleAll(transform.position, childDetectionRange);
+
+        List<Collider2D> childs = new List<Collider2D>();
+        Transform closestChild = null;
+
+        foreach (Collider2D collision in collisions)
+        {
+            if (collision.GetComponent<PasiveVillager>() && collision.GetComponent<PasiveVillager>().type.Equals("child") && collision.GetComponent<PasiveVillager>().isScared)
+            {
+                childs.Add(collision);
+            }
+        }
+
+
+        if (childs.Count > 0)
+        {
+            foreach (Collider2D child in childs)
+            {
+                if (closestChild == null)
+                {
+                    closestChild = child.transform;
+                }
+                else
+                {
+                    if ((child.transform.position - transform.position).magnitude < (closestChild.transform.position - transform.position).magnitude)
+                    {
+                        closestChild = child.transform;
+                    }
+                }
+            }
+        }
+        return closestChild;
+    }
+
     public bool checkMonstersInRange()
     {
         Collider2D[] collisions = Physics2D.OverlapCircleAll(transform.position, range);
 
         foreach (Collider2D collision in collisions)
         {
-            if (collision.GetComponent<Monster>() && collision.GetComponent<Monster>().level < 2)
+            if (collision.GetComponent<Monster>() && collision.GetComponent<Monster>().level <= level)
             {
                 return true;
             }
@@ -78,7 +138,7 @@ public class Mom : Villager
         //Check if there are jackOLanterns
         foreach (Collider2D collision in collisions)
         {
-            if (collision.GetComponent<Monster>() && collision.GetComponent<Monster>().level < 2)
+            if (collision.GetComponent<Monster>() && collision.GetComponent<Monster>().level <= level)
             {
                 if (!collision.GetComponent<JackOLantern>()) onlyJackOLantern = false;
             }
@@ -88,14 +148,14 @@ public class Mom : Villager
         {
             if (!onlyJackOLantern)
             {
-                if (collision.GetComponent<Monster>() && collision.GetComponent<Monster>().level < 2 && !collision.GetComponent<JackOLantern>())
+                if (collision.GetComponent<Monster>() && collision.GetComponent<Monster>().level <= level && !collision.GetComponent<JackOLantern>())
                 {
                     monsters.Add(collision);
                 }
             }
             else
             {
-                if (collision.GetComponent<Monster>() && collision.GetComponent<Monster>().level < 2)
+                if (collision.GetComponent<Monster>() && collision.GetComponent<Monster>().level <= level)
                 {
                     monsters.Add(collision);
                 }
@@ -125,27 +185,63 @@ public class Mom : Villager
 
     public void takeAction()
     {
-        if (!checkMonstersInRange() || isRunning)
+        if (checkScaredChild())
         {
-            move();
+            Transform currentTarget = getScaredChild();
+            runToChild(runningSpeed);
+            isProtecting = true;
+            agent.SetDestination(currentTarget.position);
         }
         else
         {
-            Transform currentTarget = getMonsterInRange();
-            if ((transform.position - currentTarget.position).magnitude <= agent.stoppingDistance + 0.2f)
+            if (isProtecting)
             {
-                attackTime += Time.deltaTime;
-                if (attackTime >= attackRate)
-                {
-                    currentTarget.gameObject.GetComponent<Monster>().takeDamage(damage);
-                    attackTime = 0;
-                }
+                setOriginalSpeed();
+                isProtecting = false;
+            }
+            if (!checkMonstersInRange() || isRunning)
+            {
+                move();
             }
             else
             {
-                //keep moving to waypoint
-                agent.SetDestination(currentTarget.position);
+                Transform currentTarget = getMonsterInRange();
+                if (currentTarget != null)
+                {
+                    if ((transform.position - currentTarget.position).magnitude <= agent.stoppingDistance + 0.2f)
+                    {
+                        if (canAttack)
+                        {
+                            attackTime += Time.deltaTime;
+                            if (attackTime >= attackRate)
+                            {
+                                currentTarget.gameObject.GetComponent<Monster>().takeDamage(damage);
+                                attackTime = 0;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //keep moving to waypoint
+                        agent.SetDestination(currentTarget.position);
+                    }
+                }
             }
         }
+    }
+
+    public void runToChild(float speed)
+    {
+        if (canMove)
+        {
+            isRunning = true;
+            agent.speed = speed;
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, childDetectionRange);
     }
 }

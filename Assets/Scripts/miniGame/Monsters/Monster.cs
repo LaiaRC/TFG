@@ -39,6 +39,7 @@ public abstract class Monster : MonoBehaviour
     protected RectTransform canvas;
 
     protected NavMeshAgent agent;
+    public bool isAttacking = false;
 
     //Variables x els sons de l'array sounds
     protected static int ATTACK = 0;
@@ -76,6 +77,8 @@ public abstract class Monster : MonoBehaviour
         healthBar.setValue(health);
         healthBar.setColor(fillColor, backgroundColor);
         healthBar.targetCanvas = canvas;
+
+        agent.stoppingDistance = 3;
     }
 
     public void updateFlags()
@@ -118,7 +121,6 @@ public abstract class Monster : MonoBehaviour
         
         if (!checkVillagersInRange())
         {
-            //Debug.Log("Distance: " + (transform.position - route[currentWaypointIndex].position).magnitude);
             if ((transform.position - flags[currentFlag].position).magnitude <= agent.stoppingDistance + 0.2f)
             {
                 //check if it's last waypoint
@@ -146,6 +148,7 @@ public abstract class Monster : MonoBehaviour
                 attackTime += Time.deltaTime;
                 if (attackTime >= attackRate)
                 {
+                    isAttacking = true;
                     currentTarget.gameObject.GetComponent<Villager>().takeScare(damage);
                     attackTime = 0;
                 }
@@ -223,7 +226,7 @@ public abstract class Monster : MonoBehaviour
         return closestVillager;
     }
 
-    public bool checkVillagersInRange()
+    public virtual bool checkVillagersInRange()
     {
         Collider2D[] collisions = Physics2D.OverlapCircleAll(transform.position, range);
 

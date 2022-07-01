@@ -20,8 +20,12 @@ public class PasiveVillager : Villager
     // Update is called once per frame
     void Update()
     {
-        move();
-        scareBar.setValue(currentScarePoints); //Aqui sera el take scare
-        checkNearScares();
+        if (!isStunned)
+        {
+            move();
+            checkNearScares();
+            checkIsOnLink();
+        }
+        scareBar.setValue(currentScarePoints); //Aqui sera el take scare        
     }
 }

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8310522673825038263}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: s (3)
   m_TagString: Untagged
   m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2704722847780478576}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: e
   m_TagString: Untagged
   m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
@@ -73,15 +73,14 @@ GameObject:
   - component: {fileID: 8439793852425852066}
   - component: {fileID: 4912654377224209549}
   - component: {fileID: 5061368038893494347}
-  - component: {fileID: 7910939236702109578}
-  - component: {fileID: 5294107039493247569}
   - component: {fileID: 9022433320473549639}
+  - component: {fileID: 3779182696807385124}
   - component: {fileID: -1095401438968561182}
   - component: {fileID: 6504599602452283074}
   - component: {fileID: 820994093605381148}
   - component: {fileID: 455162571667979003}
   - component: {fileID: 7914404265261761775}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: jackOLantern
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -372,59 +371,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!70 &7910939236702109578
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6161998449380206624}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
-  m_Direction: 0
---- !u!114 &5294107039493247569
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6161998449380206624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22669203d39b5ac4983efde17fc2aa55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  velocity: 0
-  health: 6
-  damage: 0
-  range: 0
-  attackRate: 0
-  canBeInvokedInside: 0
-  canFly: 0
-  currentState: 
-  favVillager: 
-  level: 1
-  animator: {fileID: 8439793852425852066}
-  tomb: {fileID: 0}
-  deathParticles: {fileID: 1594651801849776520, guid: 996f4c57fa6b80447ba970292d38562c, type: 3}
-  spawnParticles: {fileID: 1594651801849776520, guid: 996f4c57fa6b80447ba970292d38562c, type: 3}
-  deathSound: {fileID: 1594651801849776520, guid: 996f4c57fa6b80447ba970292d38562c, type: 3}
-  audioSource: {fileID: 4912654377224209549}
-  audioSourceAux: {fileID: 5061368038893494347}
-  sounds:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  healthBar: {fileID: 4110335927728442690, guid: 4be1c02213a25e84bb1477354cbe9666, type: 3}
-  fillColor: {r: 0, g: 1, b: 0, a: 1}
-  backgroundColor: {r: 0.5882353, g: 1, b: 0.5882353, a: 1}
 --- !u!58 &9022433320473549639
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -441,6 +387,45 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.65894574
+--- !u!114 &3779182696807385124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6161998449380206624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22669203d39b5ac4983efde17fc2aa55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocity: 0
+  health: 6
+  damage: 0
+  range: 3
+  attackRate: 0
+  canBeInvokedInside: 1
+  canFly: 0
+  currentState: 
+  favVillager: 
+  level: 1
+  animator: {fileID: 8439793852425852066}
+  tomb: {fileID: 5866804560099724069, guid: 8bd94ee69525f0842b6391c7a96c09b6, type: 3}
+  deathParticles: {fileID: 1594651801849776520, guid: 996f4c57fa6b80447ba970292d38562c, type: 3}
+  spawnParticles: {fileID: 1594651801849776520, guid: 996f4c57fa6b80447ba970292d38562c, type: 3}
+  deathSound: {fileID: 1594651801849776520, guid: 996f4c57fa6b80447ba970292d38562c, type: 3}
+  audioSource: {fileID: 5061368038893494347}
+  audioSourceAux: {fileID: 4912654377224209549}
+  sounds:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  healthBar: {fileID: 4110335927728442690, guid: 4be1c02213a25e84bb1477354cbe9666, type: 3}
+  fillColor: {r: 0, g: 1, b: 0, a: 1}
+  backgroundColor: {r: 0.5882353, g: 1, b: 0.5882353, a: 1}
+  isAttacking: 0
 --- !u!208 &-1095401438968561182
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -534,7 +519,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5687694000844706021}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: s
   m_TagString: Untagged
   m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
@@ -564,7 +549,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2091804295385658440}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: s (2)
   m_TagString: Untagged
   m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
@@ -594,7 +579,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1613194612249226429}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: e (1)
   m_TagString: Untagged
   m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
@@ -624,7 +609,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 231501222769244792}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: e (2)
   m_TagString: Untagged
   m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
@@ -654,7 +639,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 634701563923449078}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: s (1)
   m_TagString: Untagged
   m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
@@ -684,7 +669,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4663572567566360365}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: e (3)
   m_TagString: Untagged
   m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}

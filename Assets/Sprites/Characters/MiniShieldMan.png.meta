@@ -71,6 +71,27 @@ TextureImporter:
   - first:
       213: 409326573502337264
     second: MiniShieldMan_22
+  - first:
+      213: 5851356253860373101
+    second: MiniShieldMan_23
+  - first:
+      213: 3804800878550870838
+    second: MiniShieldMan_24
+  - first:
+      213: -2198736319642936054
+    second: MiniShieldMan_25
+  - first:
+      213: -4336318126481141146
+    second: MiniShieldMan_26
+  - first:
+      213: 2604131808745096915
+    second: MiniShieldMan_27
+  - first:
+      213: -2323446285910402123
+    second: MiniShieldMan_28
+  - first:
+      213: -2570450665582920467
+    second: MiniShieldMan_29
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -200,9 +221,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 179.2
+        y: 192
         width: 32
-        height: 44.8
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -221,9 +242,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 179.2
+        y: 192
         width: 32
-        height: 44.8
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -242,9 +263,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 179.2
+        y: 192
         width: 32
-        height: 44.8
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -263,9 +284,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 179.2
+        y: 192
         width: 32
-        height: 44.8
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -284,9 +305,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 135.2
+        y: 160
         width: 32
-        height: 44.8
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -305,9 +326,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 135.2
+        y: 160
         width: 32
-        height: 44.8
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -326,9 +347,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 135.2
+        y: 160
         width: 32
-        height: 44.8
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -347,9 +368,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 135.2
+        y: 160
         width: 32
-        height: 44.8
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -368,9 +389,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 128
-        y: 135.2
+        y: 160
         width: 32
-        height: 44.8
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -389,9 +410,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 160
-        y: 135.2
+        y: 160
         width: 32
-        height: 44.8
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -410,9 +431,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 91.2
+        y: 128
         width: 32
-        height: 44.8
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -431,9 +452,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 91.2
+        y: 128
         width: 32
-        height: 44.8
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -452,9 +473,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 91.2
+        y: 128
         width: 32
-        height: 44.8
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -473,9 +494,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 47.2
+        y: 96
         width: 32
-        height: 44.8
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -494,9 +515,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 47.2
+        y: 96
         width: 32
-        height: 44.8
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -515,9 +536,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 47.2
+        y: 96
         width: 32
-        height: 44.8
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -535,10 +556,10 @@ TextureImporter:
       name: MiniShieldMan_16
       rect:
         serializedVersion: 2
-        x: 96
-        y: 47.2
+        x: 0
+        y: 64
         width: 32
-        height: 44.8
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -556,10 +577,10 @@ TextureImporter:
       name: MiniShieldMan_17
       rect:
         serializedVersion: 2
-        x: 128
-        y: 47.2
+        x: 32
+        y: 64
         width: 32
-        height: 44.8
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -577,10 +598,10 @@ TextureImporter:
       name: MiniShieldMan_18
       rect:
         serializedVersion: 2
-        x: 0
-        y: 3.2000008
+        x: 64
+        y: 64
         width: 32
-        height: 44.8
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -598,10 +619,10 @@ TextureImporter:
       name: MiniShieldMan_19
       rect:
         serializedVersion: 2
-        x: 32
-        y: 3.2000008
+        x: 96
+        y: 64
         width: 32
-        height: 44.8
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -619,10 +640,10 @@ TextureImporter:
       name: MiniShieldMan_20
       rect:
         serializedVersion: 2
-        x: 64
-        y: 3.2000008
+        x: 128
+        y: 64
         width: 32
-        height: 44.8
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -640,10 +661,10 @@ TextureImporter:
       name: MiniShieldMan_21
       rect:
         serializedVersion: 2
-        x: 96
-        y: 3.2000008
+        x: 0
+        y: 32
         width: 32
-        height: 44.8
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -661,10 +682,10 @@ TextureImporter:
       name: MiniShieldMan_22
       rect:
         serializedVersion: 2
-        x: 128
-        y: 3.2000008
+        x: 32
+        y: 32
         width: 32
-        height: 44.8
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -674,6 +695,153 @@ TextureImporter:
       bones: []
       spriteID: 0f01cb299583ea500800000000000000
       internalID: 409326573502337264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniShieldMan_23
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d62ab95d281343150800000000000000
+      internalID: 5851356253860373101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniShieldMan_24
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63b6e178d3e5dc430800000000000000
+      internalID: 3804800878550870838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniShieldMan_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0ddee877f48c71e0800000000000000
+      internalID: -2198736319642936054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniShieldMan_26
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 662110683ad42d3c0800000000000000
+      internalID: -4336318126481141146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniShieldMan_27
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d60c80351cb32420800000000000000
+      internalID: 2604131808745096915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniShieldMan_28
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5bb1c91c9e571cfd0800000000000000
+      internalID: -2323446285910402123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniShieldMan_29
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dec734d0dbce35cd0800000000000000
+      internalID: -2570450665582920467
       vertices: []
       indices: 
       edges: []
