@@ -116,7 +116,7 @@ public class Mom : Villager
 
         foreach (Collider2D collision in collisions)
         {
-            if (collision.GetComponent<Monster>() && collision.GetComponent<Monster>().level <= level)
+            if (collision.GetComponent<Monster>()) //&& collision.GetComponent<Monster>().level <= level
             {
                 return true;
             }

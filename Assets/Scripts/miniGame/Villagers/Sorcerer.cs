@@ -5,6 +5,7 @@ using UnityEngine;
 public class Sorcerer : Villager
 {
     public float teleportRate;
+    public float detectionRange;
 
     private static int TELEPORT_RANGE = 4;
     private bool hasTeleported = false;
@@ -198,7 +199,7 @@ public class Sorcerer : Villager
     public bool checkScaredVillagers()
     {
         //check if scared villagers in range
-        Collider2D[] collisions = Physics2D.OverlapCircleAll(transform.position, range);
+        Collider2D[] collisions = Physics2D.OverlapCircleAll(transform.position, detectionRange);
         foreach (Collider2D collision in collisions)
         {
             if (collision.GetComponent<Villager>() && collision.GetComponent<Villager>().isScared && !isScared)

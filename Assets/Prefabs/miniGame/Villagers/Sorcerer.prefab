@@ -71,7 +71,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 10
   m_Sprite: {fileID: -7059054110077741554, guid: 021e69e5facdb2f45943497fe26d66a7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -133,7 +133,7 @@ Transform:
   m_GameObject: {fileID: 5266004272776114141}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.18, y: -5.3, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_Children:
   - {fileID: 6027573346648306996}
   m_Father: {fileID: 0}
@@ -159,7 +159,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 0.1
   m_BaseOffset: 0
-  m_WalkableMask: 1
+  m_WalkableMask: 17
   m_ObstacleAvoidanceType: 4
 --- !u!95 &5266004272776114137
 Animator:
@@ -400,11 +400,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c92500cb14a8f04e8c34fa3754841de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 5
-  maxScarePoints: 10
+  velocity: 2.5
+  maxScarePoints: 15
   currentScarePoints: 0
-  damage: 4
-  level: 3
+  damage: 5
+  level: 5
   range: 7
   currentState: 
   canAttack: 1
@@ -416,6 +416,7 @@ MonoBehaviour:
   runningSpeed: 7
   scareSpeed: 7
   attackRate: 1
+  isStunned: 0
   animator: {fileID: 5266004272776114137}
   audioSource: {fileID: 5266004272776114136}
   audioSourceAux: {fileID: 5266004272776114136}

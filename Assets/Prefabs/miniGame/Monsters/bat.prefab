@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 1331844805969841846}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.37, y: 1.47, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_Children:
   - {fileID: 4681397538911390142}
   m_Father: {fileID: 0}
@@ -298,11 +298,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d632aa2cbb0fa44e94d8ad3f9e00315, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 5
-  health: 6
-  damage: 3
+  velocity: 2.5
+  health: 2
+  damage: 2
   range: 5
-  attackRate: 2
+  attackRate: 1
   canBeInvokedInside: 0
   canFly: 0
   currentState: 
@@ -396,7 +396,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 10
   m_Sprite: {fileID: 1736641193778822097, guid: 7962accfb9e0f6d46bf5fa2b7aa9a4d6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

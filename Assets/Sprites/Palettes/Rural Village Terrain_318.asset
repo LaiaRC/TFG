@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: Rural Village Terrain_318
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 4553157995815680821, guid: c6681af175435d54d9dfa2dfe0ac5e2e, type: 3}
+  m_Sprite: {fileID: 4553157995815680821, guid: 06e71af0807b3da4a84414bbc548eb3c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

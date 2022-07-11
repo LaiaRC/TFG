@@ -116,7 +116,7 @@ public abstract class Monster : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, range);
     }
 
-    public void move()
+    public virtual void move()
     {
         
         if (!checkVillagersInRange())
@@ -238,5 +238,10 @@ public abstract class Monster : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public void changeLayer()
+    {
+        gameObject.layer = 0;
     }
 }

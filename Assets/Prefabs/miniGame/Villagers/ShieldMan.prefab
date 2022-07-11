@@ -190,7 +190,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 10
   m_Sprite: {fileID: 6827581200123067571, guid: 9fbae3b2dba2cdb4bacbfb0669fef4bb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -306,7 +306,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 10
   m_Sprite: {fileID: 6827581200123067571, guid: 9fbae3b2dba2cdb4bacbfb0669fef4bb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -482,7 +482,7 @@ Transform:
   m_GameObject: {fileID: 6042833894438546366}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 10.1, y: -5.4, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_Children:
   - {fileID: 1502571229541565281}
   - {fileID: 6461369896066145111}
@@ -750,14 +750,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26a7346e10676304b9c9837f009f3215, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 4
-  maxScarePoints: 6
+  velocity: 2
+  maxScarePoints: 10
   currentScarePoints: 0
   damage: 4
-  level: 3
+  level: 4
   range: 7
   currentState: 
   canAttack: 1
+  canMove: 1
   isAttacking: 0
   isScared: 0
   type: shieldMan
@@ -765,6 +766,7 @@ MonoBehaviour:
   runningSpeed: 5
   scareSpeed: 5
   attackRate: 1
+  isStunned: 0
   animator: {fileID: 6042833894438546362}
   audioSource: {fileID: 6042833894438546363}
   audioSourceAux: {fileID: 6042833894438546364}
@@ -975,7 +977,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 10
   m_Sprite: {fileID: 6827581200123067571, guid: 9fbae3b2dba2cdb4bacbfb0669fef4bb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1057,7 +1059,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 10
   m_Sprite: {fileID: 6827581200123067571, guid: 9fbae3b2dba2cdb4bacbfb0669fef4bb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

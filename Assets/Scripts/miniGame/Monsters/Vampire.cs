@@ -30,6 +30,9 @@ public class Vampire : Monster
         spawn();
 
         maxHealth = health;
+
+        //Change layer to default once the monster has been instantiated
+        Invoke("changeLayer", 1f);
     }
 
     // Update is called once per frame

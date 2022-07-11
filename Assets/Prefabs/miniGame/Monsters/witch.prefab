@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 1331844805969841846}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.37, y: 1.47, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_Children:
   - {fileID: 4681397538911390142}
   m_Father: {fileID: 0}
@@ -298,16 +298,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4d6b9a44fbeb824986338f33369234b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 4.5
+  velocity: 2.25
   health: 15
-  damage: 4
-  range: 3.5
+  damage: 5
+  range: 5
   attackRate: 1
   canBeInvokedInside: 0
   canFly: 0
   currentState: 
   favVillager: sorcerer
-  level: 3
+  level: 5
   animator: {fileID: 1331844805969841850}
   tomb: {fileID: 5866804560099724069, guid: 8bd94ee69525f0842b6391c7a96c09b6, type: 3}
   deathParticles: {fileID: 1594651801849776520, guid: 996f4c57fa6b80447ba970292d38562c, type: 3}
@@ -325,7 +325,8 @@ MonoBehaviour:
   fillColor: {r: 0, g: 1, b: 0, a: 1}
   backgroundColor: {r: 0.5882353, g: 1, b: 0.5882353, a: 1}
   isAttacking: 0
-  invocationRate: 15
+  invocationRate: 5
+  invocationRange: 3.5
 --- !u!1 &3933314819902813587
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,7 +398,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 10
   m_Sprite: {fileID: 3498872199585550424, guid: 550a1726296099546aa23037be22edfc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

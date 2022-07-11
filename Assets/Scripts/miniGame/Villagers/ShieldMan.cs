@@ -108,13 +108,33 @@ public class ShieldMan : Villager
         List<Collider2D> monsters = new List<Collider2D>();
         Transform closestMonster = null;
 
+        bool onlyJackOLantern = true;
+
+        //Check if there are jackOLanterns
         foreach (Collider2D collision in collisions)
-        {            
-            //ignore jackOLanterns and gargoyles
-            if (collision.GetComponent<Monster>() && !collision.GetComponent<JackOLantern>())
+        {
+            if (collision.GetComponent<Monster>() && collision.GetComponent<Monster>().level <= level)
             {
-                monsters.Add(collision);
-            }            
+                if (!collision.GetComponent<JackOLantern>()) onlyJackOLantern = false;
+            }
+        }
+
+        foreach (Collider2D collision in collisions)
+        {
+            if (!onlyJackOLantern)
+            {
+                if (collision.GetComponent<Monster>() && collision.GetComponent<Monster>().level <= level && !collision.GetComponent<JackOLantern>())
+                {
+                    monsters.Add(collision);
+                }
+            }
+            else
+            {
+                if (collision.GetComponent<Monster>() && collision.GetComponent<Monster>().level <= level)
+                {
+                    monsters.Add(collision);
+                }
+            }
         }
 
 

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: Rural Village Floors_78
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: -2338017892764486399, guid: 962766543e46c094985cf8bd622e76e5, type: 3}
+  m_Sprite: {fileID: -2338017892764486399, guid: bf0b92dccf725744ca6cedaf07825a12, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
