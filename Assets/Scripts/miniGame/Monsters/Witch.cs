@@ -33,9 +33,16 @@ public class Witch : Monster
     // Update is called once per frame
     void Update()
     {
-        time += Time.deltaTime;
-        move();
-        invokeSkeletons();
+        if (miniGameManager.Instance.gameOver)
+        {
+            gameOver();
+        }
+        else
+        {
+            time += Time.deltaTime;
+            move();
+            invokeSkeletons();
+        }
     }
 
     public void invokeSkeletons()
@@ -107,6 +114,7 @@ public class Witch : Monster
                 {
                     isAttacking = true;
                     currentTarget.gameObject.GetComponent<Villager>().takeScare(damage);
+                    miniGameManager.Instance.numScares++;
                     attackTime = 0;
                 }
             }

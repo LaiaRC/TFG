@@ -17,7 +17,14 @@ public class JackOLantern : Monster
     // Update is called once per frame
     void Update()
     {
-        healthBar.setValue(health);
+        if (miniGameManager.Instance.gameOver)
+        {
+            gameOver();
+        }
+        else
+        {
+            healthBar.setValue(health);
+        }
     }
 
     override

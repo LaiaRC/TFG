@@ -26,23 +26,30 @@ public class Sorcerer : Villager
     // Update is called once per frame
     void Update()
     {
-        if (hasTeleported)
+        if (miniGameManager.Instance.gameOver)
         {
-            time += Time.deltaTime;
+            gameOver();
         }
-        if(hasTeleported && time >= teleportRate)
+        else
         {
-            hasTeleported = false;
-            time = 0;
-        }
+            if (hasTeleported)
+            {
+                time += Time.deltaTime;
+            }
+            if (hasTeleported && time >= teleportRate)
+            {
+                hasTeleported = false;
+                time = 0;
+            }
 
-        if (!isStunned)
-        {
-            takeAction();
-            checkIsOnLink();
-        }
+            if (!isStunned)
+            {
+                takeAction();
+                checkIsOnLink();
+            }
 
-        scareBar.setValue(currentScarePoints); //Aqui sera el take scare
+            scareBar.setValue(currentScarePoints); //Aqui sera el take scare
+        }
     }
 
     public bool checkMonstersInRange()

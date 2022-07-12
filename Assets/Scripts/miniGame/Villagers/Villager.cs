@@ -25,6 +25,8 @@ public class Villager : MonoBehaviour
     public float scareSpeed; //speed when someone near is scared
     public float attackRate;
     public bool isStunned = false;
+    public GameObject drop; //prefab
+    public int dropQuantity; //In case there are upgrades
 
     public Animator animator;
     public AudioSource audioSource;
@@ -64,8 +66,33 @@ public class Villager : MonoBehaviour
     //Time Scared
     protected static float TIME_SCARED = 1f;
 
+    public void gameOver()
+    {
+        gameObject.SetActive(false);
+        scareBar.gameObject.SetActive(false);
+    }
+
     public void die()
-    {        
+    {
+        //Add drop to dictionary
+        if (miniGameManager.Instance.DROPS.TryGetValue(drop.name, out Drop dropClass))
+        {
+            Drop newDrop = new Drop();
+            newDrop.quantity = dropClass.quantity + dropQuantity;
+            newDrop.icon = dropClass.icon;
+            newDrop.level = level;
+            miniGameManager.Instance.DROPS[drop.name] =  newDrop;
+        }
+        else
+        {
+            //Add for the first time
+            Drop newDrop = new Drop();
+            newDrop.quantity = dropQuantity;
+            newDrop.icon = drop.GetComponent<SpriteRenderer>().sprite;
+            newDrop.level = level;
+            miniGameManager.Instance.DROPS.Add(drop.name, newDrop);
+        }
+        
         audioSource.clip = sounds[DIE];
         audioSource.Play();
         Instantiate(deathParticles, transform.position, Quaternion.identity);

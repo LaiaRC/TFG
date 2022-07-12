@@ -19,13 +19,20 @@ public class Swashbuckler : Villager
     // Update is called once per frame
     void Update()
     {
-        if (!isStunned)
+        if (miniGameManager.Instance.gameOver)
         {
-            takeAction();
-            checkNearScares();
-            checkIsOnLink();
+            gameOver();
         }
-        scareBar.setValue(currentScarePoints); //Aqui sera el take scare        
+        else
+        {
+            if (!isStunned)
+            {
+                takeAction();
+                checkNearScares();
+                checkIsOnLink();
+            }
+            scareBar.setValue(currentScarePoints); //Aqui sera el take scare        
+        }
     }
 
     override

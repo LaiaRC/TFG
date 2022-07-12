@@ -25,6 +25,13 @@ public class basicMonster : Monster
     // Update is called once per frame
     void Update()
     {
-        move();
+        if (miniGameManager.Instance.gameOver)
+        {
+            gameOver();
+        }
+        else
+        {
+            move();
+        }
     }
 }

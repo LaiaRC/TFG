@@ -401,6 +401,8 @@ MonoBehaviour:
   scareSpeed: 6
   attackRate: 0
   isStunned: 0
+  drop: {fileID: 3767981418247683008, guid: b9ae6c7fef2e9f94093d2ca28399bc93, type: 3}
+  dropQuantity: 1
   animator: {fileID: 5266004272776114137}
   audioSource: {fileID: 5266004272776114136}
   audioSourceAux: {fileID: 5266004272776114143}

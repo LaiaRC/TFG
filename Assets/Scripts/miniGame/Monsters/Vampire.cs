@@ -38,10 +38,17 @@ public class Vampire : Monster
     // Update is called once per frame
     void Update()
     {
-        time += Time.deltaTime;
-        move();
-        heal();
-        checkIsOnLink();
+        if (miniGameManager.Instance.gameOver)
+        {
+            gameOver();
+        }
+        else
+        {
+            time += Time.deltaTime;
+            move();
+            heal();
+            checkIsOnLink();
+        }
     }
 
     public void heal()

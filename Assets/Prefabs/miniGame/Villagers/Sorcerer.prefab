@@ -417,6 +417,8 @@ MonoBehaviour:
   scareSpeed: 7
   attackRate: 1
   isStunned: 0
+  drop: {fileID: 3767981418247683008, guid: 1df800c33af8e7347a5972a4f69dcb5b, type: 3}
+  dropQuantity: 1
   animator: {fileID: 5266004272776114137}
   audioSource: {fileID: 5266004272776114136}
   audioSourceAux: {fileID: 5266004272776114136}
@@ -434,3 +436,4 @@ MonoBehaviour:
   canvas: {fileID: 0}
   agent: {fileID: 5266004272776114138}
   teleportRate: 5
+  detectionRange: 0

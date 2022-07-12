@@ -48,6 +48,12 @@ public abstract class Monster : MonoBehaviour
     protected static int TAKE_DAMAGE = 3;
     protected static int WALK = 4;
 
+    public void gameOver()
+    {
+        gameObject.SetActive(false);
+        healthBar.gameObject.SetActive(false);
+    }
+    
     public virtual void die()
     {
         //Instantiate tomb
@@ -150,6 +156,7 @@ public abstract class Monster : MonoBehaviour
                 {
                     isAttacking = true;
                     currentTarget.gameObject.GetComponent<Villager>().takeScare(damage);
+                    miniGameManager.Instance.numScares++;
                     attackTime = 0;
                 }
             }

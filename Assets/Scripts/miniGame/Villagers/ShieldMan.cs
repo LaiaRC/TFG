@@ -47,43 +47,51 @@ public class ShieldMan : Villager
     // Update is called once per frame
     void Update()
     {
-        time += Time.deltaTime;
-        if (!isBlocking && !isPermanentBlocking && !isStunned)
+        if (miniGameManager.Instance.gameOver)
         {
-            takeAction();
-        }
-        else if(!isPermanentBlocking && !isStunned)
-        {
-            //attacks while it's blocking
-            attack();
-        }
-
-        if (!isStunned)
-        {
-            //Is not moving
-            if (agent.velocity.magnitude < 0.15f)
-            {
-                timeStopped += Time.deltaTime;
-            }
-            else
-            {
-                timeStopped = 0;
-            }
-
-            //check that permanentBlock applies
-            if (!isPermanentBlocking && !isBlocking && timeStopped > 15)
-            {
-                permanentBlock();
-            }
+            gameOver();
         }
         else
         {
-            //If is stunned reset timeStopeed (it doesn't count)
-            timeStopped = 0;
-        }
+            time += Time.deltaTime;
+            if (!isBlocking && !isPermanentBlocking && !isStunned)
+            {
+                takeAction();
+            }
+            else if (!isPermanentBlocking && !isStunned)
+            {
+                //attacks while it's blocking
+                attack();
+            }
 
-        scareBar.setValue(currentScarePoints); //Aqui sera el take 
-    }    
+            if (!isStunned)
+            {
+                //Is not moving
+                if (agent.velocity.magnitude < 0.15f)
+                {
+                    timeStopped += Time.deltaTime;
+                }
+                else
+                {
+                    timeStopped = 0;
+                }
+
+                //check that permanentBlock applies
+                if (!isPermanentBlocking && !isBlocking && timeStopped > 15)
+                {
+                    permanentBlock();
+                }
+            }
+            else
+            {
+                //If is stunned reset timeStopeed (it doesn't count)
+                timeStopped = 0;
+            }
+
+            scareBar.setValue(currentScarePoints); //Aqui sera el take 
+
+        }
+    }
 
     public bool checkMonstersInRange()
     {

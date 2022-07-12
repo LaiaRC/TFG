@@ -20,12 +20,19 @@ public class PasiveVillager : Villager
     // Update is called once per frame
     void Update()
     {
-        if (!isStunned)
+        if (miniGameManager.Instance.gameOver)
         {
-            move();
-            checkNearScares();
-            checkIsOnLink();
+            gameOver();
         }
-        scareBar.setValue(currentScarePoints); //Aqui sera el take scare        
+        else
+        {
+            if (!isStunned)
+            {
+                move();
+                checkNearScares();
+                checkIsOnLink();
+            }
+            scareBar.setValue(currentScarePoints); //Aqui sera el take scare
+        }
     }
 }

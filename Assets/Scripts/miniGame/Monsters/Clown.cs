@@ -22,20 +22,28 @@ public class Clown : Monster
     // Update is called once per frame
     void Update()
     {
-        if (isStunning)
+        if (miniGameManager.Instance.gameOver)
         {
-            time += Time.deltaTime;
-            health = (int)((int)lifeTime - time);
+            gameOver();
         }
+        else
+        {
+            if (isStunning)
+            {
+                time += Time.deltaTime;
+                health = (int)((int)lifeTime - time);
+            }
 
-        if (!isStunning || isStunning && time < lifeTime)
-        {
-            stun();
-        }else if(isStunning && time >= lifeTime)
-        {
-            die();
+            if (!isStunning || isStunning && time < lifeTime)
+            {
+                stun();
+            }
+            else if (isStunning && time >= lifeTime)
+            {
+                die();
+            }
+            healthBar.setValue(health);
         }
-        healthBar.setValue(health);
     }
 
     override
