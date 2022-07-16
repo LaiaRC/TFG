@@ -12,6 +12,9 @@ public class JackOLantern : Monster
     {
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
         spawn();
+
+        //Play animation
+        gameObject.transform.GetChild(0).GetComponent<Animator>().Play("jackOLantern_idle");
     }
 
     // Update is called once per frame
@@ -23,7 +26,19 @@ public class JackOLantern : Monster
         }
         else
         {
-            healthBar.setValue(health);
+            if (hasDied)
+            {
+                float nTime = transform.GetChild(0).GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime;
+                if (nTime > 1.0f)
+                {
+                    //death animation has finished
+                    die();
+                }
+            }
+            else
+            {
+                healthBar.setValue(health);
+            }
         }
     }
 
@@ -42,7 +57,10 @@ public class JackOLantern : Monster
         canvas = GameObject.Find("Canvas").GetComponent<RectTransform>();
         audioSource.clip = sounds[SPAWN];
         audioSource.Play();
-        Instantiate(spawnParticles, transform.position, Quaternion.identity);
+        //Instantiate(spawnParticles, transform.position, Quaternion.identity);
+
+        //spawn particles
+        animator.Play("monster_spawn");
 
         healthBar = Instantiate(healthBar, canvas);
         healthBar.setTarget(transform);

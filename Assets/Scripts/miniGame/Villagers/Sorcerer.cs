@@ -6,12 +6,17 @@ public class Sorcerer : Villager
 {
     public float teleportRate;
     public float detectionRange;
+    public GameObject projectile;
+    public GameObject teleportRange;
 
     private static int TELEPORT_RANGE = 4;
     private bool hasTeleported = false;
     private bool canTeleport = false;
     private float time = 0;
-    
+
+    public bool wasMovingRight = false;
+    public bool isMovingRight = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +31,14 @@ public class Sorcerer : Villager
     // Update is called once per frame
     void Update()
     {
+        //Update direction
+        isMovingRight = transform.GetComponent<CharacterMovement>().movingRight;
+        if (agent.desiredVelocity.sqrMagnitude > 0)
+        {
+            //is moving
+            wasMovingRight = isMovingRight;
+        }
+
         if (miniGameManager.Instance.gameOver)
         {
             gameOver();
@@ -131,6 +144,9 @@ public class Sorcerer : Villager
         {
             if (!hasTeleported)
             {
+                //Show teleport area
+                teleportRange.SetActive(true);
+
                 //area damage monsters before teleporting
                 if (checkMonstersInRange())
                 {
@@ -144,31 +160,22 @@ public class Sorcerer : Villager
                     }
                 }
 
-                List<GameObject> villagers = getVillagers();
-
-                //Teleport all villagers in risk to another waypoint
-                int newIndexPosition = RandomRangeExcept(0, miniGameManager.Instance.waypoints.Count, currentWaypointIndex);
-                transform.position = (Vector2)miniGameManager.Instance.waypoints[newIndexPosition].position + (Random.insideUnitCircle * TELEPORT_RANGE);
-
-                foreach (GameObject villager in villagers)
+                //play teleport before animation
+                if (!wasMovingRight)
                 {
-                    villager.transform.position = (Vector2)miniGameManager.Instance.waypoints[newIndexPosition].position + (Random.insideUnitCircle * TELEPORT_RANGE);
+                    //Play left animation
+                    transform.GetChild(0).GetComponent<Animator>().Play("sorcerer_teleport_left_before");
+                }
+                else
+                {
+                    //Play right animation
+                    transform.GetChild(0).GetComponent<Animator>().Play("sorcerer_teleport_right_before");
                 }
 
                 hasTeleported = true;
 
-                //area damage monsters after teleporting
-                if (checkMonstersInRange())
-                {
-                    List<GameObject> monsters = getMonsters();
-                    if (monsters != null)
-                    {
-                        foreach (GameObject monster in monsters)
-                        {
-                            monster.GetComponent<Monster>().takeDamage(damage);
-                        }
-                    }
-                }
+                //wait until animation finishes to actually teleport
+                Invoke(nameof(teleport), 0.4f);                
             }
         }
         else
@@ -194,7 +201,26 @@ public class Sorcerer : Villager
                         attackTime += Time.deltaTime;
                         if (attackTime >= attackRate)
                         {
-                            currentTarget.gameObject.GetComponent<Monster>().takeDamage(damage);
+                            //play attack animation
+                            if (!wasMovingRight)
+                            {
+                                //Play left animation
+                                transform.GetChild(0).GetComponent<Animator>().Play("sorcerer_attack_left");
+                            }
+                            else
+                            {
+                                //Play right animation
+                                transform.GetChild(0).GetComponent<Animator>().Play("sorcerer_attack_right");
+                            }
+
+                            //Get anim position 
+                            Vector3 animPosition = transform.GetChild(0).transform.position;
+
+                            //Cast projectile
+                            GameObject proj = miniGameManager.Instance.poolParticle(miniGameManager.SORCERER_PROJECTILE, animPosition);
+                            proj.GetComponent<Projectile>().objective = currentTarget.gameObject;
+                            proj.GetComponent<Projectile>().type = "monster";
+                            proj.GetComponent<Projectile>().damage = damage;
                             attackTime = 0;
                         }
                     }
@@ -254,5 +280,57 @@ public class Sorcerer : Villager
         } while (number == except) ;
 
         return number;
+    }
+
+    public void teleport()
+    {
+        teleportRange.gameObject.SetActive(false);
+
+        List<GameObject> villagers = getVillagers();
+
+        //Teleport all villagers in risk to another waypoint
+        int newIndexPosition = RandomRangeExcept(0, miniGameManager.Instance.waypoints.Count, currentWaypointIndex);
+        transform.position = (Vector2)miniGameManager.Instance.waypoints[newIndexPosition].position + (Random.insideUnitCircle * TELEPORT_RANGE);
+
+        foreach (GameObject villager in villagers)
+        {
+            villager.transform.position = (Vector2)miniGameManager.Instance.waypoints[newIndexPosition].position + (Random.insideUnitCircle * TELEPORT_RANGE);
+        }
+
+        //Show teleport area
+        teleportRange.gameObject.SetActive(true);
+
+        //play teleport after animation
+        if (!wasMovingRight)
+        {
+            //Play left animation
+            transform.GetChild(0).GetComponent<Animator>().Play("sorcerer_teleport_left_after");
+        }
+        else
+        {
+            //Play right animation
+            transform.GetChild(0).GetComponent<Animator>().Play("sorcerer_teleport_right_after");
+        }
+
+        //area damage monsters after teleporting
+        if (checkMonstersInRange())
+        {
+            List<GameObject> monsters = getMonsters();
+            if (monsters != null)
+            {
+                foreach (GameObject monster in monsters)
+                {
+                    monster.GetComponent<Monster>().takeDamage(damage);
+                }
+            }
+        }
+
+        //Hide teleport area
+        Invoke(nameof(hideTeleportRange), 0.4f);
+    }
+
+    public void hideTeleportRange()
+    {
+        teleportRange.gameObject.SetActive(false);
     }
 }

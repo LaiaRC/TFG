@@ -44,10 +44,22 @@ public class Vampire : Monster
         }
         else
         {
-            time += Time.deltaTime;
-            move();
-            heal();
-            checkIsOnLink();
+            if (hasDied)
+            {
+                float nTime = transform.GetChild(0).GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime;
+                if (nTime > 1.0f)
+                {
+                    //death animation has finished
+                    die();
+                }
+            }
+            else
+            {
+                time += Time.deltaTime;
+                move();
+                heal();
+                checkIsOnLink();
+            }
         }
     }
 

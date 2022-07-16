@@ -12,7 +12,8 @@ public abstract class Monster : MonoBehaviour
     public float velocity;
     public int health;
     public int damage;
-    public float range;
+    public float detectionRange;
+    public float attackRange;
     public float attackRate;
     public bool canBeInvokedInside;
     public bool canFly;
@@ -20,7 +21,7 @@ public abstract class Monster : MonoBehaviour
     public string favVillager;
     public int level;
 
-    protected Transform currentTarget;
+    protected Collider2D currentTarget;
     protected List<Transform> flags = new List<Transform>();
     protected int currentFlag = 0;
     public Animator animator;
@@ -40,6 +41,7 @@ public abstract class Monster : MonoBehaviour
 
     protected NavMeshAgent agent;
     public bool isAttacking = false;
+    protected bool hasDied = false;
 
     //Variables x els sons de l'array sounds
     protected static int ATTACK = 0;
@@ -47,6 +49,8 @@ public abstract class Monster : MonoBehaviour
     protected static int SPAWN = 2;
     protected static int TAKE_DAMAGE = 3;
     protected static int WALK = 4;
+
+    protected static float SCARE_DISTANCE = 2f;
 
     public void gameOver()
     {
@@ -64,12 +68,20 @@ public abstract class Monster : MonoBehaviour
         Destroy(this.gameObject);        
     }
 
+    public void playDieAnim()
+    {
+        transform.GetChild(0).GetComponent<Animator>().Play("Die");
+        Invoke("die", 0.5f);
+    }
+
     protected virtual void spawn()
     {
         canvas = GameObject.Find("Canvas").GetComponent<RectTransform>();
         audioSource.clip = sounds[SPAWN];
         audioSource.Play();
-        Instantiate(spawnParticles, transform.position, Quaternion.identity);
+
+        //spawn particles
+        animator.Play("monster_spawn");
 
         for (int i = 0; i < miniGameManager.Instance.activeFlags.Count; i++)
         {            
@@ -85,6 +97,8 @@ public abstract class Monster : MonoBehaviour
         healthBar.targetCanvas = canvas;
 
         agent.stoppingDistance = 3;
+
+        attackTime = attackRate; //So it starts attacking and then waits to attack again
     }
 
     public void updateFlags()
@@ -103,7 +117,7 @@ public abstract class Monster : MonoBehaviour
 
         if (health <= 0)
         {
-            die();
+            playDieAnim();
         }
     }
 
@@ -119,7 +133,7 @@ public abstract class Monster : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, range);
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
     }
 
     public virtual void move()
@@ -127,6 +141,10 @@ public abstract class Monster : MonoBehaviour
         
         if (!checkVillagersInRange())
         {
+            if (agent.speed == 0)
+            {
+                setOriginalSpeed();
+            }
             if ((transform.position - flags[currentFlag].position).magnitude <= agent.stoppingDistance + 0.2f)
             {
                 //check if it's last waypoint
@@ -149,34 +167,54 @@ public abstract class Monster : MonoBehaviour
         else
         {
             currentTarget = getVillagerInRange();
-            if ((transform.position - currentTarget.position).magnitude <= agent.stoppingDistance + 0.2f)
+            if (currentTarget != null)
             {
-                attackTime += Time.deltaTime;
-                if (attackTime >= attackRate)
+                if (targetIsInAttackRange(currentTarget))
                 {
-                    isAttacking = true;
-                    currentTarget.gameObject.GetComponent<Villager>().takeScare(damage);
-                    miniGameManager.Instance.numScares++;
-                    attackTime = 0;
+                    //scare closest villager without moving
+                    agent.speed = 0;
+
+                    //Start attacking and then wait to attack again
+                    attackTime += Time.deltaTime;
+                    if (attackTime >= attackRate)
+                    {
+                        isAttacking = true;
+
+                        //Get anim position 
+                        Vector3 animPosition = transform.GetChild(0).transform.position;
+
+                        //Cast projectile
+                        GameObject proj = miniGameManager.Instance.poolParticle(miniGameManager.SCARE_PROJECTILE, animPosition);
+                        proj.GetComponent<Projectile>().objective = currentTarget.gameObject;
+                        proj.GetComponent<Projectile>().type = "villager";
+                        proj.GetComponent<Projectile>().damage = damage;
+
+                        miniGameManager.Instance.numScares++;
+                        attackTime = 0;
+                    }
                 }
-            }
-            else
-            {
-                //keep moving to waypoint
-                agent.SetDestination(currentTarget.position);
+                else
+                {
+                    //keep moving to villager
+                    if (agent.speed == 0)
+                    {
+                        setOriginalSpeed();
+                    }
+                    agent.SetDestination(currentTarget.gameObject.transform.position);
+                }
             }
         }
     }
 
-    public Transform getVillagerInRange()
+    public Collider2D getVillagerInRange()
     {
         //es pot cridar cada X segons x millorar rendiment i no a cada frame al update
 
-        Collider2D[] collisions = Physics2D.OverlapCircleAll(transform.position, range);
+        Collider2D[] collisions = Physics2D.OverlapCircleAll(transform.position, detectionRange);
 
         List<Collider2D> villagers = new List<Collider2D>(); //not favourite villagers
         List<Collider2D> favVillagers = new List<Collider2D>();
-        Transform closestVillager = null;
+        Collider2D closestVillager = null;
 
         foreach (Collider2D collision in collisions)
         {
@@ -200,13 +238,13 @@ public abstract class Monster : MonoBehaviour
             {
                 if (closestVillager == null)
                 {
-                    closestVillager = favVillager.transform;
+                    closestVillager = favVillager;
                 }
                 else
                 {
                     if ((favVillager.transform.position - transform.position).magnitude < (closestVillager.transform.position - transform.position).magnitude)
                     {
-                        closestVillager = favVillager.transform;
+                        closestVillager = favVillager;
                     }
                 }
             }
@@ -219,13 +257,13 @@ public abstract class Monster : MonoBehaviour
             {
                 if (closestVillager == null)
                 {
-                    closestVillager = villager.transform;
+                    closestVillager = villager;
                 }
                 else
                 {
                     if ((villager.transform.position - transform.position).magnitude < (closestVillager.transform.position - transform.position).magnitude)
                     {
-                        closestVillager = villager.transform;
+                        closestVillager = villager; //isInRange
                     }
                 }
             }
@@ -235,7 +273,7 @@ public abstract class Monster : MonoBehaviour
 
     public virtual bool checkVillagersInRange()
     {
-        Collider2D[] collisions = Physics2D.OverlapCircleAll(transform.position, range);
+        Collider2D[] collisions = Physics2D.OverlapCircleAll(transform.position, detectionRange);
 
         foreach (Collider2D collision in collisions)
         {
@@ -250,5 +288,25 @@ public abstract class Monster : MonoBehaviour
     public void changeLayer()
     {
         gameObject.layer = 0;
+    }
+
+    public void setOriginalSpeed()
+    {
+        agent.speed = velocity;
+    }
+
+    public bool targetIsInAttackRange(Collider2D target)
+    {
+        bool isInRange = false;
+        Collider2D[] collisions = Physics2D.OverlapCircleAll(transform.position, attackRange);
+
+        foreach (Collider2D collision in collisions)
+        {
+            if (collision == target )
+            {
+                isInRange = true;
+            }
+        }
+        return isInRange;
     }
 }

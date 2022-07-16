@@ -28,21 +28,33 @@ public class Clown : Monster
         }
         else
         {
-            if (isStunning)
+            if (hasDied)
             {
-                time += Time.deltaTime;
-                health = (int)((int)lifeTime - time);
+                float nTime = transform.GetChild(0).GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime;
+                if (nTime > 1.0f)
+                {
+                    //death animation has finished
+                    die();
+                }
             }
+            else
+            {
+                if (isStunning)
+                {
+                    time += Time.deltaTime;
+                    health = (int)((int)lifeTime - time);
+                }
 
-            if (!isStunning || isStunning && time < lifeTime)
-            {
-                stun();
+                if (!isStunning || isStunning && time < lifeTime)
+                {
+                    stun();
+                }
+                else if (isStunning && time >= lifeTime)
+                {
+                    die();
+                }
+                healthBar.setValue(health);
             }
-            else if (isStunning && time >= lifeTime)
-            {
-                die();
-            }
-            healthBar.setValue(health);
         }
     }
 
@@ -52,7 +64,10 @@ public class Clown : Monster
         canvas = GameObject.Find("Canvas").GetComponent<RectTransform>();
         audioSource.clip = sounds[SPAWN];
         audioSource.Play();
-        Instantiate(spawnParticles, transform.position, Quaternion.identity);
+        //Instantiate(spawnParticles, transform.position, Quaternion.identity);
+
+        //spawn particles
+        animator.Play("monster_spawn");
 
         healthBar = Instantiate(healthBar, canvas);
         healthBar.setTarget(transform);
@@ -117,7 +132,7 @@ public class Clown : Monster
     {
         //es pot cridar cada X segons x millorar rendiment i no a cada frame al update
 
-        Collider2D[] collisions = Physics2D.OverlapCircleAll(transform.position, range);
+        Collider2D[] collisions = Physics2D.OverlapCircleAll(transform.position, detectionRange);
 
         List<GameObject> villagers = new List<GameObject>();
 

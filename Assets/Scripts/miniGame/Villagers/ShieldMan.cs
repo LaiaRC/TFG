@@ -20,6 +20,9 @@ public class ShieldMan : Villager
     protected float time = 0;
     protected float timeStopped = 0;
 
+    public bool wasMovingRight = false;
+    public bool isMovingRight = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,6 +50,14 @@ public class ShieldMan : Villager
     // Update is called once per frame
     void Update()
     {
+        //Update direction
+        isMovingRight = transform.GetComponent<CharacterMovement>().movingRight;
+        if (agent.desiredVelocity.sqrMagnitude > 0)
+        {
+            //is moving
+            wasMovingRight = isMovingRight;
+        }
+
         if (miniGameManager.Instance.gameOver)
         {
             gameOver();
@@ -88,6 +99,12 @@ public class ShieldMan : Villager
                 timeStopped = 0;
             }
 
+            //Play block animation if it's blocking
+            if (isBlocking || isPermanentBlocking)
+            {
+                playBlockAnimation();
+            }
+            
             scareBar.setValue(currentScarePoints); //Aqui sera el take 
 
         }
@@ -221,17 +238,36 @@ public class ShieldMan : Villager
             if (checkMonstersInRange())
             {
                 Transform currentTarget = getMonsterInRange();
-
-                if ((transform.position - currentTarget.position).magnitude <= 5 + 0.2f)
+                if (currentTarget != null)
                 {
-
-                    attackTime += Time.deltaTime;
-                    if (attackTime >= attackRate)
+                    if ((transform.position - currentTarget.position).magnitude <= 5 + 0.2f)
                     {
-                        currentTarget.gameObject.GetComponent<Monster>().takeDamage(damage);
-                        attackTime = 0;
-                    }
 
+                        attackTime += Time.deltaTime;
+                        if (attackTime >= attackRate)
+                        {
+                            //play attack animation
+                            if (!wasMovingRight)
+                            {
+                                //Play left animation
+                                for (int i = 0; i < transform.GetChild(0).childCount; i++)
+                                {
+                                    transform.GetChild(0).GetChild(i).GetComponent<Animator>().Play("shieldMan_attack_left");
+                                }
+                            }
+                            else
+                            {
+                                //Play right animation
+                                for (int i = 0; i < transform.GetChild(0).childCount; i++)
+                                {
+                                    transform.GetChild(0).GetChild(i).GetComponent<Animator>().Play("shieldMan_attack_right");
+                                }
+                            }
+
+                            currentTarget.gameObject.GetComponent<Monster>().takeDamage(damage);
+                            attackTime = 0;
+                        }
+                    }
                 }
             }
         }
@@ -244,7 +280,8 @@ public class ShieldMan : Villager
     }
 
     public void block()
-    {
+    {       
+
         isBlocking = true;
         agent.speed = 0;
         isRunning = false;
@@ -287,5 +324,28 @@ public class ShieldMan : Villager
         agent.enabled = true;
         agent.speed = velocity;
         isBlocking = false;
+    }
+
+    public void playBlockAnimation()
+    {
+        for (int i = 0; i < transform.GetChild(0).childCount; i++)
+        {
+            float nTime = transform.GetChild(0).GetChild(i).GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime;
+            if (nTime > 1.0f)
+            {
+                //animation has finished
+                //play block animation
+                if (!wasMovingRight)
+                {
+                    //Play left animation                    
+                    transform.GetChild(0).GetChild(i).GetComponent<Animator>().Play("shieldMan_block_left");                    
+                }
+                else
+                {
+                    //Play right animation
+                    transform.GetChild(0).GetChild(i).GetComponent<Animator>().Play("shieldMan_block_right");                    
+                }
+            }
+        }
     }
 }

@@ -95,7 +95,8 @@ public class Villager : MonoBehaviour
         
         audioSource.clip = sounds[DIE];
         audioSource.Play();
-        Instantiate(deathParticles, transform.position, Quaternion.identity);
+        //Instantiate(deathParticles, transform.position, Quaternion.identity);
+        GameObject deathParticles = miniGameManager.Instance.poolParticle(miniGameManager.VILLAGER_DEATH_PARTICLES, transform.position);
         changeAnimationState(DIE_ANIM);
         scareBar.setValue(0);
         currentScarePoints = 0;
@@ -164,6 +165,11 @@ public class Villager : MonoBehaviour
         if (currentScarePoints >= maxScarePoints)
         {
             die();
+        }
+        else
+        {
+            //Play hit animation
+            animator.Play("scare_projectile_hit");
         }
     }
 

@@ -53,8 +53,13 @@ public class miniGameManager : MonoBehaviour
     private bool isTouching = false;
     private float time = 0;
 
+    //Particle prefabs
+    public GameObject sorcererProjectile;
+    public GameObject villagerDeathParticles;
+    public GameObject scareProjectile;
+
     //Game variables
-    public static float MINIGAME_MAX_TIME = 30f; //in seconds
+    public static float MINIGAME_MAX_TIME = 200f; //in seconds
 
     //UI variables
     public static float HOLD_TIME = 0.25f;
@@ -92,6 +97,12 @@ public class miniGameManager : MonoBehaviour
     public static string STICK = "stick";
     public static string GEM = "gem";
 
+    //Particles
+    public static int CURRENT_PARTICLES = 5;
+    public static string SORCERER_PROJECTILE = "sorcererProjectile";
+    public static string VILLAGER_DEATH_PARTICLES = "villagerDeathParticles";
+    public static string SCARE_PROJECTILE = "scareProjectile";
+
 
     #region SINGLETON PATTERN
     public static miniGameManager Instance;
@@ -121,6 +132,25 @@ public class miniGameManager : MonoBehaviour
             MONSTERS.Add(monster.name, monster);
         }
 
+        //Fill POOLS dictionary with particles
+        ObjectPool pool = new ObjectPool();
+        pool.objectToPool = sorcererProjectile;
+        pool.amountToPool = CURRENT_PARTICLES;
+        pool.setup();
+        POOLS.Add(SORCERER_PROJECTILE, pool);
+
+        ObjectPool pool1 = new ObjectPool();
+        pool1.objectToPool = villagerDeathParticles;
+        pool1.amountToPool = CURRENT_PARTICLES;
+        pool1.setup();
+        POOLS.Add(VILLAGER_DEATH_PARTICLES, pool1);
+
+        ObjectPool pool2 = new ObjectPool();
+        pool2.objectToPool = scareProjectile;
+        pool2.amountToPool = CURRENT_PARTICLES;
+        pool2.setup();
+        POOLS.Add(SCARE_PROJECTILE, pool2);
+
         //Only to debug, fill units_monsters dictionary 
         UNITS_MONSTERS.Add(SKELETON, 20);
         UNITS_MONSTERS.Add(ZOMBIE, 20);
@@ -139,7 +169,7 @@ public class miniGameManager : MonoBehaviour
         time += Time.deltaTime;
         if (time < MINIGAME_MAX_TIME)
         {
-            if (currentFlag > 0 && !shieldManSpawn.activeInHierarchy && numMonstersInvoked > 10)
+            if (currentFlag > 0 && !shieldManSpawn.activeInHierarchy && numMonstersInvoked > 20)
             {
                 shieldManSpawn.SetActive(true);
             }
@@ -340,6 +370,12 @@ public class miniGameManager : MonoBehaviour
             {
                 if (MONSTERS.TryGetValue(monsterName, out GameObject monster))
                 {
+                    //Spawn particles
+                    //GameObject particle = poolParticle(MONSTER_SPAWN, new Vector3(position.x, position.y, 0));
+
+                    //wait until spawn animation finishes
+                    //yield return new WaitUntil(() => particle.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f);
+
                     GameObject mons = Instantiate(monster, new Vector3(position.x, position.y, 0), Quaternion.identity);
                     numMonstersInvoked++;
                     UNITS_MONSTERS[monsterName] = quantity - 1;
@@ -424,5 +460,49 @@ public class miniGameManager : MonoBehaviour
         }
 
         gameOverPanel.SetActive(true);
+    }
+
+    public GameObject poolParticle(string objectToPool, Vector3 position)
+    {
+        GameObject particle = null;
+        if (POOLS.TryGetValue(objectToPool, out ObjectPool pool))
+        {
+            int currentParticles = 0;
+            foreach (GameObject go in pool.pooledObjects)
+            {
+                if (go.activeInHierarchy)
+                {
+                    currentParticles++;
+                }
+            }
+            if (currentParticles < CURRENT_PARTICLES)
+            {
+                GameObject temp = pool.GetPooledObject();
+                temp.SetActive(true);
+                temp.transform.position = position;
+                particle = temp;
+            }
+            else
+            {
+                //modify quantity to pull
+                pool.amountToPool++;
+                pool.setup();
+
+                GameObject temp = pool.GetPooledObject();
+                temp.SetActive(true);
+                temp.transform.position = position;
+                particle = temp;
+
+                CURRENT_PARTICLES++;
+
+                //Fill POOLS dictionary with particles
+                //ObjectPool pool = new ObjectPool();
+                /*pool.objectToPool = sorcererProjectile;
+                pool.amountToPool = INITIAL_PARTICLES;
+                pool.setup();
+                POOLS.Add(SORCERER_PROJECTILE, pool);*/
+            }
+        }
+        return particle;
     }
 }

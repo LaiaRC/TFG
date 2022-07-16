@@ -39,9 +39,21 @@ public class Witch : Monster
         }
         else
         {
-            time += Time.deltaTime;
-            move();
-            invokeSkeletons();
+            if (hasDied)
+            {
+                float nTime = transform.GetChild(0).GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime;
+                if (nTime > 1.0f)
+                {
+                    //death animation has finished
+                    die();
+                }
+            }
+            else
+            {
+                time += Time.deltaTime;
+                move();
+                invokeSkeletons();
+            }
         }
     }
 
@@ -113,7 +125,16 @@ public class Witch : Monster
                 if (attackTime >= attackRate)
                 {
                     isAttacking = true;
-                    currentTarget.gameObject.GetComponent<Villager>().takeScare(damage);
+
+                    //Get anim position 
+                    Vector3 animPosition = transform.GetChild(0).transform.position;
+
+                    //Cast projectile
+                    GameObject proj = miniGameManager.Instance.poolParticle(miniGameManager.SCARE_PROJECTILE, animPosition);
+                    proj.GetComponent<Projectile>().objective = currentTarget.gameObject;
+                    proj.GetComponent<Projectile>().type = "villager";
+                    proj.GetComponent<Projectile>().damage = damage;
+
                     miniGameManager.Instance.numScares++;
                     attackTime = 0;
                 }

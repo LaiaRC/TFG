@@ -9,7 +9,10 @@ public class Mom : Villager
 
     protected bool isProtecting = false;
     protected Vector3 childPosition = Vector3.zero; //avoid that mom never gets to target because child is dead
-    
+
+    public bool wasMovingRight = false;
+    public bool isMovingRight = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +27,14 @@ public class Mom : Villager
     // Update is called once per frame
     void Update()
     {
+        //Update direction
+        isMovingRight = transform.GetComponent<CharacterMovement>().movingRight;
+        if (agent.desiredVelocity.sqrMagnitude > 0)
+        {
+            //is moving
+            wasMovingRight = isMovingRight;
+        }
+
         if (miniGameManager.Instance.gameOver)
         {
             gameOver();
@@ -222,6 +233,17 @@ public class Mom : Villager
                             attackTime += Time.deltaTime;
                             if (attackTime >= attackRate)
                             {
+                                //play attack animation
+                                if (!wasMovingRight)
+                                {
+                                    //Play left animation
+                                    transform.GetChild(0).GetComponent<Animator>().Play("mom_attack_left");
+                                }
+                                else
+                                {
+                                    //Play right animation
+                                    transform.GetChild(0).GetComponent<Animator>().Play("mom_attack_right");
+                                }
                                 currentTarget.gameObject.GetComponent<Monster>().takeDamage(damage);
                                 attackTime = 0;
                             }

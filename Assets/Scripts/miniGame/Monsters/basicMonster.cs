@@ -30,7 +30,7 @@ public class basicMonster : Monster
             gameOver();
         }
         else
-        {
+        {            
             move();
         }
     }
