@@ -30,6 +30,9 @@ public class GameManager : MonoBehaviour
     public GameObject descriptionDialog;
     public GameObject offlineDialog;
     public List<Sprite> resourcesIcons;
+    public List<Sprite> monstersIcons;
+    public List<Sprite> dropsIcons;
+    public List<Sprite> villagersIcons;
     public List<GameObject> buildings;
     public List<GameObject> constructionsBuilt;
     public TextMeshProUGUI saveText;
@@ -65,6 +68,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     private void Awake()
     {
+        //gameObject.GetComponent<SaveManager>().DeleteDebug();
         if (Instance != null && Instance != this)
         {
             Destroy(this);
@@ -256,7 +260,7 @@ public class GameManager : MonoBehaviour
         {
             if (building.GetComponent<Building>().production_cost.Count > 0)
             {
-                foreach (Requirement requeriment in building.GetComponent<Building>().production_cost)
+                foreach (RequirementBuilding requeriment in building.GetComponent<Building>().production_cost)
                 {
                     enoughResource = false;
                     if (Data.Instance.INVENTORY.TryGetValue(requeriment.resourceNameKey, out int quantity))
@@ -291,7 +295,7 @@ public class GameManager : MonoBehaviour
         {
             if (building.GetComponent<Building>().production_cost.Count > 0)
             {                
-                foreach (Requirement requeriment in building.GetComponent<Building>().production_cost)
+                foreach (RequirementBuilding requeriment in building.GetComponent<Building>().production_cost)
                 {
                     if (Data.Instance.INVENTORY.TryGetValue(requeriment.resourceNameKey, out int quantity))
                     {

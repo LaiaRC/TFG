@@ -34187,6 +34187,34 @@ MonoBehaviour:
   - {fileID: 21300000, guid: bbb33cd0fe171094c8831757a8ceaae0, type: 3}
   - {fileID: 21300000, guid: 0c9ced9baf767c34db115531e4fe1795, type: 3}
   - {fileID: 21300000, guid: 5492d2de862ab814fa5ec3745cce8858, type: 3}
+  monstersIcons:
+  - {fileID: 7206118203239918969, guid: 3c4c4eafa5d3cdf4ca803ff46ca6fc2e, type: 3}
+  - {fileID: 8581991994985177897, guid: 0b8008cbd07b4064c8baf25eebb29293, type: 3}
+  - {fileID: 1736641193778822097, guid: 7962accfb9e0f6d46bf5fa2b7aa9a4d6, type: 3}
+  - {fileID: -1272586461083562588, guid: 2839dffcf3bf07b4f904e3b67ec2f02c, type: 3}
+  - {fileID: 295674366464683155, guid: 1199b389711b50145a50a65225379285, type: 3}
+  - {fileID: 7805668267725298908, guid: bb0a6d2ea0826e04d89683d6daa0e2ba, type: 3}
+  - {fileID: -1756532550940944839, guid: 1f076f860458f7d40bc9d046958b586d, type: 3}
+  - {fileID: 207381642935146538, guid: a6bcf6986cd93ab4f99aaa224aeca1a9, type: 3}
+  - {fileID: -683525234326013033, guid: 77ac055559f6a74499edc5920b83ab43, type: 3}
+  - {fileID: -5759696050290676843, guid: 17beca3e3d6139c4f9a25e65978e4a4a, type: 3}
+  dropsIcons:
+  - {fileID: 21300000, guid: 0a14a21ca28ca614abd6e5fc71b96a3b, type: 3}
+  - {fileID: 21300000, guid: 6cb01675e746fdc40b1f5cc049f61f61, type: 3}
+  - {fileID: 21300000, guid: 74048639abdf6284fb1048c84a410546, type: 3}
+  - {fileID: 21300000, guid: 1b8a3a37b5202864b9d0a731265beaed, type: 3}
+  - {fileID: 21300000, guid: 9b709a9de2b5ea544bb5e71ccaaba42b, type: 3}
+  - {fileID: 21300000, guid: f09001b62069526468a7efbc8e1c2ef3, type: 3}
+  - {fileID: 21300000, guid: f17ae259dcc9da34cb9d7c38d961cd67, type: 3}
+  - {fileID: 21300000, guid: c4d59d1d9d409a04da2f5228205a8ce6, type: 3}
+  villagersIcons:
+  - {fileID: 4334207460417465507, guid: 196be2f5c2a143b4abcc68daa02d6522, type: 3}
+  - {fileID: 5165834394559894997, guid: 950c236874915cd47afdb8bc644b3ac1, type: 3}
+  - {fileID: 638577554652680042, guid: 4159061fd53a6a243a13077787d824fd, type: 3}
+  - {fileID: -4595008655229252104, guid: 0ce848bf202fd5a4dba355c7fd360686, type: 3}
+  - {fileID: 6827581200123067571, guid: 9fbae3b2dba2cdb4bacbfb0669fef4bb, type: 3}
+  - {fileID: 8629931564238155836, guid: 06fd3557fd9b69c4b8dac2142578d3bf, type: 3}
+  - {fileID: -1669217411902873199, guid: f4e067efcd6537f41b744d2e950fc016, type: 3}
   buildings:
   - {fileID: 2000697655669412042, guid: 4ba091b04e7d06649be5fa2f0d0e326b, type: 3}
   - {fileID: 2000697655669412042, guid: b31a37c8f66cdb54b9f97fcbd3db3c23, type: 3}
@@ -34200,6 +34228,7 @@ MonoBehaviour:
   - {fileID: 2000697655669412042, guid: 59b0e7ff66b249b47b34458b51f20f03, type: 3}
   - {fileID: 2000697655669412042, guid: f5e3407a0ab66e24fb547da65f10e557, type: 3}
   - {fileID: 2000697655669412042, guid: 14f1c2591246c734d843123537223ae7, type: 3}
+  - {fileID: 2000697655669412042, guid: 22034ca2cbeeca4408cf2c7d5ed7ee9a, type: 3}
   constructionsBuilt: []
   saveText: {fileID: 745045727}
   loadText: {fileID: 2064544183}
@@ -34218,6 +34247,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resourcesIcons: []
+  monstersIcons: []
+  dropsIcons: []
+  villagersIcons: []
 --- !u!4 &1491611998
 Transform:
   m_ObjectHideFlags: 0

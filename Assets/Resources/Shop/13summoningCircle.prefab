@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &376119412293239676
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2545819794617544517}
+  - component: {fileID: 3233074414995182345}
+  m_Layer: 0
+  m_Name: 13summoningCircle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2545819794617544517
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 376119412293239676}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.183466, y: -0.055590235, z: 2743.3562}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3233074414995182345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 376119412293239676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef958bbf2b2368e43b925d534027d411, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Summoning Circle
+  id: summoningCircle
+  description: idk
+  resourceText1: 
+  resourceText2: 
+  resource1Icon: {fileID: 0}
+  resource2Icon: {fileID: 0}
+  maxQuantity: 3
+  type: 0
+  icon: {fileID: 7206118203239918969, guid: 3c4c4eafa5d3cdf4ca803ff46ca6fc2e, type: 3}
+  prefab: {fileID: 2000697655669412042, guid: 22034ca2cbeeca4408cf2c7d5ed7ee9a, type: 3}
+  produces1: {fileID: 7206118203239918969, guid: 3c4c4eafa5d3cdf4ca803ff46ca6fc2e, type: 3}
+  produces2: {fileID: 8201007689340367071, guid: 0b8008cbd07b4064c8baf25eebb29293, type: 3}
+  produces3: {fileID: 1736641193778822097, guid: 7962accfb9e0f6d46bf5fa2b7aa9a4d6, type: 3}
+  order: 5

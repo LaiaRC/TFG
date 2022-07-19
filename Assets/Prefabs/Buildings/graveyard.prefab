@@ -121,7 +121,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 290167122890808503}
+      - m_Target: {fileID: 2615384320715229706}
         m_TargetAssemblyTypeName: Building, Assembly-CSharp
         m_MethodName: upgrade
         m_Mode: 1
@@ -253,7 +253,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 290167122890808503}
+      - m_Target: {fileID: 2615384320715229706}
         m_TargetAssemblyTypeName: Building, Assembly-CSharp
         m_MethodName: pause
         m_Mode: 1
@@ -759,7 +759,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 290167122890808503}
+      - m_Target: {fileID: 2615384320715229706}
         m_TargetAssemblyTypeName: Building, Assembly-CSharp
         m_MethodName: setActiveResource
         m_Mode: 5
@@ -864,7 +864,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1005562922093219316
 RectTransform:
   m_ObjectHideFlags: 0
@@ -982,12 +982,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1505155503864857801}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 737886092570155380}
-  m_RootOrder: 3
+  m_Father: {fileID: 7500240430325155212}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &346930488504854447
 Tilemap:
@@ -1369,8 +1369,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1384341458226974199}
-  - component: {fileID: 290167122890808503}
   - component: {fileID: 983532502411858490}
+  - component: {fileID: 2615384320715229706}
   m_Layer: 0
   m_Name: graveyard
   m_TagString: Untagged
@@ -1398,85 +1398,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &290167122890808503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2000697655669412042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a94697345af8aa646a2423a7cb3889c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  building_name: Graveyard
-  id: graveyard
-  production_cost: []
-  upgrade_cost:
-  - list:
-    - resourceNameKey: poisonIvy
-      quantity: 10
-  - list:
-    - resourceNameKey: blackCatHair
-      quantity: 400
-  resources:
-  - bone
-  - rottenFlesh
-  - tombstone
-  resourcesButtons:
-  - {fileID: 3012333092958355244}
-  - {fileID: 1213862884332734816}
-  - {fileID: 3281808837747136120}
-  resourceButtonsIcons:
-  - {fileID: 4605619436018295752}
-  - {fileID: 526926918589390057}
-  - {fileID: 2084908688868898160}
-  level: 1
-  isProducing: 1
-  maxLevel: 3
-  initialActiveResource: bone
-  upgradeText1: {fileID: 2432693176335455942}
-  upgradeText2: {fileID: 4922436297077787610}
-  upgradeIcon1: {fileID: 3391052077381795444}
-  upgradeIcon2: {fileID: 3046558901654492477}
-  resourceTimeText: {fileID: 2776917278777606543}
-  activeResourceIcon: {fileID: 3582714354420112990}
-  playButton: {fileID: 5891379088711128686}
-  pauseButton: {fileID: 5000100155185299252}
-  levelText: {fileID: 8606896109660575028}
-  maxText: {fileID: 8009462343562368781}
-  upgradeButton: {fileID: 3772692392834935417}
-  timeBar: {fileID: 4301120364474364937}
-  level1Background: {fileID: 1305295824661781195}
-  level2Background: {fileID: 734890750666836927}
-  level3Background: {fileID: 4460226560711756619}
-  level2Tilemap: {fileID: 5842455406773973953}
-  level2Decoration: {fileID: 346930488504854447}
-  level3Tilemap: {fileID: 6093485870902350481}
-  level3Decoration: {fileID: 3345647830857418910}
-  requirementIcon: {fileID: 3111201497504285984}
-  requirementIcon1: {fileID: 6092557359222074753}
-  requirementIcon2: {fileID: 7442691076971409153}
-  requirementText: {fileID: 2583580523715973379}
-  requirement1Text: {fileID: 6001274924497203358}
-  requirement2Text: {fileID: 1445051763481190469}
-  position: {x: 0, y: 0, z: 0}
-  tempArea:
-    m_Position: {x: 0, y: 0, z: 0}
-    m_Size: {x: 0, y: 0, z: 0}
-  activeResource: 
-  numTypeBuildings: 0
-  timeLeft: 0
-  time: 0
-  isPaused: 0
-  placed: 0
-  area:
-    m_Position: {x: 0, y: 0, z: 0}
-    m_Size: {x: 3, y: 6, z: 1}
-  confirmUI: {fileID: 1688311054014621016}
-  canvasInterior: {fileID: 1362195048390551837}
-  activeResourceTime: 0
 --- !u!61 &983532502411858490
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1503,6 +1424,77 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 13.826216, y: 7.577388}
   m_EdgeRadius: 0
+--- !u!114 &2615384320715229706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000697655669412042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b393607fe5b188c4cb762f22c923dfef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  building_name: Graveyard
+  id: graveyard
+  production_cost: []
+  upgrade_cost:
+  - list:
+    - resourceNameKey: poisonIvy
+      quantity: 10
+  - list:
+    - resourceNameKey: blackCatHair
+      quantity: 40
+  resources:
+  - bone
+  - rottenFlesh
+  - tombstone
+  resourcesButtons: []
+  resourceButtonsIcons: []
+  level: 0
+  isProducing: 0
+  maxLevel: 0
+  initialActiveResource: bone
+  upgradeText1: {fileID: 0}
+  upgradeText2: {fileID: 0}
+  upgradeIcon1: {fileID: 0}
+  upgradeIcon2: {fileID: 0}
+  resourceTimeText: {fileID: 0}
+  activeResourceIcon: {fileID: 0}
+  playButton: {fileID: 0}
+  pauseButton: {fileID: 0}
+  levelText: {fileID: 0}
+  maxText: {fileID: 0}
+  upgradeButton: {fileID: 0}
+  timeBar: {fileID: 0}
+  level1Background: {fileID: 0}
+  level2Background: {fileID: 0}
+  level3Background: {fileID: 0}
+  level2Grid: {fileID: 0}
+  level3Grid: {fileID: 0}
+  requirementIcon: {fileID: 0}
+  requirementIcon1: {fileID: 0}
+  requirementIcon2: {fileID: 0}
+  requirementText: {fileID: 0}
+  requirement1Text: {fileID: 0}
+  requirement2Text: {fileID: 0}
+  position: {x: 0, y: 0, z: 0}
+  tempArea:
+    m_Position: {x: 0, y: 0, z: 0}
+    m_Size: {x: 0, y: 0, z: 0}
+  activeResource: bone
+  numTypeBuildings: 0
+  timeLeft: 0
+  time: 0
+  isPaused: 0
+  placed: 0
+  area:
+    m_Position: {x: 0, y: 0, z: 0}
+    m_Size: {x: 6, y: 3, z: 0}
+  confirmUI: {fileID: 1688311054014621016}
+  canvasInterior: {fileID: 1362195048390551837}
+  activeResourceTime: 0
 --- !u!1 &2028175942808267847
 GameObject:
   m_ObjectHideFlags: 0
@@ -1812,12 +1804,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2189968913541943358}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 737886092570155380}
-  m_RootOrder: 4
+  m_Father: {fileID: 146131272683574497}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &6093485870902350481
 Tilemap:
@@ -2503,12 +2495,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 7208219705324182168}
-  - {fileID: 4053310705314343686}
-  - {fileID: 3966452414595209450}
-  - {fileID: 64978291973139491}
-  - {fileID: 714303994953995699}
-  - {fileID: 7067727655603321922}
+  - {fileID: 7986907724280316533}
+  - {fileID: 7500240430325155212}
+  - {fileID: 146131272683574497}
   - {fileID: 7224789763009078131}
   m_Father: {fileID: 1384341458226974199}
   m_RootOrder: 1
@@ -3193,7 +3182,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 290167122890808503}
+      - m_Target: {fileID: 2615384320715229706}
         m_TargetAssemblyTypeName: Building, Assembly-CSharp
         m_MethodName: setActiveResource
         m_Mode: 5
@@ -3325,7 +3314,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 290167122890808503}
+      - m_Target: {fileID: 2615384320715229706}
         m_TargetAssemblyTypeName: Building, Assembly-CSharp
         m_MethodName: hideBuildingInterior
         m_Mode: 1
@@ -3696,7 +3685,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 290167122890808503}
+      - m_Target: {fileID: 2615384320715229706}
         m_TargetAssemblyTypeName: Building, Assembly-CSharp
         m_MethodName: setActiveResource
         m_Mode: 5
@@ -3797,6 +3786,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates: []
+--- !u!1 &3843892852014012105
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 146131272683574497}
+  m_Layer: 0
+  m_Name: Level3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &146131272683574497
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3843892852014012105}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 714303994953995699}
+  - {fileID: 7067727655603321922}
+  m_Father: {fileID: 737886092570155380}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3979056501392526175
 GameObject:
   m_ObjectHideFlags: 0
@@ -4133,7 +4154,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 290167122890808503}
+      - m_Target: {fileID: 2615384320715229706}
         m_TargetAssemblyTypeName: Building, Assembly-CSharp
         m_MethodName: play
         m_Mode: 1
@@ -4304,12 +4325,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4520249562741556355}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 737886092570155380}
-  m_RootOrder: 2
+  m_Father: {fileID: 7500240430325155212}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &5842455406773973953
 Tilemap:
@@ -4814,11 +4835,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4550566565073394429}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 737886092570155380}
+  m_Father: {fileID: 7986907724280316533}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &8917917628223720610
@@ -5893,7 +5914,7 @@ RectTransform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.823, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -5, y: 2.5}
   m_SizeDelta: {x: -10, y: -5}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5965,7 +5986,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 737886092570155380}
-  m_RootOrder: 6
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &7331705700015554597
 Tilemap:
@@ -8743,11 +8764,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7316521833400432619}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 737886092570155380}
+  m_Father: {fileID: 7986907724280316533}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &4611464656877787415
@@ -10318,6 +10339,38 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &7999128511679042173
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7986907724280316533}
+  m_Layer: 0
+  m_Name: Level1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7986907724280316533
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7999128511679042173}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 7208219705324182168}
+  - {fileID: 4053310705314343686}
+  m_Father: {fileID: 737886092570155380}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8187242636743107778
 GameObject:
   m_ObjectHideFlags: 0
@@ -10396,6 +10449,38 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &8223215181110192940
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7500240430325155212}
+  m_Layer: 0
+  m_Name: Level2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7500240430325155212
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8223215181110192940}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 3966452414595209450}
+  - {fileID: 64978291973139491}
+  m_Father: {fileID: 737886092570155380}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8547251544690983616
 GameObject:
   m_ObjectHideFlags: 0
@@ -10651,7 +10736,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 290167122890808503}
+      - m_Target: {fileID: 2615384320715229706}
         m_TargetAssemblyTypeName: Building, Assembly-CSharp
         m_MethodName: cancelBuilding
         m_Mode: 1
@@ -10918,7 +11003,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 290167122890808503}
+      - m_Target: {fileID: 2615384320715229706}
         m_TargetAssemblyTypeName: Building, Assembly-CSharp
         m_MethodName: confirmBuilding
         m_Mode: 1
@@ -10959,8 +11044,8 @@ Transform:
   m_LocalPosition: {x: 1.9948, y: -0.32687, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 737886092570155380}
-  m_RootOrder: 5
+  m_Father: {fileID: 146131272683574497}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &3345647830857418910
 Tilemap:

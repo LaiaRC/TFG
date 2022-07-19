@@ -45,6 +45,13 @@ public class Player : MonoBehaviour
                     {
                         touchedObject.GetComponent<Building>().showBuildingInterior();
                     }
+                }else if (touchedObject.GetComponent<SummoningCircle>() != null && !dragged) //maybe no cal
+                {
+                    //Summoning circle building touched
+                    if (touchedObject.GetComponent<SummoningCircle>().placed)
+                    {
+                        touchedObject.GetComponent<SummoningCircle>().showBuildingInterior();
+                    }
                 }     
             }
         }

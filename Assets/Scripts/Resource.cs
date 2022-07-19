@@ -26,33 +26,4 @@ public class Resource : MonoBehaviour
     }
 
     public Resource() { }
-
-    
-    private void Start()
-    { 
-        /*Requirement[] r;
-        Resource re;
-
-        //Cementery 
-        r = new Requirement[2];
-        re = new Resource();
-        r[0] = new Requirement(10, re);
-        re = new Resource();
-        r[1] = new Requirement(5, re);
-        requirements_.Add("Cementery", r);
-
-        //Lapida 
-        r = new Requirement[2];
-        re = new Resource();
-        r[0] = new Requirement(10, re);
-        re = new Resource();
-        r[1] = new Requirement(5, re);
-        requirements_.Add("Lapida", r);
-
-        if(requirements_.TryGetValue("Cementery", out Requirement[] requirements))
-        {
-            requirements[0].quantity = 10;
-        }*/
-    }
-
 }

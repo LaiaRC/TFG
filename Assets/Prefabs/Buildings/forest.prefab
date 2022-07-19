@@ -31,12 +31,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5912581561088487616}
-  m_Father: {fileID: 4920041683527209920}
-  m_RootOrder: 0
+  m_Father: {fileID: 7257712783884627411}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 268.3, y: 49}
+  m_AnchoredPosition: {x: 176.77237, y: 41.027466}
   m_SizeDelta: {x: 90.4616, y: 90.4615}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8877302956463673179
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 290167122890808503}
+      - m_Target: {fileID: 6923097723000751112}
         m_TargetAssemblyTypeName: Building, Assembly-CSharp
         m_MethodName: upgrade
         m_Mode: 1
@@ -1523,12 +1523,12 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 3621796703474875597}
-  m_RootOrder: 0
+  m_Father: {fileID: 4341730814544282667}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 49.999985, y: 49.99998}
+  m_AnchoredPosition: {x: -40.622406, y: 41.327564}
   m_SizeDelta: {x: 90.4616, y: 90.4615}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &482939945296575466
@@ -1613,7 +1613,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 290167122890808503}
+      - m_Target: {fileID: 6923097723000751112}
         m_TargetAssemblyTypeName: Building, Assembly-CSharp
         m_MethodName: pause
         m_Mode: 1
@@ -1950,8 +1950,10 @@ RectTransform:
   - {fileID: 737096757428417426}
   - {fileID: 9035997744168598977}
   - {fileID: 2830873389103196410}
+  - {fileID: 523301752148662938}
+  - {fileID: 3705262613871672753}
   m_Father: {fileID: 3621796703474875597}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2117,7 +2119,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 290167122890808503}
+      - m_Target: {fileID: 6923097723000751112}
         m_TargetAssemblyTypeName: Building, Assembly-CSharp
         m_MethodName: setActiveResource
         m_Mode: 5
@@ -2126,7 +2128,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: rottenFlesh
+          m_StringArgument: lantern
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &1321392353443611422
@@ -2222,7 +2224,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1005562922093219316
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2495,8 +2497,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1384341458226974199}
-  - component: {fileID: 290167122890808503}
   - component: {fileID: 983532502411858490}
+  - component: {fileID: 6923097723000751112}
   m_Layer: 0
   m_Name: forest
   m_TagString: Untagged
@@ -2524,87 +2526,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &290167122890808503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2000697655669412042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a94697345af8aa646a2423a7cb3889c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  building_name: Forest
-  id: forest
-  production_cost:
-  - resourceNameKey: bone
-    quantity: 15
-  upgrade_cost:
-  - list:
-    - resourceNameKey: bandages
-      quantity: 250
-  - list:
-    - resourceNameKey: poisonApple
-      quantity: 1000
-  resources:
-  - spiderweb
-  - lantern
-  - deadTreeBranch
-  resourcesButtons:
-  - {fileID: 3012333092958355244}
-  - {fileID: 1213862884332734816}
-  - {fileID: 3281808837747136120}
-  resourceButtonsIcons:
-  - {fileID: 4605619436018295752}
-  - {fileID: 526926918589390057}
-  - {fileID: 2084908688868898160}
-  level: 1
-  isProducing: 1
-  maxLevel: 3
-  initialActiveResource: spiderweb
-  upgradeText1: {fileID: 2432693176335455942}
-  upgradeText2: {fileID: 4922436297077787610}
-  upgradeIcon1: {fileID: 3391052077381795444}
-  upgradeIcon2: {fileID: 3046558901654492477}
-  resourceTimeText: {fileID: 2776917278777606543}
-  activeResourceIcon: {fileID: 3582714354420112990}
-  playButton: {fileID: 5891379088711128686}
-  pauseButton: {fileID: 5000100155185299252}
-  levelText: {fileID: 8606896109660575028}
-  maxText: {fileID: 8009462343562368781}
-  upgradeButton: {fileID: 3772692392834935417}
-  timeBar: {fileID: 4301120364474364937}
-  level1Background: {fileID: 1305295824661781195}
-  level2Background: {fileID: 734890750666836927}
-  level3Background: {fileID: 4460226560711756619}
-  level2Tilemap: {fileID: 5842455406773973953}
-  level2Decoration: {fileID: 0}
-  level3Tilemap: {fileID: 6093485870902350481}
-  level3Decoration: {fileID: 0}
-  requirementIcon: {fileID: 3111201497504285984}
-  requirementIcon1: {fileID: 6092557359222074753}
-  requirementIcon2: {fileID: 7442691076971409153}
-  requirementText: {fileID: 2583580523715973379}
-  requirement1Text: {fileID: 6001274924497203358}
-  requirement2Text: {fileID: 1445051763481190469}
-  position: {x: 0, y: 0, z: 0}
-  tempArea:
-    m_Position: {x: 0, y: 0, z: 0}
-    m_Size: {x: 0, y: 0, z: 0}
-  activeResource: 
-  numTypeBuildings: 0
-  timeLeft: 0
-  time: 0
-  isPaused: 0
-  placed: 0
-  area:
-    m_Position: {x: 0, y: 0, z: 0}
-    m_Size: {x: 3, y: 6, z: 1}
-  confirmUI: {fileID: 1688311054014621016}
-  canvasInterior: {fileID: 1362195048390551837}
-  activeResourceTime: 0
 --- !u!61 &983532502411858490
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2631,6 +2552,79 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 13.826216, y: 7.577388}
   m_EdgeRadius: 0
+--- !u!114 &6923097723000751112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000697655669412042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b393607fe5b188c4cb762f22c923dfef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  building_name: Forest
+  id: forest
+  production_cost:
+  - resourceNameKey: bone
+    quantity: 15
+  upgrade_cost:
+  - list:
+    - resourceNameKey: bandages
+      quantity: 250
+  - list:
+    - resourceNameKey: poisonApple
+      quantity: 1000
+  resources:
+  - spiderweb
+  - lantern
+  - deadTreeBranch
+  resourcesButtons: []
+  resourceButtonsIcons: []
+  level: 0
+  isProducing: 0
+  maxLevel: 0
+  initialActiveResource: spiderweb
+  upgradeText1: {fileID: 0}
+  upgradeText2: {fileID: 0}
+  upgradeIcon1: {fileID: 0}
+  upgradeIcon2: {fileID: 0}
+  resourceTimeText: {fileID: 0}
+  activeResourceIcon: {fileID: 0}
+  playButton: {fileID: 0}
+  pauseButton: {fileID: 0}
+  levelText: {fileID: 0}
+  maxText: {fileID: 0}
+  upgradeButton: {fileID: 0}
+  timeBar: {fileID: 0}
+  level1Background: {fileID: 0}
+  level2Background: {fileID: 0}
+  level3Background: {fileID: 0}
+  level2Grid: {fileID: 0}
+  level3Grid: {fileID: 0}
+  requirementIcon: {fileID: 0}
+  requirementIcon1: {fileID: 0}
+  requirementIcon2: {fileID: 0}
+  requirementText: {fileID: 0}
+  requirement1Text: {fileID: 0}
+  requirement2Text: {fileID: 0}
+  position: {x: 0, y: 0, z: 0}
+  tempArea:
+    m_Position: {x: 0, y: 0, z: 0}
+    m_Size: {x: 0, y: 0, z: 0}
+  activeResource: spiderweb
+  numTypeBuildings: 0
+  timeLeft: 0
+  time: 0
+  isPaused: 0
+  placed: 0
+  area:
+    m_Position: {x: 0, y: 0, z: 0}
+    m_Size: {x: 6, y: 3, z: 0}
+  confirmUI: {fileID: 1688311054014621016}
+  canvasInterior: {fileID: 1362195048390551837}
+  activeResourceTime: 0
 --- !u!1 &2028175942808267847
 GameObject:
   m_ObjectHideFlags: 0
@@ -4098,7 +4092,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.4289, y: 1.4289, z: 1.4289}
   m_Children:
-  - {fileID: 9178752740687100355}
   - {fileID: 7257712783884627411}
   m_Father: {fileID: 1005562922093219316}
   m_RootOrder: 10
@@ -4381,7 +4374,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 290167122890808503}
+      - m_Target: {fileID: 6923097723000751112}
         m_TargetAssemblyTypeName: Building, Assembly-CSharp
         m_MethodName: setActiveResource
         m_Mode: 5
@@ -4390,7 +4383,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: bone
+          m_StringArgument: spiderweb
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &3053133156456045728
@@ -4513,7 +4506,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 290167122890808503}
+      - m_Target: {fileID: 6923097723000751112}
         m_TargetAssemblyTypeName: Building, Assembly-CSharp
         m_MethodName: hideBuildingInterior
         m_Mode: 1
@@ -4674,8 +4667,9 @@ RectTransform:
   - {fileID: 5487960798449212742}
   - {fileID: 8237592910100958160}
   - {fileID: 5991219640543540058}
+  - {fileID: 9178752740687100355}
   m_Father: {fileID: 4920041683527209920}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4916,7 +4910,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 290167122890808503}
+      - m_Target: {fileID: 6923097723000751112}
         m_TargetAssemblyTypeName: Building, Assembly-CSharp
         m_MethodName: setActiveResource
         m_Mode: 5
@@ -4925,7 +4919,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: tombstone
+          m_StringArgument: deadTreeBranch
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &3371424008725975172
@@ -5947,12 +5941,12 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 3621796703474875597}
-  m_RootOrder: 1
+  m_Father: {fileID: 4341730814544282667}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 49.999985, y: 49.99998}
+  m_AnchoredPosition: {x: -40.622406, y: 41.327564}
   m_SizeDelta: {x: 90.4616, y: 90.4615}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1566693166147716315
@@ -6037,7 +6031,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 290167122890808503}
+      - m_Target: {fileID: 6923097723000751112}
         m_TargetAssemblyTypeName: Building, Assembly-CSharp
         m_MethodName: play
         m_Mode: 1
@@ -8074,7 +8068,7 @@ RectTransform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.823, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -5, y: 2.5}
   m_SizeDelta: {x: -10, y: -5}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -13955,8 +13949,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.4289, y: 1.4289, z: 1.4289}
   m_Children:
-  - {fileID: 523301752148662938}
-  - {fileID: 3705262613871672753}
   - {fileID: 2732448891158790235}
   - {fileID: 4341730814544282667}
   m_Father: {fileID: 1005562922093219316}
@@ -17634,7 +17626,7 @@ RectTransform:
   - {fileID: 3124860837135539675}
   - {fileID: 649701426894032437}
   m_Father: {fileID: 3621796703474875597}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -18226,7 +18218,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 290167122890808503}
+      - m_Target: {fileID: 6923097723000751112}
         m_TargetAssemblyTypeName: Building, Assembly-CSharp
         m_MethodName: cancelBuilding
         m_Mode: 1
@@ -18493,7 +18485,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 290167122890808503}
+      - m_Target: {fileID: 6923097723000751112}
         m_TargetAssemblyTypeName: Building, Assembly-CSharp
         m_MethodName: confirmBuilding
         m_Mode: 1

@@ -6,14 +6,20 @@ public class Data : MonoBehaviour
 {
     public Dictionary<string, GameObject> BUILDINGS = new Dictionary<string, GameObject>();
     public Dictionary<string, Resource> RESOURCES = new Dictionary<string, Resource>();
+    public Dictionary<string, DropInfo> DROPS = new Dictionary<string, DropInfo>();
+    public Dictionary<string, MonsterInfo> MONSTERS = new Dictionary<string, MonsterInfo>();
     public Dictionary<string, int> BUILDING_INVENTORY = new Dictionary<string, int>();
 
     /*********************DICTIONARIES SAVED****************************/
     public Dictionary<string, int> INVENTORY = new Dictionary<string, int>();
     public Dictionary<string, float[]> CONSTRUCTIONS = new Dictionary<string, float[]>(); //x i y posicio i la z el level del building (x no fer 2 diccionaris)
     public Dictionary<string, int> PLAYER = new Dictionary<string, int>();
+    public Dictionary<string, int> MONSTER_INVENTORY = new Dictionary<string, int>(); //to be saved
 
     public List<Sprite> resourcesIcons;
+    public List<Sprite> monstersIcons;
+    public List<Sprite> dropsIcons;
+    public List<Sprite> villagersIcons;
 
 
     #region RESOURCES KEYS
@@ -53,16 +59,38 @@ public class Data : MonoBehaviour
     public static string POISONAPPLE = "poisonApple";
     public static string FANG = "fang";
     public static string WOLFCLAW = "wolfClaw";
-      
     #endregion
 
+    #region DROPS KEYS
+
+    public static string SCARE = "scare";
+    public static string LOLLIPOP = "lollipop";
+    public static string RING = "ring";
+    public static string BEER = "beer";
+    public static string SWORD = "sword";
+    public static string SHIELD = "shield";
+    public static string STICK = "stick";
+    public static string GEM = "gem";
+    #endregion
+
+    #region MONSTER KEYS
+
+    public static string SKELETON = "skeleton";
+    public static string ZOMBIE = "zombie";
+    public static string GHOST = "ghost";
+    public static string JACK_LANTERN = "jackOLantern";
+    public static string BAT = "bat";
+    public static string GOBLIN = "goblin";
+    public static string VAMPIRE = "vampire";
+    public static string WITCH = "witch";
+    public static string CLOWN = "clown";
+    public static string REAPER = "reaper";
+    #endregion
 
     #region SINGLETON PATTERN
     public static Data Instance;
 
     //crear diccionaris publics de inventari i de crafteos
-
-    //(x accedir desde altres scripts fer Data.Instance.inventaryDictionary. eetc
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -73,6 +101,9 @@ public class Data : MonoBehaviour
         Instance = this;
 
         this.resourcesIcons = GameManager.Instance.resourcesIcons;
+        this.monstersIcons = GameManager.Instance.monstersIcons;
+        this.dropsIcons = GameManager.Instance.dropsIcons;
+        this.villagersIcons = GameManager.Instance.villagersIcons;
 
         #region RESOURCES 
 
@@ -550,6 +581,113 @@ public class Data : MonoBehaviour
         PLAYER.Add("Day", GameManager.Instance.localDate.Day);
         PLAYER.Add("Month", GameManager.Instance.localDate.Month);
         PLAYER.Add("Year", GameManager.Instance.localDate.Year);
+        #endregion
+
+        #region MONSTERS 
+
+        //Skeleton
+        List<Requirement> reqSkeleton = new List<Requirement>();
+
+        reqSkeleton.Add(new Requirement(BONE, 3000));
+        reqSkeleton.Add(new Requirement(PLASMA, 1500));
+
+        MONSTERS.Add(SKELETON, new MonsterInfo(SKELETON, "Skeleton", 3600, reqSkeleton, 4, 2, 1, 2, 5, 1, monstersIcons[0]));
+
+        //JackOLantern
+        List<Requirement> reqJack = new List<Requirement>();
+
+        reqJack.Add(new Requirement(PUMPKIN, 3000));
+        reqJack.Add(new Requirement(LANTERN, 1500));
+
+        MONSTERS.Add(JACK_LANTERN, new MonsterInfo(JACK_LANTERN, "Jack-o'-lantern", 5400, reqJack, 0, 6, 0, 0, 5, 1, monstersIcons[1]));
+
+        //Bat
+        List<Requirement> reqBat = new List<Requirement>();
+
+        reqBat.Add(new Requirement(BATWING, 2500));
+        reqBat.Add(new Requirement(DEADTREEBRANCH, 1000));
+
+        MONSTERS.Add(BAT, new MonsterInfo(BAT, "Bat", 7200, reqBat, 5, 2, 2, 1, 5, 2, monstersIcons[2]));
+
+        //Goblin
+        List<Requirement> reqGoblin = new List<Requirement>();
+
+        reqGoblin.Add(new Requirement(DEADFISH, 2500));
+        reqGoblin.Add(new Requirement(SWAMPWATER, 1000));
+        reqGoblin.Add(new Requirement(LOLLIPOP, 10)); //Si te 3r parametre el ultim sera un drop
+
+        MONSTERS.Add(GOBLIN, new MonsterInfo(GOBLIN, "Goblin", 9000, reqGoblin, 7, 3, 2, 0.5f, 5, 2, monstersIcons[3]));
+
+        //Ghost
+        List<Requirement> reqGhost = new List<Requirement>();
+
+        reqGhost.Add(new Requirement(IMMORTALITYELIXIR, 2000));
+        reqGhost.Add(new Requirement(SPIRITSOUL, 800));
+        reqGhost.Add(new Requirement(RING, 10));
+
+        MONSTERS.Add(GHOST, new MonsterInfo(GHOST, "Ghost", 10800, reqGhost, 5, 6, 3, 1, 5, 3, monstersIcons[4]));
+
+        //Clown
+        List<Requirement> reqClown = new List<Requirement>();
+
+        reqClown.Add(new Requirement(BLACKCATHAIR, 2000));
+        reqClown.Add(new Requirement(HORNS, 2000));
+        reqClown.Add(new Requirement(BEER, 10));
+
+        MONSTERS.Add(CLOWN, new MonsterInfo(CLOWN, "Clown", 12600, reqClown, 0, 5, 0, 0, 7.5f, 3, monstersIcons[5]));
+
+        //Zombie
+        List<Requirement> reqZombie = new List<Requirement>();
+
+        reqZombie.Add(new Requirement(ROTTEN_FLESH, 5000));
+        reqZombie.Add(new Requirement(DEATHESSENCE, 300));
+        reqZombie.Add(new Requirement(SWORD, 10));
+
+        MONSTERS.Add(ZOMBIE, new MonsterInfo(ZOMBIE, "Zombie", 14400, reqZombie, 3, 8, 6, 2, 4, 4, monstersIcons[6]));
+
+        //Vampire
+        List<Requirement> reqVampire = new List<Requirement>();
+
+        reqVampire.Add(new Requirement(BLOOD, 1000));
+        reqVampire.Add(new Requirement(COFFIN, 300));
+        reqVampire.Add(new Requirement(STICK, 10));
+
+        MONSTERS.Add(VAMPIRE, new MonsterInfo(VAMPIRE, "Vampire", 16200, reqVampire, 6, 10, 5, 1, 6, 4, monstersIcons[7]));
+
+        //Witch
+        List<Requirement> reqWitch = new List<Requirement>();
+
+        reqWitch.Add(new Requirement(WITCHHAT, 2000));
+        reqWitch.Add(new Requirement(SPELLBOOK, 4000));
+        reqWitch.Add(new Requirement(SHIELD, 10));
+
+        MONSTERS.Add(WITCH, new MonsterInfo(WITCH, "Witch", 18000, reqWitch, 4.5f, 15, 5, 1, 5, 5, monstersIcons[8]));
+
+        //Reaper
+        List<Requirement> reqReaper = new List<Requirement>();
+
+        reqReaper.Add(new Requirement(LOLLIPOP, 100));
+        reqReaper.Add(new Requirement(RING, 85));
+        reqReaper.Add(new Requirement(BEER, 70));
+        reqReaper.Add(new Requirement(SWORD, 55));
+        reqReaper.Add(new Requirement(STICK, 40));
+        reqReaper.Add(new Requirement(SHIELD, 25));
+        reqReaper.Add(new Requirement(GEM, 15));
+
+        MONSTERS.Add(REAPER, new MonsterInfo(REAPER, "The Reaper", 28800, reqReaper, 8, 100, 20, 0.5f, 8, 6, monstersIcons[9]));
+
+        #endregion
+
+        #region DROPS
+
+        DROPS.Add(LOLLIPOP, new DropInfo(LOLLIPOP, "Lollipop", "child", dropsIcons[0], villagersIcons[0]));
+        DROPS.Add(RING, new DropInfo(RING, "Ring", "mom", dropsIcons[1], villagersIcons[1]));
+        DROPS.Add(BEER, new DropInfo(BEER, "Beer", "adult", dropsIcons[2], villagersIcons[2]));
+        DROPS.Add(SWORD, new DropInfo(SWORD, "Sword", "swashbuckler", dropsIcons[3], villagersIcons[3]));
+        DROPS.Add(SHIELD, new DropInfo(SHIELD, "Shield", "shield man", dropsIcons[4], villagersIcons[4]));
+        DROPS.Add(STICK, new DropInfo(STICK, "Stick", "elder", dropsIcons[5], villagersIcons[5]));
+        DROPS.Add(GEM, new DropInfo(GEM, "Gem", "sorcerer", dropsIcons[6], villagersIcons[6]));
+        DROPS.Add(SCARE, new DropInfo(SCARE, "Scare", "villagers", dropsIcons[7], null));
         #endregion
     }
     #endregion
