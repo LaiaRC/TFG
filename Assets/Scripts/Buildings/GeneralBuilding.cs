@@ -54,51 +54,6 @@ public class GeneralBuilding : Building
     // Start is called before the first frame update
     void Start()
     {
-        //Set all UI variables through code
-        /*upgradeText1 = canvasInterior.transform.Find("UpgradeGroup").transform.Find("UpgradeImage").transform.Find("Requirement1Text").GetComponent<TextMeshProUGUI>();
-        upgradeText2 = canvasInterior.transform.Find("UpgradeGroup").transform.Find("UpgradeImage").transform.Find("Requirement2Text").GetComponent<TextMeshProUGUI>();
-        upgradeIcon1 = canvasInterior.transform.Find("UpgradeGroup").transform.Find("UpgradeImage").transform.Find("resourceIcon1").GetComponent<Image>();
-        upgradeIcon2 = canvasInterior.transform.Find("UpgradeGroup").transform.Find("UpgradeImage").transform.Find("resourceIcon2").GetComponent<Image>();
-        maxText = canvasInterior.transform.Find("UpgradeGroup").transform.Find("UpgradeImage").transform.Find("FullyUpgraded").GetComponent<TextMeshProUGUI>();
-        upgradeButton = canvasInterior.transform.Find("UpgradeGroup").transform.Find("UpgradeImage").transform.Find("upgradeButton").GetComponent<Button>();
-        
-        resourceTimeText = canvasInterior.transform.Find("TimeGroup").transform.Find("activeResourceImage").transform.Find("timeText").GetComponent<TextMeshProUGUI>();
-        activeResourceIcon = canvasInterior.transform.Find("TimeGroup").transform.Find("activeResourceImage").transform.Find("activeResourceIcon").GetComponent<Image>();
-        timeBar = canvasInterior.transform.Find("TimeGroup").transform.Find("activeResourceImage").transform.Find("TimeBar").GetComponent<Slider>();
-
-        playButton = canvasInterior.transform.Find("TimeGroup").transform.Find("TimeResourceImage").transform.Find("playButton").GetComponent<Button>();
-        pauseButton = canvasInterior.transform.Find("TimeGroup").transform.Find("TimeResourceImage").transform.Find("pauseButton").GetComponent<Button>();
-        requirementIcon = canvasInterior.transform.Find("TimeGroup").transform.Find("TimeResourceImage").transform.Find("RequirementIcon").GetComponent<Image>();
-        requirementIcon1 = canvasInterior.transform.Find("TimeGroup").transform.Find("TimeResourceImage").transform.Find("RequirementIcon1").GetComponent<Image>();
-        requirementIcon2 = canvasInterior.transform.Find("TimeGroup").transform.Find("TimeResourceImage").transform.Find("RequirementIcon2").GetComponent<Image>();
-        requirementText = canvasInterior.transform.Find("TimeGroup").transform.Find("TimeResourceImage").transform.Find("RequirementText").GetComponent<TextMeshProUGUI>();
-        requirement1Text = canvasInterior.transform.Find("TimeGroup").transform.Find("TimeResourceImage").transform.Find("Requirement1Text").GetComponent<TextMeshProUGUI>();
-        requirement2Text = canvasInterior.transform.Find("TimeGroup").transform.Find("TimeResourceImage").transform.Find("Requirement2Text").GetComponent<TextMeshProUGUI>();
-
-        levelText = canvasInterior.transform.Find("LevelGroup").transform.Find("LevelImage").transform.Find("NumberText").GetComponent<TextMeshProUGUI>();
-
-
-        level1Background = canvasInterior.transform.Find("level1Background").GetComponent<Image>();
-        level2Background = canvasInterior.transform.Find("level2Background").GetComponent<Image>();
-        level3Background = canvasInterior.transform.Find("level3Background").GetComponent<Image>();
-
-        level2Tilemap = transform.Find("Grid").transform.Find("Level2").GetComponent<Tilemap>();
-        level2Decoration = transform.Find("Grid").transform.Find("Level2Decoration").GetComponent<Tilemap>();
-        level3Tilemap = transform.Find("Grid").transform.Find("Level3").GetComponent<Tilemap>();
-        level3Decoration = transform.Find("Grid").transform.Find("Level3Decoration").GetComponent<Tilemap>();
-
-        resourcesButtons.Add(canvasInterior.transform.Find("resource1Button").gameObject);
-        resourcesButtons.Add(canvasInterior.transform.Find("resource2Button").gameObject);
-        resourcesButtons.Add(canvasInterior.transform.Find("resource3Button").gameObject);
-
-        resourceButtonsIcons.Add(canvasInterior.transform.Find("resource1Button").transform.Find("Resource1Icon").GetComponent<Image>());
-        resourceButtonsIcons.Add(canvasInterior.transform.Find("resource2Button").transform.Find("Resource2Icon").GetComponent<Image>());
-        resourceButtonsIcons.Add(canvasInterior.transform.Find("resource3Button").transform.Find("Resource3Icon").GetComponent<Image>());
-
-        level = 1;
-        maxLevel = 3;*/
-
-
         if (level == 1)
         {
             activeResource = initialActiveResource;

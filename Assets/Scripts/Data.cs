@@ -6,7 +6,7 @@ public class Data : MonoBehaviour
 {
     public Dictionary<string, GameObject> BUILDINGS = new Dictionary<string, GameObject>();
     public Dictionary<string, Resource> RESOURCES = new Dictionary<string, Resource>();
-    public Dictionary<string, DropInfo> DROPS = new Dictionary<string, DropInfo>();
+    public Dictionary<string, DropInfo> DROPS = new Dictionary<string, DropInfo>(); 
     public Dictionary<string, MonsterInfo> MONSTERS = new Dictionary<string, MonsterInfo>();
     public Dictionary<string, int> BUILDING_INVENTORY = new Dictionary<string, int>();
 
@@ -106,6 +106,8 @@ public class Data : MonoBehaviour
         this.villagersIcons = GameManager.Instance.villagersIcons;
 
         #region RESOURCES 
+
+        #region BUILDING RESOURCES
 
         #region GRAVEYARD
 
@@ -571,6 +573,18 @@ public class Data : MonoBehaviour
 
         RESOURCES.Add(WOLFCLAW, new Resource("Wolf's claw", WOLFCLAW, false, 30, false, requirements36, resourcesIcons[35]));
         #endregion
+        #endregion
+
+        #region DROPS
+        RESOURCES.Add(LOLLIPOP, new DropInfo(LOLLIPOP, "Lollipop", "child", dropsIcons[0], villagersIcons[0]));
+        RESOURCES.Add(RING, new DropInfo(RING, "Ring", "mom", dropsIcons[1], villagersIcons[1]));
+        RESOURCES.Add(BEER, new DropInfo(BEER, "Beer", "adult", dropsIcons[2], villagersIcons[2]));
+        RESOURCES.Add(SWORD, new DropInfo(SWORD, "Sword", "swashbuckler", dropsIcons[3], villagersIcons[3]));
+        RESOURCES.Add(SHIELD, new DropInfo(SHIELD, "Shield", "shield man", dropsIcons[4], villagersIcons[4]));
+        RESOURCES.Add(STICK, new DropInfo(STICK, "Stick", "elder", dropsIcons[5], villagersIcons[5]));
+        RESOURCES.Add(GEM, new DropInfo(GEM, "Gem", "sorcerer", dropsIcons[6], villagersIcons[6]));
+        RESOURCES.Add(SCARE, new DropInfo(SCARE, "Scare", "villagers", dropsIcons[7], null));
+        #endregion
 
         #endregion
 
@@ -591,7 +605,59 @@ public class Data : MonoBehaviour
         reqSkeleton.Add(new Requirement(BONE, 3000));
         reqSkeleton.Add(new Requirement(PLASMA, 1500));
 
-        MONSTERS.Add(SKELETON, new MonsterInfo(SKELETON, "Skeleton", 3600, reqSkeleton, 4, 2, 1, 2, 5, 1, monstersIcons[0]));
+        List<List<Requirement>> reqUpgradeSkeleton = new List<List<Requirement>>();
+
+        List<Requirement> reqUpgradeSkeleton1 = new List<Requirement>();
+        reqUpgradeSkeleton1.Add(new Requirement(PLASMA, 3000));
+        reqUpgradeSkeleton1.Add(new Requirement(BONE, 1500));
+
+        List<Requirement> reqUpgradeSkeleton2 = new List<Requirement>();
+        reqUpgradeSkeleton2.Add(new Requirement(DIVINATIONBALL, 2000));
+        reqUpgradeSkeleton2.Add(new Requirement(BONE, 1500));
+
+        reqUpgradeSkeleton.Add(reqUpgradeSkeleton1);
+        reqUpgradeSkeleton.Add(reqUpgradeSkeleton2);
+
+        List<Requirement> reqUnlockSkeleton = new List<Requirement>();
+
+        reqUnlockSkeleton.Add(new Requirement(PLASMA, 30));
+
+        #region STATS
+
+        List<float> velSkeleton = new List<float>();
+        velSkeleton.Add(4);
+        velSkeleton.Add(4.5f);
+        velSkeleton.Add(5);
+
+        List<int> healthSkeleton = new List<int>();
+        healthSkeleton.Add(2);
+        healthSkeleton.Add(2);
+        healthSkeleton.Add(3);
+
+        List<int> damageSkeleton = new List<int>();
+        damageSkeleton.Add(1);
+        damageSkeleton.Add(2);
+        damageSkeleton.Add(2);
+
+        List<float> aRateSkeleton = new List<float>();
+        aRateSkeleton.Add(2);
+        aRateSkeleton.Add(1.5f);
+        aRateSkeleton.Add(1);
+
+        List<float> aRangeSkeleton = new List<float>();
+        aRangeSkeleton.Add(4.5f);
+        aRangeSkeleton.Add(5);
+        aRangeSkeleton.Add(5.5f);
+
+        List<int> levelSkeleton = new List<int>();
+        levelSkeleton.Add(1);
+        levelSkeleton.Add(1);
+        levelSkeleton.Add(2);
+        #endregion
+
+        string desSkeleton = "It's the most basic type of monster. Can only be invoked outside the village and it's favourite type of villager are children.";
+
+        MONSTERS.Add(SKELETON, new MonsterInfo(SKELETON, "Skeleton", 3600, reqSkeleton, reqUpgradeSkeleton, reqUnlockSkeleton, velSkeleton, healthSkeleton, damageSkeleton, aRateSkeleton, aRangeSkeleton, levelSkeleton, monstersIcons[0], desSkeleton, 1, false));
 
         //JackOLantern
         List<Requirement> reqJack = new List<Requirement>();
@@ -599,7 +665,59 @@ public class Data : MonoBehaviour
         reqJack.Add(new Requirement(PUMPKIN, 3000));
         reqJack.Add(new Requirement(LANTERN, 1500));
 
-        MONSTERS.Add(JACK_LANTERN, new MonsterInfo(JACK_LANTERN, "Jack-o'-lantern", 5400, reqJack, 0, 6, 0, 0, 5, 1, monstersIcons[1]));
+        List<List<Requirement>> reqUpgradeJack = new List<List<Requirement>>();
+        List<Requirement> reqUpgradeJack1 = new List<Requirement>();
+        List<Requirement> reqUpgradeJack2 = new List<Requirement>();
+
+        reqUpgradeJack1.Add(new Requirement(PLASMA, 3000));
+        reqUpgradeJack1.Add(new Requirement(BONE, 1500));
+
+        reqUpgradeJack2.Add(new Requirement(PLASMA, 30));
+        reqUpgradeJack2.Add(new Requirement(BONE, 1500));
+
+        reqUpgradeJack.Add(reqUpgradeJack1);
+        reqUpgradeJack.Add(reqUpgradeJack2);
+
+        List<Requirement> reqUnlockJack = new List<Requirement>();
+
+        reqUnlockJack.Add(new Requirement(LANTERN, 30));
+
+        #region STATS
+
+        List<float> velJack = new List<float>();
+        velJack.Add(0);
+        velJack.Add(0);
+        velJack.Add(0);
+
+        List<int> healthJack = new List<int>();
+        healthJack.Add(6);
+        healthJack.Add(8);
+        healthJack.Add(10);
+
+        List<int> damageJack = new List<int>();
+        damageJack.Add(0);
+        damageJack.Add(0);
+        damageJack.Add(0);
+
+        List<float> aRateJack = new List<float>();
+        aRateJack.Add(0);
+        aRateJack.Add(0);
+        aRateJack.Add(0);
+
+        List<float> aRangeJack = new List<float>();
+        aRangeJack.Add(0);
+        aRangeJack.Add(0);
+        aRangeJack.Add(0);
+
+        List<int> levelJack = new List<int>();
+        levelJack.Add(1);
+        levelJack.Add(2);
+        levelJack.Add(3);
+        #endregion
+
+        string desJack = "JackO It's the most basic type of monster. Can only be invoked outside the village and it's favourite type of villager are children.";
+
+        MONSTERS.Add(JACK_LANTERN, new MonsterInfo(JACK_LANTERN, "Jack-o'-lantern", 5400, reqJack, reqUpgradeJack, reqUnlockJack, velJack, healthJack, damageJack, aRateJack, aRangeJack, levelJack, monstersIcons[1], desJack, 1, false));
 
         //Bat
         List<Requirement> reqBat = new List<Requirement>();
@@ -607,7 +725,59 @@ public class Data : MonoBehaviour
         reqBat.Add(new Requirement(BATWING, 2500));
         reqBat.Add(new Requirement(DEADTREEBRANCH, 1000));
 
-        MONSTERS.Add(BAT, new MonsterInfo(BAT, "Bat", 7200, reqBat, 5, 2, 2, 1, 5, 2, monstersIcons[2]));
+        List<List<Requirement>> reqUpgradeBat = new List<List<Requirement>>();
+        List<Requirement> reqUpgradeBat1 = new List<Requirement>();
+        List<Requirement> reqUpgradeBat2 = new List<Requirement>();
+
+        reqUpgradeBat1.Add(new Requirement(PLASMA, 3000));
+        reqUpgradeBat1.Add(new Requirement(BONE, 1500));
+
+        reqUpgradeBat2.Add(new Requirement(EYE, 3000));
+        reqUpgradeBat2.Add(new Requirement(BONE, 1500));
+
+        reqUpgradeBat.Add(reqUpgradeBat1);
+        reqUpgradeBat.Add(reqUpgradeBat2);
+
+        List<Requirement> reqUnlockBat = new List<Requirement>();
+
+        reqUnlockBat.Add(new Requirement(BATWING, 30));
+
+        #region STATS
+
+        List<float> velBat = new List<float>();
+        velBat.Add(5);
+        velBat.Add(5.5f);
+        velBat.Add(6);
+
+        List<int> healthBat = new List<int>();
+        healthBat.Add(2);
+        healthBat.Add(3);
+        healthBat.Add(4);
+
+        List<int> damageBat = new List<int>();
+        damageBat.Add(2);
+        damageBat.Add(3);
+        damageBat.Add(4);
+
+        List<float> aRateBat = new List<float>();
+        aRateBat.Add(2);
+        aRateBat.Add(1.5f);
+        aRateBat.Add(1);
+
+        List<float> aRangeBat = new List<float>();
+        aRangeBat.Add(4.5f);
+        aRangeBat.Add(5);
+        aRangeBat.Add(5.5f);
+
+        List<int> levelBat = new List<int>();
+        levelBat.Add(2);
+        levelBat.Add(2);
+        levelBat.Add(3);
+        #endregion
+
+        string desBat = "Bat It's the most basic type of monster. Can only be invoked outside the village and it's favourite type of villager are children.";
+
+        MONSTERS.Add(BAT, new MonsterInfo(BAT, "Bat", 7200, reqBat, reqUpgradeBat, reqUnlockBat, velBat, healthBat, damageBat, aRateBat, aRangeBat, levelBat, monstersIcons[2], desBat, 1, false));
 
         //Goblin
         List<Requirement> reqGoblin = new List<Requirement>();
@@ -616,7 +786,59 @@ public class Data : MonoBehaviour
         reqGoblin.Add(new Requirement(SWAMPWATER, 1000));
         reqGoblin.Add(new Requirement(LOLLIPOP, 10)); //Si te 3r parametre el ultim sera un drop
 
-        MONSTERS.Add(GOBLIN, new MonsterInfo(GOBLIN, "Goblin", 9000, reqGoblin, 7, 3, 2, 0.5f, 5, 2, monstersIcons[3]));
+        List<List<Requirement>> reqUpgradeGoblin = new List<List<Requirement>>();
+        List<Requirement> reqUpgradeGoblin1 = new List<Requirement>();
+        List<Requirement> reqUpgradeGoblin2 = new List<Requirement>();
+
+        reqUpgradeGoblin1.Add(new Requirement(SWAMPWATER, 2500));
+        reqUpgradeGoblin1.Add(new Requirement(DEADFISH, 1000));
+
+        reqUpgradeGoblin2.Add(new Requirement(EYE, 2500));
+        reqUpgradeGoblin2.Add(new Requirement(DEADFISH, 1000));
+
+        reqUpgradeGoblin.Add(reqUpgradeGoblin1);
+        reqUpgradeGoblin.Add(reqUpgradeGoblin2);
+
+        List<Requirement> reqUnlockGoblin = new List<Requirement>();
+
+        reqUnlockGoblin.Add(new Requirement(SWAMPWATER, 30));
+
+        #region STATS
+
+        List<float> velGoblin = new List<float>();
+        velGoblin.Add(6);
+        velGoblin.Add(7);
+        velGoblin.Add(8);
+
+        List<int> healthGoblin = new List<int>();
+        healthGoblin.Add(3);
+        healthGoblin.Add(3);
+        healthGoblin.Add(4);
+
+        List<int> damageGoblin = new List<int>();
+        damageGoblin.Add(2);
+        damageGoblin.Add(3);
+        damageGoblin.Add(4);
+
+        List<float> aRateGoblin = new List<float>();
+        aRateGoblin.Add(1);
+        aRateGoblin.Add(0.5f);
+        aRateGoblin.Add(0.25f);
+
+        List<float> aRangeGoblin = new List<float>();
+        aRangeGoblin.Add(4.5f);
+        aRangeGoblin.Add(5);
+        aRangeGoblin.Add(5.5f);
+
+        List<int> levelGoblin = new List<int>();
+        levelGoblin.Add(2);
+        levelGoblin.Add(2);
+        levelGoblin.Add(3);
+        #endregion
+
+        string desGoblin = "goblin It's the most basic type of monster. Can only be invoked outside the village and it's favourite type of villager are children.";
+
+        MONSTERS.Add(GOBLIN, new MonsterInfo(GOBLIN, "Goblin", 9000, reqGoblin, reqUpgradeGoblin, reqUnlockGoblin, velGoblin, healthGoblin, damageGoblin, aRateGoblin, aRangeGoblin, levelGoblin, monstersIcons[3], desGoblin, 1, false));
 
         //Ghost
         List<Requirement> reqGhost = new List<Requirement>();
@@ -625,7 +847,59 @@ public class Data : MonoBehaviour
         reqGhost.Add(new Requirement(SPIRITSOUL, 800));
         reqGhost.Add(new Requirement(RING, 10));
 
-        MONSTERS.Add(GHOST, new MonsterInfo(GHOST, "Ghost", 10800, reqGhost, 5, 6, 3, 1, 5, 3, monstersIcons[4]));
+        List<List<Requirement>> reqUpgradeGhost = new List<List<Requirement>>();
+        List<Requirement> reqUpgradeGhost1 = new List<Requirement>();
+        List<Requirement> reqUpgradeGhost2 = new List<Requirement>();
+
+        reqUpgradeGhost1.Add(new Requirement(SWAMPWATER, 2500));
+        reqUpgradeGhost1.Add(new Requirement(DEADFISH, 1000));
+
+        reqUpgradeGhost2.Add(new Requirement(DEATHESSENCE, 2500));
+        reqUpgradeGhost2.Add(new Requirement(DEADFISH, 1000));
+
+        reqUpgradeGhost.Add(reqUpgradeGhost1);
+        reqUpgradeGhost.Add(reqUpgradeGhost2);
+
+        List<Requirement> reqUnlockGhost = new List<Requirement>();
+
+        reqUnlockGhost.Add(new Requirement(SPIRITSOUL, 30));
+
+        #region STATS
+
+        List<float> velGhost = new List<float>();
+        velGhost.Add(4.5f);
+        velGhost.Add(5);
+        velGhost.Add(5.5f);
+
+        List<int> healthGhost = new List<int>();
+        healthGhost.Add(6);
+        healthGhost.Add(7);
+        healthGhost.Add(8);
+
+        List<int> damageGhost = new List<int>();
+        damageGhost.Add(3);
+        damageGhost.Add(3);
+        damageGhost.Add(4);
+
+        List<float> aRateGhost = new List<float>();
+        aRateGhost.Add(1.5f);
+        aRateGhost.Add(1);
+        aRateGhost.Add(1);
+
+        List<float> aRangeGhost = new List<float>();
+        aRangeGhost.Add(4.5f);
+        aRangeGhost.Add(5);
+        aRangeGhost.Add(5.5f);
+
+        List<int> levelGhost = new List<int>();
+        levelGhost.Add(3);
+        levelGhost.Add(3);
+        levelGhost.Add(4);
+        #endregion
+
+        string desGhost = "ghost It's the most basic type of monster. Can only be invoked outside the village and it's favourite type of villager are children.";
+
+        MONSTERS.Add(GHOST, new MonsterInfo(GHOST, "Ghost", 10800, reqGhost, reqUpgradeGhost, reqUnlockGhost, velGhost, healthGhost, damageGhost, aRateGhost, aRangeGhost, levelGhost, monstersIcons[4], desGhost, 1, false));
 
         //Clown
         List<Requirement> reqClown = new List<Requirement>();
@@ -634,7 +908,59 @@ public class Data : MonoBehaviour
         reqClown.Add(new Requirement(HORNS, 2000));
         reqClown.Add(new Requirement(BEER, 10));
 
-        MONSTERS.Add(CLOWN, new MonsterInfo(CLOWN, "Clown", 12600, reqClown, 0, 5, 0, 0, 7.5f, 3, monstersIcons[5]));
+        List<List<Requirement>> reqUpgradeClown = new List<List<Requirement>>();
+        List<Requirement> reqUpgradeClown1 = new List<Requirement>();
+        List<Requirement> reqUpgradeClown2 = new List<Requirement>();
+
+        reqUpgradeClown1.Add(new Requirement(SWAMPWATER, 2500));
+        reqUpgradeClown1.Add(new Requirement(DEADFISH, 1000));
+
+        reqUpgradeClown2.Add(new Requirement(DIVINATIONBALL, 2500));
+        reqUpgradeClown2.Add(new Requirement(DEADFISH, 1000));
+
+        reqUpgradeClown.Add(reqUpgradeClown1);
+        reqUpgradeClown.Add(reqUpgradeClown2);
+
+        List<Requirement> reqUnlockClown = new List<Requirement>();
+
+        reqUnlockClown.Add(new Requirement(HORNS, 30));
+
+        #region STATS
+
+        List<float> velClown = new List<float>();
+        velClown.Add(0);
+        velClown.Add(0);
+        velClown.Add(0);
+
+        List<int> healthClown = new List<int>();
+        healthClown.Add(4);
+        healthClown.Add(5);
+        healthClown.Add(6);
+
+        List<int> damageClown = new List<int>();
+        damageClown.Add(0);
+        damageClown.Add(0);
+        damageClown.Add(0);
+
+        List<float> aRateClown = new List<float>();
+        aRateClown.Add(0);
+        aRateClown.Add(0);
+        aRateClown.Add(0);
+
+        List<float> aRangeClown = new List<float>();
+        aRangeClown.Add(6);
+        aRangeClown.Add(7);
+        aRangeClown.Add(8);
+
+        List<int> levelClown = new List<int>();
+        levelClown.Add(3);
+        levelClown.Add(3);
+        levelClown.Add(4);
+        #endregion
+
+        string desClown = "clown It's the most basic type of monster. Can only be invoked outside the village and it's favourite type of villager are children.";
+
+        MONSTERS.Add(CLOWN, new MonsterInfo(CLOWN, "Clown", 12600, reqClown, reqUpgradeClown, reqUnlockClown, velClown, healthClown, damageClown, aRateClown, aRangeClown, levelClown, monstersIcons[5], desClown, 1, false));
 
         //Zombie
         List<Requirement> reqZombie = new List<Requirement>();
@@ -643,7 +969,60 @@ public class Data : MonoBehaviour
         reqZombie.Add(new Requirement(DEATHESSENCE, 300));
         reqZombie.Add(new Requirement(SWORD, 10));
 
-        MONSTERS.Add(ZOMBIE, new MonsterInfo(ZOMBIE, "Zombie", 14400, reqZombie, 3, 8, 6, 2, 4, 4, monstersIcons[6]));
+        List<List<Requirement>> reqUpgradeZombie = new List<List<Requirement>>();
+        List<Requirement> reqUpgradeZombie1 = new List<Requirement>();
+        List<Requirement> reqUpgradeZombie2 = new List<Requirement>();
+
+        reqUpgradeZombie1.Add(new Requirement(SWAMPWATER, 2500));
+        reqUpgradeZombie1.Add(new Requirement(DEADFISH, 1000));
+
+        reqUpgradeZombie2.Add(new Requirement(BLACKROSE, 2500));
+        reqUpgradeZombie2.Add(new Requirement(DEADFISH, 1000));
+
+        reqUpgradeZombie.Add(reqUpgradeZombie1);
+        reqUpgradeZombie.Add(reqUpgradeZombie2);
+
+        List<Requirement> reqUnlockZombie = new List<Requirement>();
+
+        reqUnlockZombie.Add(new Requirement(DEATHESSENCE, 30));
+
+
+        #region STATS
+
+        List<float> velZombie = new List<float>();
+        velZombie.Add(3);
+        velZombie.Add(4);
+        velZombie.Add(4.5f);
+
+        List<int> healthZombie = new List<int>();
+        healthZombie.Add(8);
+        healthZombie.Add(9);
+        healthZombie.Add(10);
+
+        List<int> damageZombie = new List<int>();
+        damageZombie.Add(5);
+        damageZombie.Add(6);
+        damageZombie.Add(8);
+
+        List<float> aRateZombie = new List<float>();
+        aRateZombie.Add(2);
+        aRateZombie.Add(1.5f);
+        aRateZombie.Add(1);
+
+        List<float> aRangeZombie = new List<float>();
+        aRangeZombie.Add(4);
+        aRangeZombie.Add(4.5f);
+        aRangeZombie.Add(5);
+
+        List<int> levelZombie = new List<int>();
+        levelZombie.Add(3);
+        levelZombie.Add(4);
+        levelZombie.Add(4);
+        #endregion
+
+        string desZombie = "zombie It's the most basic type of monster. Can only be invoked outside the village and it's favourite type of villager are children.";
+
+        MONSTERS.Add(ZOMBIE, new MonsterInfo(ZOMBIE, "Zombie", 14400, reqZombie, reqUpgradeZombie, reqUnlockZombie, velZombie, healthZombie, damageZombie, aRateZombie, aRangeZombie, levelZombie, monstersIcons[6], desZombie, 1, false));
 
         //Vampire
         List<Requirement> reqVampire = new List<Requirement>();
@@ -652,7 +1031,59 @@ public class Data : MonoBehaviour
         reqVampire.Add(new Requirement(COFFIN, 300));
         reqVampire.Add(new Requirement(STICK, 10));
 
-        MONSTERS.Add(VAMPIRE, new MonsterInfo(VAMPIRE, "Vampire", 16200, reqVampire, 6, 10, 5, 1, 6, 4, monstersIcons[7]));
+        List<List<Requirement>> reqUpgradeVampire = new List<List<Requirement>>();
+        List<Requirement> reqUpgradeVampire1 = new List<Requirement>();
+        List<Requirement> reqUpgradeVampire2 = new List<Requirement>();
+
+        reqUpgradeVampire1.Add(new Requirement(SWAMPWATER, 2500));
+        reqUpgradeVampire1.Add(new Requirement(DEADFISH, 1000));
+
+        reqUpgradeVampire2.Add(new Requirement(HELLFIRE, 2500));
+        reqUpgradeVampire2.Add(new Requirement(DEADFISH, 1000));
+
+        reqUpgradeVampire.Add(reqUpgradeVampire1);
+        reqUpgradeVampire.Add(reqUpgradeVampire2);
+
+        List<Requirement> reqUnlockVampire = new List<Requirement>();
+
+        reqUnlockVampire.Add(new Requirement(COFFIN, 30));
+
+        #region STATS
+
+        List<float> velVampire = new List<float>();
+        velVampire.Add(5.5f);
+        velVampire.Add(6);
+        velVampire.Add(6.5f);
+
+        List<int> healthVampire = new List<int>();
+        healthVampire.Add(9);
+        healthVampire.Add(10);
+        healthVampire.Add(11);
+
+        List<int> damageVampire = new List<int>();
+        damageVampire.Add(5);
+        damageVampire.Add(5);
+        damageVampire.Add(6);
+
+        List<float> aRateVampire = new List<float>();
+        aRateVampire.Add(1.5f);
+        aRateVampire.Add(1);
+        aRateVampire.Add(1);
+
+        List<float> aRangeVampire = new List<float>();
+        aRangeVampire.Add(5);
+        aRangeVampire.Add(5.5f);
+        aRangeVampire.Add(6);
+
+        List<int> levelVampire = new List<int>();
+        levelVampire.Add(4);
+        levelVampire.Add(4);
+        levelVampire.Add(5);
+        #endregion
+
+        string desVampire = "vampire It's the most basic type of monster. Can only be invoked outside the village and it's favourite type of villager are children.";
+
+        MONSTERS.Add(VAMPIRE, new MonsterInfo(VAMPIRE, "Vampire", 16200, reqVampire, reqUpgradeVampire, reqUnlockVampire, velVampire, healthVampire, damageVampire, aRateVampire, aRangeVampire, levelVampire, monstersIcons[7], desVampire, 1, false));
 
         //Witch
         List<Requirement> reqWitch = new List<Requirement>();
@@ -661,12 +1092,64 @@ public class Data : MonoBehaviour
         reqWitch.Add(new Requirement(SPELLBOOK, 4000));
         reqWitch.Add(new Requirement(SHIELD, 10));
 
-        MONSTERS.Add(WITCH, new MonsterInfo(WITCH, "Witch", 18000, reqWitch, 4.5f, 15, 5, 1, 5, 5, monstersIcons[8]));
+        List<List<Requirement>> reqUpgradeWitch = new List<List<Requirement>>();
+        List<Requirement> reqUpgradeWitch1 = new List<Requirement>();
+        List<Requirement> reqUpgradeWitch2 = new List<Requirement>();
+
+        reqUpgradeWitch1.Add(new Requirement(SWAMPWATER, 2500));
+        reqUpgradeWitch1.Add(new Requirement(DEADFISH, 1000));
+
+        reqUpgradeWitch2.Add(new Requirement(GEM, 2500));
+        reqUpgradeWitch2.Add(new Requirement(DEADFISH, 1000));
+
+        reqUpgradeWitch.Add(reqUpgradeWitch1);
+        reqUpgradeWitch.Add(reqUpgradeWitch2);
+
+        List<Requirement> reqUnlockWitch = new List<Requirement>();
+
+        reqUnlockWitch.Add(new Requirement(WITCHHAT, 30));
+
+        #region STATS
+
+        List<float> velWitch = new List<float>();
+        velWitch.Add(4);
+        velWitch.Add(4.5f);
+        velWitch.Add(5);
+
+        List<int> healthWitch = new List<int>();
+        healthWitch.Add(11);
+        healthWitch.Add(13);
+        healthWitch.Add(15);
+
+        List<int> damageWitch = new List<int>();
+        damageWitch.Add(4);
+        damageWitch.Add(5);
+        damageWitch.Add(6);
+
+        List<float> aRateWitch = new List<float>();
+        aRateWitch.Add(2);
+        aRateWitch.Add(1.5f);
+        aRateWitch.Add(1);
+
+        List<float> aRangeWitch = new List<float>();
+        aRangeWitch.Add(4.5f);
+        aRangeWitch.Add(5);
+        aRangeWitch.Add(5.5f);
+
+        List<int> levelWitch = new List<int>();
+        levelWitch.Add(4);
+        levelWitch.Add(5);
+        levelWitch.Add(5);
+        #endregion
+
+        string desWitch = "witch It's the most basic type of monster. Can only be invoked outside the village and it's favourite type of villager are children.";
+
+        MONSTERS.Add(WITCH, new MonsterInfo(WITCH, "Witch", 18000, reqWitch, reqUpgradeWitch, reqUnlockWitch, velWitch, healthWitch, damageWitch, aRateWitch, aRangeWitch, levelWitch, monstersIcons[8], desWitch, 1, false));
 
         //Reaper
         List<Requirement> reqReaper = new List<Requirement>();
 
-        reqReaper.Add(new Requirement(LOLLIPOP, 100));
+        reqReaper.Add(new Requirement(LOLLIPOP, 100)); //S'haurà de modificar UI perque accepti tants requirements
         reqReaper.Add(new Requirement(RING, 85));
         reqReaper.Add(new Requirement(BEER, 70));
         reqReaper.Add(new Requirement(SWORD, 55));
@@ -674,7 +1157,59 @@ public class Data : MonoBehaviour
         reqReaper.Add(new Requirement(SHIELD, 25));
         reqReaper.Add(new Requirement(GEM, 15));
 
-        MONSTERS.Add(REAPER, new MonsterInfo(REAPER, "The Reaper", 28800, reqReaper, 8, 100, 20, 0.5f, 8, 6, monstersIcons[9]));
+        List<List<Requirement>> reqUpgradeReaper = new List<List<Requirement>>(); //No es podrà upgradejar
+        List<Requirement> reqUpgradeReaper1 = new List<Requirement>();
+        List<Requirement> reqUpgradeReaper2 = new List<Requirement>();
+
+        reqUpgradeReaper1.Add(new Requirement(SWAMPWATER, 2500));
+        reqUpgradeReaper1.Add(new Requirement(DEADFISH, 1000));
+
+        reqUpgradeReaper2.Add(new Requirement(ROTTEN_FLESH, 2500));
+        reqUpgradeReaper2.Add(new Requirement(DEADFISH, 1000));
+
+        reqUpgradeReaper.Add(reqUpgradeReaper1);
+        reqUpgradeReaper.Add(reqUpgradeReaper2);
+
+        List<Requirement> reqUnlockReaper = new List<Requirement>();
+
+        reqUnlockReaper.Add(new Requirement(HELLFIRE, 30)); //Or scares
+
+        #region STATS
+
+        List<float> velReaper = new List<float>();
+        velReaper.Add(8);
+        velReaper.Add(8);
+        velReaper.Add(8);
+
+        List<int> healthReaper = new List<int>();
+        healthReaper.Add(100);
+        healthReaper.Add(100);
+        healthReaper.Add(100);
+
+        List<int> damageReaper = new List<int>();
+        damageReaper.Add(20);
+        damageReaper.Add(20);
+        damageReaper.Add(20);
+
+        List<float> aRateReaper = new List<float>();
+        aRateReaper.Add(0.5f);
+        aRateReaper.Add(0.5f);
+        aRateReaper.Add(0.5f);
+
+        List<float> aRangeReaper = new List<float>();
+        aRangeReaper.Add(8);
+        aRangeReaper.Add(8);
+        aRangeReaper.Add(8);
+
+        List<int> levelReaper = new List<int>();
+        levelReaper.Add(6);
+        levelReaper.Add(6);
+        levelReaper.Add(6);
+        #endregion
+
+        string desReaper = "reaper It's the most basic type of monster. Can only be invoked outside the village and it's favourite type of villager are children.";
+
+        MONSTERS.Add(REAPER, new MonsterInfo(REAPER, "The Reaper", 28800, reqReaper, reqUpgradeReaper, reqUnlockReaper, velReaper, healthReaper, damageReaper, aRateReaper, aRangeReaper, levelReaper, monstersIcons[9], desReaper, 1, false));
 
         #endregion
 
@@ -705,5 +1240,11 @@ public class Data : MonoBehaviour
     {
         INVENTORY.Remove(key);
         INVENTORY.Add(key, quantity);
+    }
+
+    public void updateMonsterInventory(string key, int quantity)
+    {
+        MONSTER_INVENTORY.Remove(key);
+        MONSTER_INVENTORY.Add(key, quantity);
     }
 }

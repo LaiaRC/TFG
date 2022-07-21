@@ -185,12 +185,10 @@ public class Building : MonoBehaviour
                 requirement2Text.gameObject.SetActive(false);
             }
         }
-        #endregion
-
-        
+        #endregion        
     }
 
-    public bool checkRequirementsToProduce()
+    public virtual bool checkRequirementsToProduce()
     {
         bool hasRequirements = false;
         if (Data.Instance.RESOURCES.TryGetValue(activeResource, out Resource resource))
@@ -237,7 +235,7 @@ public class Building : MonoBehaviour
         return hasRequirements;
     }
 
-    public void produce()
+    public virtual void produce()
     {
         if (Data.Instance.RESOURCES.TryGetValue(activeResource, out Resource resource))
         {
@@ -367,7 +365,7 @@ public class Building : MonoBehaviour
         GameManager.Instance.isOnCanvas = false;
     }
 
-    public void pause()
+    public virtual void pause()
     {
         isProducing = false;
         isPaused = true;

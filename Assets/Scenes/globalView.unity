@@ -34188,16 +34188,16 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 0c9ced9baf767c34db115531e4fe1795, type: 3}
   - {fileID: 21300000, guid: 5492d2de862ab814fa5ec3745cce8858, type: 3}
   monstersIcons:
-  - {fileID: 7206118203239918969, guid: 3c4c4eafa5d3cdf4ca803ff46ca6fc2e, type: 3}
-  - {fileID: 8581991994985177897, guid: 0b8008cbd07b4064c8baf25eebb29293, type: 3}
-  - {fileID: 1736641193778822097, guid: 7962accfb9e0f6d46bf5fa2b7aa9a4d6, type: 3}
-  - {fileID: -1272586461083562588, guid: 2839dffcf3bf07b4f904e3b67ec2f02c, type: 3}
-  - {fileID: 295674366464683155, guid: 1199b389711b50145a50a65225379285, type: 3}
-  - {fileID: 7805668267725298908, guid: bb0a6d2ea0826e04d89683d6daa0e2ba, type: 3}
-  - {fileID: -1756532550940944839, guid: 1f076f860458f7d40bc9d046958b586d, type: 3}
-  - {fileID: 207381642935146538, guid: a6bcf6986cd93ab4f99aaa224aeca1a9, type: 3}
-  - {fileID: -683525234326013033, guid: 77ac055559f6a74499edc5920b83ab43, type: 3}
-  - {fileID: -5759696050290676843, guid: 17beca3e3d6139c4f9a25e65978e4a4a, type: 3}
+  - {fileID: 21300000, guid: cb532cde7ffa3544b9d668703ccdcf87, type: 3}
+  - {fileID: 21300000, guid: db195a2becbb5fe458ca79376f11bc9d, type: 3}
+  - {fileID: 21300000, guid: 402c3116a9534a248ad156bb36ee5725, type: 3}
+  - {fileID: 21300000, guid: 0933db10aa23afb44adb7152b545acd0, type: 3}
+  - {fileID: 21300000, guid: 8867f0bb48127be4ea9a658112bbf7cd, type: 3}
+  - {fileID: 21300000, guid: 040799054bcc4474ea97d939f1f70b3b, type: 3}
+  - {fileID: 21300000, guid: f87cb470175132d439f75b9e00c8e685, type: 3}
+  - {fileID: 21300000, guid: 0559409eee9b6f340b6cdcf7742f7fbe, type: 3}
+  - {fileID: 21300000, guid: d9665aa5ca10d6148bbb089d4326b1a4, type: 3}
+  - {fileID: 21300000, guid: 7df8646cd8f52af4baa100b638b6ec13, type: 3}
   dropsIcons:
   - {fileID: 21300000, guid: 0a14a21ca28ca614abd6e5fc71b96a3b, type: 3}
   - {fileID: 21300000, guid: 6cb01675e746fdc40b1f5cc049f61f61, type: 3}
