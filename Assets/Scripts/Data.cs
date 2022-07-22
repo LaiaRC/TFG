@@ -14,7 +14,7 @@ public class Data : MonoBehaviour
     public Dictionary<string, int> INVENTORY = new Dictionary<string, int>();
     public Dictionary<string, float[]> CONSTRUCTIONS = new Dictionary<string, float[]>(); //x i y posicio i la z el level del building (x no fer 2 diccionaris)
     public Dictionary<string, int> PLAYER = new Dictionary<string, int>();
-    public Dictionary<string, int> MONSTER_INVENTORY = new Dictionary<string, int>(); //to be saved
+    public Dictionary<string, int[]> MONSTERS_STATS = new Dictionary<string, int[]>(); //To save if each monster is unlocked and upgrade level
 
     public List<Sprite> resourcesIcons;
     public List<Sprite> monstersIcons;
@@ -1224,6 +1224,19 @@ public class Data : MonoBehaviour
         DROPS.Add(GEM, new DropInfo(GEM, "Gem", "sorcerer", dropsIcons[6], villagersIcons[6]));
         DROPS.Add(SCARE, new DropInfo(SCARE, "Scare", "villagers", dropsIcons[7], null));
         #endregion
+
+        #region MONSTERS STATS
+        MONSTERS_STATS.Add(SKELETON, new int[] { 0, 1});
+        MONSTERS_STATS.Add(JACK_LANTERN, new int[] { 0, 1});
+        MONSTERS_STATS.Add(BAT, new int[] { 0, 1});
+        MONSTERS_STATS.Add(GOBLIN, new int[] { 0, 1});
+        MONSTERS_STATS.Add(GHOST, new int[] { 0, 1});
+        MONSTERS_STATS.Add(CLOWN, new int[] { 0, 1});
+        MONSTERS_STATS.Add(ZOMBIE, new int[] { 0, 1});
+        MONSTERS_STATS.Add(VAMPIRE, new int[] { 0, 1});
+        MONSTERS_STATS.Add(WITCH, new int[] { 0, 1});
+        MONSTERS_STATS.Add(REAPER, new int[] { 0, 1});
+        #endregion
     }
     #endregion
 
@@ -1240,11 +1253,5 @@ public class Data : MonoBehaviour
     {
         INVENTORY.Remove(key);
         INVENTORY.Add(key, quantity);
-    }
-
-    public void updateMonsterInventory(string key, int quantity)
-    {
-        MONSTER_INVENTORY.Remove(key);
-        MONSTER_INVENTORY.Add(key, quantity);
     }
 }

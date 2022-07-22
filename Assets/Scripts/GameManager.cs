@@ -38,13 +38,15 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI saveText;
     public TextMeshProUGUI loadText;
     public Button boostTimeButton;
+    public List<String> monstersKeys;
+    public List<String> dropsKeys;
 
     public Camera mainCamera;
 
     //Constructions dictionary
     public static int POS_X = 0;
     public static int POS_Y = 1;
-    public static int LEVEL = 2;
+    public static int LEVEL = 2; //HIDDEN_MONSTER_INDEX (summoningCircle)
     public static int ACTIVE_RESOURCE = 3;
     public static int TIME_LEFT = 4;
     public static int PRODUCING = 5;
@@ -60,6 +62,11 @@ public class GameManager : MonoBehaviour
     public static int MONTH = 4;
     public static int YEAR = 5;
 
+    //Monster stats dictionary
+    public static int IS_UNLOCKED = 0;
+    public static int UPGRADE_LEVEL = 1;
+    public static int HIDDEN_MONSTER_INDEX = 2;
+    //public static int QUANTITY = 2; //The quantity of each monster produced
 
     private string info = "";
     private bool offlineBoostApplied = false;
@@ -68,7 +75,6 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     private void Awake()
     {
-        //gameObject.GetComponent<SaveManager>().DeleteDebug();
         if (Instance != null && Instance != this)
         {
             Destroy(this);
@@ -77,6 +83,27 @@ public class GameManager : MonoBehaviour
         Instance = this;
 
         ShopItemDrag.canvas = canvas.GetComponent<Canvas>();
+
+        #region FILL LIST KEYS
+        monstersKeys.Add(Data.SKELETON);
+        monstersKeys.Add(Data.JACK_LANTERN);
+        monstersKeys.Add(Data.BAT);
+        monstersKeys.Add(Data.GOBLIN);
+        monstersKeys.Add(Data.GHOST);
+        monstersKeys.Add(Data.CLOWN);
+        monstersKeys.Add(Data.ZOMBIE);
+        monstersKeys.Add(Data.VAMPIRE);
+        monstersKeys.Add(Data.WITCH);
+        monstersKeys.Add(Data.REAPER);
+
+        dropsKeys.Add(Data.LOLLIPOP);
+        dropsKeys.Add(Data.RING);
+        dropsKeys.Add(Data.BEER);
+        dropsKeys.Add(Data.SWORD);
+        dropsKeys.Add(Data.SHIELD);
+        dropsKeys.Add(Data.STICK);
+        dropsKeys.Add(Data.GEM);
+        #endregion
     }
     #endregion
 
@@ -100,9 +127,15 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        foreach (KeyValuePair<string, int> inventoryResource in Data.Instance.MONSTER_INVENTORY)
+        foreach (KeyValuePair<string, int> inventoryResource in Data.Instance.INVENTORY)
         {
-            info += "\n -" + inventoryResource.Key + ": " + inventoryResource.Value;
+            for (int i = 0; i < monstersKeys.Count; i++)
+            {
+                if (inventoryResource.Key.Equals(monstersKeys[i]))
+                {
+                    info += "\n -" + inventoryResource.Key + ": " + inventoryResource.Value;
+                }
+            }
         }
         //debugInventoryInfo.SetText("isDialogOpen: " + isDialogOpen + "\n" + "draggingItemShop: " + draggingItemShop + "\n" + "draggingFromShop: " + draggingFromShop + "\n");
         debugInventoryInfo.text = info;
@@ -355,27 +388,70 @@ public class GameManager : MonoBehaviour
             {
                 if (construction.Key.Contains(buildings[i].GetComponent<Building>().id))
                 {
-                    //check if it's general building or summon circle
-                    if (!construction.Key.Contains("summoningCircle"))
+                    //Instantiate building prefab
+                    Vector3 constructionPosition = new Vector3(construction.Value[POS_X], construction.Value[POS_Y], 0);
+
+                    Vector3Int positionIntAux = GridBuildingSystem.current.gridLayout.LocalToCell(constructionPosition);
+                    BoundsInt areaTempAux = buildings[i].GetComponent<Building>().area;
+                    areaTempAux.position = positionIntAux;
+
+                    if (GridBuildingSystem.current.canTakeArea(areaTempAux))
                     {
-
-                        //Instantiate building prefab
-                        Vector3 constructionPosition = new Vector3(construction.Value[POS_X], construction.Value[POS_Y], 0);
-
-                        Vector3Int positionIntAux = GridBuildingSystem.current.gridLayout.LocalToCell(constructionPosition);
-                        BoundsInt areaTempAux = buildings[i].GetComponent<Building>().area;
-                        areaTempAux.position = positionIntAux;
-
-                        if (GridBuildingSystem.current.canTakeArea(areaTempAux))
+                        GameObject obj = Instantiate(buildings[i], constructionPosition, Quaternion.identity);
+                        if (construction.Key.Contains("summoningCircle"))
                         {
+                            #region SUMMONING CIRCLE
+                            //It's summoning circle
+                            SummoningCircle temp = obj.GetComponent<SummoningCircle>();
+                            //set building values
+                            temp.hidenMonsterIndex = (int)construction.Value[LEVEL];
+                            temp.hidenMonster = temp.getHiddenMonster(temp.hidenMonsterIndex);
+                            temp.placed = true;
 
+                            temp.activeMonster = temp.getStringMonster((int)construction.Value[ACTIVE_RESOURCE]);
+                            if (construction.Value[PRODUCING] == 0)
+                            {
+                                temp.isProducing = false;
+                            }
+                            else
+                            {
+                                temp.isProducing = true;
+                            }
 
-                            GameObject obj = Instantiate(buildings[i], constructionPosition, Quaternion.identity);
+                            if (construction.Value[PAUSED] == 0)
+                            {
+                                temp.isPaused = false;
+                                temp.play();
+                            }
+                            else
+                            {
+                                temp.isPaused = true;
+                                temp.pause();
+                            }
+
+                            temp.time = construction.Value[ACTIVE_RESOURCE_TIME] - construction.Value[TIME_LEFT];
+                            temp.timeLeft = construction.Value[TIME_LEFT];
+
+                            temp.numTypeBuildings = (int)construction.Value[NUM_TYPE];
+                            temp.activeResourceTime = construction.Value[ACTIVE_RESOURCE_TIME];
+                            temp.activeMonsterTime = construction.Value[ACTIVE_RESOURCE_TIME];
+                            temp.setSelectedTab(temp.activeMonster);
+                            temp.setUI(temp.activeMonster);
+                            temp.setActiveMonsterUI(temp.activeMonster);
+                            Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(constructionPosition);
+                            BoundsInt areaTemp = temp.area;
+                            areaTemp.position = positionInt;
+                            GridBuildingSystem.current.takeArea(areaTemp);
+                            #endregion
+                        }
+                        else
+                        {
+                            #region GENERAL BUILDING
                             Building temp = obj.GetComponent<Building>();
-
                             //set building values
                             temp.level = (int)construction.Value[LEVEL];
                             temp.placed = true;
+
                             temp.activeResource = temp.resources[(int)construction.Value[ACTIVE_RESOURCE]];
                             if (construction.Value[PRODUCING] == 0)
                             {
@@ -406,50 +482,47 @@ public class GameManager : MonoBehaviour
                             Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(constructionPosition);
                             BoundsInt areaTemp = temp.area;
                             areaTemp.position = positionInt;
-
-                            /*Debug.Log(
-                                "-----------Construction--------" + "\nx: " +
-                                construction.Value[GameManager.POS_X] + "\ny: " +
-                                construction.Value[GameManager.POS_Y] + "\nlvl: " +
-                                construction.Value[GameManager.LEVEL] + "\nar: " +
-                                construction.Value[GameManager.ACTIVE_RESOURCE] + "\ntl: " +
-                                construction.Value[GameManager.TIME_LEFT] + "\nip: " +
-                                construction.Value[GameManager.PRODUCING] + "\nart: " +
-                                construction.Value[GameManager.ACTIVE_RESOURCE_TIME] + "\n" +
-                                "-----------temp------------\nx: " +
-                                temp.transform.position.x + "\ny: "+
-                                temp.transform.position.y + "\nlvl: " +
-                                temp.level + "\naR: " +
-                               temp.activeResource + "\ntl: " +
-                               temp.timeLeft + "\nt: " +
-                               temp.time + "\nip: " +
-                               temp.isProducing + "\nart: " +
-                               temp.activeResourceTime + "\n");*/
-
                             GridBuildingSystem.current.takeArea(areaTemp);
+                            #endregion
+                        }
+
+                        /*Debug.Log(
+                            "-----------Construction--------" + "\nx: " +
+                            construction.Value[GameManager.POS_X] + "\ny: " +
+                            construction.Value[GameManager.POS_Y] + "\nlvl: " +
+                            construction.Value[GameManager.LEVEL] + "\nar: " +
+                            construction.Value[GameManager.ACTIVE_RESOURCE] + "\ntl: " +
+                            construction.Value[GameManager.TIME_LEFT] + "\nip: " +
+                            construction.Value[GameManager.PRODUCING] + "\nart: " +
+                            construction.Value[GameManager.ACTIVE_RESOURCE_TIME] + "\n" +
+                            "-----------temp------------\nx: " +
+                            temp.transform.position.x + "\ny: "+
+                            temp.transform.position.y + "\nlvl: " +
+                            temp.level + "\naR: " +
+                            temp.activeResource + "\ntl: " +
+                            temp.timeLeft + "\nt: " +
+                            temp.time + "\nip: " +
+                            temp.isProducing + "\nart: " +
+                            temp.activeResourceTime + "\n");*/
 
 
-                            //Add building to built constructions list
-                            constructionsBuilt.Add(obj);
 
-                            //Add building to building_inventory dictionary
-                            if (Data.Instance.BUILDING_INVENTORY.TryGetValue(buildings[i].GetComponent<Building>().id, out int quantity))
-                            {
-                                Data.Instance.BUILDING_INVENTORY[buildings[i].GetComponent<Building>().id] = quantity + 1;
-                            }
-                            else
-                            {
-                                //First building of that type
-                                Data.Instance.BUILDING_INVENTORY.Add(buildings[i].GetComponent<Building>().id, 1);
-                            }
+                        //Add building to built constructions list
+                        constructionsBuilt.Add(obj);
+
+                        //Add building to building_inventory dictionary
+                        if (Data.Instance.BUILDING_INVENTORY.TryGetValue(buildings[i].GetComponent<Building>().id, out int quantity))
+                        {
+                            Data.Instance.BUILDING_INVENTORY[buildings[i].GetComponent<Building>().id] = quantity + 1;
+                        }
+                        else
+                        {
+                            //First building of that type
+                            Data.Instance.BUILDING_INVENTORY.Add(buildings[i].GetComponent<Building>().id, 1);
                         }
                     }
-                    else
-                    {
-                        //It's summon circle
-                    }
                 }
-            }          
+            }    
         }
     }
 
@@ -549,5 +622,25 @@ public class GameManager : MonoBehaviour
         boostTimeButton.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
         Time.timeScale = 1;
         offlineBoostApplied = true;
+    }
+
+    public void setMonstersDictionary()
+    {
+        foreach (KeyValuePair<string, int[]> monsterStats in Data.Instance.MONSTERS_STATS)
+        {
+            if (Data.Instance.MONSTERS.TryGetValue(monsterStats.Key, out MonsterInfo monster))
+            {
+                if (monsterStats.Value[IS_UNLOCKED] == 0)
+                {
+                    monster.isUnlocked = false;
+                }
+                else
+                {
+                    monster.isUnlocked = true;
+                }
+
+                monster.upgradeLevel = monsterStats.Value[UPGRADE_LEVEL];
+            }
+        }
     }
 }

@@ -6,6 +6,11 @@ using UnityEngine;
 
 public class SaveManager : MonoBehaviour
 {
+    string pathInventory;
+    string pathConstructions;
+    string pathPlayer;
+    string pathMonsters;
+
     #region SINGLETON PATTERN
     public static SaveManager Instance;
     private void Awake()
@@ -19,18 +24,16 @@ public class SaveManager : MonoBehaviour
         pathInventory = Application.persistentDataPath + "inventory.idk";
         pathConstructions = Application.persistentDataPath + "constructions.idk";
         pathPlayer = Application.persistentDataPath + "player.idk";
+        pathMonsters = Application.persistentDataPath + "monsters.idk";
     }
-    #endregion
-
-    string pathInventory;
-    string pathConstructions;
-    string pathPlayer;
+    #endregion    
 
     private void Start()
     {
         pathInventory = Application.persistentDataPath + "inventory.idk";
         pathConstructions = Application.persistentDataPath + "constructions.idk";
         pathPlayer = Application.persistentDataPath + "player.idk";
+        pathMonsters = Application.persistentDataPath + "monsters.idk";
     }
     public void Save()
     {
@@ -42,7 +45,17 @@ public class SaveManager : MonoBehaviour
             float[] oldValue = Data.Instance.CONSTRUCTIONS[construction.GetComponent<Building>().id + construction.GetComponent<Building>().numTypeBuildings];
             oldValue[GameManager.POS_X] = construction.transform.position.x;
             oldValue[GameManager.POS_Y] = construction.transform.position.y;
-            oldValue[GameManager.LEVEL] = construction.GetComponent<Building>().level;
+
+            //Save lever or hiddenMonsterIndex depending if it's summoningCircle or not
+            if (construction.GetComponent<Building>().id.Contains("summoningCircle"))
+            {
+                oldValue[GameManager.LEVEL] = construction.GetComponent<SummoningCircle>().hidenMonsterIndex;
+            }
+            else
+            {
+                oldValue[GameManager.LEVEL] = construction.GetComponent<Building>().level;
+            }
+
             oldValue[GameManager.ACTIVE_RESOURCE] = construction.GetComponent<Building>().getNumActiveResource();
             oldValue[GameManager.TIME_LEFT] = (construction.GetComponent<Building>().timeLeft);
             oldValue[GameManager.PRODUCING] = construction.GetComponent<Building>().isProducing ? 1 : 0;
@@ -74,20 +87,24 @@ public class SaveManager : MonoBehaviour
         var outputStreamInventory = new FileStream(pathInventory, FileMode.Create);
         var outputStreamConstructions = new FileStream(pathConstructions, FileMode.Create);      
         var outputStreamPlayer = new FileStream(pathPlayer, FileMode.Create);      
+        var outputStreamMonsters = new FileStream(pathMonsters, FileMode.Create);      
 
         MsgPack.Serialize(Data.Instance.INVENTORY, outputStreamInventory);
         MsgPack.Serialize(Data.Instance.CONSTRUCTIONS, outputStreamConstructions);
         MsgPack.Serialize(Data.Instance.PLAYER, outputStreamPlayer);
+        MsgPack.Serialize(Data.Instance.MONSTERS_STATS, outputStreamMonsters);
 
         outputStreamInventory.Position = 0; // rewind stream before copying/read
         outputStreamConstructions.Position = 0;
         outputStreamPlayer.Position = 0;
+        outputStreamMonsters.Position = 0;
 
         GameManager.Instance.saved = true;
 
         outputStreamInventory.Close();
         outputStreamConstructions.Close();
         outputStreamPlayer.Close();
+        outputStreamMonsters.Close();
     }
 
     public void Load()
@@ -113,6 +130,14 @@ public class SaveManager : MonoBehaviour
             
             inputStreamPlayer.Close();
         }
+        if (File.Exists(pathMonsters))
+        {
+            FileStream inputStreamMonsters = new FileStream(pathMonsters, FileMode.Open);
+            Data.Instance.MONSTERS_STATS = MsgPack.Deserialize(typeof(Dictionary<string, int[]>), inputStreamMonsters) as Dictionary<string, int[]>;
+            inputStreamMonsters.Close();
+
+            GameManager.Instance.setMonstersDictionary();
+        }
         GameManager.Instance.calculateOfflineTime();
         GameManager.Instance.saved = false;
     }
@@ -130,6 +155,10 @@ public class SaveManager : MonoBehaviour
         if (File.Exists(pathPlayer))
         {
             File.Delete(pathPlayer);
+        }
+        if (File.Exists(pathMonsters))
+        {
+            File.Delete(pathMonsters);
         }
     }
     public void DeleteDebug() //Nomes per debug, eventualment es pot borrar i utilitzar l'altre
@@ -149,5 +178,7 @@ public class SaveManager : MonoBehaviour
         GameManager.Instance.constructionsBuilt.Clear();
         Data.Instance.CONSTRUCTIONS.Clear();
         Data.Instance.INVENTORY.Clear();
+        Data.Instance.MONSTERS_STATS.Clear();
+        Data.Instance.MONSTERS.Clear();
     }
 }

@@ -422,7 +422,7 @@ public class Building : MonoBehaviour
         updateUI();
     }
 
-    public int getNumActiveResource()
+    public virtual int getNumActiveResource()
     {
         int num = 0;
         for (int i = 0; i < resources.Count; i++)
@@ -633,7 +633,7 @@ public class Building : MonoBehaviour
         GameManager.Instance.isOnCanvas = true;
     }
 
-    public void confirmBuilding()
+    public virtual void confirmBuilding()
     {
         if (canBePlaced())
         {

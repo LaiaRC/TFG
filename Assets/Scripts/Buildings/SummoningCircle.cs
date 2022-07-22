@@ -92,15 +92,15 @@ public class SummoningCircle : Building
     public List<Sprite> numbersIcons;
     public Animator animator; //.play("book") to turn page
 
-    private string activeMonster = NONE;
+    public string activeMonster = NONE;
     private string selectedTab = NONE;
     private int selectedTabIndex = 0;
-    private float activeMonsterTime = 0;
+    public float activeMonsterTime = 0;
     private float timeToUpdate = 0;
     private float timeToUpdateBar = 0;
     private List<string> unlockedMonsters = new List<string>();
-    private string hidenMonster = "skeleton"; //default value
-    private int hidenMonsterIndex = 0;
+    public string hidenMonster = "skeleton"; //default value
+    public int hidenMonsterIndex = 0;
 
     #region MONSTER KEYS
 
@@ -166,14 +166,15 @@ public class SummoningCircle : Building
             if (Data.Instance.MONSTERS.TryGetValue(activeMonster, out MonsterInfo monster))
             {
                 activeMonsterTime = monster.time;
+                activeResourceTime = monster.time;
             }
             timeBarMonster.minValue = 0;
-            timeBarMonster.maxValue = activeMonsterTime;
-
-            //Save building position
-            position = transform.position;
+            timeBarMonster.maxValue = activeMonsterTime;            
         }
         canvasInterior.SetActive(false);
+
+        //Save building position
+        position = transform.position;
     }
 
     void Update()
@@ -251,7 +252,7 @@ public class SummoningCircle : Building
                             }
                             else
                             {
-                                timeTextMonster.SetText(hours.ToString() + "h " + timeLeft.ToString("F0") + "s");
+                                timeTextMonster.SetText(hours.ToString() + "h " + secondsLeft + "s");
                             }
                         }
                         else
@@ -262,7 +263,7 @@ public class SummoningCircle : Building
                             }
                             else
                             {
-                                timeTextMonster.SetText(timeLeft.ToString("F0") + "s");
+                                timeTextMonster.SetText(secondsLeft + "s");
                             }
                         }
                     }
@@ -815,6 +816,10 @@ public class SummoningCircle : Building
                     #endregion
 
                     monsterAux.isUnlocked = true;
+
+                    //Update monster stats dictionary
+                    Data.Instance.MONSTERS_STATS[selectedTab] = new int[] {1, 1};
+
                     unlockedMonsters.Add(selectedTab);
                     hidenMonster = getHiddenMonster(selectedTabIndex + 1);
                     hidenMonsterIndex = selectedTabIndex + 1;
@@ -832,6 +837,7 @@ public class SummoningCircle : Building
                     if (Data.Instance.MONSTERS.TryGetValue(activeMonster, out MonsterInfo monster))
                     {
                         activeMonsterTime = monster.time;
+                        activeResourceTime = monster.time;
                     }
                     //Reset time to produce
                     time = 0;
@@ -896,7 +902,89 @@ public class SummoningCircle : Building
         return hidenMonster;
     }
 
-    
+    public string getStringMonster(int monsterIndex)
+    {
+        string hidenMonster = "";
+        switch (monsterIndex)
+        {
+            case 0:
+                hidenMonster = SKELETON;
+                break;
+            case 1:
+                hidenMonster = JACK_LANTERN;
+                break;
+            case 2:
+                hidenMonster = BAT;
+                break;
+            case 3:
+                hidenMonster = GOBLIN;
+                break;
+            case 4:
+                hidenMonster = GHOST;
+                break;
+            case 5:
+                hidenMonster = CLOWN;
+                break;
+            case 6:
+                hidenMonster = ZOMBIE;
+                break;
+            case 7:
+                hidenMonster = VAMPIRE;
+                break;
+            case 8:
+                hidenMonster = WITCH;
+                break;
+            case 9:
+                hidenMonster = REAPER;
+                break;
+            case 100:
+                hidenMonster = NONE;
+                break;
+        }
+        return hidenMonster;
+    }
+
+    public int getIndexMonster(string monsterString)
+    {
+        int hidenMonster = 0;
+        switch (monsterString)
+        {
+            case "skeleton":
+                hidenMonster = 0;
+                break;
+            case "jackOLantern":
+                hidenMonster = 1;
+                break;
+            case "bat":
+                hidenMonster = 2;
+                break;
+            case "goblin":
+                hidenMonster = 3;
+                break;
+            case "ghost":
+                hidenMonster = 4;
+                break;
+            case "clown":
+                hidenMonster = 5;
+                break;
+            case "zombie":
+                hidenMonster = 6;
+                break;
+            case "vampire":
+                hidenMonster = 7;
+                break;
+            case "witch":
+                hidenMonster = 8;
+                break;
+            case "reaper":
+                hidenMonster = 9;
+                break;
+            case "none":
+                hidenMonster = 100;
+                break;
+        }
+        return hidenMonster;
+    }
 
     public void setSelectedTab(string selectedMonster)
     {
@@ -999,14 +1087,14 @@ public class SummoningCircle : Building
                 #endregion
 
                 #region ADD TO INVENTORY
-                if (Data.Instance.MONSTER_INVENTORY.TryGetValue(activeMonster, out int quantity))
+                if (Data.Instance.INVENTORY.TryGetValue(activeMonster, out int quantity))
                 {
                     quantity += 1;
-                    Data.Instance.updateMonsterInventory(activeMonster, quantity); //update monster inventory
+                    Data.Instance.updateInventory(activeMonster, quantity); //update monster inventory
                 }
                 else
                 {
-                    Data.Instance.MONSTER_INVENTORY.Add(activeMonster, 1);
+                    Data.Instance.INVENTORY.Add(activeMonster, 1);
                 }
                 #endregion
             }
@@ -1294,9 +1382,18 @@ public class SummoningCircle : Building
 
                     monster.upgradeLevel++;
 
+                    //Update monster stats dictionary
+                    Data.Instance.MONSTERS_STATS[selectedTab] = new int[] { 1, monster.upgradeLevel };
+
                     setUI(selectedTab);
                 }
             }
         }
+    }
+
+    override
+    public int getNumActiveResource() //Get index of activeMonster
+    {
+        return getIndexMonster(activeMonster);
     }
 }
