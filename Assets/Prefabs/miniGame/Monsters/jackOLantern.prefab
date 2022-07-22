@@ -496,10 +496,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: 0
-  health: 6
+  health: 10
   damage: 0
   detectionRange: 7
-  attackRange: 5
+  attackRange: 0
   attackRate: 0
   canBeInvokedInside: 1
   canFly: 0

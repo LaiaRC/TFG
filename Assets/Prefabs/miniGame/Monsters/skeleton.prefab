@@ -351,12 +351,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d632aa2cbb0fa44e94d8ad3f9e00315, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 2
-  health: 2
-  damage: 1
+  velocity: 5
+  health: 3
+  damage: 2
   detectionRange: 7
-  attackRange: 5
-  attackRate: 2
+  attackRange: 5.5
+  attackRate: 1
   canBeInvokedInside: 0
   canFly: 0
   currentState: 

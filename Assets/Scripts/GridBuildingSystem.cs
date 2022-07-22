@@ -30,10 +30,22 @@ public class GridBuildingSystem : MonoBehaviour
     {
         current = this;
         string tilePath = @"Sprites\Palettes\";
-        tileBases.Add(TileType.Empty, null);
-        tileBases.Add(TileType.White, whiteTile);
-        tileBases.Add(TileType.Green, greenTile);
-        tileBases.Add(TileType.Red, redTile);
+        if (!tileBases.ContainsKey(TileType.Empty))
+        {
+            tileBases.Add(TileType.Empty, null);
+        }
+        if (!tileBases.ContainsKey(TileType.White))
+        {
+            tileBases.Add(TileType.White, null);
+        }
+        if (!tileBases.ContainsKey(TileType.Green))
+        {
+            tileBases.Add(TileType.Green, null);
+        }
+        if (!tileBases.ContainsKey(TileType.Red))
+        {
+            tileBases.Add(TileType.Red, null);
+        }
     }
 
     private void Update()

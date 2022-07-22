@@ -107,6 +107,18 @@ public class SaveManager : MonoBehaviour
         outputStreamMonsters.Close();
     }
 
+    public void SaveInventory()
+    {
+        //Save minigame drops to inventory
+        if (File.Exists(pathInventory))
+        {
+            File.Delete(pathInventory);
+        }
+        var outputStreamInventory = new FileStream(pathInventory, FileMode.Create);
+        MsgPack.Serialize(Data.Instance.INVENTORY, outputStreamInventory);
+        outputStreamInventory.Position = 0; // rewind stream before copying/read
+        outputStreamInventory.Close();
+    }
     public void Load()
     {
         if (File.Exists(pathInventory))
@@ -161,6 +173,24 @@ public class SaveManager : MonoBehaviour
             File.Delete(pathMonsters);
         }
     }
+
+    public void Restart()
+    {
+        //Borrar tot menys inventory (nomes te drops i scares)
+        if (File.Exists(pathConstructions))
+        {
+            File.Delete(pathConstructions);
+        }
+        if (File.Exists(pathPlayer))
+        {
+            File.Delete(pathPlayer);
+        }
+        GameManager.Instance.constructionsBuilt.Clear();
+        Data.Instance.CONSTRUCTIONS.Clear();
+        Data.Instance.MONSTERS_STATS.Clear();
+        Data.Instance.MONSTERS.Clear();
+    }
+
     public void DeleteDebug() //Nomes per debug, eventualment es pot borrar i utilitzar l'altre
     {
         if (File.Exists(pathInventory))

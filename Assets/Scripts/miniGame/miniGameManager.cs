@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
 using TMPro;
+using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class Drop
 {
@@ -59,7 +61,7 @@ public class miniGameManager : MonoBehaviour
     public GameObject scareProjectile;
 
     //Game variables
-    public static float MINIGAME_MAX_TIME = 200f; //in seconds
+    public static float MINIGAME_MAX_TIME = 20f; //in seconds
 
     //UI variables
     public static float HOLD_TIME = 0.25f;
@@ -152,15 +154,18 @@ public class miniGameManager : MonoBehaviour
         POOLS.Add(SCARE_PROJECTILE, pool2);
 
         //Only to debug, fill units_monsters dictionary 
-        UNITS_MONSTERS.Add(SKELETON, 20);
-        UNITS_MONSTERS.Add(ZOMBIE, 20);
-        UNITS_MONSTERS.Add(GHOST, 20);
-        UNITS_MONSTERS.Add(JACK_LANTERN, 20);
-        UNITS_MONSTERS.Add(BAT, 20);
-        UNITS_MONSTERS.Add(GOBLIN, 20);
-        UNITS_MONSTERS.Add(VAMPIRE, 20);
-        UNITS_MONSTERS.Add(WITCH, 20);
-        UNITS_MONSTERS.Add(CLOWN, 20);
+
+        foreach (KeyValuePair<string, int> monster in Data.Instance.INVENTORY)
+        {
+            for (int i = 0; i < GameManager.Instance.monstersKeys.Count; i++)
+            {
+                if (monster.Key.Equals(GameManager.Instance.monstersKeys[i]))
+                {
+                    //It's a monster
+                    UNITS_MONSTERS.Add(monster.Key, monster.Value);
+                }
+            }
+        }
     }
 
     // Update is called once per frame
@@ -370,13 +375,19 @@ public class miniGameManager : MonoBehaviour
             {
                 if (MONSTERS.TryGetValue(monsterName, out GameObject monster))
                 {
-                    //Spawn particles
-                    //GameObject particle = poolParticle(MONSTER_SPAWN, new Vector3(position.x, position.y, 0));
+                    GameObject monsterObj = Instantiate(monster, new Vector3(position.x, position.y, 0), Quaternion.identity);
 
-                    //wait until spawn animation finishes
-                    //yield return new WaitUntil(() => particle.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f);
+                    //Set monster stats (not affecting the prefab)
+                    if (Data.Instance.MONSTERS.TryGetValue(monsterName, out MonsterInfo monsterInfo))
+                    {
+                        monsterObj.GetComponent<Monster>().velocity = monsterInfo.velocity[monsterInfo.upgradeLevel - 1];
+                        monsterObj.GetComponent<Monster>().health = monsterInfo.health[monsterInfo.upgradeLevel - 1];
+                        monsterObj.GetComponent<Monster>().damage = monsterInfo.damage[monsterInfo.upgradeLevel - 1];
+                        monsterObj.GetComponent<Monster>().attackRate = monsterInfo.attackRate[monsterInfo.upgradeLevel - 1];
+                        monsterObj.GetComponent<Monster>().attackRange = monsterInfo.attackRange[monsterInfo.upgradeLevel - 1];
+                        monsterObj.GetComponent<Monster>().level = monsterInfo.level[monsterInfo.upgradeLevel - 1];
+                    }
 
-                    GameObject mons = Instantiate(monster, new Vector3(position.x, position.y, 0), Quaternion.identity);
                     numMonstersInvoked++;
                     UNITS_MONSTERS[monsterName] = quantity - 1;
                 }
@@ -504,5 +515,61 @@ public class miniGameManager : MonoBehaviour
             }
         }
         return particle;
+    }
+
+    public void close()
+    {
+        //Save drops to inventory
+        foreach (KeyValuePair<string, Drop> drop in DROPS)
+        {
+            if (Data.Instance.INVENTORY.ContainsKey(drop.Key))
+            {
+                //Sumar al que ja te
+                Data.Instance.INVENTORY[drop.Key] += drop.Value.quantity;
+            }
+            else
+            {
+                Data.Instance.INVENTORY.Add(drop.Key, drop.Value.quantity);
+            }
+        }
+
+        //Save scares to inventory
+        if (Data.Instance.INVENTORY.ContainsKey(Data.SCARE))
+        {
+            //Sumar al que ja te
+            Data.Instance.INVENTORY[Data.SCARE] += numScares;
+        }
+        else
+        {
+            Data.Instance.INVENTORY.Add(Data.SCARE, numScares);
+        }
+
+        //Borrar totes resources inventory menys scares i drops
+
+        foreach (var item in Data.Instance.INVENTORY.ToList())
+        {
+            bool isDrop = false;
+            for (int i = 0; i < GameManager.Instance.dropsKeys.Count; i++)
+            {
+                if (item.Key.Equals(GameManager.Instance.dropsKeys[i]))
+                {
+                    isDrop = true;
+                }
+            }
+            if (!isDrop)
+            {
+                //Delete from inventory
+                Data.Instance.INVENTORY.Remove(item.Key);
+            }
+        }
+
+        //Save inventory
+        SaveManager.Instance.SaveInventory();
+
+        //Delete all except inventory
+        SaveManager.Instance.Restart();
+
+        //Go back to main scene
+        SceneManager.LoadScene("globalView");
     }
 }

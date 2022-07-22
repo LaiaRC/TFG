@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -103,6 +104,7 @@ public class GameManager : MonoBehaviour
         dropsKeys.Add(Data.SHIELD);
         dropsKeys.Add(Data.STICK);
         dropsKeys.Add(Data.GEM);
+        dropsKeys.Add(Data.SCARE);
         #endregion
     }
     #endregion
@@ -129,13 +131,8 @@ public class GameManager : MonoBehaviour
     {
         foreach (KeyValuePair<string, int> inventoryResource in Data.Instance.INVENTORY)
         {
-            for (int i = 0; i < monstersKeys.Count; i++)
-            {
-                if (inventoryResource.Key.Equals(monstersKeys[i]))
-                {
-                    info += "\n -" + inventoryResource.Key + ": " + inventoryResource.Value;
-                }
-            }
+            
+            info += "\n -" + inventoryResource.Key + ": " + inventoryResource.Value;
         }
         //debugInventoryInfo.SetText("isDialogOpen: " + isDialogOpen + "\n" + "draggingItemShop: " + draggingItemShop + "\n" + "draggingFromShop: " + draggingFromShop + "\n");
         debugInventoryInfo.text = info;
@@ -642,5 +639,10 @@ public class GameManager : MonoBehaviour
                 monster.upgradeLevel = monsterStats.Value[UPGRADE_LEVEL];
             }
         }
+    }
+
+    public void loadMiniGame()
+    {
+        SceneManager.LoadScene("miniGame");
     }
 }
