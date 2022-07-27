@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 
 public class GeneralBuilding : Building
-{
+{    
     public void Awake()
     {
         //Set all UI variables through code

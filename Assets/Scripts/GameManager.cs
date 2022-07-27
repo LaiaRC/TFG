@@ -25,11 +25,13 @@ public class GameManager : MonoBehaviour
     public float offlineTime = 0;
     public int offlineBoostMultiplier = 100; //600
     public float offlineBoostTime = 0;
+    public bool isHellfireUnlocked = false;
 
     public GameObject shop;
     public GameObject allShop;
     public GameObject descriptionDialog;
     public GameObject offlineDialog;
+    public GameObject boostShop;
     public List<Sprite> resourcesIcons;
     public List<Sprite> monstersIcons;
     public List<Sprite> dropsIcons;
@@ -41,6 +43,10 @@ public class GameManager : MonoBehaviour
     public Button boostTimeButton;
     public List<String> monstersKeys;
     public List<String> dropsKeys;
+    public List<ShopItemHolder> buildingShopItems = new List<ShopItemHolder>();
+    public List<string> unlockedMonsters = new List<string>();
+    public string hidenMonster = "jackOLantern";
+    public int hidenMonsterIndex = 1;
 
     public Camera mainCamera;
 
@@ -116,6 +122,11 @@ public class GameManager : MonoBehaviour
 
         //Load game
         SaveManager.Instance.Load();
+
+        if (hidenMonster == "")
+        {
+            hidenMonster = "jackOLantern"; //Just in case
+        }
 
         //Just to debug (hardcoded drops) (si ja estan afegits peta)
         /*Data.Instance.INVENTORY.Add(Data.LOLLIPOP, 50);
@@ -401,8 +412,8 @@ public class GameManager : MonoBehaviour
                             //It's summoning circle
                             SummoningCircle temp = obj.GetComponent<SummoningCircle>();
                             //set building values
-                            temp.hidenMonsterIndex = (int)construction.Value[LEVEL];
-                            temp.hidenMonster = temp.getHiddenMonster(temp.hidenMonsterIndex);
+                            hidenMonsterIndex = (int)construction.Value[LEVEL];
+                            hidenMonster = temp.getHiddenMonster(hidenMonsterIndex);
                             temp.placed = true;
 
                             temp.activeMonster = temp.getStringMonster((int)construction.Value[ACTIVE_RESOURCE]);
@@ -644,5 +655,419 @@ public class GameManager : MonoBehaviour
     public void loadMiniGame()
     {
         SceneManager.LoadScene("miniGame");
+    }
+
+    public void applyBoost(string id)
+    {
+        switch (id)
+        {
+            case "crypt":
+                //Unlock the crypt
+                foreach (ShopItemHolder item in buildingShopItems)
+                {
+                    if (item.titleText.text.Contains("Crypt"))
+                    {
+                        item.isLocked = false;
+                        item.setToUnlocked();
+                    }
+                }
+                
+            break;
+
+            case "magicWorkshop":
+                //Unlock the magic workshop
+                foreach (ShopItemHolder item in buildingShopItems)
+                {
+                    if (item.titleText.text.Contains("Magic Workshop"))
+                    {
+                        item.isLocked = false;
+                        item.setToUnlocked();
+                    }
+                }
+
+                break;
+
+            case "deepForest":
+                //Unlock the deep forest
+                foreach (ShopItemHolder item in buildingShopItems)
+                {
+                    if (item.titleText.text.Contains("Deep Forest"))
+                    {
+                        item.isLocked = false;
+                        item.setToUnlocked();
+                    }
+                }
+
+                break;
+
+            case "hellfire":
+                //Unlock the hellfire Zone
+                isHellfireUnlocked = true;
+                foreach (GameObject building in constructionsBuilt)
+                {
+                    if(building.GetComponent<Building>() != null && building.GetComponent<Building>().id.Equals("hellIsland"))
+                    {
+                        building.GetComponent<Building>().updateUI();
+                    }
+                }
+
+                break;
+
+            case "graveyard":
+                //Unlock another graveyard
+                foreach (ShopItemHolder item in buildingShopItems)
+                {
+                    if (item.titleText.text.Contains("Graveyard"))
+                    {
+                        item.maxQuantity += 1;
+                        item.updateTextAmount(item.currentQuantity);
+                    }
+                }
+
+                break;
+
+            case "forest":
+                //Unlock another graveyard
+                foreach (ShopItemHolder item in buildingShopItems)
+                {
+                    if (item.titleText.text.Contains("Forest"))
+                    {
+                        item.maxQuantity += 1;
+                        item.updateTextAmount(item.currentQuantity);
+                    }
+                }
+
+                break;
+
+            case "vegetablePatch":
+                //Unlock another graveyard
+                foreach (ShopItemHolder item in buildingShopItems)
+                {
+                    if (item.titleText.text.Contains("Vegetable"))
+                    {
+                        item.maxQuantity += 1;
+                        item.updateTextAmount(item.currentQuantity);
+                    }
+                }
+
+                break;
+
+            case "swamp":
+                //Unlock another graveyard
+                foreach (ShopItemHolder item in buildingShopItems)
+                {
+                    if (item.titleText.text.Contains("Swamp"))
+                    {
+                        item.maxQuantity += 1;
+                        item.updateTextAmount(item.currentQuantity);
+                    }
+                }
+
+                break;
+
+            case "abandonedHospital":
+                //Unlock another graveyard
+                foreach (ShopItemHolder item in buildingShopItems)
+                {
+                    if (item.titleText.text.Contains("Abandoned"))
+                    {
+                        item.maxQuantity += 1;
+                        item.updateTextAmount(item.currentQuantity);
+                    }
+                }
+
+                break;
+
+            case "crypt2":
+                //Unlock another graveyard
+                foreach (ShopItemHolder item in buildingShopItems)
+                {
+                    if (item.titleText.text.Contains("Crypt"))
+                    {
+                        item.maxQuantity += 1;
+                        item.updateTextAmount(item.currentQuantity);
+                    }
+                }
+
+                break;
+
+            case "jackOLantern":
+
+                if (Data.Instance.MONSTERS.TryGetValue(Data.JACK_LANTERN, out MonsterInfo monsterAux1))
+                {
+                    if (!monsterAux1.isUnlocked)
+                    {
+                        monsterAux1.isUnlocked = true;
+
+                        //Update monster stats dictionary
+                        Data.Instance.MONSTERS_STATS[Data.JACK_LANTERN] = new int[] { 1, 1 };
+
+                        unlockedMonsters.Add(Data.JACK_LANTERN);
+                        hidenMonster = Data.BAT;
+                        hidenMonsterIndex = 2;
+
+                        //Get summoning circle
+                        for (int i = 0; i < constructionsBuilt.Count; i++)
+                        {
+                            if (constructionsBuilt[i].GetComponent<SummoningCircle>() != null)
+                            {
+                                constructionsBuilt[i].GetComponent<SummoningCircle>().setUI(constructionsBuilt[i].GetComponent<SummoningCircle>().selectedTab);
+                            }
+                        }
+
+                        boostShop.GetComponent<BoostShop>().setMonsterTabs();
+                    }
+                }
+
+                break;
+
+            case "bat":
+
+                if (Data.Instance.MONSTERS.TryGetValue(Data.BAT, out MonsterInfo monsterAux))
+                {
+                    if (!monsterAux.isUnlocked)
+                    {
+                        monsterAux.isUnlocked = true;
+
+                        //Update monster stats dictionary
+                        Data.Instance.MONSTERS_STATS[Data.BAT] = new int[] { 1, 1 };
+
+                        unlockedMonsters.Add(Data.BAT);
+                        hidenMonster = Data.GOBLIN;
+                        hidenMonsterIndex = 3;
+                        //Get summoning circle
+                        for (int i = 0; i < constructionsBuilt.Count; i++)
+                        {
+                            if (constructionsBuilt[i].GetComponent<SummoningCircle>() != null)
+                            {
+                                constructionsBuilt[i].GetComponent<SummoningCircle>().setUI(constructionsBuilt[i].GetComponent<SummoningCircle>().selectedTab);
+                            }
+                        }
+
+                        boostShop.GetComponent<BoostShop>().setMonsterTabs();
+                    }
+                }
+
+                break;
+
+            case "goblin":
+
+                if (Data.Instance.MONSTERS.TryGetValue(Data.GOBLIN, out MonsterInfo monsterAux2))
+                {
+                    if (!monsterAux2.isUnlocked)
+                    {
+                        monsterAux2.isUnlocked = true;
+
+                        //Update monster stats dictionary
+                        Data.Instance.MONSTERS_STATS[Data.GOBLIN] = new int[] { 1, 1 };
+
+                        unlockedMonsters.Add(Data.GOBLIN);
+                        hidenMonster = Data.GHOST;
+                        hidenMonsterIndex = 4;
+
+                        //Get summoning circle
+                        for (int i = 0; i < constructionsBuilt.Count; i++)
+                        {
+                            if (constructionsBuilt[i].GetComponent<SummoningCircle>() != null)
+                            {
+                                constructionsBuilt[i].GetComponent<SummoningCircle>().setUI(constructionsBuilt[i].GetComponent<SummoningCircle>().selectedTab);
+                            }
+                        }
+
+                        boostShop.GetComponent<BoostShop>().setMonsterTabs();
+                    }
+                }
+
+                break;
+
+            case "ghost":
+
+                if (Data.Instance.MONSTERS.TryGetValue(Data.GHOST, out MonsterInfo monsterAux3))
+                {
+                    if (!monsterAux3.isUnlocked)
+                    {
+                        monsterAux3.isUnlocked = true;
+
+                        //Update monster stats dictionary
+                        Data.Instance.MONSTERS_STATS[Data.GHOST] = new int[] { 1, 1 };
+
+                        unlockedMonsters.Add(Data.GHOST);
+                        hidenMonster = Data.CLOWN;
+                        hidenMonsterIndex = 5;
+
+                        //Get summoning circle
+                        for (int i = 0; i < constructionsBuilt.Count; i++)
+                        {
+                            if (constructionsBuilt[i].GetComponent<SummoningCircle>() != null)
+                            {
+                                constructionsBuilt[i].GetComponent<SummoningCircle>().setUI(constructionsBuilt[i].GetComponent<SummoningCircle>().selectedTab);
+                            }
+                        }
+
+                        boostShop.GetComponent<BoostShop>().setMonsterTabs();
+                    }
+                }
+
+                break;
+
+            case "clown":
+
+                if (Data.Instance.MONSTERS.TryGetValue(Data.CLOWN, out MonsterInfo monsterAux4))
+                {
+                    if (!monsterAux4.isUnlocked)
+                    {
+                        monsterAux4.isUnlocked = true;
+
+                        //Update monster stats dictionary
+                        Data.Instance.MONSTERS_STATS[Data.CLOWN] = new int[] { 1, 1 };
+
+                        unlockedMonsters.Add(Data.CLOWN);
+                        hidenMonster = Data.ZOMBIE;
+                        hidenMonsterIndex = 6;
+
+                        //Get summoning circle
+                        for (int i = 0; i < constructionsBuilt.Count; i++)
+                        {
+                            if (constructionsBuilt[i].GetComponent<SummoningCircle>() != null)
+                            {
+                                constructionsBuilt[i].GetComponent<SummoningCircle>().setUI(constructionsBuilt[i].GetComponent<SummoningCircle>().selectedTab);
+                            }
+                        }
+
+                        boostShop.GetComponent<BoostShop>().setMonsterTabs();
+                    }
+                }
+
+                break;
+
+            case "zombie":
+
+                if (Data.Instance.MONSTERS.TryGetValue(Data.ZOMBIE, out MonsterInfo monsterAux5))
+                {
+                    if (!monsterAux5.isUnlocked)
+                    {
+                        monsterAux5.isUnlocked = true;
+
+                        //Update monster stats dictionary
+                        Data.Instance.MONSTERS_STATS[Data.ZOMBIE] = new int[] { 1, 1 };
+
+                        unlockedMonsters.Add(Data.ZOMBIE);
+                        hidenMonster = Data.VAMPIRE;
+                        hidenMonsterIndex = 7;
+
+                        //Get summoning circle
+                        for (int i = 0; i < constructionsBuilt.Count; i++)
+                        {
+                            if (constructionsBuilt[i].GetComponent<SummoningCircle>() != null)
+                            {
+                                constructionsBuilt[i].GetComponent<SummoningCircle>().setUI(constructionsBuilt[i].GetComponent<SummoningCircle>().selectedTab);
+                            }
+                        }
+
+                        boostShop.GetComponent<BoostShop>().setMonsterTabs();
+                    }
+                }
+
+                break;
+
+            case "vampire":
+
+                if (Data.Instance.MONSTERS.TryGetValue(Data.VAMPIRE, out MonsterInfo monsterAux6))
+                {
+                    if (!monsterAux6.isUnlocked)
+                    {
+                        monsterAux6.isUnlocked = true;
+
+                        //Update monster stats dictionary
+                        Data.Instance.MONSTERS_STATS[Data.VAMPIRE] = new int[] { 1, 1 };
+
+                        unlockedMonsters.Add(Data.VAMPIRE);
+                        hidenMonster = Data.WITCH;
+                        hidenMonsterIndex = 8;
+                        //Get summoning circle
+                        for (int i = 0; i < constructionsBuilt.Count; i++)
+                        {
+                            if (constructionsBuilt[i].GetComponent<SummoningCircle>() != null)
+                            {
+                                constructionsBuilt[i].GetComponent<SummoningCircle>().setUI(constructionsBuilt[i].GetComponent<SummoningCircle>().selectedTab);
+                            }
+                        }
+
+                        boostShop.GetComponent<BoostShop>().setMonsterTabs();
+                    }
+                }
+
+                break;
+
+            case "witch":
+
+                if (Data.Instance.MONSTERS.TryGetValue(Data.WITCH, out MonsterInfo monsterAux7))
+                {
+                    if (!monsterAux7.isUnlocked)
+                    {
+                        monsterAux7.isUnlocked = true;
+
+                        //Update monster stats dictionary
+                        Data.Instance.MONSTERS_STATS[Data.WITCH] = new int[] { 1, 1 };
+
+                        unlockedMonsters.Add(Data.WITCH);
+                        hidenMonster = Data.REAPER;
+                        hidenMonsterIndex = 9;
+                        //Get summoning circle
+                        for (int i = 0; i < constructionsBuilt.Count; i++)
+                        {
+                            if (constructionsBuilt[i].GetComponent<SummoningCircle>() != null)
+                            {
+                                constructionsBuilt[i].GetComponent<SummoningCircle>().setUI(constructionsBuilt[i].GetComponent<SummoningCircle>().selectedTab);
+                            }
+                        }
+
+                        boostShop.GetComponent<BoostShop>().setMonsterTabs();
+                    }
+                }
+
+                break;
+
+            case "reaper":
+
+                if (Data.Instance.MONSTERS.TryGetValue(Data.REAPER, out MonsterInfo monsterAux8))
+                {
+                    if (!monsterAux8.isUnlocked)
+                    {
+                        monsterAux8.isUnlocked = true;
+
+                        //Update monster stats dictionary
+                        Data.Instance.MONSTERS_STATS[Data.REAPER] = new int[] { 1, 1 };
+
+                        unlockedMonsters.Add(Data.REAPER);
+                        hidenMonster = "none";
+                        hidenMonsterIndex = 100;
+                        //Get summoning circle
+                        for (int i = 0; i < constructionsBuilt.Count; i++)
+                        {
+                            if (constructionsBuilt[i].GetComponent<SummoningCircle>() != null)
+                            {
+                                constructionsBuilt[i].GetComponent<SummoningCircle>().setUI(constructionsBuilt[i].GetComponent<SummoningCircle>().selectedTab);
+                            }
+                        }
+
+                        boostShop.GetComponent<BoostShop>().setMonsterTabs();
+                    }
+                }
+
+                break;
+        }
+    }
+
+    public void applyAllBoosts()
+    {
+        //When loading the game
+        foreach (KeyValuePair<string, int> boost in Data.Instance.BOOSTS)
+        {
+            if(boost.Value == 1) //Maybe can be applied twice or more (>= 1 ?)
+            {
+                applyBoost(boost.Key);
+            }
+        }
     }
 }

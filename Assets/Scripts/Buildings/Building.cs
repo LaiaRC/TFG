@@ -363,7 +363,7 @@ public class Building : MonoBehaviour
     void isOnCanvasOff()
     {
         GameManager.Instance.isOnCanvas = false;
-    }
+    }    
 
     public virtual void pause()
     {
@@ -379,7 +379,7 @@ public class Building : MonoBehaviour
     }
 
     public void upgrade()
-    {
+    {         
         if (level < maxLevel)
         {
             //Check if has all the requirements
@@ -436,7 +436,7 @@ public class Building : MonoBehaviour
     }
 
     public void updateUI()
-    {
+    {          
         //Change upgrade icons 
         if (level < maxLevel)
         {
@@ -476,8 +476,32 @@ public class Building : MonoBehaviour
 
             level2Grid.SetActive(true);
             level3Grid.SetActive(false);
+
+            //Just in case
+            if (id.Equals("hellIsland") && GameManager.Instance.isHellfireUnlocked)
+            {
+                upgradeText1.gameObject.SetActive(true);
+                upgradeIcon1.gameObject.SetActive(true);
+
+                if (Data.Instance.BUILDINGS.TryGetValue(id, out GameObject building))
+                {
+                    if(building.GetComponent<Building>().upgrade_cost[level - 1].list.Count > 1)
+                    {
+                        upgradeText2.gameObject.SetActive(true);
+                        upgradeIcon2.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        upgradeText2.gameObject.SetActive(false);
+                        upgradeIcon2.gameObject.SetActive(false);
+                    }
+                }
+                
+                upgradeButton.gameObject.SetActive(true);
+                maxText.gameObject.SetActive(false);
+            }
         }
-        if (level == maxLevel)
+        if (level == maxLevel || (id.Equals("hellIsland") && level == 2 && !GameManager.Instance.isHellfireUnlocked))
         {
             upgradeText1.gameObject.SetActive(false);
             upgradeText2.gameObject.SetActive(false);
@@ -485,6 +509,17 @@ public class Building : MonoBehaviour
             upgradeIcon2.gameObject.SetActive(false);
             upgradeButton.gameObject.SetActive(false);
             maxText.gameObject.SetActive(true);
+
+            if (id.Equals("hellIsland") && level == 2 && !GameManager.Instance.isHellfireUnlocked)
+            {
+                maxText.SetText("Unlock in The Merchant");
+                maxText.fontSize = 14;
+            }
+            else
+            {
+                maxText.SetText("MAX");
+                maxText.fontSize = 36;
+            }
 
             level1Background.gameObject.SetActive(false);
             level2Background.gameObject.SetActive(false);

@@ -15,6 +15,7 @@ public class Data : MonoBehaviour
     public Dictionary<string, float[]> CONSTRUCTIONS = new Dictionary<string, float[]>(); //x i y posicio i la z el level del building (x no fer 2 diccionaris)
     public Dictionary<string, int> PLAYER = new Dictionary<string, int>();
     public Dictionary<string, int[]> MONSTERS_STATS = new Dictionary<string, int[]>(); //To save if each monster is unlocked and upgrade level
+    public Dictionary<string, int> BOOSTS = new Dictionary<string, int>();
 
     public List<Sprite> resourcesIcons;
     public List<Sprite> monstersIcons;
@@ -657,7 +658,7 @@ public class Data : MonoBehaviour
 
         string desSkeleton = "It's the most basic type of monster. Can only be invoked outside the village and it's favourite type of villager are children.";
 
-        MONSTERS.Add(SKELETON, new MonsterInfo(SKELETON, "Skeleton", 3600, reqSkeleton, reqUpgradeSkeleton, reqUnlockSkeleton, velSkeleton, healthSkeleton, damageSkeleton, aRateSkeleton, aRangeSkeleton, levelSkeleton, monstersIcons[0], desSkeleton, 1, false));
+        MONSTERS.Add(SKELETON, new MonsterInfo(SKELETON, "Skeleton", 3600, reqSkeleton, reqUpgradeSkeleton, reqUnlockSkeleton, velSkeleton, healthSkeleton, damageSkeleton, aRateSkeleton, aRangeSkeleton, levelSkeleton, monstersIcons[0], desSkeleton, 1, true));
 
         //JackOLantern
         List<Requirement> reqJack = new List<Requirement>();

@@ -52,7 +52,10 @@ public class Player : MonoBehaviour
                     {
                         touchedObject.GetComponent<SummoningCircle>().showBuildingInterior();
                     }
-                }     
+                }else if (touchedObject.GetComponent<BoostShop>() != null && !dragged)
+                {
+                    touchedObject.GetComponent<BoostShop>().showShop();
+                }
             }
         }
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)

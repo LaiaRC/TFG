@@ -19,7 +19,7 @@ public class ShopManager2 : MonoBehaviour
     private bool dragging = false;
 
     [SerializeField] private GameObject itemPrefab;
-    private Dictionary<ObjectType, List<ShopItem>> shopItems = new Dictionary<ObjectType, List<ShopItem>>(5);
+    public Dictionary<ObjectType, List<ShopItem>> shopItems = new Dictionary<ObjectType, List<ShopItem>>(5);
 
     [SerializeField] public TabGroup shopTabs;
 
@@ -81,6 +81,7 @@ public class ShopManager2 : MonoBehaviour
             {
                 GameObject itemObject = Instantiate(itemPrefab, shopTabs.objectsToSwap[i].transform);
                 itemObject.GetComponent<ShopItemHolder>().initialize(item);
+                GameManager.Instance.buildingShopItems.Add(itemObject.GetComponent<ShopItemHolder>());
             }
         }
     }    

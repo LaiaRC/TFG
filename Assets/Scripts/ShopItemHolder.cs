@@ -9,7 +9,7 @@ public class ShopItemHolder : MonoBehaviour
 {
     private ShopItem Item;
 
-    [SerializeField] private TextMeshProUGUI titleText;
+    [SerializeField] public TextMeshProUGUI titleText;
     [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField] private TextMeshProUGUI amountText;
     [SerializeField] private Image iconImage;
@@ -18,6 +18,7 @@ public class ShopItemHolder : MonoBehaviour
     [SerializeField] private TextMeshProUGUI resourceText2;
     [SerializeField] private Image resource1Icon;
     [SerializeField] private Image resource2Icon;
+    [SerializeField] private GameObject costGroup;
 
     private string idResource1 = "";
     private string resourceText1Aux = "0";
@@ -27,35 +28,41 @@ public class ShopItemHolder : MonoBehaviour
     private int result = 0;
     private bool isDragActivated = false;
     private bool hasReachedLimit = false;
-    private int currentQuantity = 0;
+    public int currentQuantity = 0;
+    public bool isLocked = false;
+    public int maxQuantity = 0;
 
     private void Update()
     {
         if (GameManager.Instance.isOnBuildingMode)
         {
-            //Update cost & amount text
-            if (isInitialized)
+            if (!isLocked)
             {
-                updateTextCost(Item.resourceText1, resourceText1, resource1Icon.sprite.name);
-                updateTextCost(Item.resourceText2, resourceText2, resource2Icon.sprite.name);
+                //Update cost & amount text
+                if (isInitialized)
+                {
+                    updateTextCost(Item.resourceText1, resourceText1, resource1Icon.sprite.name);
+                    updateTextCost(Item.resourceText2, resourceText2, resource2Icon.sprite.name);
 
-                if(Data.Instance.BUILDING_INVENTORY.TryGetValue(Item.id, out int quantity))                {
-                    if(currentQuantity != quantity)
+                    if (Data.Instance.BUILDING_INVENTORY.TryGetValue(Item.id, out int quantity))
                     {
-                        currentQuantity = quantity;
-                        updateTextAmount(currentQuantity);
+                        if (currentQuantity != quantity)
+                        {
+                            currentQuantity = quantity;
+                            updateTextAmount(currentQuantity);
+                        }
                     }
                 }
-            }
 
-            //Activate/Deactivate if an item can be dragged 
-            if (GameManager.Instance.checkRequirements(Item.id) && !isDragActivated && !hasReachedLimit)
-            {
-                activateDrag();
-            }
-            if(!GameManager.Instance.checkRequirements(Item.id) && isDragActivated && !hasReachedLimit)
-            {
-                deactivateDrag();
+                //Activate/Deactivate if an item can be dragged 
+                if (GameManager.Instance.checkRequirements(Item.id) && !isDragActivated && !hasReachedLimit)
+                {
+                    activateDrag();
+                }
+                if (!GameManager.Instance.checkRequirements(Item.id) && isDragActivated && !hasReachedLimit)
+                {
+                    deactivateDrag();
+                }
             }
         }
     }
@@ -68,9 +75,10 @@ public class ShopItemHolder : MonoBehaviour
         titleText.text = Item.name;
         //descriptionText.text = Item.description;
         amountText.text = currentQuantity.ToString() + "/" + Item.maxQuantity;
+        maxQuantity = Item.maxQuantity;
 
         //Hide icons if there is no requirement
-        if(Item.resource1Icon != null)
+        if (Item.resource1Icon != null)
         {
             resource1Icon.sprite = Item.resource1Icon;
         }
@@ -92,8 +100,28 @@ public class ShopItemHolder : MonoBehaviour
         updateTextCost(Item.resourceText1, resourceText1, resource1Icon.sprite.name);
         updateTextCost(Item.resourceText2, resourceText2, resource2Icon.sprite.name);
 
+        isLocked = item.isLocked;
+
         unlockItem();
         isInitialized = true;
+
+        if (isLocked)
+        {
+            descriptionText.gameObject.SetActive(true);
+            costGroup.SetActive(false);
+            deactivateDrag();
+        }
+        else {
+            descriptionText.gameObject.SetActive(false);
+            costGroup.SetActive(true);
+        }
+    }
+
+    public void setToUnlocked()
+    {
+        descriptionText.gameObject.SetActive(false);
+        costGroup.SetActive(true);
+        activateDrag();
     }
 
     public void unlockItem()
@@ -179,12 +207,22 @@ public class ShopItemHolder : MonoBehaviour
 
     public void updateTextAmount(int currentQuantity)
     {
-        amountText.text = currentQuantity.ToString() + "/" + Item.maxQuantity;
-        if(currentQuantity == Item.maxQuantity)
+        amountText.text = currentQuantity.ToString() + "/" + maxQuantity;
+        if(currentQuantity == maxQuantity)
         {
             hasReachedLimit = true;
             deactivateDrag();
             amountText.color = new Color(1, 0, 0, 1);
+        }
+        else
+        {
+            hasReachedLimit = false;
+            amountText.color = new Color(1, 1, 1, 1);
+
+            if (!isLocked)
+            {
+                activateDrag();
+            }
         }
     }
     

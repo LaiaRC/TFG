@@ -87,20 +87,18 @@ public class SummoningCircle : Building
     public GameObject levelImagePortrait;
     public GameObject infoGroup;
     public GameObject upgradeGroup;
+    public GameObject goToMerchant;
     #endregion
 
     public List<Sprite> numbersIcons;
     public Animator animator; //.play("book") to turn page
 
     public string activeMonster = NONE;
-    private string selectedTab = NONE;
-    private int selectedTabIndex = 0;
+    public string selectedTab = NONE;
+    public int selectedTabIndex = 0;
     public float activeMonsterTime = 0;
     private float timeToUpdate = 0;
     private float timeToUpdateBar = 0;
-    private List<string> unlockedMonsters = new List<string>();
-    public string hidenMonster = "skeleton"; //default value
-    public int hidenMonsterIndex = 0;
 
     #region MONSTER KEYS
 
@@ -291,7 +289,7 @@ public class SummoningCircle : Building
         if (Data.Instance.MONSTERS.TryGetValue(monsterKey, out MonsterInfo monsterInfo)){
 
             //Check if it's unknown
-            if (!monsterInfo.isUnlocked && monsterKey != hidenMonster)
+            if (!monsterInfo.isUnlocked && monsterKey != GameManager.Instance.hidenMonster)
             {
                 //It's unknown
                 monsterName.SetText("Unknown");
@@ -329,8 +327,10 @@ public class SummoningCircle : Building
 
                 if (monsterInfo.isUnlocked)
                 {
+                    summonRequirement1.SetActive(true);
                     summonRequirement2.SetActive(true);
                     summonRequirement3.SetActive(true);
+                    goToMerchant.SetActive(false);
 
                     //Summon requirement 1
                     if (Data.Instance.RESOURCES.TryGetValue(monsterInfo.requirements[0].resourceNameKey, out Resource resource))
@@ -393,27 +393,14 @@ public class SummoningCircle : Building
                 else
                 {
                     //show unlock requirements (only 1?)
-                    //Summon requirement 1
-                    if (Data.Instance.RESOURCES.TryGetValue(monsterInfo.unlockRequirements[0].resourceNameKey, out Resource resource))
-                    {
-                        summonRequirement1.transform.GetChild(0).GetComponent<Image>().sprite = resource.icon;
-                    }
-
-                    //Show current amount and needed
-                    if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.unlockRequirements[0].resourceNameKey, out int quantity))
-                    {
-                        summonRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(quantity + "/" + monsterInfo.unlockRequirements[0].quantity);
-                    }
-                    else
-                    {
-                        summonRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + monsterInfo.unlockRequirements[0].quantity);
-                    }
 
                     //Hide other requirements
+                    summonRequirement1.SetActive(false);
                     summonRequirement2.SetActive(false);
                     summonRequirement3.SetActive(false);
+                    goToMerchant.SetActive(true);
 
-                    summonButtonText.SetText("Unlock");
+                    summonButtonText.SetText("Merchant shop");
                     upgradeMonsterButton.GetComponent<Image>().color = new Color(0, 1, 0, 0.5f);
                 }
                 //only show >> if upgrading changes value (TODO) 
@@ -624,7 +611,7 @@ public class SummoningCircle : Building
                 tabs[i].GetComponent<Image>().sprite = tabBackgrounds[DESELECTED];
             }
 
-            if (i == hidenMonsterIndex)
+            if (i == GameManager.Instance.hidenMonsterIndex)
             {
                 //Put color black
                 tabs[i].transform.GetChild(1).GetComponent<Image>().color = new Color(0, 0, 0, 0.5f);
@@ -649,7 +636,7 @@ public class SummoningCircle : Building
         }
 
         //Sprite inside
-        if(selectedTabIndex == hidenMonsterIndex)
+        if(selectedTabIndex == GameManager.Instance.hidenMonsterIndex)
         {
             tabs[selectedTabIndex].transform.GetChild(1).GetComponent<Image>().color = new Color(0, 0, 0, 1);
         }
@@ -661,7 +648,7 @@ public class SummoningCircle : Building
         //Set sprite inside portrait
         for (int i = 0; i < tabs.Count; i++)
         {
-            if(i > hidenMonsterIndex)
+            if(i > GameManager.Instance.hidenMonsterIndex)
             {
                 //It's unknown
                 //tabs[i].transform.GetChild(0).GetComponent<Image>().sprite = questionMark;
@@ -797,34 +784,9 @@ public class SummoningCircle : Building
         {
             if (!monsterAux.isUnlocked)
             {
-                //Has pressed "unlock"
-                if (checkRequirementsToUnlock())
-                {
-                    #region PAY REQUIREMENTS
-
-                    foreach (Requirement requirement in monsterAux.unlockRequirements)
-                    {
-                        if (Data.Instance.INVENTORY.TryGetValue(requirement.resourceNameKey, out int requirementQuantity))
-                        {
-                            if (requirementQuantity >= requirement.quantity)
-                            {
-                                requirementQuantity -= requirement.quantity;
-                                Data.Instance.updateInventory(requirement.resourceNameKey, requirementQuantity);
-                            }
-                        }
-                    }
-                    #endregion
-
-                    monsterAux.isUnlocked = true;
-
-                    //Update monster stats dictionary
-                    Data.Instance.MONSTERS_STATS[selectedTab] = new int[] {1, 1};
-
-                    unlockedMonsters.Add(selectedTab);
-                    hidenMonster = getHiddenMonster(selectedTabIndex + 1);
-                    hidenMonsterIndex = selectedTabIndex + 1;
-                    setUI(selectedTab); //Update UI (unlocked) & show upgradeGroup
-                }
+                //Has pressed "unlock" -> go to BoostShop
+                canvasInterior.SetActive(false);
+                GameManager.Instance.boostShop.GetComponent<BoostShop>().showShopImmediate();
             }
             else
             {
@@ -863,6 +825,11 @@ public class SummoningCircle : Building
         }        
     }
 
+    public void goToBoostShop()
+    {
+        GameManager.Instance.boostShop.GetComponent<BoostShop>().showShop();
+    }
+
     public string getHiddenMonster(int hidenMonsterIndex)
     {
         string hidenMonster = "";
@@ -897,6 +864,9 @@ public class SummoningCircle : Building
                 break;
             case 9:
                 hidenMonster = REAPER;
+                break;
+            case 100:
+                hidenMonster = NONE;
                 break;
         }
         return hidenMonster;

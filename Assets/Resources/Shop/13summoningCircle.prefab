@@ -50,7 +50,7 @@ MonoBehaviour:
   resourceText2: 
   resource1Icon: {fileID: 0}
   resource2Icon: {fileID: 0}
-  maxQuantity: 3
+  maxQuantity: 1
   type: 0
   icon: {fileID: 7206118203239918969, guid: 3c4c4eafa5d3cdf4ca803ff46ca6fc2e, type: 3}
   prefab: {fileID: 2000697655669412042, guid: 22034ca2cbeeca4408cf2c7d5ed7ee9a, type: 3}
@@ -58,3 +58,4 @@ MonoBehaviour:
   produces2: {fileID: 8201007689340367071, guid: 0b8008cbd07b4064c8baf25eebb29293, type: 3}
   produces3: {fileID: 1736641193778822097, guid: 7962accfb9e0f6d46bf5fa2b7aa9a4d6, type: 3}
   order: 5
+  isLocked: 0

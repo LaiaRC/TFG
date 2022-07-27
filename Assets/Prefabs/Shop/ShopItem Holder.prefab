@@ -112,7 +112,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -38.3, y: -153.6}
-  m_SizeDelta: {x: 0, y: 50}
+  m_SizeDelta: {x: 70.33, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2216288171162169886
 CanvasRenderer:
@@ -396,7 +396,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -189.4, y: -153.6}
-  m_SizeDelta: {x: 0, y: 50}
+  m_SizeDelta: {x: 70.33, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4595546696055181069
 CanvasRenderer:
@@ -660,7 +660,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4595546696182179940
 RectTransform:
   m_ObjectHideFlags: 0
@@ -677,8 +677,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.94}
-  m_SizeDelta: {x: 0, y: 63.99}
+  m_AnchoredPosition: {x: 0, y: -41.468}
+  m_SizeDelta: {x: 0, y: 82.937}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4595546696182179942
 CanvasRenderer:
@@ -708,7 +708,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: this is a description
+  m_text: Unlock in The Merchant
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -735,15 +735,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -1138,6 +1138,7 @@ MonoBehaviour:
   resourceText2: {fileID: 757744070206531763}
   resource1Icon: {fileID: 8563383087607919893}
   resource2Icon: {fileID: 4028814754637431076}
+  costGroup: {fileID: 7173273184249829176}
 --- !u!1 &5041489343134880945
 GameObject:
   m_ObjectHideFlags: 0
@@ -1228,7 +1229,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5001646253315409687
 Transform:
   m_ObjectHideFlags: 0

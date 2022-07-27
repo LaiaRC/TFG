@@ -49,7 +49,7 @@ public class SaveManager : MonoBehaviour
             //Save lever or hiddenMonsterIndex depending if it's summoningCircle or not
             if (construction.GetComponent<Building>().id.Contains("summoningCircle"))
             {
-                oldValue[GameManager.LEVEL] = construction.GetComponent<SummoningCircle>().hidenMonsterIndex;
+                oldValue[GameManager.LEVEL] = GameManager.Instance.hidenMonsterIndex;
             }
             else
             {
