@@ -33,6 +33,8 @@ public class miniGameManager : MonoBehaviour
     public bool flagsPlaced = false;
     public NavMeshSurface2d surface;
     public bool gameOver = false;
+    public float scaresModifier = 0;
+    public float dropsModifier = 0;
 
     //UI
     public bool isOnCanvas = false;
@@ -42,7 +44,13 @@ public class miniGameManager : MonoBehaviour
     public List<Button> cardButtons;
     public string selectedCard = NONE;
     public GameObject gameOverPanel;
+    public GameObject scareGroup;
+    public GameObject dropGroup;
     public TextMeshProUGUI scaresText;
+    public TextMeshProUGUI scaresPercentText;
+    public TextMeshProUGUI dropPercentText;
+    public TextMeshProUGUI realScaresText;
+    public TextMeshProUGUI extraScaresText;
     public GameObject dropPrefab;
     public GameObject dropsGroup;
 
@@ -61,7 +69,7 @@ public class miniGameManager : MonoBehaviour
     public GameObject scareProjectile;
 
     //Game variables
-    public static float MINIGAME_MAX_TIME = 20f; //in seconds
+    public static float MINIGAME_MAX_TIME = 30f; //in seconds
 
     //UI variables
     public static float HOLD_TIME = 0.25f;
@@ -99,6 +107,10 @@ public class miniGameManager : MonoBehaviour
     public static string STICK = "stick";
     public static string GEM = "gem";
 
+    //BOOSTS
+    public static string SCARE_BOOST = "mageGuardian";
+    public static string DROP_BOOST = "demonLord";
+
     //Particles
     public static int CURRENT_PARTICLES = 5;
     public static string SORCERER_PROJECTILE = "sorcererProjectile";
@@ -128,11 +140,13 @@ public class miniGameManager : MonoBehaviour
 
     public void Start()
     {
+        gameOverPanel.SetActive(false);
+        
         //Fill monsters dictionary
         foreach (var monster in monsters)
         {
             MONSTERS.Add(monster.name, monster);
-        }
+        }       
 
         //Fill POOLS dictionary with particles
         ObjectPool pool = new ObjectPool();
@@ -155,7 +169,7 @@ public class miniGameManager : MonoBehaviour
 
         //Only to debug, fill units_monsters dictionary 
 
-        foreach (KeyValuePair<string, int> monster in Data.Instance.INVENTORY)
+        /*foreach (KeyValuePair<string, int> monster in Data.Instance.INVENTORY)
         {
             for (int i = 0; i < GameManager.Instance.monstersKeys.Count; i++)
             {
@@ -165,6 +179,48 @@ public class miniGameManager : MonoBehaviour
                     UNITS_MONSTERS.Add(monster.Key, monster.Value);
                 }
             }
+        }*/
+
+        //Add all monsters
+        UNITS_MONSTERS.Add(Data.SKELETON, 30);
+        UNITS_MONSTERS.Add(Data.JACK_LANTERN, 30);
+        UNITS_MONSTERS.Add(Data.ZOMBIE, 30);
+        UNITS_MONSTERS.Add(Data.GHOST, 30);
+        UNITS_MONSTERS.Add(Data.BAT, 30);
+        UNITS_MONSTERS.Add(Data.GOBLIN, 30);
+        UNITS_MONSTERS.Add(Data.VAMPIRE, 30);
+        UNITS_MONSTERS.Add(Data.CLOWN, 30);
+        UNITS_MONSTERS.Add(Data.WITCH, 30);
+
+
+        //Get boosts
+        if (Data.Instance.BUILDING_INVENTORY.TryGetValue(SCARE_BOOST, out int quantity))
+        {
+            for (int i = 0; i < quantity; i++)
+            {
+                scaresModifier += 0.5f;
+            }
+            scareGroup.SetActive(true);
+        }
+        else
+        {
+            //No scare boost
+            scareGroup.SetActive(false);
+        }
+
+        if (Data.Instance.BUILDING_INVENTORY.TryGetValue(DROP_BOOST, out int quantity2))
+        {
+            for (int i = 0; i < quantity2; i++)
+            {
+                dropsModifier += 0.25f;
+                Debug.Log(dropsModifier);
+            }
+            dropGroup.SetActive(true);
+        }
+        else
+        {
+            //No drop boost
+            dropGroup.SetActive(false);
         }
     }
 
@@ -454,7 +510,11 @@ public class miniGameManager : MonoBehaviour
 
     public void showStats()
     {
-        scaresText.SetText(numScares.ToString());
+        scaresText.SetText((numScares + (int)(numScares * scaresModifier)).ToString());
+        scaresPercentText.SetText("+" + scaresModifier*100 + "%");
+        realScaresText.SetText("(" + numScares.ToString());
+        extraScaresText.SetText(" + " + ((int)(numScares * scaresModifier)).ToString() + ")");
+        dropPercentText.SetText("+" + dropsModifier * 100 + "% villager's drops");
         List<Drop> dropsSorted = new List<Drop>();
         foreach (KeyValuePair<string, Drop> drop in DROPS)
         {
@@ -467,7 +527,7 @@ public class miniGameManager : MonoBehaviour
         {
             GameObject itemObject = Instantiate(dropPrefab, dropsGroup.transform);
             itemObject.transform.GetChild(0).GetComponent<Image>().sprite = dropsSorted[i].icon;
-            itemObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(dropsSorted[i].quantity.ToString());
+            itemObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText((dropsSorted[i].quantity + (int)(dropsSorted[i].quantity*dropsModifier)).ToString());
         }
 
         gameOverPanel.SetActive(true);
@@ -525,11 +585,11 @@ public class miniGameManager : MonoBehaviour
             if (Data.Instance.INVENTORY.ContainsKey(drop.Key))
             {
                 //Sumar al que ja te
-                Data.Instance.INVENTORY[drop.Key] += drop.Value.quantity;
+                Data.Instance.INVENTORY[drop.Key] += drop.Value.quantity + (int)(drop.Value.quantity*dropsModifier);
             }
             else
             {
-                Data.Instance.INVENTORY.Add(drop.Key, drop.Value.quantity);
+                Data.Instance.INVENTORY.Add(drop.Key, drop.Value.quantity + (int)(drop.Value.quantity * dropsModifier));
             }
         }
 
@@ -537,11 +597,11 @@ public class miniGameManager : MonoBehaviour
         if (Data.Instance.INVENTORY.ContainsKey(Data.SCARE))
         {
             //Sumar al que ja te
-            Data.Instance.INVENTORY[Data.SCARE] += numScares;
+            Data.Instance.INVENTORY[Data.SCARE] += numScares + (int)(numScares*scaresModifier);
         }
         else
         {
-            Data.Instance.INVENTORY.Add(Data.SCARE, numScares);
+            Data.Instance.INVENTORY.Add(Data.SCARE, numScares + (int)(numScares * scaresModifier));
         }
 
         //Borrar totes resources inventory menys scares i drops

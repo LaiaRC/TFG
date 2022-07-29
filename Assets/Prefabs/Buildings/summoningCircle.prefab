@@ -2340,9 +2340,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcad02f4e7a33f54882baffa04a8d485, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  building_name: Summoning Circle
   id: summoningCircle
+  construction_name: 
   production_cost: []
+  numType: 0
+  position: {x: 0, y: 0, z: 0}
+  tempArea:
+    m_Position: {x: 0, y: 0, z: 0}
+    m_Size: {x: 6, y: 3, z: 0}
+  placed: 0
+  area:
+    m_Position: {x: 0, y: 0, z: 0}
+    m_Size: {x: 0, y: 0, z: 0}
+  confirmUI: {fileID: 1688311054014621016}
   upgrade_cost: []
   resources: []
   resourcesButtons: []
@@ -2374,20 +2384,11 @@ MonoBehaviour:
   requirementText: {fileID: 0}
   requirement1Text: {fileID: 0}
   requirement2Text: {fileID: 0}
-  position: {x: 0, y: 0, z: 0}
-  tempArea:
-    m_Position: {x: 0, y: 0, z: 0}
-    m_Size: {x: 6, y: 3, z: 0}
+  extraNumResources: 0
   activeResource: 
-  numTypeBuildings: 0
   timeLeft: 0
   time: 0
   isPaused: 0
-  placed: 0
-  area:
-    m_Position: {x: 0, y: 0, z: 0}
-    m_Size: {x: 0, y: 0, z: 0}
-  confirmUI: {fileID: 1688311054014621016}
   canvasInterior: {fileID: 1362195048390551837}
   activeResourceTime: 0
   monsterName: {fileID: 5559193380389881342}
@@ -2459,6 +2460,7 @@ MonoBehaviour:
   selectedTab: skeleton
   selectedTabIndex: 0
   activeMonsterTime: 0
+  timeModifier: 0
 --- !u!1 &2166440479145518915
 GameObject:
   m_ObjectHideFlags: 0
@@ -13040,14 +13042,14 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 1854148774200140687}
   m_FillRect: {fileID: 802231547076614830}
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.823
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

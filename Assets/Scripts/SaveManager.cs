@@ -42,12 +42,12 @@ public class SaveManager : MonoBehaviour
         {
             //Debug.Log(construction.GetComponent<Building>().id + construction.GetComponent<Building>().numTypeBuildings);
 
-            float[] oldValue = Data.Instance.CONSTRUCTIONS[construction.GetComponent<Building>().id + construction.GetComponent<Building>().numTypeBuildings];
+            float[] oldValue = Data.Instance.CONSTRUCTIONS[construction.GetComponent<Construction>().id + construction.GetComponent<Construction>().numType];
             oldValue[GameManager.POS_X] = construction.transform.position.x;
             oldValue[GameManager.POS_Y] = construction.transform.position.y;
 
             //Save lever or hiddenMonsterIndex depending if it's summoningCircle or not
-            if (construction.GetComponent<Building>().id.Contains("summoningCircle"))
+            if (construction.GetComponent<Construction>().id.Contains("summoningCircle"))
             {
                 oldValue[GameManager.LEVEL] = GameManager.Instance.hidenMonsterIndex;
             }
@@ -60,7 +60,7 @@ public class SaveManager : MonoBehaviour
             oldValue[GameManager.TIME_LEFT] = (construction.GetComponent<Building>().timeLeft);
             oldValue[GameManager.PRODUCING] = construction.GetComponent<Building>().isProducing ? 1 : 0;
             oldValue[GameManager.PAUSED] = construction.GetComponent<Building>().isPaused ? 1 : 0;
-            oldValue[GameManager.NUM_TYPE] = construction.GetComponent<Building>().numTypeBuildings;
+            oldValue[GameManager.NUM_TYPE] = construction.GetComponent<Building>().numType;
             oldValue[GameManager.ACTIVE_RESOURCE_TIME] = construction.GetComponent<Building>().activeResourceTime;
             /*Debug.Log(oldValue[GameManager.POS_X]);
             Debug.Log(oldValue[GameManager.POS_Y]);

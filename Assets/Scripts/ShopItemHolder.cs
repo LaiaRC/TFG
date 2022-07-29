@@ -7,17 +7,17 @@ using UnityEngine.UI;
 
 public class ShopItemHolder : MonoBehaviour
 {
-    private ShopItem Item;
+    public ShopItem Item;
 
     [SerializeField] public TextMeshProUGUI titleText;
     [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField] private TextMeshProUGUI amountText;
     [SerializeField] private Image iconImage;
     //[SerializeField] private Image currencyImage;
-    [SerializeField] private TextMeshProUGUI resourceText1;
-    [SerializeField] private TextMeshProUGUI resourceText2;
-    [SerializeField] private Image resource1Icon;
-    [SerializeField] private Image resource2Icon;
+    [SerializeField] public TextMeshProUGUI resourceText1;
+    [SerializeField] public TextMeshProUGUI resourceText2;
+    [SerializeField] public Image resource1Icon;
+    [SerializeField] public Image resource2Icon;
     [SerializeField] private GameObject costGroup;
 
     private string idResource1 = "";
@@ -27,10 +27,12 @@ public class ShopItemHolder : MonoBehaviour
     private bool isInitialized = false;
     private int result = 0;
     private bool isDragActivated = false;
-    private bool hasReachedLimit = false;
+    public bool hasReachedLimit = false;
     public int currentQuantity = 0;
     public bool isLocked = false;
     public int maxQuantity = 0;
+    public string requirementText1 = "";
+    public string requirementText2 = "";
 
     private void Update()
     {
@@ -41,8 +43,11 @@ public class ShopItemHolder : MonoBehaviour
                 //Update cost & amount text
                 if (isInitialized)
                 {
-                    updateTextCost(Item.resourceText1, resourceText1, resource1Icon.sprite.name);
-                    updateTextCost(Item.resourceText2, resourceText2, resource2Icon.sprite.name);
+                    if (!hasReachedLimit)
+                    {
+                        updateTextCost(requirementText1, resourceText1, resource1Icon.sprite.name);
+                        updateTextCost(requirementText2, resourceText2, resource2Icon.sprite.name);
+                    }
 
                     if (Data.Instance.BUILDING_INVENTORY.TryGetValue(Item.id, out int quantity))
                     {
@@ -54,7 +59,7 @@ public class ShopItemHolder : MonoBehaviour
                     }
                 }
 
-                //Activate/Deactivate if an item can be dragged 
+                //Activate/Deactivate if an item can be dragged  
                 if (GameManager.Instance.checkRequirements(Item.id) && !isDragActivated && !hasReachedLimit)
                 {
                     activateDrag();
@@ -76,6 +81,8 @@ public class ShopItemHolder : MonoBehaviour
         //descriptionText.text = Item.description;
         amountText.text = currentQuantity.ToString() + "/" + Item.maxQuantity;
         maxQuantity = Item.maxQuantity;
+        requirementText1 = Item.resourceText1;
+        requirementText2 = Item.resourceText2;
 
         //Hide icons if there is no requirement
         if (Item.resource1Icon != null)
@@ -97,8 +104,8 @@ public class ShopItemHolder : MonoBehaviour
         }
 
         //set cost text
-        updateTextCost(Item.resourceText1, resourceText1, resource1Icon.sprite.name);
-        updateTextCost(Item.resourceText2, resourceText2, resource2Icon.sprite.name);
+        updateTextCost(requirementText1, resourceText1, resource1Icon.sprite.name);
+        updateTextCost(requirementText2, resourceText2, resource2Icon.sprite.name);
 
         isLocked = item.isLocked;
 
@@ -212,6 +219,7 @@ public class ShopItemHolder : MonoBehaviour
         {
             hasReachedLimit = true;
             deactivateDrag();
+            setMaxQuantityText();
             amountText.color = new Color(1, 0, 0, 1);
         }
         else
@@ -224,6 +232,23 @@ public class ShopItemHolder : MonoBehaviour
                 activateDrag();
             }
         }
+    }
+
+    public void setMaxQuantityText()
+    {
+        resource1Icon.gameObject.SetActive(false);
+        resource2Icon.gameObject.SetActive(false);
+        resourceText2.gameObject.SetActive(false);
+        resourceText1.SetText("MAX");
+        resourceText1.color = new Color(1, 1, 1, 1);
+    }
+
+    public void setRequirementTextConfig()
+    {
+        //after max quantity is amplified (boost)
+        resource1Icon.gameObject.SetActive(true);
+        resource2Icon.gameObject.SetActive(true);
+        resourceText2.gameObject.SetActive(true);
     }
     
     public void activateDrag()

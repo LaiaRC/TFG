@@ -657,7 +657,6 @@ public class Data : MonoBehaviour
         #endregion
 
         string desSkeleton = "It's the most basic type of monster. Can only be invoked outside the village and it's favourite type of villager are children.";
-
         MONSTERS.Add(SKELETON, new MonsterInfo(SKELETON, "Skeleton", 3600, reqSkeleton, reqUpgradeSkeleton, reqUnlockSkeleton, velSkeleton, healthSkeleton, damageSkeleton, aRateSkeleton, aRangeSkeleton, levelSkeleton, monstersIcons[0], desSkeleton, 1, true));
 
         //JackOLantern
@@ -1246,7 +1245,7 @@ public class Data : MonoBehaviour
     {
         foreach(GameObject building in buildings)
         {
-            BUILDINGS.Add(building.GetComponent<Building>().id, building);
+            BUILDINGS.Add(building.GetComponent<Construction>().id, building);
         }
     }
 

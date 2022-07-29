@@ -18,12 +18,8 @@ public class RequirementList
     public List<RequirementBuilding> list;
 }
 
-public class Building : MonoBehaviour
-{
-    
-    public string building_name; //nom del building
-    public string id;
-    public List<RequirementBuilding> production_cost;
+public class Building : Construction
+{    
     public List<RequirementList> upgrade_cost;
     public List<string> resources; //Llista dels recursos que produeix el building
     public List<GameObject> resourcesButtons; //Llista amb els sprites de cada resource 
@@ -55,21 +51,15 @@ public class Building : MonoBehaviour
     public TextMeshProUGUI requirementText;
     public TextMeshProUGUI requirement1Text;
     public TextMeshProUGUI requirement2Text;
-    public Vector3 position;
-    public BoundsInt tempArea;
+    public int extraNumResources = 0;
+    
     public string activeResource; //Quina resource s'esta produïnt
-    public int numTypeBuildings = 0;
     public float timeLeft;
     public float time = 0; //comptador de temps fins el activeResourceTime
-    public bool isPaused = false;
-
-    public bool placed;
-    public BoundsInt area;
-    public GameObject confirmUI;
+    public bool isPaused = false;    
     public GameObject canvasInterior;
 
     public float activeResourceTime = 0;   //temps que triga a fer-se el active resource
-    protected Vector3 origin;
     protected bool showUI = false;
     protected bool enoughResources = false;
 
@@ -261,7 +251,7 @@ public class Building : MonoBehaviour
                 #region ADD TO INVENTORY
                 if (Data.Instance.INVENTORY.TryGetValue(activeResource, out int quantity))
                 {
-                    quantity += 1;
+                    quantity += 1 + extraNumResources;
                     Data.Instance.updateInventory(activeResource, quantity);
                 }
                 else
@@ -358,12 +348,7 @@ public class Building : MonoBehaviour
     {
         canvasInterior.SetActive(false);
         Invoke("isOnCanvasOff", 0.1f);
-    }
-
-    void isOnCanvasOff()
-    {
-        GameManager.Instance.isOnCanvas = false;
-    }    
+    }        
 
     public virtual void pause()
     {
@@ -645,99 +630,16 @@ public class Building : MonoBehaviour
             }
         }
         #endregion
-    }
-
-    #region Building Methods
-
-    public bool canBePlaced()
+    } 
+    
+    override
+    public void saveConstructionToDictionary()
     {
-        Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(transform.position);
-        BoundsInt areaTemp = area;
-        areaTemp.position = positionInt;
-
-        if (GridBuildingSystem.current.canTakeArea(areaTemp))
+        if (!Data.Instance.CONSTRUCTIONS.ContainsKey(id + numType))
         {
-            return true;
-        }
-        return false;
-    }
-
-    public void place()
-    {
-        confirmUI.SetActive(true);
-        GameManager.Instance.isOnCanvas = true;
-    }
-
-    public virtual void confirmBuilding()
-    {
-        if (canBePlaced())
-        {
-            //Check requirements
-            if (GameManager.Instance.checkRequirements(id))
-            {
-
-                //Apply cost and update inventory
-                GameManager.Instance.buy(id);
-
-                //Build building gameObject
-                Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(transform.position);
-                BoundsInt areaTemp = area;
-                areaTemp.position = positionInt;
-                placed = true;
-                GridBuildingSystem.current.takeArea(areaTemp);
-                tempArea = areaTemp;
-                confirmUI.SetActive(false);
-                GameManager.Instance.detected = false;
-                GameManager.Instance.showAllShop();
-                GameManager.Instance.draggingItemShop = false;
-                Invoke("isOnCanvasOff", 0.1f);
-
-                //Update amount of buildings in inventory of buildings
-                if (Data.Instance.BUILDING_INVENTORY.TryGetValue(id, out int quantity)) {
-                    quantity += 1;
-                    Data.Instance.BUILDING_INVENTORY[id] = quantity;
-                    numTypeBuildings = quantity;
-                }
-                else
-                {
-                    //It's the first building (of this type)
-                    Data.Instance.BUILDING_INVENTORY.Add(id, 1);
-                    numTypeBuildings = 1;
-                }
-
-                //Save building in dictionary
-                if (!Data.Instance.CONSTRUCTIONS.ContainsKey(id + numTypeBuildings))
-                {
-                    Data.Instance.CONSTRUCTIONS.Add(id + numTypeBuildings, new float[] { transform.position.x, transform.position.y, level, getNumActiveResource(), timeLeft, isProducing ? 1 : 0, isPaused ? 1 : 0, numTypeBuildings, activeResourceTime });
-                }
-                GameManager.Instance.constructionsBuilt.Add(this.gameObject);
-            }
+            Data.Instance.CONSTRUCTIONS.Add(id + numType, new float[] { transform.position.x, transform.position.y, level, getNumActiveResource(), timeLeft, isProducing ? 1 : 0, isPaused ? 1 : 0, numType, activeResourceTime });
         }
     }
-
-    public void cancelBuilding()
-    {
-        GameManager.Instance.detected = false;
-        GameManager.Instance.draggingItemShop = false;
-        GameManager.Instance.showAllShop();
-        Destroy(gameObject);
-    }
-
-    public void checkPlacement()
-    {
-        if (canBePlaced())
-        {
-            place();
-            origin = transform.position;
-        }
-        else
-        {
-            Destroy(transform.gameObject);
-        }
-        GameManager.Instance.openShop();
-    }
-
-    #endregion
 
     private void OnDrawGizmosSelected()
     {

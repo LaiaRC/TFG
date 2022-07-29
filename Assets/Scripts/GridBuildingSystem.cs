@@ -19,7 +19,7 @@ public class GridBuildingSystem : MonoBehaviour
     public TextMeshProUGUI debugText;
    
     private static Dictionary<TileType, TileBase> tileBases = new Dictionary<TileType, TileBase>();
-    private Building temp;
+    private Construction temp;
     private Vector3 prevPos;
     private BoundsInt prevArea;
     private Touch touch;
@@ -136,7 +136,7 @@ public class GridBuildingSystem : MonoBehaviour
         }
         
 
-        temp = Instantiate(building, Camera.main.ScreenToWorldPoint(position), Quaternion.identity).GetComponent<Building>();
+        temp = Instantiate(building, Camera.main.ScreenToWorldPoint(position), Quaternion.identity).GetComponent<Construction>();
         FollowBuilding();
 
         /*pos.z = 0;
@@ -156,7 +156,7 @@ public class GridBuildingSystem : MonoBehaviour
         Vector3Int cellPos = gridLayout.WorldToCell(pos);
         Vector3 position = gridLayout.CellToLocalInterpolated(cellPos);
 
-        temp = Instantiate(building, position, Quaternion.identity).GetComponent<Building>();
+        temp = Instantiate(building, position, Quaternion.identity).GetComponent<Construction>();
         temp.gameObject.AddComponent<ObjectDrag>();
         FollowBuilding();
     }
@@ -170,7 +170,6 @@ public class GridBuildingSystem : MonoBehaviour
     private void FollowBuilding()
     {
         ClearArea();
-
         temp.area.position = gridLayout.WorldToCell(temp.gameObject.transform.position);
         BoundsInt buildingArea = temp.area;
 

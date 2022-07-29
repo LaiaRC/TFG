@@ -1436,9 +1436,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b393607fe5b188c4cb762f22c923dfef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  building_name: Graveyard
   id: graveyard
+  construction_name: Graveyard
   production_cost: []
+  numType: 0
+  position: {x: 0, y: 0, z: 0}
+  tempArea:
+    m_Position: {x: 0, y: 0, z: 0}
+    m_Size: {x: 0, y: 0, z: 0}
+  placed: 0
+  area:
+    m_Position: {x: 0, y: 0, z: 0}
+    m_Size: {x: 6, y: 3, z: 0}
+  confirmUI: {fileID: 1688311054014621016}
   upgrade_cost:
   - list:
     - resourceNameKey: poisonIvy
@@ -1479,22 +1489,15 @@ MonoBehaviour:
   requirementText: {fileID: 0}
   requirement1Text: {fileID: 0}
   requirement2Text: {fileID: 0}
-  position: {x: 0, y: 0, z: 0}
-  tempArea:
-    m_Position: {x: 0, y: 0, z: 0}
-    m_Size: {x: 0, y: 0, z: 0}
+  extraNumResources: 0
   activeResource: bone
-  numTypeBuildings: 0
   timeLeft: 0
   time: 0
   isPaused: 0
-  placed: 0
-  area:
-    m_Position: {x: 0, y: 0, z: 0}
-    m_Size: {x: 6, y: 3, z: 0}
-  confirmUI: {fileID: 1688311054014621016}
   canvasInterior: {fileID: 1362195048390551837}
   activeResourceTime: 0
+  isProducer: 1
+  isConverter: 1
 --- !u!1 &2028175942808267847
 GameObject:
   m_ObjectHideFlags: 0

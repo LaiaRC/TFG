@@ -97,8 +97,10 @@ public class SummoningCircle : Building
     public string selectedTab = NONE;
     public int selectedTabIndex = 0;
     public float activeMonsterTime = 0;
+    public float timeModifier = 0;
     private float timeToUpdate = 0;
     private float timeToUpdateBar = 0;
+    private bool timeTimeUpdated = false;
 
     #region MONSTER KEYS
 
@@ -163,8 +165,8 @@ public class SummoningCircle : Building
 
             if (Data.Instance.MONSTERS.TryGetValue(activeMonster, out MonsterInfo monster))
             {
-                activeMonsterTime = monster.time;
-                activeResourceTime = monster.time;
+                activeMonsterTime = monster.time - (monster.time * timeModifier);
+                activeResourceTime = monster.time - (monster.time * timeModifier);
             }
             timeBarMonster.minValue = 0;
             timeBarMonster.maxValue = activeMonsterTime;            
@@ -188,9 +190,8 @@ public class SummoningCircle : Building
                     pauseButton.gameObject.SetActive(true);
                 }
 
-                time += Time.deltaTime;
+                time += Time.deltaTime;                
                 timeLeft = activeMonsterTime - time;
-
                 if (timeLeft <= 0)
                 {
                     produce();
@@ -749,8 +750,8 @@ public class SummoningCircle : Building
                 }
 
                 timeBarMonster.minValue = 0;
-                timeBarMonster.maxValue = monsterInfo.time;
-                timeBarMonster.value = monsterInfo.time; //S'hauria d'agafar el time left si s'ha guardat
+                timeBarMonster.maxValue = monsterInfo.time - (monsterInfo.time * timeModifier);
+                timeBarMonster.value = monsterInfo.time - (monsterInfo.time * timeModifier); //S'hauria d'agafar el time left si s'ha guardat
                 //timeTextMonster.text = "-";
                 activeMonsterIcon.sprite = monsterInfo.icon;
             }
@@ -798,8 +799,8 @@ public class SummoningCircle : Building
                     activeMonster = selectedTab;
                     if (Data.Instance.MONSTERS.TryGetValue(activeMonster, out MonsterInfo monster))
                     {
-                        activeMonsterTime = monster.time;
-                        activeResourceTime = monster.time;
+                        activeMonsterTime = monster.time - (monster.time * timeModifier);
+                        activeResourceTime = monster.time - (monster.time * timeModifier);
                     }
                     //Reset time to produce
                     time = 0;
@@ -1365,5 +1366,23 @@ public class SummoningCircle : Building
     public int getNumActiveResource() //Get index of activeMonster
     {
         return getIndexMonster(activeMonster);
+    }
+
+    public void updateActiveMonsterTime()
+    {
+        if (activeMonster != NONE)
+        {
+            //Get proportion
+            float proportion = timeLeft / activeMonsterTime;
+            
+            if (Data.Instance.MONSTERS.TryGetValue(activeMonster, out MonsterInfo monster))
+            {
+                activeMonsterTime = monster.time - (monster.time * timeModifier);
+                activeResourceTime = monster.time - (monster.time * timeModifier);
+            }
+            timeBarMonster.minValue = 0;
+            timeBarMonster.maxValue = activeMonsterTime;
+            time = activeMonsterTime - (activeMonsterTime * proportion);
+        }
     }
 }

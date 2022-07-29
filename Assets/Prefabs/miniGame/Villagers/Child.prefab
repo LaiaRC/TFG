@@ -353,7 +353,7 @@ MonoBehaviour:
   attackRate: 0
   isStunned: 0
   drop: {fileID: 3767981418247683008, guid: f7ee502801a7997448284eb43bb7fece, type: 3}
-  dropQuantity: 2
+  dropQuantity: 1
   animator: {fileID: 6042833894438546362}
   audioSource: {fileID: 6042833894438546363}
   audioSourceAux: {fileID: 6042833894438546364}

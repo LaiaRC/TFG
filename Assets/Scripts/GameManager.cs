@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public float offlineTime = 0;
     public int offlineBoostMultiplier = 100; //600
     public float offlineBoostTime = 0;
+    public float offlineBoostTimeModifier = 0;
     public bool isHellfireUnlocked = false;
 
     public GameObject shop;
@@ -142,8 +143,10 @@ public class GameManager : MonoBehaviour
     {
         foreach (KeyValuePair<string, int> inventoryResource in Data.Instance.INVENTORY)
         {
+
             
             info += "\n -" + inventoryResource.Key + ": " + inventoryResource.Value;
+            
         }
         //debugInventoryInfo.SetText("isDialogOpen: " + isDialogOpen + "\n" + "draggingItemShop: " + draggingItemShop + "\n" + "draggingFromShop: " + draggingFromShop + "\n");
         debugInventoryInfo.text = info;
@@ -301,32 +304,35 @@ public class GameManager : MonoBehaviour
         isOnCanvas = false;
     }
 
-    public bool checkRequirements(string buildingToBuild)
+    public bool checkRequirements(string id)
     {
-        //At the moment only works for buildings (generalise to objectToBuild in the future)
+        bool enoughResource = false;        
 
-        bool enoughResource = false;
-        if (Data.Instance.BUILDINGS.TryGetValue(buildingToBuild, out GameObject building))
+        if (Data.Instance.BUILDINGS.TryGetValue(id, out GameObject building))
         {
-            if (building.GetComponent<Building>().production_cost.Count > 0)
+            if (building.GetComponent<Construction>().production_cost.Count > 0)
             {
-                foreach (RequirementBuilding requeriment in building.GetComponent<Building>().production_cost)
+                if (building.GetComponent<Construction>().production_cost[0].list.Count > 0)
                 {
-                    enoughResource = false;
-                    if (Data.Instance.INVENTORY.TryGetValue(requeriment.resourceNameKey, out int quantity))
+
+                    foreach (RequirementBuilding requeriment in building.GetComponent<Construction>().production_cost[0].list)
                     {
-                        if (quantity >= requeriment.quantity)
+                        enoughResource = false;
+                        if (Data.Instance.INVENTORY.TryGetValue(requeriment.resourceNameKey, out int quantity))
                         {
-                            //Tenim suficient de 1 dels resources necessaris falta comprovar si tenim suficient de tots
-                            enoughResource = true;
+                            if (quantity >= requeriment.quantity)
+                            {
+                                //Tenim suficient de 1 dels resources necessaris falta comprovar si tenim suficient de tots
+                                enoughResource = true;
+                            }
                         }
+                        //Et falta algun resource!
+                        if (!enoughResource) return enoughResource;
                     }
-                    //Et falta algun resource!
-                    if (!enoughResource) return enoughResource;
-                }
-                if (enoughResource)
-                {
-                    return enoughResource;
+                    if (enoughResource)
+                    {
+                        return enoughResource;
+                    }
                 }
             }
             else
@@ -334,7 +340,8 @@ public class GameManager : MonoBehaviour
                 //The building is free
                 enoughResource = true;
             }
-        }
+        }   
+        
         return enoughResource;
     }
 
@@ -343,16 +350,27 @@ public class GameManager : MonoBehaviour
         //Apply cost of shop item and update Inventory
         if (Data.Instance.BUILDINGS.TryGetValue(buildingToBuild, out GameObject building))
         {
-            if (building.GetComponent<Building>().production_cost.Count > 0)
-            {                
-                foreach (RequirementBuilding requeriment in building.GetComponent<Building>().production_cost)
+            int num = 0;
+            //Get num of constructions
+            if (Data.Instance.BUILDING_INVENTORY.TryGetValue(buildingToBuild, out int numConstruction))
+            {
+                num = numConstruction;
+            }            
+            
+            //check if it's free
+            if (building.GetComponent<Construction>().production_cost.Count > 0)
+            {
+                if (building.GetComponent<Construction>().production_cost[num].list.Count > 0)
                 {
-                    if (Data.Instance.INVENTORY.TryGetValue(requeriment.resourceNameKey, out int quantity))
+                    foreach (RequirementBuilding requeriment in building.GetComponent<Construction>().production_cost[num].list)
                     {
-                        if (quantity >= requeriment.quantity)
+                        if (Data.Instance.INVENTORY.TryGetValue(requeriment.resourceNameKey, out int quantity))
                         {
-                            quantity -= requeriment.quantity;
-                            Data.Instance.updateInventory(requeriment.resourceNameKey, quantity);
+                            if (quantity >= requeriment.quantity)
+                            {
+                                quantity -= requeriment.quantity;
+                                Data.Instance.updateInventory(requeriment.resourceNameKey, quantity);
+                            }
                         }
                     }
                 }
@@ -440,7 +458,7 @@ public class GameManager : MonoBehaviour
                             temp.time = construction.Value[ACTIVE_RESOURCE_TIME] - construction.Value[TIME_LEFT];
                             temp.timeLeft = construction.Value[TIME_LEFT];
 
-                            temp.numTypeBuildings = (int)construction.Value[NUM_TYPE];
+                            temp.numType = (int)construction.Value[NUM_TYPE];
                             temp.activeResourceTime = construction.Value[ACTIVE_RESOURCE_TIME];
                             temp.activeMonsterTime = construction.Value[ACTIVE_RESOURCE_TIME];
                             temp.setSelectedTab(temp.activeMonster);
@@ -484,7 +502,7 @@ public class GameManager : MonoBehaviour
                             temp.time = construction.Value[ACTIVE_RESOURCE_TIME] - construction.Value[TIME_LEFT];
                             temp.timeLeft = construction.Value[TIME_LEFT];
 
-                            temp.numTypeBuildings = (int)construction.Value[NUM_TYPE];
+                            temp.numType = (int)construction.Value[NUM_TYPE];
                             temp.activeResourceTime = construction.Value[ACTIVE_RESOURCE_TIME];
                             temp.updateUI();
                             Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(constructionPosition);
@@ -559,7 +577,7 @@ public class GameManager : MonoBehaviour
             showOfflineDialog();
 
             boostTimeButton.gameObject.SetActive(true);
-            boostTimeButton.GetComponentInChildren<TextMeshProUGUI>().SetText("Apply boost " + (offlineBoostTime/offlineBoostMultiplier).ToString("F2") + "s");
+            boostTimeButton.GetComponentInChildren<TextMeshProUGUI>().SetText("Apply boost " + (offlineBoostTime/offlineBoostMultiplier).ToString("F2") + " +(" + ((offlineBoostTime * offlineBoostTimeModifier)/ offlineBoostMultiplier).ToString("F2") + ")" +"s");
         }
     }
 
@@ -619,8 +637,9 @@ public class GameManager : MonoBehaviour
     {
         if (!offlineBoostApplied)
         {
+            offlineBoostTime = 10;
             Time.timeScale = offlineBoostMultiplier;
-            Invoke("stopOfflineProduction", offlineBoostTime);
+            Invoke("stopOfflineProduction", ((offlineBoostTime + (offlineBoostTime*offlineBoostTimeModifier))* offlineBoostMultiplier));
         }
     }
 
@@ -661,6 +680,7 @@ public class GameManager : MonoBehaviour
     {
         switch (id)
         {
+            #region BUILDINGS BOOSTS
             case "crypt":
                 //Unlock the crypt
                 foreach (ShopItemHolder item in buildingShopItems)
@@ -720,7 +740,9 @@ public class GameManager : MonoBehaviour
                     if (item.titleText.text.Contains("Graveyard"))
                     {
                         item.maxQuantity += 1;
+                        item.hasReachedLimit = false;
                         item.updateTextAmount(item.currentQuantity);
+                        item.setRequirementTextConfig();
                     }
                 }
 
@@ -733,7 +755,9 @@ public class GameManager : MonoBehaviour
                     if (item.titleText.text.Contains("Forest"))
                     {
                         item.maxQuantity += 1;
+                        item.hasReachedLimit = false;
                         item.updateTextAmount(item.currentQuantity);
+                        item.setRequirementTextConfig();
                     }
                 }
 
@@ -746,7 +770,9 @@ public class GameManager : MonoBehaviour
                     if (item.titleText.text.Contains("Vegetable"))
                     {
                         item.maxQuantity += 1;
+                        item.hasReachedLimit = false;
                         item.updateTextAmount(item.currentQuantity);
+                        item.setRequirementTextConfig();
                     }
                 }
 
@@ -759,7 +785,9 @@ public class GameManager : MonoBehaviour
                     if (item.titleText.text.Contains("Swamp"))
                     {
                         item.maxQuantity += 1;
+                        item.hasReachedLimit = false;
                         item.updateTextAmount(item.currentQuantity);
+                        item.setRequirementTextConfig();
                     }
                 }
 
@@ -772,7 +800,9 @@ public class GameManager : MonoBehaviour
                     if (item.titleText.text.Contains("Abandoned"))
                     {
                         item.maxQuantity += 1;
+                        item.hasReachedLimit = false;
                         item.updateTextAmount(item.currentQuantity);
+                        item.setRequirementTextConfig();
                     }
                 }
 
@@ -785,12 +815,16 @@ public class GameManager : MonoBehaviour
                     if (item.titleText.text.Contains("Crypt"))
                     {
                         item.maxQuantity += 1;
+                        item.hasReachedLimit = false;
                         item.updateTextAmount(item.currentQuantity);
+                        item.setRequirementTextConfig();
                     }
                 }
 
                 break;
+            #endregion
 
+            #region MONSTER BOOSTS
             case "jackOLantern":
 
                 if (Data.Instance.MONSTERS.TryGetValue(Data.JACK_LANTERN, out MonsterInfo monsterAux1))
@@ -1056,6 +1090,104 @@ public class GameManager : MonoBehaviour
                 }
 
                 break;
+            #endregion
+
+            #region DECORATION BOOSTS
+            case "gargoyle":
+
+                foreach (GameObject gargoyle in constructionsBuilt)
+                {
+                    if (gargoyle.GetComponent<Gargoyle>() != null && !gargoyle.GetComponent<Gargoyle>().boostApplied)
+                    {
+                        gargoyle.GetComponent<Gargoyle>().applyBoost();
+                        
+                        //Data.Instance.BOOSTS.Add(obelisk.GetComponent<Obelisk>().id, 1);
+                    }
+                }
+
+                //Change price in shop
+                updateShopPrices("gargoyle");
+                break;
+
+            case "obelisk":
+
+                foreach (GameObject obelisk in constructionsBuilt)
+                {
+                    if (obelisk.GetComponent<Obelisk>() != null && !obelisk.GetComponent<Obelisk>().boostApplied)
+                    {
+                        obelisk.GetComponent<Obelisk>().applyBoost();
+                        //checkejar que no existeixi ja la key
+                        //Data.Instance.BOOSTS.Add(bloodMoonTower.GetComponent<BloodMoonTower>().id, 1);
+                    }
+                }
+
+                //Change price in shop
+                updateShopPrices("obelisk");
+                break;
+
+            case "bloodMoonTower":
+
+                foreach (GameObject bloodMoonTower in constructionsBuilt)
+                {
+                    if (bloodMoonTower.GetComponent<BloodMoonTower>() != null && !bloodMoonTower.GetComponent<BloodMoonTower>().boostApplied)
+                    {
+                        bloodMoonTower.GetComponent<BloodMoonTower>().applyBoost();
+                        //Data.Instance.BOOSTS.Add(fireSkull.GetComponent<FireSkull>().id, 1);
+                    }
+                }
+
+                //Change price in shop
+                updateShopPrices("bloodMoonTower");
+                break;
+
+            case "spectre":
+
+                foreach (GameObject spectre in constructionsBuilt)
+                {
+                    if (spectre.GetComponent<Spectre>() != null && !spectre.GetComponent<Spectre>().boostApplied)
+                    {
+                        spectre.GetComponent<Spectre>().applyBoost();
+                        //Data.Instance.BOOSTS.Add(fireSkull.GetComponent<FireSkull>().id, 1);
+                    }
+                }
+
+                //Change price in shop
+                updateShopPrices("spectre");
+                break;
+
+            case "mageGuardian":
+
+                foreach (GameObject mageGuardian in constructionsBuilt)
+                {
+                    if (mageGuardian.GetComponent<MageGuardian>() != null && !mageGuardian.GetComponent<MageGuardian>().boostApplied)
+                    {
+                        mageGuardian.GetComponent<MageGuardian>().applyBoost();
+                        //Data.Instance.BOOSTS.Add(fireSkull.GetComponent<FireSkull>().id, 1);
+                    }
+                }
+
+                //Change price in shop
+                updateShopPrices("mageGuardian");
+                break;
+
+            case "demonLord":
+
+                foreach (GameObject demonLord in constructionsBuilt)
+                {
+                    if (demonLord.GetComponent<DemonLord>() != null && !demonLord.GetComponent<DemonLord>().boostApplied)
+                    {
+                        demonLord.GetComponent<DemonLord>().applyBoost();
+                        //Data.Instance.BOOSTS.Add(fireSkull.GetComponent<FireSkull>().id, 1);
+                    }
+                }
+
+                //Change price in shop
+                updateShopPrices("demonLord");
+                break;
+
+            
+
+                #endregion
         }
     }
 
@@ -1067,6 +1199,56 @@ public class GameManager : MonoBehaviour
             if(boost.Value == 1) //Maybe can be applied twice or more (>= 1 ?)
             {
                 applyBoost(boost.Key);
+            }
+        }
+    }
+
+    public void updateShopPrices(string id)
+    {
+        foreach (ShopItemHolder item in buildingShopItems)
+        {
+            if (item.Item.id.Equals(id))
+            {
+                if (Data.Instance.BUILDINGS.TryGetValue(id, out GameObject construction)) {
+
+                    if (Data.Instance.BUILDING_INVENTORY.TryGetValue(id, out int quantity))
+                    {
+
+                        if (construction.GetComponent<Construction>().production_cost.Count > 0 && quantity < item.Item.maxQuantity)
+                        {
+                            item.requirementText1 = construction.GetComponent<Construction>().production_cost[quantity].list[0].quantity.ToString();
+
+                            if (Data.Instance.RESOURCES.TryGetValue(construction.GetComponent<Construction>().production_cost[quantity].list[0].resourceNameKey, out Resource resource))
+                            {
+                                item.resource1Icon.sprite = resource.icon;
+                            }
+
+                            item.resourceText1.gameObject.SetActive(true);
+                            item.resource1Icon.gameObject.SetActive(true);
+                            item.resource1Icon.color = new Color(1,1,1,1);
+
+                            if (construction.GetComponent<Construction>().production_cost[quantity].list.Count > 1)
+                            {
+                                item.requirementText2 = construction.GetComponent<Construction>().production_cost[quantity].list[1].quantity.ToString();
+
+                                if (Data.Instance.RESOURCES.TryGetValue(construction.GetComponent<Construction>().production_cost[quantity].list[1].resourceNameKey, out Resource resource2))
+                                {
+                                    item.resource2Icon.sprite = resource2.icon;
+                                }
+                                item.resourceText2.gameObject.SetActive(true);
+                                item.resource2Icon.gameObject.SetActive(true);
+                                item.resource2Icon.color = new Color(1, 1, 1, 1);
+
+                            }
+                            else
+                            {
+                                item.resourceText2.gameObject.SetActive(false);
+                                //item.resource2Icon.gameObject.SetActive(false);
+                                item.resource2Icon.color = new Color(1, 1, 1, 0);
+                            }
+                        }
+                    }
+                }
             }
         }
     }

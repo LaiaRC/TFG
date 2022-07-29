@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &376119412293239676
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2545819794617544517}
+  - component: {fileID: 3233074414995182345}
+  m_Layer: 0
+  m_Name: DM_demonLord
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &2545819794617544517
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 376119412293239676}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.183466, y: -0.055590235, z: 2743.3562}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3233074414995182345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 376119412293239676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef958bbf2b2368e43b925d534027d411, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: Demon Lord
+  id: demonLord
+  description: idk
+  resourceText1: 50
+  resourceText2: 
+  resource1Icon: {fileID: 21300000, guid: c4d59d1d9d409a04da2f5228205a8ce6, type: 3}
+  resource2Icon: {fileID: 0}
+  maxQuantity: 4
+  type: 3
+  icon: {fileID: 9083683855015346827, guid: 337dd915d7eabe742b53a3b2b8177ab4, type: 3}
+  prefab: {fileID: 7407920909547853337, guid: 28ba610624be57c45bddb186a0c7cce7, type: 3}
+  produces1: {fileID: 21300000, guid: ec11db212ab94ff4d883b1de0d3751ea, type: 3}
+  produces2: {fileID: 21300000, guid: f3b77c3f639aa7847ade1511384e628c, type: 3}
+  produces3: {fileID: -7389210485372547783, guid: ca94a167d3e13fa48b06865fb9703a22, type: 3}
+  order: 6
+  isLocked: 0
