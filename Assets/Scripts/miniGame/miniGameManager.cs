@@ -107,10 +107,6 @@ public class miniGameManager : MonoBehaviour
     public static string STICK = "stick";
     public static string GEM = "gem";
 
-    //BOOSTS
-    public static string SCARE_BOOST = "mageGuardian";
-    public static string DROP_BOOST = "demonLord";
-
     //Particles
     public static int CURRENT_PARTICLES = 5;
     public static string SORCERER_PROJECTILE = "sorcererProjectile";
@@ -194,7 +190,7 @@ public class miniGameManager : MonoBehaviour
 
 
         //Get boosts
-        if (Data.Instance.BUILDING_INVENTORY.TryGetValue(SCARE_BOOST, out int quantity))
+        if (Data.Instance.BOOSTS.TryGetValue(Data.SCARES_BOOST, out int quantity))
         {
             for (int i = 0; i < quantity; i++)
             {
@@ -208,12 +204,11 @@ public class miniGameManager : MonoBehaviour
             scareGroup.SetActive(false);
         }
 
-        if (Data.Instance.BUILDING_INVENTORY.TryGetValue(DROP_BOOST, out int quantity2))
+        if (Data.Instance.BOOSTS.TryGetValue(Data.DROPS_BOOST, out int quantity2))
         {
             for (int i = 0; i < quantity2; i++)
             {
                 dropsModifier += 0.25f;
-                Debug.Log(dropsModifier);
             }
             dropGroup.SetActive(true);
         }

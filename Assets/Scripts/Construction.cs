@@ -9,6 +9,9 @@ public class Construction : MonoBehaviour
     public List<RequirementList> production_cost;
     public int numType = 0;
 
+    [HideInInspector]
+    public int constructionType; //0 -> general building / 1 -> summoning circle / 2 -> decoration boost
+
     public Vector3 position;
     public BoundsInt tempArea;
     public bool placed;
@@ -89,12 +92,12 @@ public class Construction : MonoBehaviour
 
     public virtual void saveConstructionToDictionary()
     {
-        //TODO decoration case (modify)
-        /*
-         if (!Data.Instance.CONSTRUCTIONS.ContainsKey(id + numType))
+        //Decoration Boost case (only need position)
+        
+        if (!Data.Instance.CONSTRUCTIONS.ContainsKey(id + numType))
         {
-            Data.Instance.CONSTRUCTIONS.Add(id + numType, new float[] { transform.position.x, transform.position.y, level, getNumActiveResource(), timeLeft, isProducing ? 1 : 0, isPaused ? 1 : 0, numType, activeResourceTime });
-        }*/
+            Data.Instance.CONSTRUCTIONS.Add(id + numType, new float[] { transform.position.x, transform.position.y, 0, 0, 0, 0, 0, numType, 0, 2, 0, 0});
+        }
     }
 
     public void cancelBuilding()

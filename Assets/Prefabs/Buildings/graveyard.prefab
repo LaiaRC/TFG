@@ -1440,6 +1440,7 @@ MonoBehaviour:
   construction_name: Graveyard
   production_cost: []
   numType: 0
+  constructionType: 0
   position: {x: 0, y: 0, z: 0}
   tempArea:
     m_Position: {x: 0, y: 0, z: 0}
@@ -1490,14 +1491,14 @@ MonoBehaviour:
   requirement1Text: {fileID: 0}
   requirement2Text: {fileID: 0}
   extraNumResources: 0
+  isProducer: 1
+  isConverter: 0
   activeResource: bone
   timeLeft: 0
   time: 0
   isPaused: 0
   canvasInterior: {fileID: 1362195048390551837}
   activeResourceTime: 0
-  isProducer: 1
-  isConverter: 1
 --- !u!1 &2028175942808267847
 GameObject:
   m_ObjectHideFlags: 0

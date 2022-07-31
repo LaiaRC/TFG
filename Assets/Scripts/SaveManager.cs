@@ -2,6 +2,7 @@ using GameDevWare.Serialization;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 public class SaveManager : MonoBehaviour
@@ -45,23 +46,43 @@ public class SaveManager : MonoBehaviour
             float[] oldValue = Data.Instance.CONSTRUCTIONS[construction.GetComponent<Construction>().id + construction.GetComponent<Construction>().numType];
             oldValue[GameManager.POS_X] = construction.transform.position.x;
             oldValue[GameManager.POS_Y] = construction.transform.position.y;
+            oldValue[GameManager.NUM_TYPE] = construction.GetComponent<Construction>().numType;
+            oldValue[GameManager.CONSTRUCTION_TYPE] = construction.GetComponent<Construction>().constructionType;
 
-            //Save lever or hiddenMonsterIndex depending if it's summoningCircle or not
-            if (construction.GetComponent<Construction>().id.Contains("summoningCircle"))
+            //Check if it's decoration boost
+            if (construction.GetComponent<DecorationBoost>() != null)
             {
-                oldValue[GameManager.LEVEL] = GameManager.Instance.hidenMonsterIndex;
+                //It's decoration boost, put all to 0
+                oldValue[GameManager.LEVEL] = 0;
+                oldValue[GameManager.ACTIVE_RESOURCE] = 0;
+                oldValue[GameManager.PRODUCING] = 0;
+                oldValue[GameManager.PAUSED] = 0;
+                oldValue[GameManager.ACTIVE_RESOURCE_TIME] = 0;
+                oldValue[GameManager.IS_PRODUCER] = 0;
+                oldValue[GameManager.IS_CONVERTER] = 0;
             }
             else
             {
-                oldValue[GameManager.LEVEL] = construction.GetComponent<Building>().level;
-            }
+                //It's a building
 
-            oldValue[GameManager.ACTIVE_RESOURCE] = construction.GetComponent<Building>().getNumActiveResource();
-            oldValue[GameManager.TIME_LEFT] = (construction.GetComponent<Building>().timeLeft);
-            oldValue[GameManager.PRODUCING] = construction.GetComponent<Building>().isProducing ? 1 : 0;
-            oldValue[GameManager.PAUSED] = construction.GetComponent<Building>().isPaused ? 1 : 0;
-            oldValue[GameManager.NUM_TYPE] = construction.GetComponent<Building>().numType;
-            oldValue[GameManager.ACTIVE_RESOURCE_TIME] = construction.GetComponent<Building>().activeResourceTime;
+                //Save level or hiddenMonsterIndex depending if it's summoningCircle or not
+                if (construction.GetComponent<Construction>().id.Contains("summoningCircle"))
+                {
+                    oldValue[GameManager.LEVEL] = GameManager.Instance.hidenMonsterIndex;
+                }
+                else
+                {
+                    oldValue[GameManager.LEVEL] = construction.GetComponent<Building>().level;
+                }
+
+                oldValue[GameManager.ACTIVE_RESOURCE] = construction.GetComponent<Building>().getNumActiveResource(); //Check if works with summoning circle
+                oldValue[GameManager.TIME_LEFT] = (construction.GetComponent<Building>().timeLeft);
+                oldValue[GameManager.PRODUCING] = construction.GetComponent<Building>().isProducing ? 1 : 0;
+                oldValue[GameManager.PAUSED] = construction.GetComponent<Building>().isPaused ? 1 : 0;
+                oldValue[GameManager.ACTIVE_RESOURCE_TIME] = construction.GetComponent<Building>().activeResourceTime;
+                oldValue[GameManager.IS_PRODUCER] = construction.GetComponent<Building>().isProducer;
+                oldValue[GameManager.IS_CONVERTER] = construction.GetComponent<Building>().isConverter;
+            }
             /*Debug.Log(oldValue[GameManager.POS_X]);
             Debug.Log(oldValue[GameManager.POS_Y]);
             Debug.Log(oldValue[GameManager.LEVEL]);
@@ -81,6 +102,19 @@ public class SaveManager : MonoBehaviour
         Data.Instance.PLAYER["Day"] = GameManager.Instance.localDate.Day;
         Data.Instance.PLAYER["Month"] = GameManager.Instance.localDate.Month;
         Data.Instance.PLAYER["Year"] = GameManager.Instance.localDate.Year;
+
+        //Update inventory old value (same as current values)
+        foreach (var item in Data.Instance.INVENTORY.ToList())
+        {
+            if (!item.Key.Contains("Old") && Data.Instance.INVENTORY.TryGetValue(item.Key + "Old", out int oldQuantity))
+            {
+                Data.Instance.INVENTORY[item.Key + "Old"] = item.Value; //Update old quantity to current quantity
+            }
+            else if(!item.Key.Contains("Old"))
+            {
+                Data.Instance.INVENTORY.Add(item.Key + "Old", item.Value);
+            }
+        }
 
         Delete();
         
@@ -119,6 +153,7 @@ public class SaveManager : MonoBehaviour
         outputStreamInventory.Position = 0; // rewind stream before copying/read
         outputStreamInventory.Close();
     }
+
     public void Load()
     {
         if (File.Exists(pathInventory))
@@ -133,6 +168,8 @@ public class SaveManager : MonoBehaviour
             Data.Instance.CONSTRUCTIONS = MsgPack.Deserialize(typeof(Dictionary<string, float[]>), inputStreamConstructions) as Dictionary<string, float[]>;
 
             GameManager.Instance.buildConstructions();
+            GameManager.Instance.loadBoosts();
+
             inputStreamConstructions.Close();
         }
         if (File.Exists(pathPlayer))
@@ -210,5 +247,6 @@ public class SaveManager : MonoBehaviour
         Data.Instance.INVENTORY.Clear();
         Data.Instance.MONSTERS_STATS.Clear();
         Data.Instance.MONSTERS.Clear();
+        Data.Instance.BOOSTS.Clear();
     }
 }

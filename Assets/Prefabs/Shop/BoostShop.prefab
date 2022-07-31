@@ -382,7 +382,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 1.5643309e-10, y: -0.000061035156}
-  m_SizeDelta: {x: 977.12, y: 2424.5173}
+  m_SizeDelta: {x: 977.12, y: 2503.0417}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &6204445096716748987
 MonoBehaviour:
@@ -477,8 +477,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: The Merchant
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 61643bf50a076654db7cc48b83088443, type: 2}
+  m_sharedMaterial: {fileID: -1408573379100043128, guid: 61643bf50a076654db7cc48b83088443, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -502,8 +502,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -809,6 +809,7 @@ MonoBehaviour:
   - {fileID: 3460001902683824760}
   - {fileID: 47803437957501993}
   - {fileID: 5298756301297220544}
+  - {fileID: 1668994568872630727}
   boostMonsterItems:
   - {fileID: 7948853919672725992}
   - {fileID: 4789608017887037305}
@@ -1155,8 +1156,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 61643bf50a076654db7cc48b83088443, type: 2}
+  m_sharedMaterial: {fileID: -1408573379100043128, guid: 61643bf50a076654db7cc48b83088443, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1180,8 +1181,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 26
+  m_fontSizeBase: 26
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1599,13 +1600,14 @@ RectTransform:
   - {fileID: 855679268209889498}
   - {fileID: 4283567963011540619}
   - {fileID: 8238042960732277090}
+  - {fileID: 3238909550836951909}
   m_Father: {fileID: 4639813565933962900}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 973.9399, y: 369.1721}
+  m_SizeDelta: {x: 973.9399, y: 441.913}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &967778113978303620
 MonoBehaviour:
@@ -2092,6 +2094,121 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!1001 &75967128779123317
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 7880382220501612844}
+    m_Modifications:
+    - target: {fileID: 238620640057584896, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -21.07898
+      objectReference: {fileID: 0}
+    - target: {fileID: 1595565115221603250, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_Name
+      value: DemonLordPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: id
+      value: demonLord
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: icon
+      value: 
+      objectReference: {fileID: 21300000, guid: b7a16519e2839f04eaf1767aa824c1f1, type: 3}
+    - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: title
+      value: Demon Lord
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: description
+      value: Unlock the Demon Lord and increase villager's drops
+      objectReference: {fileID: 0}
+    - target: {fileID: 2261970215801213584, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2261970215801213584, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2261970215801213584, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2261970215801213584, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4448953761392481818, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_text
+      value: Demon Lord
+      objectReference: {fileID: 0}
+    - target: {fileID: 5666084320889263906, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b7a16519e2839f04eaf1767aa824c1f1, type: 3}
+    - target: {fileID: 6234621903376412270, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6234621903376412270, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6234621903376412270, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6234621903376412270, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6574981501841545824, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_text
+      value: Unlock the Demon Lord and increase villager's drops
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+--- !u!224 &3238909550836951909 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+  m_PrefabInstance: {fileID: 75967128779123317}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1668994568872630727 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1595565115221603250, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+  m_PrefabInstance: {fileID: 75967128779123317}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &480744315710319619
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2106,6 +2223,22 @@ PrefabInstance:
     - target: {fileID: 1595565115221603250, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_Name
       value: MerchantPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: id
+      value: merchant
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: icon
+      value: 
+      objectReference: {fileID: 687226044036645251, guid: baf7392e7e3d71a4d980c25dd9031928, type: 3}
+    - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: title
+      value: The Merchant's stall
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: description
+      value: Unlock the Merchant's stall and trade with restart resources
       objectReference: {fileID: 0}
     - target: {fileID: 2261970215801213584, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2175,16 +2308,20 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6574981501841545824, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_text
+      value: Unlock the Merchant's stall and trade with restart resources
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
---- !u!1 &1193282844273303473 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1595565115221603250, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
-  m_PrefabInstance: {fileID: 480744315710319619}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &3122396180681485587 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+  m_PrefabInstance: {fileID: 480744315710319619}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1193282844273303473 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1595565115221603250, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
   m_PrefabInstance: {fileID: 480744315710319619}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &769337987866030873
@@ -2216,7 +2353,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: description
-      value: Permanently unlock the Goblin
+      value: Unlock the Goblin
       objectReference: {fileID: 0}
     - target: {fileID: 2261970215801213584, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2288,14 +2425,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
---- !u!224 &2833384783806607881 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
-  m_PrefabInstance: {fileID: 769337987866030873}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2056362541545554091 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1595565115221603250, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+  m_PrefabInstance: {fileID: 769337987866030873}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &2833384783806607881 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
   m_PrefabInstance: {fileID: 769337987866030873}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1077692121629863132
@@ -2327,7 +2464,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: description
-      value: Permanently unlock another Swamp
+      value: Unlock another Swamp
       objectReference: {fileID: 0}
     - target: {fileID: 2261970215801213584, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2399,14 +2536,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
---- !u!224 &2525309818084912588 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
-  m_PrefabInstance: {fileID: 1077692121629863132}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1787978816010182510 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1595565115221603250, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+  m_PrefabInstance: {fileID: 1077692121629863132}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &2525309818084912588 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
   m_PrefabInstance: {fileID: 1077692121629863132}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1625028699218126747
@@ -2422,7 +2559,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1595565115221603250, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_Name
-      value: TowerDropsPanel
+      value: NecromancerPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: id
+      value: necromancer
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 26dd662ac8d06b44b8e8f4e3a9a2d300, type: 3}
+    - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: title
+      value: Necromancer
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: description
+      value: Unlock the Necromancer and increase offline productivity
       objectReference: {fileID: 0}
     - target: {fileID: 2261970215801213584, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2470,8 +2623,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4448953761392481818, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_text
-      value: Tower Drops
+      value: Necromancer
       objectReference: {fileID: 0}
+    - target: {fileID: 5666084320889263906, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 26dd662ac8d06b44b8e8f4e3a9a2d300, type: 3}
     - target: {fileID: 6234621903376412270, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2487,6 +2644,10 @@ PrefabInstance:
     - target: {fileID: 6234621903376412270, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6574981501841545824, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_text
+      value: Unlock the Necromancer and increase offline productivity
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
@@ -2529,7 +2690,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: description
-      value: Permanently unlock the Grim Reaper
+      value: Unlock the Grim Reaper
       objectReference: {fileID: 0}
     - target: {fileID: 2261970215801213584, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2640,7 +2801,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: description
-      value: Permanently unlock the Zombie
+      value: Unlock the Zombie
       objectReference: {fileID: 0}
     - target: {fileID: 2261970215801213584, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2751,7 +2912,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: description
-      value: Permanently unlock the Magic Workshop
+      value: Unlock the Magic Workshop
       objectReference: {fileID: 0}
     - target: {fileID: 2261970215801213584, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2825,14 +2986,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
---- !u!1 &3660646087036287828 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1595565115221603250, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
-  m_PrefabInstance: {fileID: 2659846430364092646}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &654891787609737718 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+  m_PrefabInstance: {fileID: 2659846430364092646}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3660646087036287828 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1595565115221603250, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
   m_PrefabInstance: {fileID: 2659846430364092646}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2747463378408362442
@@ -2848,7 +3009,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1595565115221603250, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_Name
-      value: TowerScaresPanel
+      value: SpectrePanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: id
+      value: spectre
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: icon
+      value: 
+      objectReference: {fileID: 21300000, guid: 7900a70eb8ede6842afb6e4c5bde2c8f, type: 3}
+    - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: title
+      value: Spectre
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: description
+      value: Unlock the Spectre and increase max offline time
       objectReference: {fileID: 0}
     - target: {fileID: 2261970215801213584, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2896,8 +3073,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4448953761392481818, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_text
-      value: Tower Scares
+      value: Spectre
       objectReference: {fileID: 0}
+    - target: {fileID: 5666084320889263906, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7900a70eb8ede6842afb6e4c5bde2c8f, type: 3}
     - target: {fileID: 6234621903376412270, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2913,6 +3094,10 @@ PrefabInstance:
     - target: {fileID: 6234621903376412270, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6574981501841545824, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_text
+      value: Unlock the Spectre and increase max offline time
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
@@ -2955,7 +3140,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: description
-      value: Permanently unlock another Forest
+      value: Unlock another Forest
       objectReference: {fileID: 0}
     - target: {fileID: 2261970215801213584, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3027,14 +3212,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
---- !u!1 &3600249187497866031 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1595565115221603250, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
-  m_PrefabInstance: {fileID: 2869410387394756765}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &733305173044543885 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+  m_PrefabInstance: {fileID: 2869410387394756765}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3600249187497866031 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1595565115221603250, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
   m_PrefabInstance: {fileID: 2869410387394756765}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3545809687893212443
@@ -3066,7 +3251,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: description
-      value: Permanently unlock the Clown
+      value: Unlock the Clown
       objectReference: {fileID: 0}
     - target: {fileID: 2261970215801213584, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3177,7 +3362,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: description
-      value: Permanently unlock another Crypt
+      value: Unlock another Crypt
       objectReference: {fileID: 0}
     - target: {fileID: 2261970215801213584, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3249,14 +3434,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
---- !u!1 &2328082750076432724 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1595565115221603250, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
-  m_PrefabInstance: {fileID: 3921391632943727334}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1987385176731223030 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+  m_PrefabInstance: {fileID: 3921391632943727334}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2328082750076432724 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1595565115221603250, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
   m_PrefabInstance: {fileID: 3921391632943727334}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4271947914103102153
@@ -3288,7 +3473,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: description
-      value: Permanently unlock the Hellfire in Hell Island
+      value: Unlock the Hellfire in Hell Island
       objectReference: {fileID: 0}
     - target: {fileID: 2261970215801213584, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3399,7 +3584,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: description
-      value: Permanently unlock another Graveyard
+      value: Unlock another Graveyard
       objectReference: {fileID: 0}
     - target: {fileID: 2261970215801213584, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3471,14 +3656,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
---- !u!1 &3022163496092507349 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1595565115221603250, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
-  m_PrefabInstance: {fileID: 4599432737675734887}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1309279843934482039 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+  m_PrefabInstance: {fileID: 4599432737675734887}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3022163496092507349 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1595565115221603250, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
   m_PrefabInstance: {fileID: 4599432737675734887}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4599797288825039247
@@ -3510,7 +3695,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: description
-      value: Permanently unlock the Vampire
+      value: Unlock the Vampire
       objectReference: {fileID: 0}
     - target: {fileID: 2261970215801213584, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3582,14 +3767,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
---- !u!224 &1309082819250972831 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
-  m_PrefabInstance: {fileID: 4599797288825039247}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3022290591258073661 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1595565115221603250, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+  m_PrefabInstance: {fileID: 4599797288825039247}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1309082819250972831 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
   m_PrefabInstance: {fileID: 4599797288825039247}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4639034984606067766
@@ -3621,7 +3806,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: description
-      value: Permanently unlock the Deep Forest
+      value: Unlock the Deep Forest
       objectReference: {fileID: 0}
     - target: {fileID: 2261970215801213584, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3693,14 +3878,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
---- !u!1 &6216585664675454852 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1595565115221603250, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
-  m_PrefabInstance: {fileID: 4639034984606067766}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &7898787206740847910 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+  m_PrefabInstance: {fileID: 4639034984606067766}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6216585664675454852 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1595565115221603250, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
   m_PrefabInstance: {fileID: 4639034984606067766}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5429384361599782791
@@ -3732,7 +3917,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: description
-      value: Permanently unlock another Abandoned Hospital
+      value: Unlock another Abandoned Hospital
       objectReference: {fileID: 0}
     - target: {fileID: 2261970215801213584, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3804,14 +3989,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
---- !u!224 &7396604864795152023 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
-  m_PrefabInstance: {fileID: 5429384361599782791}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6736710265787563061 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1595565115221603250, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+  m_PrefabInstance: {fileID: 5429384361599782791}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &7396604864795152023 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
   m_PrefabInstance: {fileID: 5429384361599782791}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6078888737223013579
@@ -3843,7 +4028,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: description
-      value: Permanently unlock the Bat
+      value: Unlock the Bat
       objectReference: {fileID: 0}
     - target: {fileID: 2261970215801213584, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3954,7 +4139,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: description
-      value: Permanently unlock the Ghost
+      value: Unlock the Ghost
       objectReference: {fileID: 0}
     - target: {fileID: 2261970215801213584, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4026,14 +4211,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
---- !u!224 &8866626950192431922 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
-  m_PrefabInstance: {fileID: 6265525898684776994}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4672212617796006288 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1595565115221603250, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+  m_PrefabInstance: {fileID: 6265525898684776994}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &8866626950192431922 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
   m_PrefabInstance: {fileID: 6265525898684776994}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6893991563029317746
@@ -4049,7 +4234,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1595565115221603250, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_Name
-      value: TowerTimePanel
+      value: MageGuardianPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: id
+      value: mageGuardian
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: icon
+      value: 
+      objectReference: {fileID: 21300000, guid: f7ac178db501646419ba947fb086553b, type: 3}
+    - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: title
+      value: Mage Guardian
+      objectReference: {fileID: 0}
+    - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: description
+      value: Unlock the Mage Guardian and increase villager's scares
       objectReference: {fileID: 0}
     - target: {fileID: 2261970215801213584, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4097,8 +4298,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4448953761392481818, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_text
-      value: Tower Time
+      value: Mage Guardian
       objectReference: {fileID: 0}
+    - target: {fileID: 5666084320889263906, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f7ac178db501646419ba947fb086553b, type: 3}
     - target: {fileID: 6234621903376412270, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -4114,6 +4319,10 @@ PrefabInstance:
     - target: {fileID: 6234621903376412270, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6574981501841545824, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_text
+      value: Unlock the Mage Guardian and increase villager's scares
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
@@ -4152,7 +4361,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: description
-      value: Permanently unlock the Crypt
+      value: Unlock the Crypt
       objectReference: {fileID: 0}
     - target: {fileID: 2261970215801213584, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4198,6 +4407,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5529275002188350363, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6234621903376412270, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -4216,14 +4429,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
---- !u!224 &6671913899622591885 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
-  m_PrefabInstance: {fileID: 8171903533931768989}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7443598008476426031 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1595565115221603250, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+  m_PrefabInstance: {fileID: 8171903533931768989}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &6671913899622591885 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
   m_PrefabInstance: {fileID: 8171903533931768989}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8679727869780918874
@@ -4255,7 +4468,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: description
-      value: Permanently unlock the Jack-o'-lantern
+      value: Unlock the Jack-o'-lantern
       objectReference: {fileID: 0}
     - target: {fileID: 2261970215801213584, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4327,14 +4540,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
---- !u!1 &7948853919672725992 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1595565115221603250, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
-  m_PrefabInstance: {fileID: 8679727869780918874}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &6164194386560435018 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+  m_PrefabInstance: {fileID: 8679727869780918874}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7948853919672725992 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1595565115221603250, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
   m_PrefabInstance: {fileID: 8679727869780918874}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8842750342722152414
@@ -4366,7 +4579,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: description
-      value: Permanently unlock the Witch
+      value: Unlock the Witch
       objectReference: {fileID: 0}
     - target: {fileID: 2261970215801213584, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4438,14 +4651,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
---- !u!224 &6289499212888876750 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
-  m_PrefabInstance: {fileID: 8842750342722152414}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7823689960286000236 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1595565115221603250, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
+  m_PrefabInstance: {fileID: 8842750342722152414}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &6289499212888876750 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3314377334194028816, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
   m_PrefabInstance: {fileID: 8842750342722152414}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9222518260138167559
@@ -4477,7 +4690,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2021612165953432103, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: description
-      value: Permanently unlock another Vegetable Patch
+      value: Unlock another Vegetable Patch
       objectReference: {fileID: 0}
     - target: {fileID: 2261970215801213584, guid: 5aa1ad4e3c4324b45935fef1c2d55ade, type: 3}
       propertyPath: m_AnchorMax.y

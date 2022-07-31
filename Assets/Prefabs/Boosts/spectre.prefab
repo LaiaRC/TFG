@@ -121,7 +121,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3846379252732503159}
+      - m_Target: {fileID: 5256291959684900756}
         m_TargetAssemblyTypeName: Construction, Assembly-CSharp
         m_MethodName: confirmBuilding
         m_Mode: 1
@@ -522,7 +522,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3846379252732503159}
+      - m_Target: {fileID: 5256291959684900756}
         m_TargetAssemblyTypeName: Construction, Assembly-CSharp
         m_MethodName: cancelBuilding
         m_Mode: 1
@@ -645,7 +645,7 @@ GameObject:
   - component: {fileID: 7407920909547853340}
   - component: {fileID: 7407920909547853343}
   - component: {fileID: 7407920909547853342}
-  - component: {fileID: 3846379252732503159}
+  - component: {fileID: 5256291959684900756}
   m_Layer: 0
   m_Name: spectre
   m_TagString: Untagged
@@ -738,7 +738,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &3846379252732503159
+--- !u!114 &5256291959684900756
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -747,22 +747,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 7407920909547853337}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96d4919554c9f16479f5dfdaeef53047, type: 3}
+  m_Script: {fileID: 11500000, guid: a7f6a2078981ada42a1dc792413adaa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   id: spectre
-  construction_name: The Spectre
+  construction_name: Spectre
   production_cost:
+  - list:
+    - resourceNameKey: scare
+      quantity: 10
+  - list:
+    - resourceNameKey: scare
+      quantity: 20
   - list:
     - resourceNameKey: scare
       quantity: 30
   - list:
     - resourceNameKey: scare
       quantity: 40
-  - list:
-    - resourceNameKey: scare
-      quantity: 50
   numType: 0
+  constructionType: 0
   position: {x: 0, y: 0, z: 0}
   tempArea:
     m_Position: {x: 0, y: 0, z: 0}

@@ -52,7 +52,9 @@ public class Building : Construction
     public TextMeshProUGUI requirement1Text;
     public TextMeshProUGUI requirement2Text;
     public int extraNumResources = 0;
-    
+    public int isProducer;
+    public int isConverter;
+
     public string activeResource; //Quina resource s'esta produïnt
     public float timeLeft;
     public float time = 0; //comptador de temps fins el activeResourceTime
@@ -251,6 +253,28 @@ public class Building : Construction
                 #region ADD TO INVENTORY
                 if (Data.Instance.INVENTORY.TryGetValue(activeResource, out int quantity))
                 {
+                    if (isProducer == 1)
+                    {
+                        if (Data.Instance.BOOSTS.TryGetValue(Data.PRODUCER_BOOST, out int numProd))
+                        {
+                            extraNumResources = numProd;
+                        }
+                        else
+                        {
+                            extraNumResources = 0;
+                        }
+                    }else if (isConverter == 1)
+                    {
+                        if (Data.Instance.BOOSTS.TryGetValue(Data.CONVERTER_BOOST, out int numProd2))
+                        {
+                            extraNumResources = numProd2;
+                        }
+                        else
+                        {
+                            extraNumResources = 0;
+                        }
+                    }
+
                     quantity += 1 + extraNumResources;
                     Data.Instance.updateInventory(activeResource, quantity);
                 }
@@ -630,16 +654,7 @@ public class Building : Construction
             }
         }
         #endregion
-    } 
-    
-    override
-    public void saveConstructionToDictionary()
-    {
-        if (!Data.Instance.CONSTRUCTIONS.ContainsKey(id + numType))
-        {
-            Data.Instance.CONSTRUCTIONS.Add(id + numType, new float[] { transform.position.x, transform.position.y, level, getNumActiveResource(), timeLeft, isProducing ? 1 : 0, isPaused ? 1 : 0, numType, activeResourceTime });
-        }
-    }
+    }   
 
     private void OnDrawGizmosSelected()
     {

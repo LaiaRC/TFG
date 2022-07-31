@@ -7,8 +7,6 @@ using UnityEngine.Tilemaps;
 
 public class GeneralBuilding : Building
 {
-    public bool isProducer;
-    public bool isConverter;
     public void Awake()
     {
         //Set all UI variables through code
@@ -56,6 +54,8 @@ public class GeneralBuilding : Building
     // Start is called before the first frame update
     void Start()
     {
+        constructionType = 0;
+
         if (level == 1)
         {
             activeResource = initialActiveResource;
@@ -93,6 +93,8 @@ public class GeneralBuilding : Building
         {
             if (isProducing)
             {
+                checkBoosts();
+
                 if (playButton.gameObject.activeInHierarchy)
                 {
                     playButton.gameObject.SetActive(false);
@@ -223,5 +225,19 @@ public class GeneralBuilding : Building
             }
             #endregion
         }
+    }
+
+    override
+    public void saveConstructionToDictionary()
+    {
+        if (!Data.Instance.CONSTRUCTIONS.ContainsKey(id + numType))
+        {
+            Data.Instance.CONSTRUCTIONS.Add(id + numType, new float[] { transform.position.x, transform.position.y, level, getNumActiveResource(), timeLeft, isProducing ? 1 : 0, isPaused ? 1 : 0, numType, activeResourceTime, 0, isProducer, isConverter });
+        }
+    }
+
+    public void checkBoosts()
+    {
+
     }
 }

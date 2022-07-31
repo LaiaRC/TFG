@@ -51,6 +51,12 @@ public class BoostShop : MonoBehaviour
         BOOSTS.Add(Data.WITCH, new Requirement(Data.SHIELD, 10));
         BOOSTS.Add(Data.REAPER, new Requirement(Data.GEM, 30));
 
+        BOOSTS.Add(Data.MERCHANT_BOOST, new Requirement(Data.LOLLIPOP, 10));
+        BOOSTS.Add(Data.OFFLINE_MAXTIME_BOOST, new Requirement(Data.LOLLIPOP, 20));
+        BOOSTS.Add(Data.OFFLINE_PRODUCTIVITY_BOOST, new Requirement(Data.LOLLIPOP, 30));
+        BOOSTS.Add(Data.SCARES_BOOST, new Requirement(Data.RING, 10));
+        BOOSTS.Add(Data.DROPS_BOOST, new Requirement(Data.RING, 20));
+
         foreach (KeyValuePair<string, Requirement> boost in BOOSTS)
         {
             for (int i = 0; i < boostItems.Count; i++)
@@ -138,7 +144,7 @@ public class BoostShop : MonoBehaviour
         {
             boostMonsterItems[i].GetComponent<BoostItem>().iconImage.sprite = questionMark;
             boostMonsterItems[i].GetComponent<BoostItem>().titleText.SetText("Unkown");
-            boostMonsterItems[i].GetComponent<BoostItem>().descriptionText.SetText("Summon previous monsters in the Summoning Circle to unlock");
+            boostMonsterItems[i].GetComponent<BoostItem>().descriptionText.SetText("Unlock previous monsters to discover this new creature");
             boostMonsterItems[i].GetComponent<BoostItem>().requirementGroup.SetActive(false);
             boostMonsterItems[i].GetComponent<BoostItem>().buyButton.SetActive(false);
         }
@@ -174,7 +180,7 @@ public class BoostShop : MonoBehaviour
                             boostMonsterItems[i].GetComponent<BoostItem>().iconImage.sprite = questionMark;
                             boostMonsterItems[i].GetComponent<BoostItem>().iconImage.color = new Color(1, 1, 1, 1);
                             boostMonsterItems[i].GetComponent<BoostItem>().titleText.SetText("Unkown");
-                            boostMonsterItems[i].GetComponent<BoostItem>().descriptionText.SetText("Summon previous monsters in the Summoning Circle to unlock");
+                            boostMonsterItems[i].GetComponent<BoostItem>().descriptionText.SetText("Unlock previous monsters to discover this new creature");
                             boostMonsterItems[i].GetComponent<BoostItem>().requirementGroup.SetActive(false);
                             boostMonsterItems[i].GetComponent<BoostItem>().buyButton.SetActive(false);
                         }

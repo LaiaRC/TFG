@@ -88,6 +88,32 @@ public class Data : MonoBehaviour
     public static string REAPER = "reaper";
     #endregion
 
+    #region BOOSTS KEYS
+    public static string PRODUCER_BOOST = "gargoyle";
+    public static string CONVERTER_BOOST = "obelisk";
+    public static string SUMMONING_BOOST = "bloodMoonTower";
+    public static string OFFLINE_MAXTIME_BOOST = "spectre";
+    public static string OFFLINE_PRODUCTIVITY_BOOST = "necromancer";
+    public static string SCARES_BOOST = "mageGuardian";
+    public static string DROPS_BOOST = "demonLord";
+    public static string MERCHANT_BOOST = "merchant";
+    #endregion
+
+    #region CONSTRUCTION KEYS
+    public static int POS_X = 0;
+    public static int POS_Y = 1;
+    public static int LEVEL = 2; //HIDDEN_MONSTER_INDEX (summoningCircle)
+    public static int ACTIVE_RESOURCE = 3;
+    public static int TIME_LEFT = 4;
+    public static int PRODUCING = 5;
+    public static int PAUSED = 6;
+    public static int NUM_TYPE = 7;
+    public static int ACTIVE_RESOURCE_TIME = 8;
+    public static int CONSTRUCTION_TYPE = 9;
+    public static int IS_PRODUCER = 10;
+    public static int IS_CONVERTER = 11;
+    #endregion
+
     #region SINGLETON PATTERN
     public static Data Instance;
 
@@ -101,10 +127,13 @@ public class Data : MonoBehaviour
         }
         Instance = this;
 
-        this.resourcesIcons = GameManager.Instance.resourcesIcons;
-        this.monstersIcons = GameManager.Instance.monstersIcons;
-        this.dropsIcons = GameManager.Instance.dropsIcons;
-        this.villagersIcons = GameManager.Instance.villagersIcons;
+        if (GameManager.Instance != null)
+        {
+            this.resourcesIcons = GameManager.Instance.resourcesIcons;
+            this.monstersIcons = GameManager.Instance.monstersIcons;
+            this.dropsIcons = GameManager.Instance.dropsIcons;
+            this.villagersIcons = GameManager.Instance.villagersIcons;
+        }
 
         #region RESOURCES 
 
@@ -575,27 +604,40 @@ public class Data : MonoBehaviour
         RESOURCES.Add(WOLFCLAW, new Resource("Wolf's claw", WOLFCLAW, false, 30, false, requirements36, resourcesIcons[35]));
         #endregion
         #endregion
-
-        #region DROPS
-        RESOURCES.Add(LOLLIPOP, new DropInfo(LOLLIPOP, "Lollipop", "child", dropsIcons[0], villagersIcons[0]));
-        RESOURCES.Add(RING, new DropInfo(RING, "Ring", "mom", dropsIcons[1], villagersIcons[1]));
-        RESOURCES.Add(BEER, new DropInfo(BEER, "Beer", "adult", dropsIcons[2], villagersIcons[2]));
-        RESOURCES.Add(SWORD, new DropInfo(SWORD, "Sword", "swashbuckler", dropsIcons[3], villagersIcons[3]));
-        RESOURCES.Add(SHIELD, new DropInfo(SHIELD, "Shield", "shield man", dropsIcons[4], villagersIcons[4]));
-        RESOURCES.Add(STICK, new DropInfo(STICK, "Stick", "elder", dropsIcons[5], villagersIcons[5]));
-        RESOURCES.Add(GEM, new DropInfo(GEM, "Gem", "sorcerer", dropsIcons[6], villagersIcons[6]));
-        RESOURCES.Add(SCARE, new DropInfo(SCARE, "Scare", "villagers", dropsIcons[7], null));
-        #endregion
-
+        if (GameManager.Instance != null)
+        {
+            #region DROPS
+            RESOURCES.Add(LOLLIPOP, new DropInfo(LOLLIPOP, "Lollipop", "child", dropsIcons[0], villagersIcons[0]));
+            RESOURCES.Add(RING, new DropInfo(RING, "Ring", "mom", dropsIcons[1], villagersIcons[1]));
+            RESOURCES.Add(BEER, new DropInfo(BEER, "Beer", "adult", dropsIcons[2], villagersIcons[2]));
+            RESOURCES.Add(SWORD, new DropInfo(SWORD, "Sword", "swashbuckler", dropsIcons[3], villagersIcons[3]));
+            RESOURCES.Add(SHIELD, new DropInfo(SHIELD, "Shield", "shield man", dropsIcons[4], villagersIcons[4]));
+            RESOURCES.Add(STICK, new DropInfo(STICK, "Stick", "elder", dropsIcons[5], villagersIcons[5]));
+            RESOURCES.Add(GEM, new DropInfo(GEM, "Gem", "sorcerer", dropsIcons[6], villagersIcons[6]));
+            RESOURCES.Add(SCARE, new DropInfo(SCARE, "Scare", "villagers", dropsIcons[7], null));
+            #endregion
+        }
         #endregion
 
         #region PLAYER
-        PLAYER.Add("Hour", GameManager.Instance.localDate.Hour);
-        PLAYER.Add("Minute", GameManager.Instance.localDate.Minute);
-        PLAYER.Add("Second", GameManager.Instance.localDate.Second);
-        PLAYER.Add("Day", GameManager.Instance.localDate.Day);
-        PLAYER.Add("Month", GameManager.Instance.localDate.Month);
-        PLAYER.Add("Year", GameManager.Instance.localDate.Year);
+        if (GameManager.Instance != null)
+        {
+            PLAYER.Add("Hour", GameManager.Instance.localDate.Hour);
+            PLAYER.Add("Minute", GameManager.Instance.localDate.Minute);
+            PLAYER.Add("Second", GameManager.Instance.localDate.Second);
+            PLAYER.Add("Day", GameManager.Instance.localDate.Day);
+            PLAYER.Add("Month", GameManager.Instance.localDate.Month);
+            PLAYER.Add("Year", GameManager.Instance.localDate.Year);
+        }
+        else
+        {
+            PLAYER.Add("Hour", OfflineCalculator.Instance.localDate.Hour);
+            PLAYER.Add("Minute", OfflineCalculator.Instance.localDate.Minute);
+            PLAYER.Add("Second", OfflineCalculator.Instance.localDate.Second);
+            PLAYER.Add("Day", OfflineCalculator.Instance.localDate.Day);
+            PLAYER.Add("Month", OfflineCalculator.Instance.localDate.Month);
+            PLAYER.Add("Year", OfflineCalculator.Instance.localDate.Year);
+        }
         #endregion
 
         #region MONSTERS 
@@ -1213,30 +1255,34 @@ public class Data : MonoBehaviour
 
         #endregion
 
-        #region DROPS
+        if (GameManager.Instance != null)
+        {            
 
-        DROPS.Add(LOLLIPOP, new DropInfo(LOLLIPOP, "Lollipop", "child", dropsIcons[0], villagersIcons[0]));
-        DROPS.Add(RING, new DropInfo(RING, "Ring", "mom", dropsIcons[1], villagersIcons[1]));
-        DROPS.Add(BEER, new DropInfo(BEER, "Beer", "adult", dropsIcons[2], villagersIcons[2]));
-        DROPS.Add(SWORD, new DropInfo(SWORD, "Sword", "swashbuckler", dropsIcons[3], villagersIcons[3]));
-        DROPS.Add(SHIELD, new DropInfo(SHIELD, "Shield", "shield man", dropsIcons[4], villagersIcons[4]));
-        DROPS.Add(STICK, new DropInfo(STICK, "Stick", "elder", dropsIcons[5], villagersIcons[5]));
-        DROPS.Add(GEM, new DropInfo(GEM, "Gem", "sorcerer", dropsIcons[6], villagersIcons[6]));
-        DROPS.Add(SCARE, new DropInfo(SCARE, "Scare", "villagers", dropsIcons[7], null));
-        #endregion
+            #region DROPS
 
-        #region MONSTERS STATS
-        MONSTERS_STATS.Add(SKELETON, new int[] { 0, 1});
-        MONSTERS_STATS.Add(JACK_LANTERN, new int[] { 0, 1});
-        MONSTERS_STATS.Add(BAT, new int[] { 0, 1});
-        MONSTERS_STATS.Add(GOBLIN, new int[] { 0, 1});
-        MONSTERS_STATS.Add(GHOST, new int[] { 0, 1});
-        MONSTERS_STATS.Add(CLOWN, new int[] { 0, 1});
-        MONSTERS_STATS.Add(ZOMBIE, new int[] { 0, 1});
-        MONSTERS_STATS.Add(VAMPIRE, new int[] { 0, 1});
-        MONSTERS_STATS.Add(WITCH, new int[] { 0, 1});
-        MONSTERS_STATS.Add(REAPER, new int[] { 0, 1});
-        #endregion
+            DROPS.Add(LOLLIPOP, new DropInfo(LOLLIPOP, "Lollipop", "child", dropsIcons[0], villagersIcons[0]));
+            DROPS.Add(RING, new DropInfo(RING, "Ring", "mom", dropsIcons[1], villagersIcons[1]));
+            DROPS.Add(BEER, new DropInfo(BEER, "Beer", "adult", dropsIcons[2], villagersIcons[2]));
+            DROPS.Add(SWORD, new DropInfo(SWORD, "Sword", "swashbuckler", dropsIcons[3], villagersIcons[3]));
+            DROPS.Add(SHIELD, new DropInfo(SHIELD, "Shield", "shield man", dropsIcons[4], villagersIcons[4]));
+            DROPS.Add(STICK, new DropInfo(STICK, "Stick", "elder", dropsIcons[5], villagersIcons[5]));
+            DROPS.Add(GEM, new DropInfo(GEM, "Gem", "sorcerer", dropsIcons[6], villagersIcons[6]));
+            DROPS.Add(SCARE, new DropInfo(SCARE, "Scare", "villagers", dropsIcons[7], null));
+            #endregion
+
+            #region MONSTERS STATS
+            MONSTERS_STATS.Add(SKELETON, new int[] { 0, 1 });
+            MONSTERS_STATS.Add(JACK_LANTERN, new int[] { 0, 1 });
+            MONSTERS_STATS.Add(BAT, new int[] { 0, 1 });
+            MONSTERS_STATS.Add(GOBLIN, new int[] { 0, 1 });
+            MONSTERS_STATS.Add(GHOST, new int[] { 0, 1 });
+            MONSTERS_STATS.Add(CLOWN, new int[] { 0, 1 });
+            MONSTERS_STATS.Add(ZOMBIE, new int[] { 0, 1 });
+            MONSTERS_STATS.Add(VAMPIRE, new int[] { 0, 1 });
+            MONSTERS_STATS.Add(WITCH, new int[] { 0, 1 });
+            MONSTERS_STATS.Add(REAPER, new int[] { 0, 1 });
+            #endregion
+        }
     }
     #endregion
 

@@ -149,6 +149,8 @@ public class SummoningCircle : Building
 
     private void Start()
     {
+        constructionType = 1;
+
         if (activeMonster == NONE)
         {
             //If it's not producing (either in pause or first time building created, set default settings to skeleton)
@@ -175,6 +177,9 @@ public class SummoningCircle : Building
 
         //Save building position
         position = transform.position;
+
+        //Apply boost
+        updateActiveMonsterBoostStart();
     }
 
     void Update()
@@ -1370,6 +1375,28 @@ public class SummoningCircle : Building
 
     public void updateActiveMonsterTime()
     {
+        if (Data.Instance.BOOSTS.TryGetValue(Data.SUMMONING_BOOST, out int quantity))
+        {
+            switch (quantity)
+            {
+                case 1:
+                    timeModifier = 0.15f;
+                    break;
+
+                case 2:
+                    timeModifier = 0.3f;
+                    break;
+
+                case 3:
+                    timeModifier = 0.5f;
+                    break;
+            }
+        }
+        else
+        {
+            timeModifier = 0;
+        }
+        
         if (activeMonster != NONE)
         {
             //Get proportion
@@ -1383,6 +1410,54 @@ public class SummoningCircle : Building
             timeBarMonster.minValue = 0;
             timeBarMonster.maxValue = activeMonsterTime;
             time = activeMonsterTime - (activeMonsterTime * proportion);
+        }
+    }
+
+    public void updateActiveMonsterBoostStart()
+    {
+        if (Data.Instance.BOOSTS.TryGetValue(Data.SUMMONING_BOOST, out int quantity))
+        {
+            switch (quantity)
+            {
+                case 1:
+                    timeModifier = 0.15f;
+                    break;
+
+                case 2:
+                    timeModifier = 0.3f;
+                    break;
+
+                case 3:
+                    timeModifier = 0.5f;
+                    break;
+            }
+        }
+        else
+        {
+            timeModifier = 0;
+        }
+
+        if (activeMonster != NONE)
+        {
+            //Get proportion
+            float proportion = timeLeft / activeMonsterTime;
+
+            if (Data.Instance.MONSTERS.TryGetValue(activeMonster, out MonsterInfo monster))
+            {
+                activeMonsterTime = monster.time - (monster.time * timeModifier);
+                activeResourceTime = monster.time - (monster.time * timeModifier);
+            }
+            timeBarMonster.minValue = 0;
+            timeBarMonster.maxValue = activeMonsterTime;
+        }
+    }
+
+    override
+    public void saveConstructionToDictionary()
+    {
+        if (!Data.Instance.CONSTRUCTIONS.ContainsKey(id + numType))
+        {
+            Data.Instance.CONSTRUCTIONS.Add(id + numType, new float[] { transform.position.x, transform.position.y, level, getNumActiveResource(), timeLeft, isProducing ? 1 : 0, isPaused ? 1 : 0, numType, activeResourceTime, 1 , 0, 0});
         }
     }
 }

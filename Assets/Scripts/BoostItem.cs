@@ -62,6 +62,7 @@ public class BoostItem : MonoBehaviour
         buyButton.SetActive(false);
         requirementIcon.SetActive(false);
         requirementText.SetText("Owned");
+        requirementText.alignment = TextAlignmentOptions.Center;
     }
 
     public void buy()
@@ -82,7 +83,15 @@ public class BoostItem : MonoBehaviour
 
             //Apply the permanent boost
             isUnlocked = true;
-            Data.Instance.BOOSTS.Add(id, 1);
+
+            if(id.Equals(Data.OFFLINE_MAXTIME_BOOST) || id.Equals(Data.OFFLINE_PRODUCTIVITY_BOOST) || id.Equals(Data.SCARES_BOOST) || id.Equals(Data.DROPS_BOOST))
+            {
+                Data.Instance.BOOSTS.Add(id, 0); //Because the boost is only applied when the decoration boost is in the map
+            }
+            else
+            {
+                Data.Instance.BOOSTS.Add(id, 1);
+            }
             //GameManager apply boost
             GameManager.Instance.applyBoost(id);
 

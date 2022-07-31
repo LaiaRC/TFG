@@ -121,7 +121,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2057524373827191734}
+      - m_Target: {fileID: 4792922712428399056}
         m_TargetAssemblyTypeName: Construction, Assembly-CSharp
         m_MethodName: confirmBuilding
         m_Mode: 1
@@ -522,7 +522,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2057524373827191734}
+      - m_Target: {fileID: 4792922712428399056}
         m_TargetAssemblyTypeName: Construction, Assembly-CSharp
         m_MethodName: cancelBuilding
         m_Mode: 1
@@ -645,7 +645,7 @@ GameObject:
   - component: {fileID: 7407920909547853340}
   - component: {fileID: 7407920909547853343}
   - component: {fileID: 7407920909547853342}
-  - component: {fileID: 2057524373827191734}
+  - component: {fileID: 4792922712428399056}
   m_Layer: 0
   m_Name: bloodMoonTower
   m_TagString: Untagged
@@ -738,7 +738,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &2057524373827191734
+--- !u!114 &4792922712428399056
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -747,7 +747,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7407920909547853337}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b3377fa6cc91bd479dfa7924d4119d2, type: 3}
+  m_Script: {fileID: 11500000, guid: a7f6a2078981ada42a1dc792413adaa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   id: bloodMoonTower
@@ -755,14 +755,15 @@ MonoBehaviour:
   production_cost:
   - list:
     - resourceNameKey: scare
+      quantity: 10
+  - list:
+    - resourceNameKey: scare
+      quantity: 20
+  - list:
+    - resourceNameKey: scare
       quantity: 30
-  - list:
-    - resourceNameKey: scare
-      quantity: 40
-  - list:
-    - resourceNameKey: scare
-      quantity: 50
   numType: 0
+  constructionType: 0
   position: {x: 0, y: 0, z: 0}
   tempArea:
     m_Position: {x: 0, y: 0, z: 0}
@@ -776,7 +777,6 @@ MonoBehaviour:
   affectedBuildingsIcons: []
   type: general
   boostApplied: 0
-  numMages: 0
 --- !u!1 &8182166419561430679
 GameObject:
   m_ObjectHideFlags: 0

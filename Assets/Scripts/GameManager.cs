@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour
     public List<string> unlockedMonsters = new List<string>();
     public string hidenMonster = "jackOLantern";
     public int hidenMonsterIndex = 1;
+    public GameObject resourcePanel;
 
     public Camera mainCamera;
 
@@ -61,6 +62,9 @@ public class GameManager : MonoBehaviour
     public static int PAUSED = 6;
     public static int NUM_TYPE = 7;
     public static int ACTIVE_RESOURCE_TIME = 8;
+    public static int CONSTRUCTION_TYPE = 9;
+    public static int IS_PRODUCER = 10;
+    public static int IS_CONVERTER = 11;
 
     //Player dictionary
     public static int HOUR = 0;
@@ -75,6 +79,14 @@ public class GameManager : MonoBehaviour
     public static int UPGRADE_LEVEL = 1;
     public static int HIDDEN_MONSTER_INDEX = 2;
     //public static int QUANTITY = 2; //The quantity of each monster produced
+
+    public static float LOAD_TIME = 10;
+    public static float REDUCTION_FACTOR = 1;
+    public static float TIME_ESCALE_MULTIPLIER = 100;
+
+    //BOOST VARIABLES
+    public static int PRODUCER_BOOST = 0;
+    public static int CONVERTER_BOOST = 0;
 
     private string info = "";
     private bool offlineBoostApplied = false;
@@ -143,10 +155,10 @@ public class GameManager : MonoBehaviour
     {
         foreach (KeyValuePair<string, int> inventoryResource in Data.Instance.INVENTORY)
         {
-
-            
-            info += "\n -" + inventoryResource.Key + ": " + inventoryResource.Value;
-            
+            if (inventoryResource.Key.Equals(Data.BONE) || inventoryResource.Key.Equals(Data.SKELETON) || inventoryResource.Key.Equals(Data.SPIDERWEB))
+            {
+                info += "\n -" + inventoryResource.Key + ": " + inventoryResource.Value;
+            }
         }
         //debugInventoryInfo.SetText("isDialogOpen: " + isDialogOpen + "\n" + "draggingItemShop: " + draggingItemShop + "\n" + "draggingFromShop: " + draggingFromShop + "\n");
         debugInventoryInfo.text = info;
@@ -155,8 +167,10 @@ public class GameManager : MonoBehaviour
         //Update after coming back from pause mode
         if (isPaused)
         {
-            SaveManager.Instance.Load();
-            //produceOfflineResources();
+            //Load loadin scene
+            SceneManager.LoadScene("loadingScene");
+
+            //SaveManager.Instance.Load();
             isPaused = false;
         }
     }
@@ -167,7 +181,7 @@ public class GameManager : MonoBehaviour
         {
             isPaused = true;
             //Save when exiting game
-            SaveManager.Instance.Save();
+            SaveManager.Instance.Save();            
         }
     }
 
@@ -388,10 +402,66 @@ public class GameManager : MonoBehaviour
         descriptionDialog.GetComponent<Transform>().Find("IconResource3").GetComponent<Image>().sprite = iconResource3;
     }
 
-    public void fillOfflineDialog(string description, string boostTimeText)
+    public void fillOfflineDialog(string timeAwayText)
     {
-        offlineDialog.GetComponent<Transform>().Find("Description").GetComponent<TextMeshProUGUI>().text = description;
-        offlineDialog.GetComponent<Transform>().Find("BoostTimeText").GetComponent<TextMeshProUGUI>().text = boostTimeText;
+        //Calculate max time out 
+        int timeBoost = 4; //default 4h
+        if (Data.Instance.BOOSTS.TryGetValue(Data.OFFLINE_MAXTIME_BOOST, out int quantity))
+        {
+            timeBoost += quantity;
+        }
+        
+        offlineDialog.transform.Find("TimePanel").transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(timeAwayText + "/" + timeBoost.ToString() + "h");
+
+        //Calculate info text
+        string prod = "25%";
+        if (Data.Instance.BOOSTS.TryGetValue(Data.OFFLINE_PRODUCTIVITY_BOOST, out int prodQuantity))
+        {
+            switch (prodQuantity)
+            {
+                case 1:
+                    prod = "50%";
+                    break;
+
+                case 2:
+                    prod = "75%";
+                    break;
+
+                case 3:
+                    prod = "100%";
+                    break;
+
+                default:
+                    prod = "25%";
+                    break;
+            }
+        }
+
+        offlineDialog.GetComponent<Transform>().Find("InfoPanel").transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText("While you are away the productivity is " + prod +  " and only works for " + timeBoost.ToString()  + "h at most.\n You can upgrade this with the Spectre and the Necromancer at the shop.");
+
+        //Fill grid with offline resources
+        foreach (KeyValuePair<string, int> resourceOld in Data.Instance.INVENTORY)
+        {
+            if (resourceOld.Key.Contains("Old"))
+            {
+                foreach (KeyValuePair<string, int> resource in Data.Instance.INVENTORY)
+                {
+                    if (!resource.Key.Contains("Old") && resourceOld.Key.Contains(resource.Key) && resourceOld.Key != resource.Key)
+                    {
+                        if (resourceOld.Value != resource.Value)
+                        {
+                            GameObject panel = Instantiate(resourcePanel, offlineDialog.transform.Find("Scrollback").transform.GetChild(0).transform);
+
+                            if (Data.Instance.RESOURCES.TryGetValue(resource.Key, out Resource res))
+                            {
+                                panel.transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite = res.icon;
+                            }
+                            panel.transform.GetChild(0).transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText((resource.Value - resourceOld.Value).ToString());
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public void addInventory()
@@ -412,19 +482,19 @@ public class GameManager : MonoBehaviour
         {
             for (int i = 0; i < buildings.Count; i++)
             {
-                if (construction.Key.Contains(buildings[i].GetComponent<Building>().id))
+                if (construction.Key.Contains(buildings[i].GetComponent<Construction>().id))
                 {
                     //Instantiate building prefab
                     Vector3 constructionPosition = new Vector3(construction.Value[POS_X], construction.Value[POS_Y], 0);
 
                     Vector3Int positionIntAux = GridBuildingSystem.current.gridLayout.LocalToCell(constructionPosition);
-                    BoundsInt areaTempAux = buildings[i].GetComponent<Building>().area;
+                    BoundsInt areaTempAux = buildings[i].GetComponent<Construction>().area;
                     areaTempAux.position = positionIntAux;
 
                     if (GridBuildingSystem.current.canTakeArea(areaTempAux))
                     {
                         GameObject obj = Instantiate(buildings[i], constructionPosition, Quaternion.identity);
-                        if (construction.Key.Contains("summoningCircle"))
+                        if (construction.Value[CONSTRUCTION_TYPE] == 1)
                         {
                             #region SUMMONING CIRCLE
                             //It's summoning circle
@@ -464,6 +534,21 @@ public class GameManager : MonoBehaviour
                             temp.setSelectedTab(temp.activeMonster);
                             temp.setUI(temp.activeMonster);
                             temp.setActiveMonsterUI(temp.activeMonster);
+                            Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(constructionPosition);
+                            BoundsInt areaTemp = temp.area;
+                            areaTemp.position = positionInt;
+                            GridBuildingSystem.current.takeArea(areaTemp);
+                            #endregion
+                        }
+                        else if (construction.Value[CONSTRUCTION_TYPE] == 2)
+                        {
+                            //It's a decoration boost
+                            #region DECORATION BOOST
+                            DecorationBoost temp = obj.GetComponent<DecorationBoost>();
+
+                            //Set decoration boost values
+                            temp.numType = (int)construction.Value[NUM_TYPE];
+
                             Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(constructionPosition);
                             BoundsInt areaTemp = temp.area;
                             areaTemp.position = positionInt;
@@ -537,14 +622,14 @@ public class GameManager : MonoBehaviour
                         constructionsBuilt.Add(obj);
 
                         //Add building to building_inventory dictionary
-                        if (Data.Instance.BUILDING_INVENTORY.TryGetValue(buildings[i].GetComponent<Building>().id, out int quantity))
+                        if (Data.Instance.BUILDING_INVENTORY.TryGetValue(buildings[i].GetComponent<Construction>().id, out int quantity))
                         {
-                            Data.Instance.BUILDING_INVENTORY[buildings[i].GetComponent<Building>().id] = quantity + 1;
+                            Data.Instance.BUILDING_INVENTORY[buildings[i].GetComponent<Construction>().id] = quantity + 1;
                         }
                         else
                         {
                             //First building of that type
-                            Data.Instance.BUILDING_INVENTORY.Add(buildings[i].GetComponent<Building>().id, 1);
+                            Data.Instance.BUILDING_INVENTORY.Add(buildings[i].GetComponent<Construction>().id, 1);
                         }
                     }
                 }
@@ -560,25 +645,26 @@ public class GameManager : MonoBehaviour
 
         offlineTime = (float)(localDate - previousDateTime).TotalSeconds;
 
-        float maxTimeOut = 18000;
+        //Calculate max time out depending on boost
+        float maxTimeOut = 4 * 3600; //Default value -> 4h
 
-        if(offlineTime > maxTimeOut)
+        if (Data.Instance.BOOSTS.TryGetValue(Data.OFFLINE_MAXTIME_BOOST, out int quantity))
+        {
+            for (int i = 0; i < quantity; i++)
+            {
+                maxTimeOut += 3600; // +1h for each boost
+            }
+        }
+
+        if (offlineTime > maxTimeOut)
         {
             offlineTime = maxTimeOut;
         }
 
-        offlineBoostTime = offlineTime;
-
-        if (offlineBoostTime >= 1) {
-
-            //Show offline dialog
-            TimeSpan offlineTimeAux = localDate - previousDateTime; //in hours, min, etc
-            calculateOfflineDialogText(offlineTimeAux);
-            showOfflineDialog();
-
-            boostTimeButton.gameObject.SetActive(true);
-            boostTimeButton.GetComponentInChildren<TextMeshProUGUI>().SetText("Apply boost " + (offlineBoostTime/offlineBoostMultiplier).ToString("F2") + " +(" + ((offlineBoostTime * offlineBoostTimeModifier)/ offlineBoostMultiplier).ToString("F2") + ")" +"s");
-        }
+        //Show offline dialog
+        TimeSpan offlineTimeAux = localDate - previousDateTime; //in hours, min, etc
+        calculateOfflineDialogText(offlineTimeAux);
+        showOfflineDialog();
     }
 
     public void calculateOfflineDialogText(TimeSpan offlineTimeAux)
@@ -586,26 +672,20 @@ public class GameManager : MonoBehaviour
         if (offlineTimeAux.Hours > 0)
         {
             if (offlineTimeAux.Minutes > 0)
-            {
-                if (offlineTimeAux.Seconds > 0)
-                {
-                    fillOfflineDialog("You were away for " + offlineTimeAux.Hours + "h " + offlineTimeAux.Minutes + "min " + offlineTimeAux.Seconds + "s", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
-                }
-                else
-                {
-                    fillOfflineDialog("You were away for " + offlineTimeAux.Hours + "h " + offlineTimeAux.Minutes + "min", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
-                }
+            {               
+                
+                fillOfflineDialog(offlineTimeAux.Hours + "h " + offlineTimeAux.Minutes + "min");   
             }
             else
             {
                 if (offlineTimeAux.Seconds > 0)
                 {
-                    fillOfflineDialog("You were away for " + offlineTimeAux.Hours + "h " + offlineTimeAux.Seconds + "s", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
+                    fillOfflineDialog(offlineTimeAux.Hours + "h " + offlineTimeAux.Seconds + "s");
 
                 }
                 else
                 {
-                    fillOfflineDialog("You were away for " + offlineTimeAux.Hours + "h", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
+                    fillOfflineDialog(offlineTimeAux.Hours + "h");
 
                 }
             }
@@ -616,39 +696,21 @@ public class GameManager : MonoBehaviour
             {
                 if (offlineTimeAux.Seconds > 0)
                 {
-                    fillOfflineDialog("You were away for " + offlineTimeAux.Minutes + "min " + offlineTimeAux.Seconds + "s", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
+                    fillOfflineDialog(offlineTimeAux.Minutes + "min " + offlineTimeAux.Seconds + "s");
 
                 }
                 else
                 {
-                    fillOfflineDialog("You were away for " + offlineTimeAux.Minutes + "min", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
+                    fillOfflineDialog(offlineTimeAux.Minutes + "min");
 
                 }
             }
             else
             {
-                fillOfflineDialog("You were away for " + offlineTimeAux.Seconds + "s", "Boost time -> " + (offlineBoostTime / offlineBoostMultiplier).ToString("F2") + "s");
+                fillOfflineDialog(offlineTimeAux.Seconds + "s");
 
             }
         }
-    }
-
-    public void applyBoostTime()
-    {
-        if (!offlineBoostApplied)
-        {
-            offlineBoostTime = 10;
-            Time.timeScale = offlineBoostMultiplier;
-            Invoke("stopOfflineProduction", ((offlineBoostTime + (offlineBoostTime*offlineBoostTimeModifier))* offlineBoostMultiplier));
-        }
-    }
-
-    public void stopOfflineProduction()
-    {
-        boostTimeButton.GetComponentInChildren<TextMeshProUGUI>().SetText("Boosted");
-        boostTimeButton.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
-        Time.timeScale = 1;
-        offlineBoostApplied = true;
     }
 
     public void setMonstersDictionary()
@@ -1092,101 +1154,54 @@ public class GameManager : MonoBehaviour
                 break;
             #endregion
 
-            #region DECORATION BOOSTS
-            case "gargoyle":
-
-                foreach (GameObject gargoyle in constructionsBuilt)
-                {
-                    if (gargoyle.GetComponent<Gargoyle>() != null && !gargoyle.GetComponent<Gargoyle>().boostApplied)
-                    {
-                        gargoyle.GetComponent<Gargoyle>().applyBoost();
-                        
-                        //Data.Instance.BOOSTS.Add(obelisk.GetComponent<Obelisk>().id, 1);
-                    }
-                }
-
-                //Change price in shop
-                updateShopPrices("gargoyle");
-                break;
-
-            case "obelisk":
-
-                foreach (GameObject obelisk in constructionsBuilt)
-                {
-                    if (obelisk.GetComponent<Obelisk>() != null && !obelisk.GetComponent<Obelisk>().boostApplied)
-                    {
-                        obelisk.GetComponent<Obelisk>().applyBoost();
-                        //checkejar que no existeixi ja la key
-                        //Data.Instance.BOOSTS.Add(bloodMoonTower.GetComponent<BloodMoonTower>().id, 1);
-                    }
-                }
-
-                //Change price in shop
-                updateShopPrices("obelisk");
-                break;
-
-            case "bloodMoonTower":
-
-                foreach (GameObject bloodMoonTower in constructionsBuilt)
-                {
-                    if (bloodMoonTower.GetComponent<BloodMoonTower>() != null && !bloodMoonTower.GetComponent<BloodMoonTower>().boostApplied)
-                    {
-                        bloodMoonTower.GetComponent<BloodMoonTower>().applyBoost();
-                        //Data.Instance.BOOSTS.Add(fireSkull.GetComponent<FireSkull>().id, 1);
-                    }
-                }
-
-                //Change price in shop
-                updateShopPrices("bloodMoonTower");
-                break;
-
+            #region SPECIALS
             case "spectre":
-
-                foreach (GameObject spectre in constructionsBuilt)
+                //Unlock the spectre
+                foreach (ShopItemHolder item in buildingShopItems)
                 {
-                    if (spectre.GetComponent<Spectre>() != null && !spectre.GetComponent<Spectre>().boostApplied)
+                    if (item.titleText.text.Contains("Spectre"))
                     {
-                        spectre.GetComponent<Spectre>().applyBoost();
-                        //Data.Instance.BOOSTS.Add(fireSkull.GetComponent<FireSkull>().id, 1);
+                        item.isLocked = false;
+                        item.setToUnlocked();
                     }
                 }
+                break;
 
-                //Change price in shop
-                updateShopPrices("spectre");
+            case "necromancer":
+                //Unlock the spectre
+                foreach (ShopItemHolder item in buildingShopItems)
+                {
+                    if (item.titleText.text.Contains("Necromancer"))
+                    {
+                        item.isLocked = false;
+                        item.setToUnlocked();
+                    }
+                }
                 break;
 
             case "mageGuardian":
-
-                foreach (GameObject mageGuardian in constructionsBuilt)
+                //Unlock the spectre
+                foreach (ShopItemHolder item in buildingShopItems)
                 {
-                    if (mageGuardian.GetComponent<MageGuardian>() != null && !mageGuardian.GetComponent<MageGuardian>().boostApplied)
+                    if (item.titleText.text.Contains("Mage Guardian"))
                     {
-                        mageGuardian.GetComponent<MageGuardian>().applyBoost();
-                        //Data.Instance.BOOSTS.Add(fireSkull.GetComponent<FireSkull>().id, 1);
+                        item.isLocked = false;
+                        item.setToUnlocked();
                     }
                 }
-
-                //Change price in shop
-                updateShopPrices("mageGuardian");
                 break;
 
             case "demonLord":
-
-                foreach (GameObject demonLord in constructionsBuilt)
+                //Unlock the spectre
+                foreach (ShopItemHolder item in buildingShopItems)
                 {
-                    if (demonLord.GetComponent<DemonLord>() != null && !demonLord.GetComponent<DemonLord>().boostApplied)
+                    if (item.titleText.text.Contains("Demon Lord"))
                     {
-                        demonLord.GetComponent<DemonLord>().applyBoost();
-                        //Data.Instance.BOOSTS.Add(fireSkull.GetComponent<FireSkull>().id, 1);
+                        item.isLocked = false;
+                        item.setToUnlocked();
                     }
                 }
-
-                //Change price in shop
-                updateShopPrices("demonLord");
                 break;
-
-            
-
                 #endregion
         }
     }
@@ -1196,7 +1211,7 @@ public class GameManager : MonoBehaviour
         //When loading the game
         foreach (KeyValuePair<string, int> boost in Data.Instance.BOOSTS)
         {
-            if(boost.Value == 1) //Maybe can be applied twice or more (>= 1 ?)
+            for (int i = 0; i < boost.Value; i++) //Can be more than one at once
             {
                 applyBoost(boost.Key);
             }
@@ -1251,5 +1266,34 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void loadBoosts()
+    {
+        foreach (GameObject construction in constructionsBuilt)
+        {
+            if(construction.GetComponent<DecorationBoost>() != null)
+            {
+                //Add boost to dictionary
+                if (Data.Instance.BOOSTS.TryGetValue(construction.GetComponent<Construction>().id, out int quantity))
+                {
+                    Data.Instance.BOOSTS[construction.GetComponent<Construction>().id] += 1;
+                }
+                else
+                {
+                    Data.Instance.BOOSTS.Add(construction.GetComponent<Construction>().id, 1);
+                }
+            }
+        }
+    }
+
+    public void hideAllDialogs()
+    {
+        canvas.GetComponent<Transform>().Find("DescriptionDialog").gameObject.SetActive(false);
+        canvas.GetComponent<Transform>().Find("OfflineDialog").gameObject.SetActive(false);
+
+        canvas.GetComponent<Transform>().Find("BlackPanel").gameObject.SetActive(false);
+        canvas.GetComponent<Transform>().Find("UIBlock").gameObject.SetActive(true);
+        Invoke("setDialogOpen", 0.05f);
     }
 }

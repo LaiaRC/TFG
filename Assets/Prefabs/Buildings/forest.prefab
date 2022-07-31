@@ -2571,6 +2571,7 @@ MonoBehaviour:
     - resourceNameKey: bone
       quantity: 15
   numType: 0
+  constructionType: 0
   position: {x: 0, y: 0, z: 0}
   tempArea:
     m_Position: {x: 0, y: 0, z: 0}
@@ -2621,13 +2622,14 @@ MonoBehaviour:
   requirement1Text: {fileID: 0}
   requirement2Text: {fileID: 0}
   extraNumResources: 0
+  isProducer: 0
+  isConverter: 1
   activeResource: spiderweb
   timeLeft: 0
   time: 0
   isPaused: 0
   canvasInterior: {fileID: 1362195048390551837}
   activeResourceTime: 0
-  isProducer: 0
 --- !u!1 &2028175942808267847
 GameObject:
   m_ObjectHideFlags: 0
