@@ -347,11 +347,11 @@ public class SummoningCircle : Building
                     //Show current amount and needed
                     if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.requirements[0].resourceNameKey, out int quantity))
                     {
-                        summonRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(quantity + "/" + monsterInfo.requirements[0].quantity);
+                        summonRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(GameManager.Instance.numToString(quantity) + "/" + GameManager.Instance.numToString(monsterInfo.requirements[0].quantity));
                     }
                     else
                     {
-                        summonRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + monsterInfo.requirements[0].quantity);
+                        summonRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.requirements[0].quantity));
                     }
 
                     //Summon requirement 2
@@ -363,11 +363,11 @@ public class SummoningCircle : Building
                     //Show current amount and needed
                     if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.requirements[1].resourceNameKey, out int quantity1))
                     {
-                        summonRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(quantity1 + "/" + monsterInfo.requirements[1].quantity);
+                        summonRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(GameManager.Instance.numToString(quantity1) + "/" + GameManager.Instance.numToString(monsterInfo.requirements[1].quantity));
                     }
                     else
                     {
-                        summonRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + monsterInfo.requirements[1].quantity);
+                        summonRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.requirements[1].quantity));
                     }
 
                     //Summon requirement 3 (MAY NOT HAVE)
@@ -381,11 +381,11 @@ public class SummoningCircle : Building
                         //Show current amount and needed
                         if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.requirements[2].resourceNameKey, out int quantity2))
                         {
-                            summonRequirement3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(quantity2 + "/" + monsterInfo.requirements[2].quantity);
+                            summonRequirement3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(GameManager.Instance.numToString(quantity2) + "/" + GameManager.Instance.numToString(monsterInfo.requirements[2].quantity));
                         }
                         else
                         {
-                            summonRequirement3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + monsterInfo.requirements[2].quantity);
+                            summonRequirement3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.requirements[2].quantity));
                         }
                     }
                     else
@@ -538,11 +538,11 @@ public class SummoningCircle : Building
                         //Show current amount and needed
                         if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][0].resourceNameKey, out int upQuantity))
                         {
-                            upgradeRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(upQuantity + "/" + monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][0].quantity);
+                            upgradeRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(GameManager.Instance.numToString(upQuantity) + "/" + GameManager.Instance.numToString(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][0].quantity));
                         }
                         else
                         {
-                            upgradeRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][0].quantity);
+                            upgradeRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][0].quantity));
                         }
 
                         //Summon requirement 2
@@ -554,11 +554,11 @@ public class SummoningCircle : Building
                         //Show current amount and needed
                         if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][1].resourceNameKey, out int upQuantity2))
                         {
-                            upgradeRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(upQuantity2 + "/" + monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][1].quantity);
+                            upgradeRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(GameManager.Instance.numToString(upQuantity2) + "/" + GameManager.Instance.numToString(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][1].quantity));
                         }
                         else
                         {
-                            upgradeRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][1].quantity);
+                            upgradeRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][1].quantity));
                         }
 
                         //Summon requirement 3 (MAY NOT HAVE)
@@ -572,11 +572,11 @@ public class SummoningCircle : Building
                             //Show current amount and needed
                             if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][2].resourceNameKey, out int upQuantity3))
                             {
-                                upgradeRequirement3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(upQuantity3 + "/" + monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][2].quantity);
+                                upgradeRequirement3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(GameManager.Instance.numToString(upQuantity3) + "/" + GameManager.Instance.numToString(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][2].quantity));
                             }
                             else
                             {
-                                upgradeRequirement3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][2].quantity);
+                                upgradeRequirement3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][2].quantity));
                             }
                         }
                         else
@@ -706,11 +706,11 @@ public class SummoningCircle : Building
                 //Show current amount and needed
                 if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.requirements[0].resourceNameKey, out int quantity))
                 {
-                    producingRequirementText1.SetText(quantity + "/" + monsterInfo.requirements[0].quantity);
+                    producingRequirementText1.SetText(GameManager.Instance.numToString(quantity) + "/" + GameManager.Instance.numToString(monsterInfo.requirements[0].quantity));
                 }
                 else
                 {
-                    producingRequirementText1.SetText("0/" + monsterInfo.requirements[0].quantity);
+                    producingRequirementText1.SetText("0/" + GameManager.Instance.numToString(monsterInfo.requirements[0].quantity));
                 }
 
                 //Summon requirement 2
@@ -722,11 +722,11 @@ public class SummoningCircle : Building
                 //Show current amount and needed
                 if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.requirements[1].resourceNameKey, out int quantity1))
                 {
-                    producingRequirementText2.SetText(quantity1 + "/" + monsterInfo.requirements[1].quantity);
+                    producingRequirementText2.SetText(GameManager.Instance.numToString(quantity1) + "/" + GameManager.Instance.numToString(monsterInfo.requirements[1].quantity));
                 }
                 else
                 {
-                    producingRequirementText2.SetText("0/" + monsterInfo.requirements[1].quantity);
+                    producingRequirementText2.SetText("0/" + GameManager.Instance.numToString(monsterInfo.requirements[1].quantity));
                 }
 
                 //Summon requirement 3 (MAY NOT HAVE)
@@ -740,11 +740,11 @@ public class SummoningCircle : Building
                     //Show current amount and needed
                     if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.requirements[2].resourceNameKey, out int quantity2))
                     {
-                        producingRequirementText3.SetText(quantity2 + "/" + monsterInfo.requirements[2].quantity);
+                        producingRequirementText3.SetText(GameManager.Instance.numToString(quantity2) + "/" + GameManager.Instance.numToString(monsterInfo.requirements[2].quantity));
                     }
                     else
                     {
-                        producingRequirementText3.SetText("0/" + monsterInfo.requirements[2].quantity);
+                        producingRequirementText3.SetText("0/" + GameManager.Instance.numToString(monsterInfo.requirements[2].quantity));
                     }
                 }
                 else
@@ -1184,22 +1184,22 @@ public class SummoningCircle : Building
                 //Show current amount and needed
                 if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.requirements[0].resourceNameKey, out int quantity))
                 {
-                    summonRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(quantity + "/" + monsterInfo.requirements[0].quantity);
+                    summonRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(GameManager.Instance.numToString(quantity) + "/" + GameManager.Instance.numToString(monsterInfo.requirements[0].quantity));
                 }
                 else
                 {
-                    summonRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + monsterInfo.requirements[0].quantity);
+                    summonRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.requirements[0].quantity));
                 }
 
                 //Summon requirement 2
                 //Show current amount and needed
                 if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.requirements[1].resourceNameKey, out int quantity1))
                 {
-                    summonRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(quantity1 + "/" + monsterInfo.requirements[1].quantity);
+                    summonRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(GameManager.Instance.numToString(quantity1) + "/" + GameManager.Instance.numToString(monsterInfo.requirements[1].quantity));
                 }
                 else
                 {
-                    summonRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + monsterInfo.requirements[1].quantity);
+                    summonRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.requirements[1].quantity));
                 }
 
                 //Summon requirement 3 (MAY NOT HAVE)
@@ -1208,11 +1208,11 @@ public class SummoningCircle : Building
                     //Show current amount and needed
                     if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.requirements[2].resourceNameKey, out int quantity2))
                     {
-                        summonRequirement3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(quantity2 + "/" + monsterInfo.requirements[2].quantity);
+                        summonRequirement3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(GameManager.Instance.numToString(quantity2) + "/" + GameManager.Instance.numToString(monsterInfo.requirements[2].quantity));
                     }
                     else
                     {
-                        summonRequirement3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + monsterInfo.requirements[2].quantity);
+                        summonRequirement3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.requirements[2].quantity));
                     }
                 }
                 else
@@ -1231,12 +1231,12 @@ public class SummoningCircle : Building
                 //Show current amount and needed
                 if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.unlockRequirements[0].resourceNameKey, out int quantity))
                 {
-                    summonRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(quantity + "/" + monsterInfo.unlockRequirements[0].quantity);
+                    summonRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(GameManager.Instance.numToString(quantity) + "/" + GameManager.Instance.numToString(monsterInfo.unlockRequirements[0].quantity));
 
                 }
                 else
                 {
-                    summonRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + monsterInfo.unlockRequirements[0].quantity);
+                    summonRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.unlockRequirements[0].quantity));
                 }
                 #endregion
             }
@@ -1249,22 +1249,22 @@ public class SummoningCircle : Building
                 //Show current amount and needed
                 if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][0].resourceNameKey, out int upQuantity))
                 {
-                    upgradeRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(upQuantity + "/" + monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][0].quantity);
+                    upgradeRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(GameManager.Instance.numToString(upQuantity) + "/" + GameManager.Instance.numToString(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][0].quantity));
                 }
                 else
                 {
-                    upgradeRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][0].quantity);
+                    upgradeRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][0].quantity));
                 }
 
                 //Upgrade requirement 2
                 //Show current amount and needed
                 if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][1].resourceNameKey, out int upQuantity2))
                 {
-                    upgradeRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(upQuantity2 + "/" + monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][1].quantity);
+                    upgradeRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(GameManager.Instance.numToString(upQuantity2) + "/" + GameManager.Instance.numToString(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][1].quantity));
                 }
                 else
                 {
-                    upgradeRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][1].quantity);
+                    upgradeRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][1].quantity));
                 }
 
                 //Upgrade requirement 3 (MAY NOT HAVE)
@@ -1273,11 +1273,11 @@ public class SummoningCircle : Building
                     //Show current amount and needed
                     if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][2].resourceNameKey, out int upQuantity3))
                     {
-                        upgradeRequirement3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(upQuantity3 + "/" + monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][2].quantity);
+                        upgradeRequirement3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(GameManager.Instance.numToString(upQuantity3) + "/" + GameManager.Instance.numToString(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][2].quantity));
                     }
                     else
                     {
-                        upgradeRequirement3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][2].quantity);
+                        upgradeRequirement3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][2].quantity));
                     }
                 }
                 else
@@ -1296,22 +1296,22 @@ public class SummoningCircle : Building
             //Show current amount and needed
             if (Data.Instance.INVENTORY.TryGetValue(mInfo.requirements[0].resourceNameKey, out int quantity))
             {
-                producingRequirementText1.SetText(quantity + "/" + mInfo.requirements[0].quantity);
+                producingRequirementText1.SetText(GameManager.Instance.numToString(quantity) + "/" + GameManager.Instance.numToString(mInfo.requirements[0].quantity));
             }
             else
             {
-                producingRequirementText1.SetText("0/" + mInfo.requirements[0].quantity);
+                producingRequirementText1.SetText("0/" + GameManager.Instance.numToString(mInfo.requirements[0].quantity));
             }
 
             //Summon requirement 2
             //Show current amount and needed
             if (Data.Instance.INVENTORY.TryGetValue(mInfo.requirements[1].resourceNameKey, out int quantity1))
             {
-                producingRequirementText2.SetText(quantity1 + "/" + mInfo.requirements[1].quantity);
+                producingRequirementText2.SetText(GameManager.Instance.numToString(quantity1) + "/" + GameManager.Instance.numToString(mInfo.requirements[1].quantity));
             }
             else
             {
-                producingRequirementText2.SetText("0/" + mInfo.requirements[1].quantity);
+                producingRequirementText2.SetText("0/" + GameManager.Instance.numToString(mInfo.requirements[1].quantity));
             }
 
             //Summon requirement 3 (MAY NOT HAVE)
@@ -1320,11 +1320,11 @@ public class SummoningCircle : Building
                 //Show current amount and needed
                 if (Data.Instance.INVENTORY.TryGetValue(mInfo.requirements[2].resourceNameKey, out int quantity2))
                 {
-                    producingRequirementText3.SetText(quantity2 + "/" + mInfo.requirements[2].quantity);
+                    producingRequirementText3.SetText(GameManager.Instance.numToString(quantity2) + "/" + GameManager.Instance.numToString(mInfo.requirements[2].quantity));
                 }
                 else
                 {
-                    producingRequirementText3.SetText("0/" + mInfo.requirements[2].quantity);
+                    producingRequirementText3.SetText("0/" + GameManager.Instance.numToString(mInfo.requirements[2].quantity));
                 }
             }
             #endregion

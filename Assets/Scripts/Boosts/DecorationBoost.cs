@@ -26,12 +26,12 @@ public class DecorationBoost : Construction
             if (Data.Instance.BOOSTS.TryGetValue(id, out int quantity))
             {
                 Data.Instance.BOOSTS[id] += 1;
-                Debug.Log(Data.Instance.BOOSTS[id]);
+                //Debug.Log(Data.Instance.BOOSTS[id]);
             }
             else
             {
                 Data.Instance.BOOSTS.Add(id, 1);
-                Debug.Log(Data.Instance.BOOSTS[id]);
+                //Debug.Log(Data.Instance.BOOSTS[id]);
             }
 
             //If it's summoning circle boost update the time
@@ -42,6 +42,28 @@ public class DecorationBoost : Construction
                     if (building.GetComponent<SummoningCircle>() != null)
                     {
                         building.GetComponent<SummoningCircle>().updateActiveMonsterTime();
+                    }
+                }
+            }
+
+            //Check if it's producer or converter boost and update numResource of affected buildings
+            if (id.Equals(Data.PRODUCER_BOOST))
+            {
+                foreach (GameObject building in GameManager.Instance.constructionsBuilt)
+                {
+                    if(building.GetComponent<GeneralBuilding>() != null  && building.GetComponent<GeneralBuilding>().isProducer == 1)
+                    {
+                        building.GetComponent<Building>().updateNumResource(Data.Instance.BOOSTS[id] + 1);
+                    }
+                }
+            }
+            if (id.Equals(Data.CONVERTER_BOOST))
+            {
+                foreach (GameObject building in GameManager.Instance.constructionsBuilt)
+                {
+                    if (building.GetComponent<GeneralBuilding>() != null && building.GetComponent<GeneralBuilding>().isConverter == 1)
+                    {
+                        building.GetComponent<Building>().updateNumResource(Data.Instance.BOOSTS[id] + 1);
                     }
                 }
             }

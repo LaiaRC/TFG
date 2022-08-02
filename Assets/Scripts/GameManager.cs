@@ -155,9 +155,12 @@ public class GameManager : MonoBehaviour
     {
         foreach (KeyValuePair<string, int> inventoryResource in Data.Instance.INVENTORY)
         {
-            if (inventoryResource.Key.Equals(Data.BONE) || inventoryResource.Key.Equals(Data.SKELETON) || inventoryResource.Key.Equals(Data.SPIDERWEB))
+            for (int i = 0; i < monstersKeys.Count; i++)
             {
-                info += "\n -" + inventoryResource.Key + ": " + inventoryResource.Value;
+                if (inventoryResource.Key.Equals(monstersKeys[i])){
+
+                    info += "\n -" + inventoryResource.Key + ": " + inventoryResource.Value;
+                }
             }
         }
         //debugInventoryInfo.SetText("isDialogOpen: " + isDialogOpen + "\n" + "draggingItemShop: " + draggingItemShop + "\n" + "draggingFromShop: " + draggingFromShop + "\n");
@@ -448,15 +451,37 @@ public class GameManager : MonoBehaviour
                 {
                     if (!resource.Key.Contains("Old") && resourceOld.Key.Contains(resource.Key) && resourceOld.Key != resource.Key)
                     {
-                        if (resourceOld.Value != resource.Value)
+                        //Check broomstickOld and stick
+                        if (!(resourceOld.Key.Equals("broomstickOld") && resource.Key.Equals("stick")))
                         {
-                            GameObject panel = Instantiate(resourcePanel, offlineDialog.transform.Find("Scrollback").transform.GetChild(0).transform);
-
-                            if (Data.Instance.RESOURCES.TryGetValue(resource.Key, out Resource res))
+                            if (resourceOld.Value != resource.Value)
                             {
-                                panel.transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite = res.icon;
+                                GameObject panel = Instantiate(resourcePanel, offlineDialog.transform.Find("Scrollback").transform.GetChild(0).transform);
+
+                                if (Data.Instance.RESOURCES.TryGetValue(resource.Key, out Resource res))
+                                {
+                                    panel.transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite = res.icon;
+                                }
+                                else
+                                {
+                                    //It's a monster
+                                    if (Data.Instance.MONSTERS.TryGetValue(resource.Key, out MonsterInfo monster))
+                                    {
+                                        panel.transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite = monster.icon;
+                                    }
+                                }
+                                panel.transform.GetChild(0).transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText((resource.Value - resourceOld.Value).ToString());
+
+                                //change color if negative or positive
+                                if ((resource.Value - resourceOld.Value) < 0)
+                                {
+                                    panel.transform.GetChild(0).transform.GetChild(1).GetComponent<TextMeshProUGUI>().color = new Color32(255, 0,0,255);
+                                }
+                                else if((resource.Value - resourceOld.Value) > 0)
+                                {
+                                    panel.transform.GetChild(0).transform.GetChild(1).GetComponent<TextMeshProUGUI>().color = new Color32(0, 255, 0, 255);
+                                }
                             }
-                            panel.transform.GetChild(0).transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText((resource.Value - resourceOld.Value).ToString());
                         }
                     }
                 }
@@ -896,9 +921,9 @@ public class GameManager : MonoBehaviour
                         monsterAux1.isUnlocked = true;
 
                         //Update monster stats dictionary
-                        Data.Instance.MONSTERS_STATS[Data.JACK_LANTERN] = new int[] { 1, 1 };
+                        Data.Instance.MONSTERS_STATS[Data.JACK_LANTERN] = new int[] { 1, 1 }; //check to modify to see if in load it is set to 1,1 again
 
-                        unlockedMonsters.Add(Data.JACK_LANTERN);
+                        unlockedMonsters.Add(Data.JACK_LANTERN); //it is added twice?
                         hidenMonster = Data.BAT;
                         hidenMonsterIndex = 2;
 
@@ -1210,11 +1235,8 @@ public class GameManager : MonoBehaviour
     {
         //When loading the game
         foreach (KeyValuePair<string, int> boost in Data.Instance.BOOSTS)
-        {
-            for (int i = 0; i < boost.Value; i++) //Can be more than one at once
-            {
-                applyBoost(boost.Key);
-            }
+        {            
+            applyBoost(boost.Key);            
         }
     }
 
@@ -1268,7 +1290,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void loadBoosts()
+    /*public void loadBoosts()
     {
         foreach (GameObject construction in constructionsBuilt)
         {
@@ -1285,7 +1307,7 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 
     public void hideAllDialogs()
     {
@@ -1295,5 +1317,30 @@ public class GameManager : MonoBehaviour
         canvas.GetComponent<Transform>().Find("BlackPanel").gameObject.SetActive(false);
         canvas.GetComponent<Transform>().Find("UIBlock").gameObject.SetActive(true);
         Invoke("setDialogOpen", 0.05f);
+    }
+
+    public string numToString(int num)
+    {
+        string output = "";
+
+        if(num >= 1000)
+        {
+            string[] aux = (num / 1000f).ToString().Split(',');
+            if (aux.Length > 1)
+            {
+                output = aux[0] + "." + aux[1].ToCharArray()[0] + "k";
+            }
+            else
+            {
+                output = aux[0] + "k";
+            }
+
+        }
+        else
+        {
+            output = num.ToString();
+        }
+
+        return output;
     }
 }

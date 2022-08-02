@@ -11,6 +11,7 @@ public class SaveManager : MonoBehaviour
     string pathConstructions;
     string pathPlayer;
     string pathMonsters;
+    string pathBoosts;
 
     #region SINGLETON PATTERN
     public static SaveManager Instance;
@@ -26,6 +27,7 @@ public class SaveManager : MonoBehaviour
         pathConstructions = Application.persistentDataPath + "constructions.idk";
         pathPlayer = Application.persistentDataPath + "player.idk";
         pathMonsters = Application.persistentDataPath + "monsters.idk";
+        pathBoosts = Application.persistentDataPath + "boosts.idk";
     }
     #endregion    
 
@@ -35,6 +37,7 @@ public class SaveManager : MonoBehaviour
         pathConstructions = Application.persistentDataPath + "constructions.idk";
         pathPlayer = Application.persistentDataPath + "player.idk";
         pathMonsters = Application.persistentDataPath + "monsters.idk";
+        pathBoosts = Application.persistentDataPath + "boosts.idk";
     }
     public void Save()
     {
@@ -122,16 +125,19 @@ public class SaveManager : MonoBehaviour
         var outputStreamConstructions = new FileStream(pathConstructions, FileMode.Create);      
         var outputStreamPlayer = new FileStream(pathPlayer, FileMode.Create);      
         var outputStreamMonsters = new FileStream(pathMonsters, FileMode.Create);      
+        var outputStreamBoosts = new FileStream(pathBoosts, FileMode.Create);      
 
         MsgPack.Serialize(Data.Instance.INVENTORY, outputStreamInventory);
         MsgPack.Serialize(Data.Instance.CONSTRUCTIONS, outputStreamConstructions);
         MsgPack.Serialize(Data.Instance.PLAYER, outputStreamPlayer);
         MsgPack.Serialize(Data.Instance.MONSTERS_STATS, outputStreamMonsters);
+        MsgPack.Serialize(Data.Instance.BOOSTS, outputStreamBoosts);
 
         outputStreamInventory.Position = 0; // rewind stream before copying/read
         outputStreamConstructions.Position = 0;
         outputStreamPlayer.Position = 0;
         outputStreamMonsters.Position = 0;
+        outputStreamBoosts.Position = 0;
 
         GameManager.Instance.saved = true;
 
@@ -139,6 +145,7 @@ public class SaveManager : MonoBehaviour
         outputStreamConstructions.Close();
         outputStreamPlayer.Close();
         outputStreamMonsters.Close();
+        outputStreamBoosts.Close();
     }
 
     public void SaveInventory()
@@ -168,7 +175,7 @@ public class SaveManager : MonoBehaviour
             Data.Instance.CONSTRUCTIONS = MsgPack.Deserialize(typeof(Dictionary<string, float[]>), inputStreamConstructions) as Dictionary<string, float[]>;
 
             GameManager.Instance.buildConstructions();
-            GameManager.Instance.loadBoosts();
+            //GameManager.Instance.loadBoosts();
 
             inputStreamConstructions.Close();
         }
@@ -186,6 +193,15 @@ public class SaveManager : MonoBehaviour
             inputStreamMonsters.Close();
 
             GameManager.Instance.setMonstersDictionary();
+        }
+        if (File.Exists(pathBoosts))
+        {
+            FileStream inputStreamBoosts = new FileStream(pathBoosts, FileMode.Open);
+            Data.Instance.BOOSTS = MsgPack.Deserialize(typeof(Dictionary<string, int>), inputStreamBoosts) as Dictionary<string, int>;
+            GameManager.Instance.applyAllBoosts();
+            GameManager.Instance.boostShop.GetComponent<BoostShop>().checkBoosts();
+
+            inputStreamBoosts.Close();
         }
         GameManager.Instance.calculateOfflineTime();
         GameManager.Instance.saved = false;

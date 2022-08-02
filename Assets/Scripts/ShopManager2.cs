@@ -63,12 +63,10 @@ public class ShopManager2 : MonoBehaviour
         System.Array.Sort(items, delegate (ShopItem x, ShopItem y) { return x.order.CompareTo(y.order); });
 
         shopItems.Add(ObjectType.Buildings, new List<ShopItem>());
-        shopItems.Add(ObjectType.BoostDecorations, new List<ShopItem>());
-        shopItems.Add(ObjectType.Decorations, new List<ShopItem>());
         shopItems.Add(ObjectType.DarkMarketItem, new List<ShopItem>());
 
         foreach (var item in items)
-        {            
+        {
             shopItems[item.type].Add(item);
         }
     }

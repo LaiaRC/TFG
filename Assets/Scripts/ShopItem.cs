@@ -29,7 +29,5 @@ public class ShopItem : MonoBehaviour
 public enum ObjectType
 {
     Buildings,
-    BoostDecorations,
-    Decorations,
     DarkMarketItem
 }

@@ -24,6 +24,8 @@ public class BoostShop : MonoBehaviour
     public static string CRYPT2 = "crypt2";
     #endregion
 
+    private int i = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,13 +71,13 @@ public class BoostShop : MonoBehaviour
             }
         }
 
-        setMonsterTabs();
+        setMonsterTabs();        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+       
     }
 
     public void showShop()
@@ -188,5 +190,22 @@ public class BoostShop : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void checkBoosts()
+    {
+        //check if boost has already been applied
+        foreach (KeyValuePair<string, int> boost in Data.Instance.BOOSTS)
+        {
+            for (int i = 0; i < boostItems.Count; i++)
+            {
+                if (boost.Key.Equals(boostItems[i].GetComponent<BoostItem>().id))
+                {
+                    //The boost is applied (it is only added in the dictionary if applied)
+                    boostItems[i].GetComponent<BoostItem>().setToOwned();
+                }
+            }
+        }
+        setMonsterTabs();
     }
 }

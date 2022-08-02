@@ -604,6 +604,7 @@ public class Data : MonoBehaviour
         RESOURCES.Add(WOLFCLAW, new Resource("Wolf's claw", WOLFCLAW, false, 30, false, requirements36, resourcesIcons[35]));
         #endregion
         #endregion
+        
         if (GameManager.Instance != null)
         {
             #region DROPS

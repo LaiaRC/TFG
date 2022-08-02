@@ -27,6 +27,9 @@ public class BoostItem : MonoBehaviour
         if (!isUnlocked)
         {
             updateRequirementText();
+        }else if (!requirementText.text.Equals("Owned"))
+        {
+            requirementText.SetText("Owned");
         }
     }
 
@@ -50,11 +53,11 @@ public class BoostItem : MonoBehaviour
     {
         if (Data.Instance.INVENTORY.TryGetValue(requirement.resourceNameKey, out int quantity))
         {
-            requirementText.SetText(quantity + "/" + requirement.quantity.ToString());
+            requirementText.SetText(GameManager.Instance.numToString(quantity) + "/" + GameManager.Instance.numToString(requirement.quantity));
         }
         else
         {
-            requirementText.SetText("0/" + requirement.quantity.ToString());
+            requirementText.SetText("0/" + GameManager.Instance.numToString(requirement.quantity));
         }
     }
     public void setToOwned()
@@ -63,6 +66,7 @@ public class BoostItem : MonoBehaviour
         requirementIcon.SetActive(false);
         requirementText.SetText("Owned");
         requirementText.alignment = TextAlignmentOptions.Center;
+        isUnlocked = true;
     }
 
     public void buy()

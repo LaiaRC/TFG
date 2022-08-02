@@ -51,7 +51,7 @@ MonoBehaviour:
   resource1Icon: {fileID: 21300000, guid: c4d59d1d9d409a04da2f5228205a8ce6, type: 3}
   resource2Icon: {fileID: 0}
   maxQuantity: 4
-  type: 3
+  type: 1
   icon: {fileID: 9083683855015346827, guid: 337dd915d7eabe742b53a3b2b8177ab4, type: 3}
   prefab: {fileID: 7407920909547853337, guid: 28ba610624be57c45bddb186a0c7cce7, type: 3}
   produces1: {fileID: 21300000, guid: ec11db212ab94ff4d883b1de0d3751ea, type: 3}

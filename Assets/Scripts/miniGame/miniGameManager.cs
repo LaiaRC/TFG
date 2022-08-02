@@ -505,7 +505,7 @@ public class miniGameManager : MonoBehaviour
 
     public void showStats()
     {
-        scaresText.SetText((numScares + (int)(numScares * scaresModifier)).ToString());
+        scaresText.SetText((numScares + (int)(numScares * scaresModifier)).ToString()); //fer funcio minigame manager que passi a 1.3k (copiar de gameManager)
         scaresPercentText.SetText("+" + scaresModifier*100 + "%");
         realScaresText.SetText("(" + numScares.ToString());
         extraScaresText.SetText(" + " + ((int)(numScares * scaresModifier)).ToString() + ")");

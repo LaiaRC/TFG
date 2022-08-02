@@ -39,7 +39,7 @@ public class Building : Construction
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI maxText;
     public Button upgradeButton;
-    public Slider timeBar;
+    public Image timeBar;
     public Image level1Background;
     public Image level2Background;
     public Image level3Background;
@@ -54,6 +54,7 @@ public class Building : Construction
     public int extraNumResources = 0;
     public int isProducer;
     public int isConverter;
+    public TextMeshProUGUI numResources;
 
     public string activeResource; //Quina resource s'esta produïnt
     public float timeLeft;
@@ -68,9 +69,9 @@ public class Building : Construction
     public void setCanvasInterior()
     {
         #region UPGRADE
-        
+
         //Update requirement 1
-        upgradeText1.text = "0/" + upgrade_cost[0].list[0].quantity;
+        upgradeText1.text = "0/" + GameManager.Instance.numToString(upgrade_cost[0].list[0].quantity);
         if (Data.Instance.RESOURCES.TryGetValue(upgrade_cost[0].list[0].resourceNameKey, out Resource resource))
         {
             upgradeIcon1.sprite = resource.icon;
@@ -79,7 +80,7 @@ public class Building : Construction
         //If has 2 update requirements set value, if not delete
         if (upgrade_cost[0].list.Count > 1)
         {
-            upgradeText2.text = "0/" + upgrade_cost[0].list[1].quantity;
+            upgradeText2.text = "0/" + GameManager.Instance.numToString(upgrade_cost[0].list[1].quantity);
             if (Data.Instance.RESOURCES.TryGetValue(upgrade_cost[0].list[1].resourceNameKey, out Resource resource2))
             {
                 upgradeIcon2.sprite = resource2.icon;
@@ -132,11 +133,11 @@ public class Building : Construction
 
                 if(Data.Instance.INVENTORY.TryGetValue(resource3.requirements[0].resourceNameKey, out int quantity))
                 {
-                    requirement1Text.SetText(quantity + "/" + resource3.requirements[0].quantity);
+                    requirement1Text.SetText(GameManager.Instance.numToString(quantity) + "/" + GameManager.Instance.numToString(resource3.requirements[0].quantity));
                 }
                 else
                 {
-                    requirementText.SetText("0/" + resource3.requirements[0].quantity);
+                    requirementText.SetText("0/" + GameManager.Instance.numToString(resource3.requirements[0].quantity));
                 }
                 requirementText.gameObject.SetActive(false);
                 requirement1Text.gameObject.SetActive(true);
@@ -154,11 +155,11 @@ public class Building : Construction
 
                     if (Data.Instance.INVENTORY.TryGetValue(resource3.requirements[1].resourceNameKey, out int quantity2))
                     {
-                        requirementText.SetText(quantity2 + "/" + resource3.requirements[1].quantity);
+                        requirementText.SetText(GameManager.Instance.numToString(quantity2) + "/" + resource3.requirements[1].quantity);
                     }
                     else
                     {
-                        requirementText.SetText("0/" + resource3.requirements[1].quantity);
+                        requirementText.SetText("0/" + GameManager.Instance.numToString(resource3.requirements[1].quantity));
                     }
                     requirement2Text.gameObject.SetActive(true);
                 }
@@ -176,6 +177,9 @@ public class Building : Construction
                 requirement1Text.gameObject.SetActive(false);
                 requirement2Text.gameObject.SetActive(false);
             }
+
+            //Set num resources
+            updateNumResource(1);
         }
         #endregion        
     }
@@ -342,7 +346,7 @@ public class Building : Construction
                     }
 
                     //Slider config
-                    timeBar.maxValue = activeResourceTime;
+                    timeBar.fillAmount = activeResourceTime;
 
                     //Play when changing resource
                     if (!isProducing)
@@ -378,7 +382,7 @@ public class Building : Construction
     {
         isProducing = false;
         isPaused = true;
-        timeBar.value = timeLeft;
+        timeBar.fillAmount = timeLeft;
     }
 
     public void play()
@@ -471,7 +475,7 @@ public class Building : Construction
             pause();
         }
 
-        timeBar.value = timeLeft;
+        timeBar.fillAmount = timeLeft;
 
         //Upgrade level text
         levelText.SetText(level.ToString());
@@ -595,20 +599,20 @@ public class Building : Construction
 
                     if (Data.Instance.INVENTORY.TryGetValue(resource3.requirements[0].resourceNameKey, out int quantity3))
                     {
-                        requirement1Text.SetText(quantity3 + "/" + resource3.requirements[0].quantity);
+                        requirement1Text.SetText(GameManager.Instance.numToString(quantity3) + "/" + GameManager.Instance.numToString(resource3.requirements[0].quantity));
                     }
                     else
                     {
-                        requirement1Text.SetText("0/" + resource3.requirements[0].quantity);
+                        requirement1Text.SetText("0/" + GameManager.Instance.numToString(resource3.requirements[0].quantity));
                     }
 
                     if (Data.Instance.INVENTORY.TryGetValue(resource3.requirements[1].resourceNameKey, out int quantity2))
                     {
-                        requirement2Text.SetText(quantity2 + "/" + resource3.requirements[1].quantity);
+                        requirement2Text.SetText(GameManager.Instance.numToString(quantity2) + "/" + resource3.requirements[1].quantity);
                     }
                     else
                     {
-                        requirement2Text.SetText("0/" + resource3.requirements[1].quantity);
+                        requirement2Text.SetText("0/" + GameManager.Instance.numToString(resource3.requirements[1].quantity));
                     }
                     requirementText.gameObject.SetActive(false);
                     requirement1Text.gameObject.SetActive(true);
@@ -628,11 +632,11 @@ public class Building : Construction
 
                     if (Data.Instance.INVENTORY.TryGetValue(resource3.requirements[0].resourceNameKey, out int quantity))
                     {
-                        requirementText.SetText(quantity + "/" + resource3.requirements[0].quantity);
+                        requirementText.SetText(GameManager.Instance.numToString(quantity) + "/" + GameManager.Instance.numToString(resource3.requirements[0].quantity));
                     }
                     else
                     {
-                        requirementText.SetText("0/" + resource3.requirements[0].quantity);
+                        requirementText.SetText("0/" + GameManager.Instance.numToString(resource3.requirements[0].quantity));
                     }
                     requirementText.gameObject.SetActive(true);
                     requirement1Text.gameObject.SetActive(false);
@@ -654,7 +658,12 @@ public class Building : Construction
             }
         }
         #endregion
-    }   
+    }
+
+    public void updateNumResource(int num)
+    {
+        numResources.SetText("x" + num.ToString());
+    }
 
     private void OnDrawGizmosSelected()
     {

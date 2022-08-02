@@ -79,7 +79,7 @@ public class ShopItemHolder : MonoBehaviour
         iconImage.sprite = Item.icon;
         titleText.text = Item.name;
         //descriptionText.text = Item.description;
-        amountText.text = currentQuantity.ToString() + "/" + Item.maxQuantity;
+        amountText.text = GameManager.Instance.numToString(currentQuantity) + "/" + Item.maxQuantity;
         maxQuantity = Item.maxQuantity;
         requirementText1 = Item.resourceText1;
         requirementText2 = Item.resourceText2;
@@ -138,15 +138,24 @@ public class ShopItemHolder : MonoBehaviour
     }
 
     public void updateTextCost(string text, TextMeshProUGUI textShop, string iconId)
-    {
+    {        
+
         if (text != "")
         {
+            if (!textShop.gameObject.activeInHierarchy)
+            {
+                textShop.gameObject.SetActive(true);
+            }
+            if (descriptionText.gameObject.activeInHierarchy)
+            {
+                descriptionText.gameObject.SetActive(false);
+            }
             if (Data.Instance.INVENTORY.TryGetValue(iconId, out int quantity))
             {
                 if (quantity > 0)
                 {
                     int.TryParse(text, out result);
-                    textShop.text = quantity.ToString() + "/" + text;
+                    textShop.text = GameManager.Instance.numToString(quantity) + "/" + GameManager.Instance.numToString(result);
 
                     //Set color of text
                     if (!hasReachedLimit)
@@ -167,7 +176,7 @@ public class ShopItemHolder : MonoBehaviour
                 }
                 else
                 {
-                    textShop.text = "0" + "/" + text;
+                    textShop.text = "0" + "/" + GameManager.Instance.numToString(int.Parse(text));
                     if (!hasReachedLimit)
                     {
                         textShop.color = new Color(1, 0, 0, 1);
@@ -180,7 +189,7 @@ public class ShopItemHolder : MonoBehaviour
             }
             else
             {
-                textShop.text = "0" + "/" + text;
+                textShop.text = "0" + "/" + GameManager.Instance.numToString(int.Parse(text));
                 if (!hasReachedLimit)
                 {
                     textShop.color = new Color(1, 0, 0, 1);
@@ -192,17 +201,27 @@ public class ShopItemHolder : MonoBehaviour
             }
         }
         else
-        {
-            if(textShop.name == resourceText1.name)
+        {            
+            if (textShop.name == resourceText1.name)
             {
-                textShop.text = "free";
+                textShop.gameObject.SetActive(false);
+                descriptionText.SetText("free");
+                descriptionText.gameObject.SetActive(true);
                 if (!hasReachedLimit)
                 {
-                    textShop.color = new Color(0, 1, 0, 1);
+                    descriptionText.color = new Color(0, 1, 0, 1);
                 }
                 else
                 {
-                    textShop.color = new Color(1,1,1,1);
+                    descriptionText.color = new Color(1,1,1,1);
+                }
+                if (textShop.gameObject.activeInHierarchy)
+                {
+                    textShop.gameObject.SetActive(false);
+                }
+                if (!descriptionText.gameObject.activeInHierarchy)
+                {
+                    descriptionText.gameObject.SetActive(true);
                 }
             }
             else
@@ -239,8 +258,10 @@ public class ShopItemHolder : MonoBehaviour
         resource1Icon.gameObject.SetActive(false);
         resource2Icon.gameObject.SetActive(false);
         resourceText2.gameObject.SetActive(false);
-        resourceText1.SetText("MAX");
-        resourceText1.color = new Color(1, 1, 1, 1);
+        resourceText1.gameObject.SetActive(false);
+        descriptionText.gameObject.SetActive(true);
+        descriptionText.SetText("MAX");
+        descriptionText.color = new Color(1, 1, 1, 1);
     }
 
     public void setRequirementTextConfig()

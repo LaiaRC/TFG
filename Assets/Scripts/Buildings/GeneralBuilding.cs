@@ -19,7 +19,8 @@ public class GeneralBuilding : Building
 
         resourceTimeText = canvasInterior.transform.Find("TimeGroup").transform.Find("activeResourceImage").transform.Find("timeText").GetComponent<TextMeshProUGUI>();
         activeResourceIcon = canvasInterior.transform.Find("TimeGroup").transform.Find("activeResourceImage").transform.Find("activeResourceIcon").GetComponent<Image>();
-        timeBar = canvasInterior.transform.Find("TimeGroup").transform.Find("activeResourceImage").transform.Find("TimeBar").GetComponent<Slider>();
+        timeBar = canvasInterior.transform.Find("TimeGroup").transform.Find("activeResourceImage").transform.Find("Fill").GetComponent<Image>();
+        numResources = canvasInterior.transform.Find("TimeGroup").transform.Find("activeResourceImage").transform.Find("numResources").GetComponent<TextMeshProUGUI>();
 
         playButton = canvasInterior.transform.Find("TimeGroup").transform.Find("TimeResourceImage").transform.Find("playButton").GetComponent<Button>();
         pauseButton = canvasInterior.transform.Find("TimeGroup").transform.Find("TimeResourceImage").transform.Find("pauseButton").GetComponent<Button>();
@@ -53,7 +54,7 @@ public class GeneralBuilding : Building
     }
     // Start is called before the first frame update
     void Start()
-    {
+    {       
         constructionType = 0;
 
         if (level == 1)
@@ -75,8 +76,6 @@ public class GeneralBuilding : Building
         canvasInterior.SetActive(false);
         playButton.gameObject.SetActive(false);
         setCanvasInterior();
-        timeBar.minValue = 0;
-        timeBar.maxValue = activeResourceTime;
 
         /*level1Background.gameObject.SetActive(true);
          level2Background.gameObject.SetActive(false);
@@ -84,6 +83,22 @@ public class GeneralBuilding : Building
 
         //Save building position
         position = transform.position;
+
+        //check if boost and update numResource
+        if (isProducer == 1)
+        {
+            if (Data.Instance.BOOSTS.TryGetValue(Data.PRODUCER_BOOST, out int quantity))
+            {
+                updateNumResource(quantity + 1);
+            }
+        }
+        if (isConverter == 1)
+        {
+            if (Data.Instance.BOOSTS.TryGetValue(Data.CONVERTER_BOOST, out int quantity2))
+            {
+                updateNumResource(quantity2 + 1);
+            }
+        }
     }
 
     // Update is called once per frame
@@ -93,7 +108,6 @@ public class GeneralBuilding : Building
         {
             if (isProducing)
             {
-                checkBoosts();
 
                 if (playButton.gameObject.activeInHierarchy)
                 {
@@ -103,7 +117,12 @@ public class GeneralBuilding : Building
 
                 time += Time.deltaTime;
                 timeLeft = activeResourceTime - time;
-
+                
+                if(time < 0) //just in case
+                {
+                    time = 0;
+                }
+                
                 if (timeLeft <= 0)
                 {
                     produce();
@@ -120,7 +139,7 @@ public class GeneralBuilding : Building
             else
             {
 
-                timeBar.value = timeLeft;
+                timeBar.fillAmount = timeLeft / activeResourceTime;
                 resourceTimeText.SetText("-");
                 if (isPaused)
                 {
@@ -146,27 +165,12 @@ public class GeneralBuilding : Building
                 {
                     if (Data.Instance.INVENTORY.TryGetValue(upgrade_cost[level - 1].list[0].resourceNameKey, out int quantity))
                     {
-                        if (quantity > 1000)
-                        {
-                            string[] aux = (quantity / 1000f).ToString().Split(',');
-                            if (aux.Length > 1)
-                            {
-                                upgradeText1.text = aux[0] + "." + aux[1].ToCharArray()[0] + "k/" + upgrade_cost[level - 1].list[0].quantity;
-                            }
-                            else
-                            {
-                                upgradeText1.text = aux[0] + "k/" + upgrade_cost[level - 1].list[0].quantity;
-                            }
-                        }
-                        else
-                        {
-                            upgradeText1.text = quantity + "/" + upgrade_cost[level - 1].list[0].quantity;
-                        }
+                        upgradeText1.text = GameManager.Instance.numToString(quantity) + "/" + upgrade_cost[level - 1].list[0].quantity;
                     }
                     else
                     {
                         //Set to 0
-                        upgradeText1.text = "0/" + upgrade_cost[level - 1].list[0].quantity;
+                        upgradeText1.text = "0/" + GameManager.Instance.numToString(upgrade_cost[level - 1].list[0].quantity);
                     }
 
                     if (upgrade_cost[level - 1].list.Count > 1)
@@ -174,12 +178,12 @@ public class GeneralBuilding : Building
                         //Set upgrade requirement 2
                         if (Data.Instance.INVENTORY.TryGetValue(upgrade_cost[level - 1].list[1].resourceNameKey, out int quantity2))
                         {
-                            upgradeText2.text = quantity2 + "/" + upgrade_cost[level - 1].list[1].quantity;
+                            upgradeText2.text = GameManager.Instance.numToString(quantity2) + "/" + GameManager.Instance.numToString(upgrade_cost[level - 1].list[1].quantity);
                         }
                         else
                         {
                             //Set to 0
-                            upgradeText2.text = "0/" + upgrade_cost[level - 1].list[1].quantity;
+                            upgradeText2.text = "0/" + GameManager.Instance.numToString(upgrade_cost[level - 1].list[1].quantity);
                         }
                     }
                     else
@@ -217,7 +221,7 @@ public class GeneralBuilding : Building
                 //Slider config
                 if (isProducing)
                 {
-                    timeBar.value = timeLeft;
+                    timeBar.fillAmount = timeLeft/activeResourceTime;
                 }
 
                 //Update requirements to produce resource (inventory)
@@ -234,10 +238,5 @@ public class GeneralBuilding : Building
         {
             Data.Instance.CONSTRUCTIONS.Add(id + numType, new float[] { transform.position.x, transform.position.y, level, getNumActiveResource(), timeLeft, isProducing ? 1 : 0, isPaused ? 1 : 0, numType, activeResourceTime, 0, isProducer, isConverter });
         }
-    }
-
-    public void checkBoosts()
-    {
-
-    }
+    }    
 }
