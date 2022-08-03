@@ -58,20 +58,16 @@ public class SummoningCircle : Building
     public TextMeshProUGUI description;
     public GameObject summonRequirement1;
     public GameObject summonRequirement2;
-    public GameObject summonRequirement3;
     public TextMeshProUGUI statsTextColumn1;
     public TextMeshProUGUI statsTextColumn2;
     public List<GameObject> villagersIcons;
     public GameObject upgradeRequirement1;
     public GameObject upgradeRequirement2;
-    public GameObject upgradeRequirement3;
     public Image producingRequirementIcon1;
     public TextMeshProUGUI producingRequirementText1;
     public Image producingRequirementIcon2;
     public TextMeshProUGUI producingRequirementText2;
-    public Image producingRequirementIcon3;
-    public TextMeshProUGUI producingRequirementText3;
-    public Slider timeBarMonster;
+    public Image timeBarMonster;
     public TextMeshProUGUI timeTextMonster;
     public Image activeMonsterIcon;
     public TextMeshProUGUI noActiveMonsterText;
@@ -80,14 +76,17 @@ public class SummoningCircle : Building
     public Image monsterImagePortrait;
     public Sprite unlockedPortrait;
     public Sprite lockedPortrait;
-    public TextMeshProUGUI summonButtonText;
     public GameObject upgradeMonsterButton;
     public Sprite questionMark;
     public GameObject unknownGroup;
     public GameObject levelImagePortrait;
     public GameObject infoGroup;
     public GameObject upgradeGroup;
-    public GameObject goToMerchant;
+    public GameObject unlockButton;
+    public GameObject playButtonMonster;
+    public GameObject pauseButtonMonster;
+    public GameObject goToMerchantText;
+    public GameObject timeBarGroup;
     #endregion
 
     public List<Sprite> numbersIcons;
@@ -145,6 +144,8 @@ public class SummoningCircle : Building
     public static int DESELECTED = 1;
     public static int DESELECTED_RED = 2;
     public static int SELECTED_RED = 3;
+    public static int SELECTED_BLUE = 4;
+    public static int DESELECTED_BLUE = 5;
     #endregion
 
     private void Start()
@@ -156,22 +157,18 @@ public class SummoningCircle : Building
             //If it's not producing (either in pause or first time building created, set default settings to skeleton)
             selectedTab = SKELETON;
             setUI(SKELETON);
-            setActiveMonsterUI(NONE);
         }
         else
         {
             //Put default UI to the monster that is producing
             selectedTab = activeMonster;
             setUI(activeMonster);
-            setActiveMonsterUI(activeMonster);
 
             if (Data.Instance.MONSTERS.TryGetValue(activeMonster, out MonsterInfo monster))
             {
                 activeMonsterTime = monster.time - (monster.time * timeModifier);
                 activeResourceTime = monster.time - (monster.time * timeModifier);
-            }
-            timeBarMonster.minValue = 0;
-            timeBarMonster.maxValue = activeMonsterTime;            
+            }           
         }
         canvasInterior.SetActive(false);
 
@@ -187,14 +184,9 @@ public class SummoningCircle : Building
         //Update requirements (inventory) EACH SECOND
         if (placed)
         {
-            if (isProducing)
-            {
-                if (playButton.gameObject.activeInHierarchy)
-                {
-                    playButton.gameObject.SetActive(false);
-                    pauseButton.gameObject.SetActive(true);
-                }
 
+            if (isProducing)
+            {               
                 time += Time.deltaTime;                
                 timeLeft = activeMonsterTime - time;
                 if (timeLeft <= 0)
@@ -212,12 +204,12 @@ public class SummoningCircle : Building
             }
             else
             {
-                timeBarMonster.value = timeLeft;
+                timeBarMonster.fillAmount = timeLeft/activeMonsterTime;
                 timeTextMonster.SetText("-");
                 if (isPaused)
                 {
-                    playButton.gameObject.SetActive(true);
-                    pauseButton.gameObject.SetActive(false);
+                    playButtonMonster.gameObject.SetActive(true);
+                    pauseButtonMonster.gameObject.SetActive(false);
                 }
                 else
                 {
@@ -279,7 +271,7 @@ public class SummoningCircle : Building
                     //Slider config
                     if (isProducing)
                     {
-                        timeBarMonster.value = timeLeft;
+                        timeBarMonster.fillAmount = timeLeft / activeMonsterTime;
                     }
                     #endregion
                     timeToUpdateBar = 0;
@@ -307,6 +299,9 @@ public class SummoningCircle : Building
                 description.SetText("This monster is yet to be discovered. Unlock the other monsters first");
 
                 unknownGroup.SetActive(false);
+
+                //Hide timeBar
+                timeBarGroup.SetActive(false);
             }
             else
             {
@@ -321,12 +316,38 @@ public class SummoningCircle : Building
                     monsterImagePortrait.sprite = unlockedPortrait;
                     monsterImage.sprite = monsterInfo.icon;
                     monsterImage.color = new Color(1, 1, 1, 1);
+                    unlockButton.SetActive(false);
+                    goToMerchantText.SetActive(false);
+
+                    //check if it's being produced
+                    if (monsterInfo.id.Equals(activeMonster))
+                    {
+                        //is being produced
+                        pauseButtonMonster.SetActive(true);
+                        playButtonMonster.SetActive(false);
+                        //Show timeBar
+                        timeBarGroup.SetActive(true);
+                    }
+                    else
+                    {
+                        //is not being produced
+                        pauseButtonMonster.SetActive(false);
+                        playButtonMonster.SetActive(true);
+                        //Hide timeBar
+                        timeBarGroup.SetActive(false);
+                    }
                 }
                 else
                 {
                     monsterImagePortrait.sprite = lockedPortrait;
                     monsterImage.sprite = monsterInfo.icon;
                     monsterImage.color = new Color(0, 0, 0, 1);
+                    unlockButton.SetActive(true);
+                    goToMerchantText.SetActive(true);
+                    playButtonMonster.SetActive(false);
+                    pauseButtonMonster.SetActive(false);
+                    //Hide timeBar
+                    timeBarGroup.SetActive(false);
                 }
                 levelImage.sprite = numbersIcons[monsterInfo.level[monsterInfo.upgradeLevel - 1] - 1];
                 description.text = monsterInfo.description;
@@ -335,8 +356,8 @@ public class SummoningCircle : Building
                 {
                     summonRequirement1.SetActive(true);
                     summonRequirement2.SetActive(true);
-                    summonRequirement3.SetActive(true);
-                    goToMerchant.SetActive(false);
+                    unlockButton.SetActive(false);
+                    goToMerchantText.SetActive(false);
 
                     //Summon requirement 1
                     if (Data.Instance.RESOURCES.TryGetValue(monsterInfo.requirements[0].resourceNameKey, out Resource resource))
@@ -369,32 +390,6 @@ public class SummoningCircle : Building
                     {
                         summonRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.requirements[1].quantity));
                     }
-
-                    //Summon requirement 3 (MAY NOT HAVE)
-                    if (monsterInfo.requirements.Count > 2)
-                    {
-                        if (Data.Instance.RESOURCES.TryGetValue(monsterInfo.requirements[2].resourceNameKey, out Resource resource2))
-                        {
-                            summonRequirement3.transform.GetChild(0).GetComponent<Image>().sprite = resource2.icon;
-                        }
-
-                        //Show current amount and needed
-                        if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.requirements[2].resourceNameKey, out int quantity2))
-                        {
-                            summonRequirement3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(GameManager.Instance.numToString(quantity2) + "/" + GameManager.Instance.numToString(monsterInfo.requirements[2].quantity));
-                        }
-                        else
-                        {
-                            summonRequirement3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.requirements[2].quantity));
-                        }
-                    }
-                    else
-                    {
-                        //Hide 3rth requirement
-                        summonRequirement3.SetActive(false);
-                    }
-                    summonButtonText.SetText("Summon");
-                    upgradeMonsterButton.GetComponent<Image>().color = new Color(0, 1, 0, 1);
                 }
                 else
                 {
@@ -403,11 +398,8 @@ public class SummoningCircle : Building
                     //Hide other requirements
                     summonRequirement1.SetActive(false);
                     summonRequirement2.SetActive(false);
-                    summonRequirement3.SetActive(false);
-                    goToMerchant.SetActive(true);
-
-                    summonButtonText.SetText("Merchant shop");
-                    upgradeMonsterButton.GetComponent<Image>().color = new Color(0, 1, 0, 0.5f);
+                    unlockButton.SetActive(true);
+                    goToMerchantText.SetActive(true);
                 }
                 //only show >> if upgrading changes value (TODO) 
                 if (monsterInfo.upgradeLevel < 3)
@@ -526,7 +518,6 @@ public class SummoningCircle : Building
                         upgradeGroup.transform.GetChild(2).gameObject.SetActive(false);
                         upgradeRequirement1.SetActive(true);
                         upgradeRequirement2.SetActive(true);
-                        upgradeRequirement3.SetActive(true);
                         upgradeMonsterButton.SetActive(true);
 
                         //Summon requirement 1
@@ -560,37 +551,12 @@ public class SummoningCircle : Building
                         {
                             upgradeRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][1].quantity));
                         }
-
-                        //Summon requirement 3 (MAY NOT HAVE)
-                        if (monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1].Count > 2)
-                        {
-                            if (Data.Instance.RESOURCES.TryGetValue(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][2].resourceNameKey, out Resource upResource3))
-                            {
-                                upgradeRequirement3.transform.GetChild(0).GetComponent<Image>().sprite = upResource3.icon;
-                            }
-
-                            //Show current amount and needed
-                            if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][2].resourceNameKey, out int upQuantity3))
-                            {
-                                upgradeRequirement3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(GameManager.Instance.numToString(upQuantity3) + "/" + GameManager.Instance.numToString(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][2].quantity));
-                            }
-                            else
-                            {
-                                upgradeRequirement3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][2].quantity));
-                            }
-                        }
-                        else
-                        {
-                            //Hide 3rth requirement
-                            upgradeRequirement3.SetActive(false);
-                        }
                     }
                     else
                     {
                         //Fully upgraded
                         upgradeRequirement1.SetActive(false);
                         upgradeRequirement2.SetActive(false);
-                        upgradeRequirement3.SetActive(false);
                         upgradeMonsterButton.SetActive(false);
 
                         upgradeGroup.transform.GetChild(2).gameObject.SetActive(true);
@@ -670,165 +636,83 @@ public class SummoningCircle : Building
                     tabs[i].transform.GetChild(1).gameObject.SetActive(true);
                 }
             }
+
+            //Set active monster tab background
+
+            
+        }
+        if (activeMonster != NONE)
+        {
+            if (tabs[getIndexMonster(activeMonster)] == tabs[selectedTabIndex])
+            {
+                tabs[getIndexMonster(activeMonster)].GetComponent<Image>().sprite = tabBackgrounds[SELECTED_BLUE];
+            }
+            else
+            {
+                tabs[getIndexMonster(activeMonster)].GetComponent<Image>().sprite = tabBackgrounds[DESELECTED_BLUE];
+            }
         }
         #endregion
 
         //Refresh title
         //Invoke(nameof(updateTitleGroup), 0.2f);
-    }
+    }    
 
-    public void setActiveMonsterUI(string monsterKey)
+    public void goToMerchant()
     {
-        if (monsterKey != NONE)
-        {
-            producingRequirementIcon1.gameObject.SetActive(true);
-            producingRequirementText1.gameObject.SetActive(true);
-            producingRequirementIcon2.gameObject.SetActive(true);
-            producingRequirementText2.gameObject.SetActive(true);
-            producingRequirementIcon3.gameObject.SetActive(true);
-            producingRequirementText3.gameObject.SetActive(true);
-
-            pauseButton.gameObject.SetActive(true);
-            playButton.gameObject.SetActive(false);
-            noActiveMonsterText.gameObject.SetActive(false);
-
-            timeBarMonster.gameObject.SetActive(true);
-            activeMonsterIcon.gameObject.SetActive(true);
-
-            if (Data.Instance.MONSTERS.TryGetValue(monsterKey, out MonsterInfo monsterInfo))
-            {
-                //Summon requirement 1
-                if (Data.Instance.RESOURCES.TryGetValue(monsterInfo.requirements[0].resourceNameKey, out Resource resource))
-                {
-                    producingRequirementIcon1.sprite = resource.icon;
-                }
-
-                //Show current amount and needed
-                if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.requirements[0].resourceNameKey, out int quantity))
-                {
-                    producingRequirementText1.SetText(GameManager.Instance.numToString(quantity) + "/" + GameManager.Instance.numToString(monsterInfo.requirements[0].quantity));
-                }
-                else
-                {
-                    producingRequirementText1.SetText("0/" + GameManager.Instance.numToString(monsterInfo.requirements[0].quantity));
-                }
-
-                //Summon requirement 2
-                if (Data.Instance.RESOURCES.TryGetValue(monsterInfo.requirements[1].resourceNameKey, out Resource resource1))
-                {
-                    producingRequirementIcon2.sprite = resource1.icon;
-                }
-
-                //Show current amount and needed
-                if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.requirements[1].resourceNameKey, out int quantity1))
-                {
-                    producingRequirementText2.SetText(GameManager.Instance.numToString(quantity1) + "/" + GameManager.Instance.numToString(monsterInfo.requirements[1].quantity));
-                }
-                else
-                {
-                    producingRequirementText2.SetText("0/" + GameManager.Instance.numToString(monsterInfo.requirements[1].quantity));
-                }
-
-                //Summon requirement 3 (MAY NOT HAVE)
-                if (monsterInfo.requirements.Count > 2)
-                {
-                    if (Data.Instance.RESOURCES.TryGetValue(monsterInfo.requirements[2].resourceNameKey, out Resource resource2))
-                    {
-                        producingRequirementIcon3.sprite = resource2.icon;
-                    }
-
-                    //Show current amount and needed
-                    if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.requirements[2].resourceNameKey, out int quantity2))
-                    {
-                        producingRequirementText3.SetText(GameManager.Instance.numToString(quantity2) + "/" + GameManager.Instance.numToString(monsterInfo.requirements[2].quantity));
-                    }
-                    else
-                    {
-                        producingRequirementText3.SetText("0/" + GameManager.Instance.numToString(monsterInfo.requirements[2].quantity));
-                    }
-                }
-                else
-                {
-                    //Hide 3rth requirement
-                    producingRequirementIcon3.gameObject.SetActive(false);
-                    producingRequirementText3.gameObject.SetActive(false);
-                }
-
-                timeBarMonster.minValue = 0;
-                timeBarMonster.maxValue = monsterInfo.time - (monsterInfo.time * timeModifier);
-                timeBarMonster.value = monsterInfo.time - (monsterInfo.time * timeModifier); //S'hauria d'agafar el time left si s'ha guardat
-                //timeTextMonster.text = "-";
-                activeMonsterIcon.sprite = monsterInfo.icon;
-            }
-        }
-        else
-        {
-            //Default values (no monster producing)
-            //Summon requirement 1
-
-            producingRequirementIcon1.gameObject.SetActive(false);
-            producingRequirementText1.gameObject.SetActive(false);
-            producingRequirementIcon2.gameObject.SetActive(false);
-            producingRequirementText2.gameObject.SetActive(false);
-            producingRequirementIcon3.gameObject.SetActive(false);
-            producingRequirementText3.gameObject.SetActive(false);
-
-            pauseButton.gameObject.SetActive(false);
-            playButton.gameObject.SetActive(false);
-            noActiveMonsterText.gameObject.SetActive(true);            
-
-            timeBarMonster.gameObject.SetActive(false);
-            timeTextMonster.text = "-";
-            activeMonsterIcon.gameObject.SetActive(false);
-        }
+        //Has pressed "unlock" -> go to BoostShop
+        canvasInterior.SetActive(false);
+        GameManager.Instance.boostShop.GetComponent<BoostShop>().showShopImmediate();
     }
 
     public void summon()
-    {
-        //check if has pressed "unlock" or "summon"
-        if (Data.Instance.MONSTERS.TryGetValue(selectedTab, out MonsterInfo monsterAux))
+    {        
+        //Has pressed "summon"
+        #region UNLOCKED CASE
+        //Summon selected tab monster
+        if (selectedTab != activeMonster) //check the monster isn't already being produced
         {
-            if (!monsterAux.isUnlocked)
+            activeMonster = selectedTab;
+            if (Data.Instance.MONSTERS.TryGetValue(activeMonster, out MonsterInfo monster))
             {
-                //Has pressed "unlock" -> go to BoostShop
-                canvasInterior.SetActive(false);
-                GameManager.Instance.boostShop.GetComponent<BoostShop>().showShopImmediate();
+                activeMonsterTime = monster.time - (monster.time * timeModifier);
+                activeResourceTime = monster.time - (monster.time * timeModifier);
+            }
+            //Reset time to produce
+            time = 0;
+
+            //Slider config
+            //timeBarMonster.fillAmount = activeMonsterTime;
+
+            //change button to pause
+            setPlayPauseButtons();
+
+            setUI(selectedTab); //To show timeBar
+        }
+        #endregion
+        play();
+    }
+
+    public void setPlayPauseButtons()
+    {
+        if (selectedTab.Equals(activeMonster))
+        {
+            if (isProducing)
+            {
+                playButtonMonster.SetActive(false);
+                pauseButtonMonster.SetActive(true);
             }
             else
             {
-                //Has pressed "summon"
-                #region UNLOCKED CASE
-                //Summon selected tab monster
-                if (selectedTab != activeMonster) //check the monster isn't already being produced
-                {
-                    activeMonster = selectedTab;
-                    if (Data.Instance.MONSTERS.TryGetValue(activeMonster, out MonsterInfo monster))
-                    {
-                        activeMonsterTime = monster.time - (monster.time * timeModifier);
-                        activeResourceTime = monster.time - (monster.time * timeModifier);
-                    }
-                    //Reset time to produce
-                    time = 0;
-
-                    //Change sprite
-                    setActiveMonsterUI(activeMonster);
-
-                    //Slider config
-                    timeBarMonster.minValue = 0;
-                    timeBarMonster.maxValue = activeMonsterTime;
-                    timeBarMonster.value = activeMonsterTime;
-
-                    //Play when changing monster to produce
-                    if (!isProducing)
-                    {
-                        play();
-                    }
-
-                    setActiveMonsterUI(activeMonster);
-                }
-                #endregion
-            }
-        }        
+                playButtonMonster.SetActive(true);
+                pauseButtonMonster.SetActive(false);
+            }            
+        }
+        else
+        {
+            playButtonMonster.SetActive(true);
+            pauseButtonMonster.SetActive(false);
+        }
     }
 
     public void goToBoostShop()
@@ -1015,7 +899,7 @@ public class SummoningCircle : Building
             //Turn page animation
             animator.Play("book");
             Invoke(nameof(hideInfoGroup), 0.25f);
-            Invoke(nameof(showInfoGroup), 0.4f); //When animation ends
+            Invoke(nameof(showInfoGroup), 0.4f); //When animation ends            
         }
     }
 
@@ -1028,6 +912,8 @@ public class SummoningCircle : Building
     {
         infoGroup.SetActive(false);
         setUI(selectedTab);
+        //Set buttons
+        setPlayPauseButtons();
     }
 
     override
@@ -1035,7 +921,16 @@ public class SummoningCircle : Building
     {
         isProducing = false;
         isPaused = true;
-        timeBarMonster.value = timeLeft;
+        timeBarMonster.fillAmount = timeLeft/activeMonsterTime;
+        setPlayPauseButtons();
+    }
+
+    override
+    public void play()
+    {
+        isProducing = true;
+        isPaused = false;
+        setPlayPauseButtons();
     }
 
     override
@@ -1201,26 +1096,6 @@ public class SummoningCircle : Building
                 {
                     summonRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.requirements[1].quantity));
                 }
-
-                //Summon requirement 3 (MAY NOT HAVE)
-                if (monsterInfo.requirements.Count > 2)
-                {
-                    //Show current amount and needed
-                    if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.requirements[2].resourceNameKey, out int quantity2))
-                    {
-                        summonRequirement3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(GameManager.Instance.numToString(quantity2) + "/" + GameManager.Instance.numToString(monsterInfo.requirements[2].quantity));
-                    }
-                    else
-                    {
-                        summonRequirement3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.requirements[2].quantity));
-                    }
-                }
-                else
-                {
-
-                    //Hide 3rth requirement
-                    summonRequirement3.SetActive(false);
-                }
                 #endregion
             }
             else
@@ -1266,25 +1141,6 @@ public class SummoningCircle : Building
                 {
                     upgradeRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][1].quantity));
                 }
-
-                //Upgrade requirement 3 (MAY NOT HAVE)
-                if (monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1].Count > 2)
-                {
-                    //Show current amount and needed
-                    if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][2].resourceNameKey, out int upQuantity3))
-                    {
-                        upgradeRequirement3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(GameManager.Instance.numToString(upQuantity3) + "/" + GameManager.Instance.numToString(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][2].quantity));
-                    }
-                    else
-                    {
-                        upgradeRequirement3.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][2].quantity));
-                    }
-                }
-                else
-                {
-                    //Hide 3rth requirement
-                    upgradeRequirement3.SetActive(false);
-                }
             }
             #endregion
         }
@@ -1312,20 +1168,6 @@ public class SummoningCircle : Building
             else
             {
                 producingRequirementText2.SetText("0/" + GameManager.Instance.numToString(mInfo.requirements[1].quantity));
-            }
-
-            //Summon requirement 3 (MAY NOT HAVE)
-            if (mInfo.requirements.Count > 2)
-            {
-                //Show current amount and needed
-                if (Data.Instance.INVENTORY.TryGetValue(mInfo.requirements[2].resourceNameKey, out int quantity2))
-                {
-                    producingRequirementText3.SetText(GameManager.Instance.numToString(quantity2) + "/" + GameManager.Instance.numToString(mInfo.requirements[2].quantity));
-                }
-                else
-                {
-                    producingRequirementText3.SetText("0/" + GameManager.Instance.numToString(mInfo.requirements[2].quantity));
-                }
             }
             #endregion
         }        
@@ -1407,8 +1249,6 @@ public class SummoningCircle : Building
                 activeMonsterTime = monster.time - (monster.time * timeModifier);
                 activeResourceTime = monster.time - (monster.time * timeModifier);
             }
-            timeBarMonster.minValue = 0;
-            timeBarMonster.maxValue = activeMonsterTime;
             time = activeMonsterTime - (activeMonsterTime * proportion);
         }
     }
@@ -1447,8 +1287,6 @@ public class SummoningCircle : Building
                 activeMonsterTime = monster.time - (monster.time * timeModifier);
                 activeResourceTime = monster.time - (monster.time * timeModifier);
             }
-            timeBarMonster.minValue = 0;
-            timeBarMonster.maxValue = activeMonsterTime;
         }
     }
 

@@ -45,6 +45,7 @@ public class JackOLantern : Monster
     override
     public void die()
     {
+        miniGameManager.Instance.numMonstersDied++;
         /*Instantiate(deathParticles, transform.position, Quaternion.identity);
         Instantiate(deathSound, transform.position, Quaternion.identity);*/
         Destroy(healthBar.gameObject);

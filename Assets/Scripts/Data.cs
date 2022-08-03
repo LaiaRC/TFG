@@ -699,7 +699,7 @@ public class Data : MonoBehaviour
         levelSkeleton.Add(2);
         #endregion
 
-        string desSkeleton = "It's the most basic type of monster. Can only be invoked outside the village and it's favourite type of villager are children.";
+        string desSkeleton = "It's the most basic type of monster. Can only be invoked outside the village.";
         MONSTERS.Add(SKELETON, new MonsterInfo(SKELETON, "Skeleton", 3600, reqSkeleton, reqUpgradeSkeleton, reqUnlockSkeleton, velSkeleton, healthSkeleton, damageSkeleton, aRateSkeleton, aRangeSkeleton, levelSkeleton, monstersIcons[0], desSkeleton, 1, true));
 
         //JackOLantern
@@ -758,7 +758,7 @@ public class Data : MonoBehaviour
         levelJack.Add(3);
         #endregion
 
-        string desJack = "JackO It's the most basic type of monster. Can only be invoked outside the village and it's favourite type of villager are children.";
+        string desJack = "Is used as an obstacle to block the path of the villagers. It can be invoked inside the village but doesn't move.";
 
         MONSTERS.Add(JACK_LANTERN, new MonsterInfo(JACK_LANTERN, "Jack-o'-lantern", 5400, reqJack, reqUpgradeJack, reqUnlockJack, velJack, healthJack, damageJack, aRateJack, aRangeJack, levelJack, monstersIcons[1], desJack, 1, false));
 
@@ -818,7 +818,7 @@ public class Data : MonoBehaviour
         levelBat.Add(3);
         #endregion
 
-        string desBat = "Bat It's the most basic type of monster. Can only be invoked outside the village and it's favourite type of villager are children.";
+        string desBat = "Flies and passes through terrain obstacles and Shield Man. Can only be invoked outside village.";
 
         MONSTERS.Add(BAT, new MonsterInfo(BAT, "Bat", 7200, reqBat, reqUpgradeBat, reqUnlockBat, velBat, healthBat, damageBat, aRateBat, aRangeBat, levelBat, monstersIcons[2], desBat, 1, false));
 
@@ -827,7 +827,6 @@ public class Data : MonoBehaviour
 
         reqGoblin.Add(new Requirement(DEADFISH, 2500));
         reqGoblin.Add(new Requirement(SWAMPWATER, 1000));
-        reqGoblin.Add(new Requirement(LOLLIPOP, 10)); //Si te 3r parametre el ultim sera un drop
 
         List<List<Requirement>> reqUpgradeGoblin = new List<List<Requirement>>();
         List<Requirement> reqUpgradeGoblin1 = new List<Requirement>();
@@ -879,7 +878,7 @@ public class Data : MonoBehaviour
         levelGoblin.Add(3);
         #endregion
 
-        string desGoblin = "goblin It's the most basic type of monster. Can only be invoked outside the village and it's favourite type of villager are children.";
+        string desGoblin = "The quickest and sneakiest monster. Can only be invoked outside village.";
 
         MONSTERS.Add(GOBLIN, new MonsterInfo(GOBLIN, "Goblin", 9000, reqGoblin, reqUpgradeGoblin, reqUnlockGoblin, velGoblin, healthGoblin, damageGoblin, aRateGoblin, aRangeGoblin, levelGoblin, monstersIcons[3], desGoblin, 1, false));
 
@@ -888,7 +887,6 @@ public class Data : MonoBehaviour
 
         reqGhost.Add(new Requirement(IMMORTALITYELIXIR, 2000));
         reqGhost.Add(new Requirement(SPIRITSOUL, 800));
-        reqGhost.Add(new Requirement(RING, 10));
 
         List<List<Requirement>> reqUpgradeGhost = new List<List<Requirement>>();
         List<Requirement> reqUpgradeGhost1 = new List<Requirement>();
@@ -940,7 +938,7 @@ public class Data : MonoBehaviour
         levelGhost.Add(4);
         #endregion
 
-        string desGhost = "ghost It's the most basic type of monster. Can only be invoked outside the village and it's favourite type of villager are children.";
+        string desGhost = "Can be invoked from a dead monster's tomb inside the village. It is ethereal and passes through obstacles and Shield Man.";
 
         MONSTERS.Add(GHOST, new MonsterInfo(GHOST, "Ghost", 10800, reqGhost, reqUpgradeGhost, reqUnlockGhost, velGhost, healthGhost, damageGhost, aRateGhost, aRangeGhost, levelGhost, monstersIcons[4], desGhost, 1, false));
 
@@ -949,7 +947,6 @@ public class Data : MonoBehaviour
 
         reqClown.Add(new Requirement(BLACKCATHAIR, 2000));
         reqClown.Add(new Requirement(HORNS, 2000));
-        reqClown.Add(new Requirement(BEER, 10));
 
         List<List<Requirement>> reqUpgradeClown = new List<List<Requirement>>();
         List<Requirement> reqUpgradeClown1 = new List<Requirement>();
@@ -1001,7 +998,7 @@ public class Data : MonoBehaviour
         levelClown.Add(4);
         #endregion
 
-        string desClown = "clown It's the most basic type of monster. Can only be invoked outside the village and it's favourite type of villager are children.";
+        string desClown = "A truly show man, it distracts villagers in range, paralizing them. Can be invoked inside village and each second loses 1HP";
 
         MONSTERS.Add(CLOWN, new MonsterInfo(CLOWN, "Clown", 12600, reqClown, reqUpgradeClown, reqUnlockClown, velClown, healthClown, damageClown, aRateClown, aRangeClown, levelClown, monstersIcons[5], desClown, 1, false));
 
@@ -1010,7 +1007,6 @@ public class Data : MonoBehaviour
 
         reqZombie.Add(new Requirement(ROTTEN_FLESH, 5000));
         reqZombie.Add(new Requirement(DEATHESSENCE, 300));
-        reqZombie.Add(new Requirement(SWORD, 10));
 
         List<List<Requirement>> reqUpgradeZombie = new List<List<Requirement>>();
         List<Requirement> reqUpgradeZombie1 = new List<Requirement>();
@@ -1063,7 +1059,7 @@ public class Data : MonoBehaviour
         levelZombie.Add(4);
         #endregion
 
-        string desZombie = "zombie It's the most basic type of monster. Can only be invoked outside the village and it's favourite type of villager are children.";
+        string desZombie = "The slowest monster but the one that deals more damage. It can be invoked from sewers inside the village.";
 
         MONSTERS.Add(ZOMBIE, new MonsterInfo(ZOMBIE, "Zombie", 14400, reqZombie, reqUpgradeZombie, reqUnlockZombie, velZombie, healthZombie, damageZombie, aRateZombie, aRangeZombie, levelZombie, monstersIcons[6], desZombie, 1, false));
 
@@ -1072,7 +1068,6 @@ public class Data : MonoBehaviour
 
         reqVampire.Add(new Requirement(BLOOD, 1000));
         reqVampire.Add(new Requirement(COFFIN, 300));
-        reqVampire.Add(new Requirement(STICK, 10));
 
         List<List<Requirement>> reqUpgradeVampire = new List<List<Requirement>>();
         List<Requirement> reqUpgradeVampire1 = new List<Requirement>();
@@ -1124,7 +1119,7 @@ public class Data : MonoBehaviour
         levelVampire.Add(5);
         #endregion
 
-        string desVampire = "vampire It's the most basic type of monster. Can only be invoked outside the village and it's favourite type of villager are children.";
+        string desVampire = "Heals himself over time. It also transforms into a bat and avoids obstacles and Shield Man but can only be invoked outside village.";
 
         MONSTERS.Add(VAMPIRE, new MonsterInfo(VAMPIRE, "Vampire", 16200, reqVampire, reqUpgradeVampire, reqUnlockVampire, velVampire, healthVampire, damageVampire, aRateVampire, aRangeVampire, levelVampire, monstersIcons[7], desVampire, 1, false));
 
@@ -1133,7 +1128,6 @@ public class Data : MonoBehaviour
 
         reqWitch.Add(new Requirement(WITCHHAT, 2000));
         reqWitch.Add(new Requirement(SPELLBOOK, 4000));
-        reqWitch.Add(new Requirement(SHIELD, 10));
 
         List<List<Requirement>> reqUpgradeWitch = new List<List<Requirement>>();
         List<Requirement> reqUpgradeWitch1 = new List<Requirement>();
@@ -1185,20 +1179,20 @@ public class Data : MonoBehaviour
         levelWitch.Add(5);
         #endregion
 
-        string desWitch = "witch It's the most basic type of monster. Can only be invoked outside the village and it's favourite type of villager are children.";
+        string desWitch = "Invokes skeletons over time and makes ranged attacks. It has great resistance.";
 
         MONSTERS.Add(WITCH, new MonsterInfo(WITCH, "Witch", 18000, reqWitch, reqUpgradeWitch, reqUnlockWitch, velWitch, healthWitch, damageWitch, aRateWitch, aRangeWitch, levelWitch, monstersIcons[8], desWitch, 1, false));
 
         //Reaper
         List<Requirement> reqReaper = new List<Requirement>();
 
-        reqReaper.Add(new Requirement(LOLLIPOP, 100)); //S'haurà de modificar UI perque accepti tants requirements
+        reqReaper.Add(new Requirement(GEM, 100)); //S'haurà de modificar UI perque accepti tants requirements
         reqReaper.Add(new Requirement(RING, 85));
-        reqReaper.Add(new Requirement(BEER, 70));
+        /*reqReaper.Add(new Requirement(BEER, 70));
         reqReaper.Add(new Requirement(SWORD, 55));
         reqReaper.Add(new Requirement(STICK, 40));
         reqReaper.Add(new Requirement(SHIELD, 25));
-        reqReaper.Add(new Requirement(GEM, 15));
+        reqReaper.Add(new Requirement(GEM, 15));*/
 
         List<List<Requirement>> reqUpgradeReaper = new List<List<Requirement>>(); //No es podrà upgradejar
         List<Requirement> reqUpgradeReaper1 = new List<Requirement>();
@@ -1250,7 +1244,7 @@ public class Data : MonoBehaviour
         levelReaper.Add(6);
         #endregion
 
-        string desReaper = "reaper It's the most basic type of monster. Can only be invoked outside the village and it's favourite type of villager are children.";
+        string desReaper = "If you want things done properly, do them yourself. The ultimate weapon to bring back Halloween's true spirit.";
 
         MONSTERS.Add(REAPER, new MonsterInfo(REAPER, "The Reaper", 28800, reqReaper, reqUpgradeReaper, reqUnlockReaper, velReaper, healthReaper, damageReaper, aRateReaper, aRangeReaper, levelReaper, monstersIcons[9], desReaper, 1, false));
 

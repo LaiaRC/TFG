@@ -497,8 +497,15 @@ public class GameManager : MonoBehaviour
             {
                 Data.Instance.INVENTORY.Remove(resource.Key);
             }
-            Data.Instance.INVENTORY.Add(resource.Key, 99999);
+            Data.Instance.INVENTORY.Add(resource.Key, 10000);
         }
+
+        Data.Instance.INVENTORY.Add(Data.SKELETON, 5);
+        Data.Instance.INVENTORY.Add(Data.JACK_LANTERN, 5);
+        Data.Instance.INVENTORY.Add(Data.GOBLIN, 5);
+        //Data.Instance.INVENTORY.Add(Data.BAT, 10);
+        Data.Instance.INVENTORY.Add(Data.ZOMBIE, 5);
+        Data.Instance.INVENTORY.Add(Data.GHOST, 5);
     }
 
     public void buildConstructions()
@@ -558,7 +565,6 @@ public class GameManager : MonoBehaviour
                             temp.activeMonsterTime = construction.Value[ACTIVE_RESOURCE_TIME];
                             temp.setSelectedTab(temp.activeMonster);
                             temp.setUI(temp.activeMonster);
-                            temp.setActiveMonsterUI(temp.activeMonster);
                             Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(constructionPosition);
                             BoundsInt areaTemp = temp.area;
                             areaTemp.position = positionInt;

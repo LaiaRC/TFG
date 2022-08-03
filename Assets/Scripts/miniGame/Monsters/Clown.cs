@@ -81,6 +81,7 @@ public class Clown : Monster
     override
     public void die()
     {
+        miniGameManager.Instance.numMonstersDied++;
         //Turn back orginal conditions to villagers
         foreach (GameObject villager in affectedVillagers)
         {

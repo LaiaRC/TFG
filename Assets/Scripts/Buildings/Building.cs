@@ -385,7 +385,7 @@ public class Building : Construction
         timeBar.fillAmount = timeLeft;
     }
 
-    public void play()
+    public virtual void play()
     {
         isProducing = true;
         isPaused = false;

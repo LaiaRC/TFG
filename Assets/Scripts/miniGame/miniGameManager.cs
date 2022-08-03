@@ -6,6 +6,7 @@ using UnityEngine.AI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using System;
 
 public class Drop
 {
@@ -29,6 +30,8 @@ public class miniGameManager : MonoBehaviour
     public List<GameObject> activeFlags;
     public List<GameObject> monsters;
     public int numMonstersInvoked = 0;
+    public int numMonstersDied = 0;
+    public int numMaxMonsters = 0;
     public int numScares = 0;
     public bool flagsPlaced = false;
     public NavMeshSurface2d surface;
@@ -37,11 +40,11 @@ public class miniGameManager : MonoBehaviour
     public float dropsModifier = 0;
 
     //UI
+    public Canvas canvas;
     public bool isOnCanvas = false;
     public bool isDragging = false;
     public bool isHolding = false;
     public bool isCardSelected = false; //invoke
-    public List<Button> cardButtons;
     public string selectedCard = NONE;
     public GameObject gameOverPanel;
     public GameObject scareGroup;
@@ -53,9 +56,14 @@ public class miniGameManager : MonoBehaviour
     public TextMeshProUGUI extraScaresText;
     public GameObject dropPrefab;
     public GameObject dropsGroup;
+    public GameObject card;
+    public GameObject infoPanel;
+    public GameObject flagButton;
+    public GameObject cardsGroup;
+    public GameObject confirmUI;
 
     public int currentFlag = 0;
-    public int maxFlags = 1; //can be upgraded
+    public int maxFlags = 3; //can be upgraded
     private Vector3 flagPosition = new Vector3();
     private Vector3 touchPosWorld;
     private float holdTimer = 0;
@@ -69,24 +77,27 @@ public class miniGameManager : MonoBehaviour
     public GameObject scareProjectile;
 
     //Game variables
-    public static float MINIGAME_MAX_TIME = 30f; //in seconds
+    public static float MINIGAME_MAX_TIME = 120f; //in seconds
 
     //UI variables
     public static float HOLD_TIME = 0.25f;
     public static float HOLD_INVOKATION_TIME = 0.25f;
+    public static Byte SELECTED_R = 42;
+    public static Byte SELECTED_G = 154;
+    public static Byte SELECTED_B = 255;
 
     //Card variables
     public static string NONE = "none";
     public static string FLAG_BUTTON = "FlagButton";
-    public static string SKELETON_BUTTON = "SkeletonButton";
-    public static string GHOST_BUTTON = "GhostButton";
-    public static string ZOMBIE_BUTTON = "ZombieButton";
-    public static string JACK_BUTTON = "JackOLanternButton";
-    public static string BAT_BUTTON = "BatButton";
-    public static string GOBLIN_BUTTON = "GoblinButton";
-    public static string VAMPIRE_BUTTON = "VampireButton";
-    public static string WITCH_BUTTON = "WitchButton";
-    public static string CLOWN_BUTTON = "ClownButton";
+    public static string SKELETON_BUTTON = "skeletonButton";
+    public static string GHOST_BUTTON = "ghostButton";
+    public static string ZOMBIE_BUTTON = "zombieButton";
+    public static string JACK_BUTTON = "jackOLanternButton";
+    public static string BAT_BUTTON = "batButton";
+    public static string GOBLIN_BUTTON = "goblinButton";
+    public static string VAMPIRE_BUTTON = "vampireButton";
+    public static string WITCH_BUTTON = "witchButton";
+    public static string CLOWN_BUTTON = "clownButton";
 
     //Dictionary variables
     public static string SKELETON = "skeleton";
@@ -137,7 +148,9 @@ public class miniGameManager : MonoBehaviour
     public void Start()
     {
         gameOverPanel.SetActive(false);
-        
+        cardsGroup.SetActive(false);
+        confirmUI.SetActive(false);
+
         //Fill monsters dictionary
         foreach (var monster in monsters)
         {
@@ -165,7 +178,7 @@ public class miniGameManager : MonoBehaviour
 
         //Only to debug, fill units_monsters dictionary 
 
-        /*foreach (KeyValuePair<string, int> monster in Data.Instance.INVENTORY)
+        foreach (KeyValuePair<string, int> monster in Data.Instance.INVENTORY)
         {
             for (int i = 0; i < GameManager.Instance.monstersKeys.Count; i++)
             {
@@ -173,11 +186,12 @@ public class miniGameManager : MonoBehaviour
                 {
                     //It's a monster
                     UNITS_MONSTERS.Add(monster.Key, monster.Value);
+                    numMaxMonsters += monster.Value;
                 }
             }
-        }*/
+        }
 
-        //Add all monsters
+        /*//Add all monsters
         UNITS_MONSTERS.Add(Data.SKELETON, 30);
         UNITS_MONSTERS.Add(Data.JACK_LANTERN, 30);
         UNITS_MONSTERS.Add(Data.ZOMBIE, 30);
@@ -186,7 +200,7 @@ public class miniGameManager : MonoBehaviour
         UNITS_MONSTERS.Add(Data.GOBLIN, 30);
         UNITS_MONSTERS.Add(Data.VAMPIRE, 30);
         UNITS_MONSTERS.Add(Data.CLOWN, 30);
-        UNITS_MONSTERS.Add(Data.WITCH, 30);
+        UNITS_MONSTERS.Add(Data.WITCH, 30);*/
 
 
         //Get boosts
@@ -222,14 +236,9 @@ public class miniGameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        time += Time.deltaTime;
-        if (time < MINIGAME_MAX_TIME)
-        {
-            if (currentFlag > 0 && !shieldManSpawn.activeInHierarchy && numMonstersInvoked > 20)
-            {
-                shieldManSpawn.SetActive(true);
-            }
 
+        if (!gameOver)
+        {
             #region DETECT USER HOLD
             if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
             {
@@ -279,7 +288,6 @@ public class miniGameManager : MonoBehaviour
                 }
                 else
                 {
-
                     //Get touch (tap) position
                     if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
                     {
@@ -302,11 +310,24 @@ public class miniGameManager : MonoBehaviour
                 }
             }
         }
-        else if(!gameOver)
+
+        if (flagsPlaced)
         {
-            gameOver = true;
-            showStats();
-        }
+            if (time < MINIGAME_MAX_TIME && numMonstersDied < numMaxMonsters)
+            {
+                time += Time.deltaTime;
+
+                if (currentFlag > 0 && !shieldManSpawn.activeInHierarchy && numMonstersInvoked > 20)
+                {
+                    shieldManSpawn.SetActive(true);
+                }
+            }
+            else if (!gameOver)
+            {
+                gameOver = true;
+                showStats();
+            }
+        }      
     }
 
     public void resolveTouchedObject(GameObject touchedObject)
@@ -411,11 +432,23 @@ public class miniGameManager : MonoBehaviour
             foreach (Monster monster in monsters)
             {
                 monster.updateFlags();
-            }
+            }            
         }
         if(currentFlag == 3)
         {
-            flagsPlaced = true;
+            flagButton.SetActive(false);
+            infoPanel.SetActive(false);
+            confirmUI.SetActive(true);   
+            selectedCard = NONE;
+        }
+        else
+        {
+            //change flag card
+            flagButton.transform.GetChild(0).gameObject.SetActive(false);
+            flagButton.transform.GetChild(1).gameObject.SetActive(false);
+            flagButton.transform.GetChild(2).gameObject.SetActive(false);
+            flagButton.transform.GetChild(currentFlag).gameObject.SetActive(true);
+            flagButton.transform.GetChild(3).transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText((maxFlags - currentFlag).ToString());
         }        
     }
 
@@ -441,6 +474,14 @@ public class miniGameManager : MonoBehaviour
 
                     numMonstersInvoked++;
                     UNITS_MONSTERS[monsterName] = quantity - 1;
+                    //update card
+                    for (int i = 0; i < cardsGroup.transform.childCount; i++)
+                    {
+                        if (cardsGroup.transform.GetChild(i).name.Contains(monsterName))
+                        {
+                            cardsGroup.transform.GetChild(i).transform.Find("NumPanel").transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(UNITS_MONSTERS[monsterName].ToString());
+                        }
+                    }
                 }
             }
         }
@@ -462,8 +503,8 @@ public class miniGameManager : MonoBehaviour
     }
 
     public void toggleSelectedCard(Button cardSelected)
-    {
-        if(selectedCard == cardSelected.name)
+    {        
+        if (selectedCard == cardSelected.name)
         {
             //deselect card
             selectedCard = NONE;
@@ -471,21 +512,24 @@ public class miniGameManager : MonoBehaviour
             //reset touch position
             touchPosWorld = Vector3.zero;
 
-            cardSelected.GetComponent<Image>().color = new Color(1,1,1,1);
+            cardSelected.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+            cardSelected.transform.Find("NumPanel").GetComponent<Image>().color = new Color(1, 1, 1, 1);
         }
         else
         {
             //Deselect all cards
-            for (int i = 0; i < cardButtons.Count; i++)
+            for (int i = 0; i < cardsGroup.transform.childCount; i++)
             {
-                cardButtons[i].GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                cardsGroup.transform.GetChild(i).GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                cardsGroup.transform.GetChild(i).transform.GetChild(1).GetComponent<Image>().color = new Color(1, 1, 1, 1);
             }
 
             //select card
             selectedCard = cardSelected.name;
-            cardSelected.GetComponent<Image>().color = Color.green;
+            cardSelected.GetComponent<Image>().color = new Color32(SELECTED_R, SELECTED_G, SELECTED_B, 255);
+            cardSelected.transform.Find("NumPanel").GetComponent<Image>().color = new Color32(SELECTED_R, SELECTED_G, SELECTED_B, 255);
             Invoke("selectCard", 0.05f);
-        }
+        }        
     }
 
     public void onBeginDrag()
@@ -626,5 +670,61 @@ public class miniGameManager : MonoBehaviour
 
         //Go back to main scene
         SceneManager.LoadScene("globalView");
+    }
+
+    public void confirmFlags()
+    {
+        flagsPlaced = true;
+        confirmUI.SetActive(false);
+
+        //Put all card to invisible
+        for (int i = 0; i < cardsGroup.transform.childCount; i++)
+        {
+            cardsGroup.transform.GetChild(i).gameObject.SetActive(false);
+        }
+
+        //Load only cards that player has
+        foreach (KeyValuePair<string, int> monster in UNITS_MONSTERS)
+        {
+            for (int i = 0; i < cardsGroup.transform.childCount; i++)
+            {
+                if (cardsGroup.transform.GetChild(i).name.Contains(monster.Key))
+                {
+                    //set units num
+                    cardsGroup.transform.GetChild(i).transform.Find("NumPanel").transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(monster.Value.ToString());
+
+                    //Make that card visible
+                    cardsGroup.transform.GetChild(i).gameObject.SetActive(true);
+                }
+            }
+        }
+
+        cardsGroup.SetActive(true);
+    }
+
+    public void cancelFlags()
+    {
+        foreach (GameObject flag in flags)
+        {
+            flag.SetActive(false);
+        }
+        currentFlag = 0;
+        flagButton.transform.GetChild(0).gameObject.SetActive(true);
+        flagButton.transform.GetChild(1).gameObject.SetActive(false);
+        flagButton.transform.GetChild(2).gameObject.SetActive(false);
+        flagButton.transform.GetChild(3).transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(maxFlags.ToString());
+
+        //restart colors
+        flagButton.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+        flagButton.transform.GetChild(3).GetComponent<Image>().color = new Color(1, 1, 1, 1);
+
+        confirmUI.SetActive(false);
+        Invoke("restartFlags", 0.05f);
+    }
+
+    public void restartFlags()
+    {
+        flagButton.SetActive(true);
+        infoPanel.SetActive(true);
     }
 }

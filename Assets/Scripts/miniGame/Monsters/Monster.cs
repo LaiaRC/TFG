@@ -63,6 +63,7 @@ public abstract class Monster : MonoBehaviour
         //Instantiate tomb
         /*Instantiate(deathParticles, transform.position, Quaternion.identity);
         Instantiate(deathSound, transform.position, Quaternion.identity);*/
+        miniGameManager.Instance.numMonstersDied++;
         Destroy(healthBar.gameObject);
         Instantiate(tomb,transform.position, Quaternion.identity);
         Destroy(this.gameObject);        
