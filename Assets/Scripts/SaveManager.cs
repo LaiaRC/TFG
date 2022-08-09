@@ -105,6 +105,7 @@ public class SaveManager : MonoBehaviour
         Data.Instance.PLAYER["Day"] = GameManager.Instance.localDate.Day;
         Data.Instance.PLAYER["Month"] = GameManager.Instance.localDate.Month;
         Data.Instance.PLAYER["Year"] = GameManager.Instance.localDate.Year;
+        Data.Instance.PLAYER["Tuto"] = GameManager.Instance.isTutoDone;
 
         //Update inventory old value (same as current values)
         foreach (var item in Data.Instance.INVENTORY.ToList())
@@ -161,6 +162,19 @@ public class SaveManager : MonoBehaviour
         outputStreamInventory.Close();
     }
 
+    public void SaveTuto()
+    {
+        //Save minigame drops to inventory
+        if (File.Exists(pathPlayer))
+        {
+            File.Delete(pathPlayer);
+        }
+        var outputStreamPlayer = new FileStream(pathPlayer, FileMode.Create);
+        MsgPack.Serialize(Data.Instance.PLAYER, outputStreamPlayer);
+        outputStreamPlayer.Position = 0; // rewind stream before copying/read
+        outputStreamPlayer.Close();
+    }
+
     public void Load()
     {
         if (File.Exists(pathInventory))
@@ -185,6 +199,12 @@ public class SaveManager : MonoBehaviour
             Data.Instance.PLAYER = MsgPack.Deserialize(typeof(Dictionary<string, int>), inputStreamPlayer) as Dictionary<string, int>;
             
             inputStreamPlayer.Close();
+
+            //update is tuto done
+            if(Data.Instance.PLAYER.TryGetValue("Tuto", out int isDone))
+            {
+                GameManager.Instance.isTutoDone = isDone;
+            }
         }
         if (File.Exists(pathMonsters))
         {
@@ -233,10 +253,6 @@ public class SaveManager : MonoBehaviour
         if (File.Exists(pathConstructions))
         {
             File.Delete(pathConstructions);
-        }
-        if (File.Exists(pathPlayer))
-        {
-            File.Delete(pathPlayer);
         }
         GameManager.Instance.constructionsBuilt.Clear();
         Data.Instance.CONSTRUCTIONS.Clear();

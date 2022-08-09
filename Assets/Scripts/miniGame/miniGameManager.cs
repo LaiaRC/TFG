@@ -61,6 +61,7 @@ public class miniGameManager : MonoBehaviour
     public GameObject flagButton;
     public GameObject cardsGroup;
     public GameObject confirmUI;
+    public Sprite skeletonIcon;
 
     public int currentFlag = 0;
     public int maxFlags = 3; //can be upgraded
@@ -71,13 +72,14 @@ public class miniGameManager : MonoBehaviour
     private bool isTouching = false;
     private float time = 0;
 
+
     //Particle prefabs
     public GameObject sorcererProjectile;
     public GameObject villagerDeathParticles;
     public GameObject scareProjectile;
 
     //Game variables
-    public static float MINIGAME_MAX_TIME = 120f; //in seconds
+    public float MINIGAME_MAX_TIME = 10f; //in seconds
 
     //UI variables
     public static float HOLD_TIME = 0.25f;
@@ -98,7 +100,7 @@ public class miniGameManager : MonoBehaviour
     public static string VAMPIRE_BUTTON = "vampireButton";
     public static string WITCH_BUTTON = "witchButton";
     public static string CLOWN_BUTTON = "clownButton";
-
+    
     //Dictionary variables
     public static string SKELETON = "skeleton";
     public static string ZOMBIE = "zombie";
@@ -177,7 +179,6 @@ public class miniGameManager : MonoBehaviour
         POOLS.Add(SCARE_PROJECTILE, pool2);
 
         //Only to debug, fill units_monsters dictionary 
-
         foreach (KeyValuePair<string, int> monster in Data.Instance.INVENTORY)
         {
             for (int i = 0; i < GameManager.Instance.monstersKeys.Count; i++)
@@ -233,10 +234,8 @@ public class miniGameManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
-
         if (!gameOver)
         {
             #region DETECT USER HOLD
@@ -294,6 +293,7 @@ public class miniGameManager : MonoBehaviour
                         touchPosWorld = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
 
                         RaycastHit2D hitInformation = Physics2D.Raycast(touchPosWorld, Camera.main.transform.forward);
+                        
                         if (hitInformation.collider != null)
                         {
                             //We should have hit something with a 2D Physics collider!
@@ -304,8 +304,8 @@ public class miniGameManager : MonoBehaviour
                         if (selectedCard == FLAG_BUTTON && !flagsPlaced)
                         {
                             placeFlag(touchPosWorld);
-                        }
 
+                        }
                     }
                 }
             }
@@ -334,7 +334,7 @@ public class miniGameManager : MonoBehaviour
     {
         if (touchedObject.tag == "spawnableGround")
         {
-            if (selectedCard == SKELETON_BUTTON)
+            if (selectedCard == SKELETON_BUTTON || (selectedCard == FLAG_BUTTON && flagsPlaced)) //The tuto card
             {
                 if (currentFlag > 0)
                 {
@@ -462,7 +462,7 @@ public class miniGameManager : MonoBehaviour
                     GameObject monsterObj = Instantiate(monster, new Vector3(position.x, position.y, 0), Quaternion.identity);
 
                     //Set monster stats (not affecting the prefab)
-                    if (Data.Instance.MONSTERS.TryGetValue(monsterName, out MonsterInfo monsterInfo))
+                    /*if (Data.Instance.MONSTERS.TryGetValue(monsterName, out MonsterInfo monsterInfo))
                     {
                         monsterObj.GetComponent<Monster>().velocity = monsterInfo.velocity[monsterInfo.upgradeLevel - 1];
                         monsterObj.GetComponent<Monster>().health = monsterInfo.health[monsterInfo.upgradeLevel - 1];
@@ -470,18 +470,33 @@ public class miniGameManager : MonoBehaviour
                         monsterObj.GetComponent<Monster>().attackRate = monsterInfo.attackRate[monsterInfo.upgradeLevel - 1];
                         monsterObj.GetComponent<Monster>().attackRange = monsterInfo.attackRange[monsterInfo.upgradeLevel - 1];
                         monsterObj.GetComponent<Monster>().level = monsterInfo.level[monsterInfo.upgradeLevel - 1];
-                    }
+                    }*/
 
                     numMonstersInvoked++;
                     UNITS_MONSTERS[monsterName] = quantity - 1;
-                    //update card
-                    for (int i = 0; i < cardsGroup.transform.childCount; i++)
+
+                    if(Data.Instance.PLAYER.TryGetValue("Tuto", out int isDone))
                     {
-                        if (cardsGroup.transform.GetChild(i).name.Contains(monsterName))
+                        if(isDone == 1)
                         {
-                            cardsGroup.transform.GetChild(i).transform.Find("NumPanel").transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(UNITS_MONSTERS[monsterName].ToString());
+                            //update card
+                            for (int i = 0; i < cardsGroup.transform.childCount; i++)
+                            {
+                                if (cardsGroup.transform.GetChild(i).name.Contains(monsterName))
+                                {
+                                    cardsGroup.transform.GetChild(i).transform.Find("NumPanel").transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(UNITS_MONSTERS[monsterName].ToString());
+                                }
+                            }
                         }
-                    }
+                        else
+                        {
+                            //update card
+                            flagButton.transform.Find("NumPanel").transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(UNITS_MONSTERS[monsterName].ToString());
+
+                            //update info panel 
+                            infoPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText("Monsters will scare villagers until their Scare Bar is full and you will get special drops once they pass out, but  some villagers will attack your creatures!");
+                        }
+                    }                 
                 }
             }
         }
@@ -539,7 +554,7 @@ public class miniGameManager : MonoBehaviour
 
     public void onEndDrag()
     {
-        Invoke("endDrag", 0.5f); //sino just quan es deixa anar el drag ja compta isDragging false i es poden instanciar clowns i pumpkins
+        Invoke("endDrag", 0.25f); //sino just quan es deixa anar el drag ja compta isDragging false i es poden instanciar clowns i pumpkins
     }
 
     public void endDrag()
@@ -617,7 +632,7 @@ public class miniGameManager : MonoBehaviour
     }
 
     public void close()
-    {
+    {          
         //Save drops to inventory
         foreach (KeyValuePair<string, Drop> drop in DROPS)
         {
@@ -665,6 +680,16 @@ public class miniGameManager : MonoBehaviour
         //Save inventory
         SaveManager.Instance.SaveInventory();
 
+        //Save player (tuto)
+
+
+        //Save tuto done
+        if (Data.Instance.PLAYER.TryGetValue("Tuto", out int isDone))
+        {
+            Data.Instance.PLAYER["Tuto"] = 1;
+        }
+        SaveManager.Instance.SaveTuto();
+
         //Delete all except inventory
         SaveManager.Instance.Restart();
 
@@ -683,23 +708,53 @@ public class miniGameManager : MonoBehaviour
             cardsGroup.transform.GetChild(i).gameObject.SetActive(false);
         }
 
-        //Load only cards that player has
-        foreach (KeyValuePair<string, int> monster in UNITS_MONSTERS)
+        if (Data.Instance.PLAYER.TryGetValue("Tuto", out int isDone))
         {
-            for (int i = 0; i < cardsGroup.transform.childCount; i++)
+            if (isDone == 1)
             {
-                if (cardsGroup.transform.GetChild(i).name.Contains(monster.Key))
+                //Load only cards that player has
+                foreach (KeyValuePair<string, int> monster in UNITS_MONSTERS)
                 {
-                    //set units num
-                    cardsGroup.transform.GetChild(i).transform.Find("NumPanel").transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(monster.Value.ToString());
+                    for (int i = 0; i < cardsGroup.transform.childCount; i++)
+                    {
+                        if (cardsGroup.transform.GetChild(i).name.Contains(monster.Key))
+                        {
+                            //set units num
+                            cardsGroup.transform.GetChild(i).transform.Find("NumPanel").transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(monster.Value.ToString());
 
-                    //Make that card visible
-                    cardsGroup.transform.GetChild(i).gameObject.SetActive(true);
+                            //Make that card visible
+                            cardsGroup.transform.GetChild(i).gameObject.SetActive(true);
+                        }
+                    }
                 }
-            }
-        }
 
-        cardsGroup.SetActive(true);
+                cardsGroup.SetActive(true);
+            }
+            else
+            {
+                //restart colors
+                flagButton.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                flagButton.transform.GetChild(3).GetComponent<Image>().color = new Color(1, 1, 1, 1);
+
+                //Explain minigame
+
+                //Get skeleton num units
+                if (UNITS_MONSTERS.TryGetValue("skeleton", out int quantity))
+                {
+                    flagButton.transform.GetChild(0).GetComponent<Image>().sprite = skeletonIcon;
+                    flagButton.transform.GetChild(0).gameObject.SetActive(true);
+                    flagButton.transform.GetChild(1).gameObject.SetActive(false);
+                    flagButton.transform.GetChild(2).gameObject.SetActive(false);
+                    flagButton.transform.Find("NumPanel").transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(quantity.ToString());
+                }
+
+                //Set info text
+                infoPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText("Select the monster card and touch anywhere in the green area to invoke it.");
+
+                flagButton.SetActive(true);
+                infoPanel.SetActive(true);
+            }
+        }      
     }
 
     public void cancelFlags()

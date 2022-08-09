@@ -864,7 +864,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1005562922093219316
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1373,7 +1373,7 @@ GameObject:
   - component: {fileID: 2615384320715229706}
   m_Layer: 0
   m_Name: graveyard
-  m_TagString: Untagged
+  m_TagString: construction
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1411,7 +1411,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -1.3606174, y: 4.013907}
+  m_Offset: {x: -0.96192837, y: 4.518914}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1422,7 +1422,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 13.826216, y: 7.577388}
+  m_Size: {x: 21.853178, y: 11.0327015}
   m_EdgeRadius: 0
 --- !u!114 &2615384320715229706
 MonoBehaviour:
@@ -1447,8 +1447,8 @@ MonoBehaviour:
     m_Size: {x: 0, y: 0, z: 0}
   placed: 0
   area:
-    m_Position: {x: 0, y: 0, z: 0}
-    m_Size: {x: 6, y: 3, z: 0}
+    m_Position: {x: -15, y: -3, z: 0}
+    m_Size: {x: 28, y: 14, z: 1}
   confirmUI: {fileID: 1688311054014621016}
   upgrade_cost:
   - list:
@@ -1493,6 +1493,7 @@ MonoBehaviour:
   extraNumResources: 0
   isProducer: 1
   isConverter: 0
+  numResources: {fileID: 0}
   activeResource: bone
   timeLeft: 0
   time: 0

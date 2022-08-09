@@ -54,7 +54,9 @@ public class GeneralBuilding : Building
     }
     // Start is called before the first frame update
     void Start()
-    {       
+    {
+        
+
         constructionType = 0;
 
         if (level == 1)

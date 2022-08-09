@@ -629,6 +629,7 @@ public class Data : MonoBehaviour
             PLAYER.Add("Day", GameManager.Instance.localDate.Day);
             PLAYER.Add("Month", GameManager.Instance.localDate.Month);
             PLAYER.Add("Year", GameManager.Instance.localDate.Year);
+            PLAYER.Add("Tuto", GameManager.Instance.isTutoDone);
         }
         else
         {
@@ -638,6 +639,7 @@ public class Data : MonoBehaviour
             PLAYER.Add("Day", OfflineCalculator.Instance.localDate.Day);
             PLAYER.Add("Month", OfflineCalculator.Instance.localDate.Month);
             PLAYER.Add("Year", OfflineCalculator.Instance.localDate.Year);
+            PLAYER.Add("Tuto", 0);
         }
         #endregion
 

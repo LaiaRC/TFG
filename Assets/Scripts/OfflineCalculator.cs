@@ -26,6 +26,7 @@ public class OfflineCalculator : MonoBehaviour
     public List<GameObject> buildings;
 
     public DateTime localDate;
+    public int isTutoDone = 0;
 
     public List<FakeProducer> constructionsBuilt = new List<FakeProducer>();
     private bool offlineBoostApplied = false;
@@ -78,6 +79,12 @@ public class OfflineCalculator : MonoBehaviour
 
         //Load boosts
         loadBoostsDictionary();
+
+        //load is tuto done
+        if(Data.Instance.PLAYER.TryGetValue("Tuto", out int isDone))
+        {
+            isTutoDone = isDone;
+        }
 
         if (Data.Instance.CONSTRUCTIONS.Count > 0)
         {           

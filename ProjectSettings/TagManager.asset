@@ -13,6 +13,8 @@ TagManager:
   - tomb
   - obstacle
   - walkableGround
+  - portal
+  - construction
   layers:
   - Default
   - TransparentFX

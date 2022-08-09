@@ -667,7 +667,7 @@ public class Building : Construction
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(area.position, area.size);
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireCube(area.center, area.size);
     }
 }

@@ -55,6 +55,9 @@ public class Player : MonoBehaviour
                 }else if (touchedObject.GetComponent<BoostShop>() != null && !dragged)
                 {
                     touchedObject.GetComponent<BoostShop>().showShop();
+                }else if (touchedObject.tag.Equals("portal"))
+                {
+                    GameManager.Instance.showPortalDialog();
                 }
             }
         }

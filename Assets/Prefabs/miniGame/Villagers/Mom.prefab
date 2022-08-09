@@ -438,7 +438,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: 2
-  maxScarePoints: 4
+  maxScarePoints: 10
   currentScarePoints: 0
   damage: 2
   level: 2

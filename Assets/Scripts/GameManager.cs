@@ -7,6 +7,12 @@ using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
 
+public class InventoryObject
+{
+    public Sprite icon;
+    public string quantity;
+}
+
 public class GameManager : MonoBehaviour
 {
     public TextMeshProUGUI debugInventoryInfo;
@@ -27,11 +33,14 @@ public class GameManager : MonoBehaviour
     public float offlineBoostTime = 0;
     public float offlineBoostTimeModifier = 0;
     public bool isHellfireUnlocked = false;
+    public int isTutoDone = 0;
 
     public GameObject shop;
     public GameObject allShop;
     public GameObject descriptionDialog;
     public GameObject offlineDialog;
+    public GameObject inventoryDialog;
+    public GameObject portalDialog;
     public GameObject boostShop;
     public List<Sprite> resourcesIcons;
     public List<Sprite> monstersIcons;
@@ -73,6 +82,7 @@ public class GameManager : MonoBehaviour
     public static int DAY = 3;
     public static int MONTH = 4;
     public static int YEAR = 5;
+    public static int TUTO_DONE = 6;
 
     //Monster stats dictionary
     public static int IS_UNLOCKED = 0;
@@ -140,6 +150,8 @@ public class GameManager : MonoBehaviour
         {
             hidenMonster = "jackOLantern"; //Just in case
         }
+
+        hideAllDialogs();
 
         //Just to debug (hardcoded drops) (si ja estan afegits peta)
         /*Data.Instance.INVENTORY.Add(Data.LOLLIPOP, 50);
@@ -300,6 +312,64 @@ public class GameManager : MonoBehaviour
     public void hideOfflineDialog()
     {
         canvas.GetComponent<Transform>().Find("OfflineDialog").gameObject.SetActive(false);
+        canvas.GetComponent<Transform>().Find("BlackPanel").gameObject.SetActive(false);
+        canvas.GetComponent<Transform>().Find("UIBlock").gameObject.SetActive(true);
+        Invoke("setDialogOpen", 0.05f);
+    }
+
+    public void showInventoryDialog()
+    {
+        //Load inventory info (only updated when inventory opens)
+        fillInventoryDialog(); 
+
+        isDialogOpen = true;
+        canvas.GetComponent<Transform>().Find("BlackPanel").gameObject.SetActive(true);
+        inventoryDialog.SetActive(true);
+        canvas.GetComponent<Transform>().Find("UIBlock").gameObject.SetActive(false);
+    }
+
+    public void hideInventoryDialog()
+    {
+        inventoryDialog.SetActive(false);
+        canvas.GetComponent<Transform>().Find("BlackPanel").gameObject.SetActive(false);
+        canvas.GetComponent<Transform>().Find("UIBlock").gameObject.SetActive(true);
+        Invoke("setDialogOpen", 0.05f);
+    }
+
+    public void showPortalDialog()
+    {
+        //check if has at least one monster
+        bool hasMonster = false;
+
+        for (int i = 0; i < monstersKeys.Count; i++)
+        {
+            if (Data.Instance.INVENTORY.ContainsKey(monstersKeys[i]))
+            {
+                hasMonster = true;
+            }
+        }
+
+        if (hasMonster)
+        {
+            portalDialog.transform.Find("MonsterText").gameObject.SetActive(false);
+
+            //Load monster cards (TODO)
+
+        }
+        else
+        {
+            portalDialog.transform.Find("MonsterText").gameObject.SetActive(true);
+        }
+
+        isDialogOpen = true;
+        canvas.GetComponent<Transform>().Find("BlackPanel").gameObject.SetActive(true);
+        portalDialog.SetActive(true);
+        canvas.GetComponent<Transform>().Find("UIBlock").gameObject.SetActive(false);
+    }
+
+    public void hidePortalDialog()
+    {
+        portalDialog.SetActive(false);
         canvas.GetComponent<Transform>().Find("BlackPanel").gameObject.SetActive(false);
         canvas.GetComponent<Transform>().Find("UIBlock").gameObject.SetActive(true);
         Invoke("setDialogOpen", 0.05f);
@@ -766,7 +836,13 @@ public class GameManager : MonoBehaviour
 
     public void loadMiniGame()
     {
-        SceneManager.LoadScene("miniGame");
+        for (int i = 0; i < monstersKeys.Count; i++)
+        {
+            if (Data.Instance.INVENTORY.ContainsKey(monstersKeys[i])) //Load minigame only if it has minim 1 monster
+            {
+                SceneManager.LoadScene("miniGame");
+            }
+        }
     }
 
     public void applyBoost(string id)
@@ -1319,6 +1395,8 @@ public class GameManager : MonoBehaviour
     {
         canvas.GetComponent<Transform>().Find("DescriptionDialog").gameObject.SetActive(false);
         canvas.GetComponent<Transform>().Find("OfflineDialog").gameObject.SetActive(false);
+        inventoryDialog.SetActive(false);
+        portalDialog.SetActive(false);
 
         canvas.GetComponent<Transform>().Find("BlackPanel").gameObject.SetActive(false);
         canvas.GetComponent<Transform>().Find("UIBlock").gameObject.SetActive(true);
@@ -1348,5 +1426,84 @@ public class GameManager : MonoBehaviour
         }
 
         return output;
+    }
+
+    public void fillInventoryDialog()
+    {          
+        //Clear all panels
+        foreach (Transform child in inventoryDialog.transform.Find("Scrollback").transform.GetChild(0).transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+
+        List<InventoryObject> dropsPanels = new List<InventoryObject>();
+        List<InventoryObject> monsterPanels = new List<InventoryObject>();
+        List<InventoryObject> resourcesPanels = new List<InventoryObject>();
+
+        //Fill grid with offline resources
+        foreach (KeyValuePair<string, int> resource in Data.Instance.INVENTORY)
+        {
+            InventoryObject aux = new InventoryObject();
+
+            if (Data.Instance.RESOURCES.TryGetValue(resource.Key, out Resource res))
+            {
+                aux.icon = res.icon;
+            }
+            else
+            {
+                //It's a monster
+                if (Data.Instance.MONSTERS.TryGetValue(resource.Key, out MonsterInfo monster))
+                {
+                    aux.icon = monster.icon;
+                }
+            }
+
+            aux.quantity = resource.Value.ToString();
+
+            bool isResource = true;
+
+            for (int i = 0; i < monstersKeys.Count; i++)
+            {
+                if (resource.Key.Equals(monstersKeys[i]))
+                {
+                    monsterPanels.Add(aux);
+                    isResource = false;
+                }
+            }
+
+            for (int i = 0; i < dropsKeys.Count; i++)
+            {
+                if (resource.Key.Equals(dropsKeys[i]))
+                {
+                    dropsPanels.Add(aux);
+                    isResource = false;
+                }
+            }
+
+            if (isResource)
+            {
+                resourcesPanels.Add(aux);
+            }
+        }
+
+        //Add panels to grid
+        foreach (InventoryObject drop in dropsPanels)
+        {
+            GameObject panel = Instantiate(resourcePanel, inventoryDialog.transform.Find("Scrollback").transform.GetChild(0).transform);
+            panel.transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite = drop.icon;
+            panel.transform.GetChild(0).transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(drop.quantity);
+        }
+        foreach (InventoryObject monster in monsterPanels)
+        {
+            GameObject panel = Instantiate(resourcePanel, inventoryDialog.transform.Find("Scrollback").transform.GetChild(0).transform);
+            panel.transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite = monster.icon;
+            panel.transform.GetChild(0).transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(monster.quantity);
+        }
+        foreach (InventoryObject resource in resourcesPanels)
+        {
+            GameObject panel = Instantiate(resourcePanel, inventoryDialog.transform.Find("Scrollback").transform.GetChild(0).transform);
+            panel.transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite = resource.icon;
+            panel.transform.GetChild(0).transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(resource.quantity);
+        }
     }
 }

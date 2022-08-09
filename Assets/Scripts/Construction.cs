@@ -26,7 +26,7 @@ public class Construction : MonoBehaviour
     {
         Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(transform.position);
         BoundsInt areaTemp = area;
-        areaTemp.position = positionInt;
+        areaTemp.position = new Vector3Int((int)(transform.position.x - area.size.x / 1.8), (int)(transform.position.y - area.size.y / 5), (int)transform.position.z);
 
         if (GridBuildingSystem.current.canTakeArea(areaTemp))
         {
@@ -55,7 +55,8 @@ public class Construction : MonoBehaviour
                 //Build building gameObject
                 Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(transform.position);
                 BoundsInt areaTemp = area;
-                areaTemp.position = positionInt;
+
+                areaTemp.position = new Vector3Int((int)(transform.position.x - area.size.x / 1.8), (int)(transform.position.y - area.size.y / 5), (int)transform.position.z);
                 placed = true;
                 GridBuildingSystem.current.takeArea(areaTemp);
                 tempArea = areaTemp;

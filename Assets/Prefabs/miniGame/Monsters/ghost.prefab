@@ -352,7 +352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: 2.5
-  health: 6
+  health: 10
   damage: 3
   detectionRange: 7
   attackRange: 5

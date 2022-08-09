@@ -72,7 +72,6 @@ public class ShopItemDrag : MonoBehaviour, IBeginDragHandler, IEndDragHandler, I
                 c.a = 0f;
                 img.color = c;
 
-
                 GridBuildingSystem.current.InitializeWithBuilding(Item.prefab);
             }
         }

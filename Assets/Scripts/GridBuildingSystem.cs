@@ -12,9 +12,9 @@ public class GridBuildingSystem : MonoBehaviour
     public GridLayout gridLayout;
     public Tilemap MainTilemap;
     public Tilemap TempTilemap;
-    public Tile greenTile;
-    public Tile redTile;
-    public Tile whiteTile;
+    public TileBase greenTile;
+    public TileBase redTile;
+    public TileBase whiteTile;
     public TileBase takenTile;
     public TextMeshProUGUI debugText;
    
@@ -36,15 +36,15 @@ public class GridBuildingSystem : MonoBehaviour
         }
         if (!tileBases.ContainsKey(TileType.White))
         {
-            tileBases.Add(TileType.White, null);
+            tileBases.Add(TileType.White, whiteTile);
         }
         if (!tileBases.ContainsKey(TileType.Green))
         {
-            tileBases.Add(TileType.Green, null);
+            tileBases.Add(TileType.Green, greenTile);
         }
         if (!tileBases.ContainsKey(TileType.Red))
         {
-            tileBases.Add(TileType.Red, null);
+            tileBases.Add(TileType.Red, redTile);
         }
     }
 
@@ -72,8 +72,7 @@ public class GridBuildingSystem : MonoBehaviour
 
                 if (prevPos != cellPos)
                 {
-                    temp.transform.localPosition = gridLayout.CellToLocalInterpolated(cellPos
-                        + new Vector3(.5f, .5f, 0f));
+                    temp.transform.localPosition = gridLayout.CellToLocalInterpolated(cellPos);
                     prevPos = cellPos;
                     FollowBuilding();
                 }
@@ -101,8 +100,7 @@ public class GridBuildingSystem : MonoBehaviour
             Vector3Int pos = new Vector3Int(v.x, v.y, 0);
             array[counter] = tilemap.GetTile(pos);
             counter++;
-        }      
-        
+        }
         return array;
     }
 
@@ -137,19 +135,12 @@ public class GridBuildingSystem : MonoBehaviour
         
 
         temp = Instantiate(building, Camera.main.ScreenToWorldPoint(position), Quaternion.identity).GetComponent<Construction>();
+        Debug.Log(temp.gameObject.name);
+
         FollowBuilding();
-
-        /*pos.z = 0;
-        pos.y -= building.transform.position.y / 2f;
-        Vector3Int cellPos = gridLayout.WorldToCell(pos);
-        Vector3 position = gridLayout.CellToLocalInterpolated(cellPos);
-
-        GameObject obj = Instantiate(building, position, Quaternion.identity);
-        Building temp = obj.transform.GetComponent<Building>();
-        temp.gameObject.AddComponent<ObjectDrag>();*/
     }
 
-    public void initializeWithObject(GameObject building, Vector3 pos)
+    /*public void initializeWithObject(GameObject building, Vector3 pos)
     {
         pos.z = 0;
         pos.y -= building.transform.position.y / 2f;
@@ -159,7 +150,7 @@ public class GridBuildingSystem : MonoBehaviour
         temp = Instantiate(building, position, Quaternion.identity).GetComponent<Construction>();
         temp.gameObject.AddComponent<ObjectDrag>();
         FollowBuilding();
-    }
+    }*/
     private void ClearArea()
     {
         TileBase[] toClear = new TileBase[prevArea.size.x * prevArea.size.y * prevArea.size.z];
@@ -170,22 +161,27 @@ public class GridBuildingSystem : MonoBehaviour
     private void FollowBuilding()
     {
         ClearArea();
-        temp.area.position = gridLayout.WorldToCell(temp.gameObject.transform.position);
+
+        Vector3Int positionInt = gridLayout.WorldToCell(temp.gameObject.transform.position);
+        temp.area.position = new Vector3Int((int)(temp.transform.position.x - temp.area.size.x/1.8), (int)(temp.transform.position.y - temp.area.size.y/5), (int)temp.transform.position.z);
         BoundsInt buildingArea = temp.area;
+        temp.area.position = positionInt;
 
         TileBase[] baseArray = GetTilesBlock(buildingArea, MainTilemap);
 
         int size = baseArray.Length;
         TileBase[] tileArray = new TileBase[size];
 
-        for(int i = 0; i < baseArray.Length; i++)
+        for (int i = 0; i < baseArray.Length; i++)
         {
             if(baseArray[i] == tileBases[TileType.White])
             {
                 tileArray[i] = tileBases[TileType.Green];
+
             }
             else
             {
+                
                 FillTiles(tileArray, TileType.Red);
                 break;
             }
@@ -215,7 +211,6 @@ public class GridBuildingSystem : MonoBehaviour
     }
     #endregion
 
-
 }
 
 public enum TileType
@@ -225,3 +220,5 @@ public enum TileType
     Green,
     Red
 }
+
+
