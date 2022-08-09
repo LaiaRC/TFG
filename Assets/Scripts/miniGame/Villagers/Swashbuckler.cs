@@ -7,9 +7,9 @@ public class Swashbuckler : Villager
 {
     public bool wasMovingRight = false;
     public bool isMovingRight = false;
-    
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
@@ -20,11 +20,11 @@ public class Swashbuckler : Villager
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         //Update direction
         isMovingRight = transform.GetComponent<CharacterMovement>().movingRight;
-        if(agent.desiredVelocity.sqrMagnitude > 0)
+        if (agent.desiredVelocity.sqrMagnitude > 0)
         {
             //is moving
             wasMovingRight = isMovingRight;
@@ -42,12 +42,11 @@ public class Swashbuckler : Villager
                 checkNearScares();
                 checkIsOnLink();
             }
-            scareBar.setValue(currentScarePoints); //Aqui sera el take scare        
+            scareBar.setValue(currentScarePoints); //Aqui sera el take scare
         }
     }
 
-    override
-    public void checkNearScares()
+    public override void checkNearScares()
     {
         //only runs if someone near is scared by a monster above his level
         Collider2D[] collisions = Physics2D.OverlapCircleAll(transform.position, range);
@@ -124,7 +123,6 @@ public class Swashbuckler : Villager
             }
         }
 
-
         if (monsters.Count > 0)
         {
             foreach (Collider2D monster in monsters)
@@ -156,7 +154,7 @@ public class Swashbuckler : Villager
             Transform currentTarget = getMonsterInRange();
             if (currentTarget != null)
             {
-                if ((transform.position - currentTarget.position).magnitude <= agent.stoppingDistance + 0.2f)
+                if ((transform.position - currentTarget.position).magnitude <= range)
                 {
                     if (canAttack)
                     {
@@ -164,7 +162,7 @@ public class Swashbuckler : Villager
                         if (attackTime >= attackRate)
                         {
                             //play attack animation
-                            if(!wasMovingRight)
+                            if (!wasMovingRight)
                             {
                                 //Play left animation
                                 transform.GetChild(0).GetComponent<Animator>().Play("swashbuckler_attack_left");

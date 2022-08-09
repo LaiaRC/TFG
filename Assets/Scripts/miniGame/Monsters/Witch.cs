@@ -7,14 +7,14 @@ public class Witch : Monster
 {
     public float invocationRate;
     public float invocationRange;
-    
+
     protected float time;
     protected List<GameObject> aliveSkeletons = new List<GameObject>();
 
     protected static int MAX_SKELETONS = 5;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
@@ -31,7 +31,7 @@ public class Witch : Monster
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (miniGameManager.Instance.gameOver)
         {
@@ -59,19 +59,20 @@ public class Witch : Monster
 
     public void invokeSkeletons()
     {
-        //Update alive skeletons        
+        //Update alive skeletons
         aliveSkeletons.RemoveAll(GameObject => GameObject == null);
-        
-        //Check if max alive skeletons 
+
+        //Check if max alive skeletons
         if (aliveSkeletons.Count < MAX_SKELETONS)
         {
             if (time >= invocationRate)
             {
                 if (miniGameManager.Instance.MONSTERS.TryGetValue(miniGameManager.SKELETON, out GameObject skeleton))
                 {
-                    GameObject aux1 = Instantiate(skeleton, (Vector2)transform.position + (Random.insideUnitCircle * invocationRange), Quaternion.identity);                    
+                    GameObject aux1 = Instantiate(skeleton, (Vector2)transform.position + (Random.insideUnitCircle * invocationRange), Quaternion.identity);
                     aux1.GetComponent<Monster>().health = 2;
                     aliveSkeletons.Add(aux1);
+                    miniGameManager.Instance.numMaxMonsters++;
 
                     //Invoke second skeleton only if the max hasn't been reached
                     if (aliveSkeletons.Count < MAX_SKELETONS)
@@ -79,6 +80,7 @@ public class Witch : Monster
                         GameObject aux2 = Instantiate(skeleton, (Vector2)transform.position + (Random.insideUnitCircle * invocationRange), Quaternion.identity);
                         aux2.GetComponent<Monster>().health = 2;
                         aliveSkeletons.Add(aux2);
+                        miniGameManager.Instance.numMaxMonsters++;
                     }
                     time = 0;
                 }
@@ -86,8 +88,7 @@ public class Witch : Monster
         }
     }
 
-    override
-    public void move()
+    public override void move()
     {
         if (!checkVillagersInRange())
         {
@@ -126,7 +127,7 @@ public class Witch : Monster
                 {
                     isAttacking = true;
 
-                    //Get anim position 
+                    //Get anim position
                     Vector3 animPosition = transform.GetChild(0).transform.position;
 
                     //Cast projectile

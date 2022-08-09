@@ -12,9 +12,9 @@ public class CharacterMovement : MonoBehaviour
     public Vector3 velocity;
     public float speed;
 
-    Vector2 movement;
+    private Vector2 movement;
 
-    void Update()
+    private void Update()
     {
         speed = agent.speed;
 
@@ -37,7 +37,7 @@ public class CharacterMovement : MonoBehaviour
 
         if (isMoving)
         {
-            velocity = agent.desiredVelocity;
+            velocity = agent.velocity;
 
             if (velocity.x < 0 && movingRight)
             {

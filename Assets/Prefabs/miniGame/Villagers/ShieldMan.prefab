@@ -848,7 +848,7 @@ MonoBehaviour:
   currentScarePoints: 0
   damage: 4
   level: 4
-  range: 7
+  range: 6
   currentState: 
   canAttack: 1
   canMove: 1

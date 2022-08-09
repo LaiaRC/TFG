@@ -18,9 +18,10 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI debugInventoryInfo;
     public Animator buildModeAnimator;
     public bool isOnBuildingMode = false;
+    public bool isShopOpeningOrClosing = false;
     public bool isOnCanvas;
     public GameObject canvas;
-    public bool dragging;    
+    public bool dragging;
     public bool draggingFromShop = false;
     public bool draggingItemShop = false;
     public bool detected = false;
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour
     public float offlineBoostTimeModifier = 0;
     public bool isHellfireUnlocked = false;
     public int isTutoDone = 0;
+    public GameObject loadingScreen;
 
     public GameObject shop;
     public GameObject allShop;
@@ -63,6 +65,7 @@ public class GameManager : MonoBehaviour
 
     //Constructions dictionary
     public static int POS_X = 0;
+
     public static int POS_Y = 1;
     public static int LEVEL = 2; //HIDDEN_MONSTER_INDEX (summoningCircle)
     public static int ACTIVE_RESOURCE = 3;
@@ -77,6 +80,7 @@ public class GameManager : MonoBehaviour
 
     //Player dictionary
     public static int HOUR = 0;
+
     public static int MIN = 1;
     public static int SEC = 2;
     public static int DAY = 3;
@@ -86,6 +90,7 @@ public class GameManager : MonoBehaviour
 
     //Monster stats dictionary
     public static int IS_UNLOCKED = 0;
+
     public static int UPGRADE_LEVEL = 1;
     public static int HIDDEN_MONSTER_INDEX = 2;
     //public static int QUANTITY = 2; //The quantity of each monster produced
@@ -96,13 +101,16 @@ public class GameManager : MonoBehaviour
 
     //BOOST VARIABLES
     public static int PRODUCER_BOOST = 0;
+
     public static int CONVERTER_BOOST = 0;
 
     private string info = "";
     private bool offlineBoostApplied = false;
 
     #region SINGLETON PATTERN
+
     public static GameManager Instance;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -115,6 +123,7 @@ public class GameManager : MonoBehaviour
         ShopItemDrag.canvas = canvas.GetComponent<Canvas>();
 
         #region FILL LIST KEYS
+
         monstersKeys.Add(Data.SKELETON);
         monstersKeys.Add(Data.JACK_LANTERN);
         monstersKeys.Add(Data.BAT);
@@ -134,12 +143,14 @@ public class GameManager : MonoBehaviour
         dropsKeys.Add(Data.STICK);
         dropsKeys.Add(Data.GEM);
         dropsKeys.Add(Data.SCARE);
-        #endregion
+
+        #endregion FILL LIST KEYS
     }
-    #endregion
+
+    #endregion SINGLETON PATTERN
 
     public void Start()
-    {    
+    {
         //carregar buildings a la bbdd
         Data.Instance.setBuildings(buildings);
 
@@ -169,8 +180,8 @@ public class GameManager : MonoBehaviour
         {
             for (int i = 0; i < monstersKeys.Count; i++)
             {
-                if (inventoryResource.Key.Equals(monstersKeys[i])){
-
+                if (inventoryResource.Key.Equals(monstersKeys[i]))
+                {
                     info += "\n -" + inventoryResource.Key + ": " + inventoryResource.Value;
                 }
             }
@@ -196,7 +207,7 @@ public class GameManager : MonoBehaviour
         {
             isPaused = true;
             //Save when exiting game
-            SaveManager.Instance.Save();            
+            SaveManager.Instance.Save();
         }
     }
 
@@ -204,9 +215,10 @@ public class GameManager : MonoBehaviour
     {
         localDate = DateTime.Now;
     }
+
     public void OnBeginDrag()
     {
-        dragging = true;        
+        dragging = true;
     }
 
     public void OnEndDrag()
@@ -231,12 +243,14 @@ public class GameManager : MonoBehaviour
 
     public void toggleBuildMode()
     {
-        if (isOnBuildingMode){
+        if (isOnBuildingMode && !isShopOpeningOrClosing)
+        {
             buildModeAnimator.Play("buildPanelClosing");
             isOnBuildingMode = false;
             Invoke("hideShop", 0.4f);
+            isShopOpeningOrClosing = true;
         }
-        else
+        else if (!isShopOpeningOrClosing)
         {
             isOnCanvas = true;
             buildModeAnimator.Play("buildPanelOpening");
@@ -247,31 +261,34 @@ public class GameManager : MonoBehaviour
 
     public void hideAllShop()
     {
-        if (isOnBuildingMode)
+        if (isOnBuildingMode && !isShopOpeningOrClosing)
         {
             buildModeAnimator.Play("buildPanelClosing");
             isOnBuildingMode = false;
             Invoke("hideShop", 0.4f);
-            Invoke("hideFullShop", 0.4f);            
+            Invoke("hideFullShop", 0.4f);
+            isShopOpeningOrClosing = true;
         }
     }
 
     public void showAllShop()
     {
-        if (!isOnBuildingMode)
+        if (!isOnBuildingMode && !isShopOpeningOrClosing)
         {
             allShop.SetActive(true);
         }
     }
+
     public void hideFullShop()
     {
         allShop.SetActive(false);
     }
+
     public void hideShop()
     {
+        isShopOpeningOrClosing = false;
         shop.SetActive(false);
     }
-
 
     public void openShop()
     {
@@ -320,7 +337,7 @@ public class GameManager : MonoBehaviour
     public void showInventoryDialog()
     {
         //Load inventory info (only updated when inventory opens)
-        fillInventoryDialog(); 
+        fillInventoryDialog();
 
         isDialogOpen = true;
         canvas.GetComponent<Transform>().Find("BlackPanel").gameObject.SetActive(true);
@@ -354,7 +371,6 @@ public class GameManager : MonoBehaviour
             portalDialog.transform.Find("MonsterText").gameObject.SetActive(false);
 
             //Load monster cards (TODO)
-
         }
         else
         {
@@ -393,7 +409,7 @@ public class GameManager : MonoBehaviour
 
     public bool checkRequirements(string id)
     {
-        bool enoughResource = false;        
+        bool enoughResource = false;
 
         if (Data.Instance.BUILDINGS.TryGetValue(id, out GameObject building))
         {
@@ -401,7 +417,6 @@ public class GameManager : MonoBehaviour
             {
                 if (building.GetComponent<Construction>().production_cost[0].list.Count > 0)
                 {
-
                     foreach (RequirementBuilding requeriment in building.GetComponent<Construction>().production_cost[0].list)
                     {
                         enoughResource = false;
@@ -427,8 +442,8 @@ public class GameManager : MonoBehaviour
                 //The building is free
                 enoughResource = true;
             }
-        }   
-        
+        }
+
         return enoughResource;
     }
 
@@ -442,8 +457,8 @@ public class GameManager : MonoBehaviour
             if (Data.Instance.BUILDING_INVENTORY.TryGetValue(buildingToBuild, out int numConstruction))
             {
                 num = numConstruction;
-            }            
-            
+            }
+
             //check if it's free
             if (building.GetComponent<Construction>().production_cost.Count > 0)
             {
@@ -477,13 +492,13 @@ public class GameManager : MonoBehaviour
 
     public void fillOfflineDialog(string timeAwayText)
     {
-        //Calculate max time out 
+        //Calculate max time out
         int timeBoost = 4; //default 4h
         if (Data.Instance.BOOSTS.TryGetValue(Data.OFFLINE_MAXTIME_BOOST, out int quantity))
         {
             timeBoost += quantity;
         }
-        
+
         offlineDialog.transform.Find("TimePanel").transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(timeAwayText + "/" + timeBoost.ToString() + "h");
 
         //Calculate info text
@@ -510,7 +525,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        offlineDialog.GetComponent<Transform>().Find("InfoPanel").transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText("While you are away the productivity is " + prod +  " and only works for " + timeBoost.ToString()  + "h at most.\n You can upgrade this with the Spectre and the Necromancer at the shop.");
+        offlineDialog.GetComponent<Transform>().Find("InfoPanel").transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText("While you are away the productivity is " + prod + " and only works for " + timeBoost.ToString() + "h at most.\n You can upgrade this with the Spectre and the Necromancer at the shop.");
 
         //Fill grid with offline resources
         foreach (KeyValuePair<string, int> resourceOld in Data.Instance.INVENTORY)
@@ -545,9 +560,9 @@ public class GameManager : MonoBehaviour
                                 //change color if negative or positive
                                 if ((resource.Value - resourceOld.Value) < 0)
                                 {
-                                    panel.transform.GetChild(0).transform.GetChild(1).GetComponent<TextMeshProUGUI>().color = new Color32(255, 0,0,255);
+                                    panel.transform.GetChild(0).transform.GetChild(1).GetComponent<TextMeshProUGUI>().color = new Color32(255, 0, 0, 255);
                                 }
-                                else if((resource.Value - resourceOld.Value) > 0)
+                                else if ((resource.Value - resourceOld.Value) > 0)
                                 {
                                     panel.transform.GetChild(0).transform.GetChild(1).GetComponent<TextMeshProUGUI>().color = new Color32(0, 255, 0, 255);
                                 }
@@ -563,7 +578,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (KeyValuePair<string, Resource> resource in Data.Instance.RESOURCES)
         {
-            if(Data.Instance.INVENTORY.ContainsKey(resource.Key))
+            if (Data.Instance.INVENTORY.ContainsKey(resource.Key))
             {
                 Data.Instance.INVENTORY.Remove(resource.Key);
             }
@@ -573,9 +588,12 @@ public class GameManager : MonoBehaviour
         Data.Instance.INVENTORY.Add(Data.SKELETON, 5);
         Data.Instance.INVENTORY.Add(Data.JACK_LANTERN, 5);
         Data.Instance.INVENTORY.Add(Data.GOBLIN, 5);
-        //Data.Instance.INVENTORY.Add(Data.BAT, 10);
+        Data.Instance.INVENTORY.Add(Data.BAT, 10);
         Data.Instance.INVENTORY.Add(Data.ZOMBIE, 5);
         Data.Instance.INVENTORY.Add(Data.GHOST, 5);
+        Data.Instance.INVENTORY.Add(Data.CLOWN, 5);
+        Data.Instance.INVENTORY.Add(Data.VAMPIRE, 5);
+        Data.Instance.INVENTORY.Add(Data.WITCH, 5);
     }
 
     public void buildConstructions()
@@ -599,6 +617,7 @@ public class GameManager : MonoBehaviour
                         if (construction.Value[CONSTRUCTION_TYPE] == 1)
                         {
                             #region SUMMONING CIRCLE
+
                             //It's summoning circle
                             SummoningCircle temp = obj.GetComponent<SummoningCircle>();
                             //set building values
@@ -639,12 +658,15 @@ public class GameManager : MonoBehaviour
                             BoundsInt areaTemp = temp.area;
                             areaTemp.position = positionInt;
                             GridBuildingSystem.current.takeArea(areaTemp);
-                            #endregion
+
+                            #endregion SUMMONING CIRCLE
                         }
                         else if (construction.Value[CONSTRUCTION_TYPE] == 2)
                         {
                             //It's a decoration boost
+
                             #region DECORATION BOOST
+
                             DecorationBoost temp = obj.GetComponent<DecorationBoost>();
 
                             //Set decoration boost values
@@ -654,11 +676,13 @@ public class GameManager : MonoBehaviour
                             BoundsInt areaTemp = temp.area;
                             areaTemp.position = positionInt;
                             GridBuildingSystem.current.takeArea(areaTemp);
-                            #endregion
+
+                            #endregion DECORATION BOOST
                         }
                         else
                         {
                             #region GENERAL BUILDING
+
                             Building temp = obj.GetComponent<Building>();
                             //set building values
                             temp.level = (int)construction.Value[LEVEL];
@@ -695,7 +719,8 @@ public class GameManager : MonoBehaviour
                             BoundsInt areaTemp = temp.area;
                             areaTemp.position = positionInt;
                             GridBuildingSystem.current.takeArea(areaTemp);
-                            #endregion
+
+                            #endregion GENERAL BUILDING
                         }
 
                         /*Debug.Log(
@@ -717,8 +742,6 @@ public class GameManager : MonoBehaviour
                             temp.isProducing + "\nart: " +
                             temp.activeResourceTime + "\n");*/
 
-
-
                         //Add building to built constructions list
                         constructionsBuilt.Add(obj);
 
@@ -734,7 +757,7 @@ public class GameManager : MonoBehaviour
                         }
                     }
                 }
-            }    
+            }
         }
     }
 
@@ -773,21 +796,18 @@ public class GameManager : MonoBehaviour
         if (offlineTimeAux.Hours > 0)
         {
             if (offlineTimeAux.Minutes > 0)
-            {               
-                
-                fillOfflineDialog(offlineTimeAux.Hours + "h " + offlineTimeAux.Minutes + "min");   
+            {
+                fillOfflineDialog(offlineTimeAux.Hours + "h " + offlineTimeAux.Minutes + "min");
             }
             else
             {
                 if (offlineTimeAux.Seconds > 0)
                 {
                     fillOfflineDialog(offlineTimeAux.Hours + "h " + offlineTimeAux.Seconds + "s");
-
                 }
                 else
                 {
                     fillOfflineDialog(offlineTimeAux.Hours + "h");
-
                 }
             }
         }
@@ -798,18 +818,15 @@ public class GameManager : MonoBehaviour
                 if (offlineTimeAux.Seconds > 0)
                 {
                     fillOfflineDialog(offlineTimeAux.Minutes + "min " + offlineTimeAux.Seconds + "s");
-
                 }
                 else
                 {
                     fillOfflineDialog(offlineTimeAux.Minutes + "min");
-
                 }
             }
             else
             {
                 fillOfflineDialog(offlineTimeAux.Seconds + "s");
-
             }
         }
     }
@@ -836,13 +853,21 @@ public class GameManager : MonoBehaviour
 
     public void loadMiniGame()
     {
+        loadingScreen.SetActive(true);
+        Invoke("load", 3f);
+    }
+
+    public void load()
+    {
+        bool hasMonster = false;
         for (int i = 0; i < monstersKeys.Count; i++)
         {
             if (Data.Instance.INVENTORY.ContainsKey(monstersKeys[i])) //Load minigame only if it has minim 1 monster
             {
-                SceneManager.LoadScene("miniGame");
+                hasMonster = true;
             }
         }
+        if (hasMonster) SceneManager.LoadScene("miniGame");
     }
 
     public void applyBoost(string id)
@@ -850,6 +875,7 @@ public class GameManager : MonoBehaviour
         switch (id)
         {
             #region BUILDINGS BOOSTS
+
             case "crypt":
                 //Unlock the crypt
                 foreach (ShopItemHolder item in buildingShopItems)
@@ -860,8 +886,8 @@ public class GameManager : MonoBehaviour
                         item.setToUnlocked();
                     }
                 }
-                
-            break;
+
+                break;
 
             case "magicWorkshop":
                 //Unlock the magic workshop
@@ -894,7 +920,7 @@ public class GameManager : MonoBehaviour
                 isHellfireUnlocked = true;
                 foreach (GameObject building in constructionsBuilt)
                 {
-                    if(building.GetComponent<Building>() != null && building.GetComponent<Building>().id.Equals("hellIsland"))
+                    if (building.GetComponent<Building>() != null && building.GetComponent<Building>().id.Equals("hellIsland"))
                     {
                         building.GetComponent<Building>().updateUI();
                     }
@@ -991,9 +1017,11 @@ public class GameManager : MonoBehaviour
                 }
 
                 break;
-            #endregion
+
+            #endregion BUILDINGS BOOSTS
 
             #region MONSTER BOOSTS
+
             case "jackOLantern":
 
                 if (Data.Instance.MONSTERS.TryGetValue(Data.JACK_LANTERN, out MonsterInfo monsterAux1))
@@ -1259,9 +1287,11 @@ public class GameManager : MonoBehaviour
                 }
 
                 break;
-            #endregion
+
+            #endregion MONSTER BOOSTS
 
             #region SPECIALS
+
             case "spectre":
                 //Unlock the spectre
                 foreach (ShopItemHolder item in buildingShopItems)
@@ -1309,7 +1339,8 @@ public class GameManager : MonoBehaviour
                     }
                 }
                 break;
-                #endregion
+
+                #endregion SPECIALS
         }
     }
 
@@ -1317,8 +1348,8 @@ public class GameManager : MonoBehaviour
     {
         //When loading the game
         foreach (KeyValuePair<string, int> boost in Data.Instance.BOOSTS)
-        {            
-            applyBoost(boost.Key);            
+        {
+            applyBoost(boost.Key);
         }
     }
 
@@ -1328,11 +1359,10 @@ public class GameManager : MonoBehaviour
         {
             if (item.Item.id.Equals(id))
             {
-                if (Data.Instance.BUILDINGS.TryGetValue(id, out GameObject construction)) {
-
+                if (Data.Instance.BUILDINGS.TryGetValue(id, out GameObject construction))
+                {
                     if (Data.Instance.BUILDING_INVENTORY.TryGetValue(id, out int quantity))
                     {
-
                         if (construction.GetComponent<Construction>().production_cost.Count > 0 && quantity < item.Item.maxQuantity)
                         {
                             item.requirementText1 = construction.GetComponent<Construction>().production_cost[quantity].list[0].quantity.ToString();
@@ -1344,7 +1374,7 @@ public class GameManager : MonoBehaviour
 
                             item.resourceText1.gameObject.SetActive(true);
                             item.resource1Icon.gameObject.SetActive(true);
-                            item.resource1Icon.color = new Color(1,1,1,1);
+                            item.resource1Icon.color = new Color(1, 1, 1, 1);
 
                             if (construction.GetComponent<Construction>().production_cost[quantity].list.Count > 1)
                             {
@@ -1357,7 +1387,6 @@ public class GameManager : MonoBehaviour
                                 item.resourceText2.gameObject.SetActive(true);
                                 item.resource2Icon.gameObject.SetActive(true);
                                 item.resource2Icon.color = new Color(1, 1, 1, 1);
-
                             }
                             else
                             {
@@ -1407,7 +1436,7 @@ public class GameManager : MonoBehaviour
     {
         string output = "";
 
-        if(num >= 1000)
+        if (num >= 1000)
         {
             string[] aux = (num / 1000f).ToString().Split(',');
             if (aux.Length > 1)
@@ -1418,7 +1447,6 @@ public class GameManager : MonoBehaviour
             {
                 output = aux[0] + "k";
             }
-
         }
         else
         {
@@ -1429,7 +1457,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void fillInventoryDialog()
-    {          
+    {
         //Clear all panels
         foreach (Transform child in inventoryDialog.transform.Find("Scrollback").transform.GetChild(0).transform)
         {

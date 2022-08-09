@@ -33,7 +33,7 @@ public abstract class Monster : MonoBehaviour
     public AudioSource audioSourceAux; //Perque sonin 2 a la vegada i no es talli si ha començat
     public AudioClip[] sounds;
     public HealthBar healthBar;
-    protected float attackTime = 0;
+    protected float attackTime = 999;
     public Color fillColor;
     public Color backgroundColor;
 
@@ -45,6 +45,7 @@ public abstract class Monster : MonoBehaviour
 
     //Variables x els sons de l'array sounds
     protected static int ATTACK = 0;
+
     protected static int DEFAULT = 1;
     protected static int SPAWN = 2;
     protected static int TAKE_DAMAGE = 3;
@@ -57,7 +58,7 @@ public abstract class Monster : MonoBehaviour
         gameObject.SetActive(false);
         healthBar.gameObject.SetActive(false);
     }
-    
+
     public virtual void die()
     {
         //Instantiate tomb
@@ -65,8 +66,9 @@ public abstract class Monster : MonoBehaviour
         Instantiate(deathSound, transform.position, Quaternion.identity);*/
         miniGameManager.Instance.numMonstersDied++;
         Destroy(healthBar.gameObject);
-        Instantiate(tomb,transform.position, Quaternion.identity);
-        Destroy(this.gameObject);        
+        GameObject g = Instantiate(tomb, transform.position, Quaternion.identity);
+        miniGameManager.Instance.tombs.Add(g.transform.GetChild(0).gameObject);
+        Destroy(this.gameObject);
     }
 
     public void playDieAnim()
@@ -84,9 +86,24 @@ public abstract class Monster : MonoBehaviour
         //spawn particles
         animator.Play("monster_spawn");
 
+        float closestFlag = 99999;
+        int closestFlagIndex = 0;
+
         for (int i = 0; i < miniGameManager.Instance.activeFlags.Count; i++)
-        {            
-            flags.Add(miniGameManager.Instance.activeFlags[i].GetComponent<Transform>());            
+        {
+            if ((miniGameManager.Instance.activeFlags[i].GetComponent<Transform>().position - transform.position).magnitude < closestFlag)
+            {
+                closestFlag = (miniGameManager.Instance.activeFlags[i].GetComponent<Transform>().position - transform.position).magnitude;
+                closestFlagIndex = i;
+            }
+        }
+        flags.Add(miniGameManager.Instance.activeFlags[closestFlagIndex].GetComponent<Transform>());
+        for (int i = 0; i < miniGameManager.Instance.activeFlags.Count; i++)
+        {
+            if (i != closestFlagIndex)
+            {
+                flags.Add(miniGameManager.Instance.activeFlags[i].GetComponent<Transform>());
+            }
         }
 
         healthBar = Instantiate(healthBar, canvas);
@@ -139,7 +156,6 @@ public abstract class Monster : MonoBehaviour
 
     public virtual void move()
     {
-        
         if (!checkVillagersInRange())
         {
             if (agent.speed == 0)
@@ -181,7 +197,7 @@ public abstract class Monster : MonoBehaviour
                     {
                         isAttacking = true;
 
-                        //Get anim position 
+                        //Get anim position
                         Vector3 animPosition = transform.GetChild(0).transform.position;
 
                         //Cast projectile
@@ -222,7 +238,7 @@ public abstract class Monster : MonoBehaviour
             if (collision.GetComponent<Villager>() && collision.GetComponent<Villager>().level <= level)
             {
                 //Check if favourite villager
-                if(collision.GetComponent<Villager>().type == favVillager)
+                if (collision.GetComponent<Villager>().type == favVillager)
                 {
                     favVillagers.Add(collision);
                 }
@@ -233,8 +249,8 @@ public abstract class Monster : MonoBehaviour
             }
         }
 
-        if(favVillagers.Count > 0){
-
+        if (favVillagers.Count > 0)
+        {
             foreach (Collider2D favVillager in favVillagers)
             {
                 if (closestVillager == null)
@@ -303,7 +319,7 @@ public abstract class Monster : MonoBehaviour
 
         foreach (Collider2D collision in collisions)
         {
-            if (collision == target )
+            if (collision == target)
             {
                 isInRange = true;
             }

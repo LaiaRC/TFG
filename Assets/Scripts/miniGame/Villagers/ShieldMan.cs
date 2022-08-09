@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class ShieldMan : Villager
 {
-
     public NavMeshObstacle navMeshObstacle;
     public float blockingTime;
     public bool isBlocking = false;
@@ -24,7 +23,7 @@ public class ShieldMan : Villager
     public bool isMovingRight = false;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
@@ -39,7 +38,7 @@ public class ShieldMan : Villager
             flags.Add(miniGameManager.Instance.activeFlags[i].GetComponent<Transform>());
         }
 
-        destinationFlag = Random.Range(0,flags.Count);
+        destinationFlag = Random.Range(0, flags.Count);
         destination = ((Vector2)flags[destinationFlag].position + (Random.insideUnitCircle * radius));
         destination.z = 0;
 
@@ -48,7 +47,7 @@ public class ShieldMan : Villager
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         //Update direction
         isMovingRight = transform.GetComponent<CharacterMovement>().movingRight;
@@ -104,9 +103,8 @@ public class ShieldMan : Villager
             {
                 playBlockAnimation();
             }
-            
-            scareBar.setValue(currentScarePoints); //Aqui sera el take 
 
+            scareBar.setValue(currentScarePoints); //Aqui sera el take
         }
     }
 
@@ -162,7 +160,6 @@ public class ShieldMan : Villager
             }
         }
 
-
         if (monsters.Count > 0)
         {
             foreach (Collider2D monster in monsters)
@@ -185,7 +182,7 @@ public class ShieldMan : Villager
 
     public void goToFlag()
     {
-        if ((transform.position - destination).magnitude <= agent.stoppingDistance + 0.2f)
+        if ((transform.position - destination).magnitude <= range)
         {
             //Once arrived to the chosen flag block permanently
             permanentBlock();
@@ -201,7 +198,7 @@ public class ShieldMan : Villager
     {
         if (!checkMonstersInRange())
         {
-            if(time <= 30)
+            if (time <= 30)
             {
                 move();
             }
@@ -242,7 +239,6 @@ public class ShieldMan : Villager
                 {
                     if ((transform.position - currentTarget.position).magnitude <= 5 + 0.2f)
                     {
-
                         attackTime += Time.deltaTime;
                         if (attackTime >= attackRate)
                         {
@@ -272,6 +268,7 @@ public class ShieldMan : Villager
             }
         }
     }
+
     public void run()
     {
         isRunning = true;
@@ -280,8 +277,7 @@ public class ShieldMan : Villager
     }
 
     public void block()
-    {       
-
+    {
         isBlocking = true;
         agent.speed = 0;
         isRunning = false;
@@ -319,6 +315,7 @@ public class ShieldMan : Villager
         collider.radius = 0.5f;
         Invoke("enableAgent", 0.5f);
     }
+
     public void enableAgent()
     {
         agent.enabled = true;
@@ -337,13 +334,13 @@ public class ShieldMan : Villager
                 //play block animation
                 if (!wasMovingRight)
                 {
-                    //Play left animation                    
-                    transform.GetChild(0).GetChild(i).GetComponent<Animator>().Play("shieldMan_block_left");                    
+                    //Play left animation
+                    transform.GetChild(0).GetChild(i).GetComponent<Animator>().Play("shieldMan_block_left");
                 }
                 else
                 {
                     //Play right animation
-                    transform.GetChild(0).GetChild(i).GetComponent<Animator>().Play("shieldMan_block_right");                    
+                    transform.GetChild(0).GetChild(i).GetComponent<Animator>().Play("shieldMan_block_right");
                 }
             }
         }

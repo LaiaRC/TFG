@@ -12,14 +12,14 @@ public class Player : MonoBehaviour
     public TextMeshProUGUI buttonTimeText;
     public bool dragged = false;
 
-    Vector3 touchPosWorld;
+    private Vector3 touchPosWorld;
 
-    void Start()
+    private void Start()
     {
         shopUI.SetActive(false);
     }
 
-    void Update()
+    private void Update()
     {
         if (GameManager.Instance.dragging)
         {
@@ -27,35 +27,50 @@ public class Player : MonoBehaviour
         }
 
         //Detectar objecte clicat (mobile)
-        if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
         {
             touchPosWorld = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
             Vector2 touchPosWorld2D = new Vector2(touchPosWorld.x, touchPosWorld.y);
 
             RaycastHit2D hitInformation = Physics2D.Raycast(touchPosWorld2D, Camera.main.transform.forward);
             if (hitInformation.collider != null)
-            {                
+            {
                 //We should have hit something with a 2D Physics collider!
                 GameObject touchedObject = hitInformation.transform.gameObject;
 
-                if(touchedObject.GetComponent<Building>() != null && !dragged)
+                if (touchedObject.GetComponent<Building>() != null && !dragged)
                 {
                     //Building touched
                     if (touchedObject.GetComponent<Building>().placed)
                     {
                         touchedObject.GetComponent<Building>().showBuildingInterior();
+                        if (GameManager.Instance.isOnBuildingMode)
+                        {
+                            GameManager.Instance.closeShop();
+                        }
                     }
-                }else if (touchedObject.GetComponent<SummoningCircle>() != null && !dragged) //maybe no cal
+                }
+                else if (touchedObject.GetComponent<SummoningCircle>() != null && !dragged) //maybe no cal
                 {
                     //Summoning circle building touched
                     if (touchedObject.GetComponent<SummoningCircle>().placed)
                     {
                         touchedObject.GetComponent<SummoningCircle>().showBuildingInterior();
+                        if (GameManager.Instance.isOnBuildingMode)
+                        {
+                            GameManager.Instance.closeShop();
+                        }
                     }
-                }else if (touchedObject.GetComponent<BoostShop>() != null && !dragged)
+                }
+                else if (touchedObject.GetComponent<BoostShop>() != null && !dragged)
                 {
                     touchedObject.GetComponent<BoostShop>().showShop();
-                }else if (touchedObject.tag.Equals("portal"))
+                    if (GameManager.Instance.isOnBuildingMode)
+                    {
+                        GameManager.Instance.closeShop();
+                    }
+                }
+                else if (touchedObject.tag.Equals("portal"))
                 {
                     GameManager.Instance.showPortalDialog();
                 }
@@ -82,5 +97,4 @@ public class Player : MonoBehaviour
             buttonTime.GetComponent<Image>().color = new Color(1, 1, 1, 1);
         }
     }
-    
 }

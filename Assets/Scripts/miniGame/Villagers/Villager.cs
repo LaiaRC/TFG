@@ -10,7 +10,7 @@ public class Villager : MonoBehaviour
 {
     public float velocity;
     public int maxScarePoints; //"health"
-    public int currentScarePoints; 
+    public int currentScarePoints;
     public int damage;
     public int level;
     public float range;
@@ -47,10 +47,12 @@ public class Villager : MonoBehaviour
     protected float linkSpeed = 0.1f;
 
     protected List<Transform> route = new List<Transform>();
+    protected List<Transform> initialRoute = new List<Transform>();
     protected int currentWaypointIndex;
 
     //Variables x els sons de l'array sounds
     protected static int ATTACK = 0;
+
     protected static int DEFAULT = 1;
     protected static int SPAWN = 2;
     protected static int TAKE_SCARE = 3;
@@ -81,7 +83,7 @@ public class Villager : MonoBehaviour
             newDrop.quantity = dropClass.quantity + dropQuantity;
             newDrop.icon = dropClass.icon;
             newDrop.level = level;
-            miniGameManager.Instance.DROPS[drop.name] =  newDrop;
+            miniGameManager.Instance.DROPS[drop.name] = newDrop;
         }
         else
         {
@@ -92,7 +94,7 @@ public class Villager : MonoBehaviour
             newDrop.level = level;
             miniGameManager.Instance.DROPS.Add(drop.name, newDrop);
         }
-        
+
         audioSource.clip = sounds[DIE];
         audioSource.Play();
         //Instantiate(deathParticles, transform.position, Quaternion.identity);
@@ -101,7 +103,14 @@ public class Villager : MonoBehaviour
         scareBar.setValue(0);
         currentScarePoints = 0;
         gameObject.SetActive(false); //S'haura d'esperar a que acabi la anim de die
-        scareBar.gameObject.SetActive(false);                                 
+        scareBar.gameObject.SetActive(false);
+    }
+
+    public bool CanReachPosition(Vector2 position)
+    {
+        NavMeshPath path = new NavMeshPath();
+        agent.CalculatePath(position, path);
+        return path.status == NavMeshPathStatus.PathComplete;
     }
 
     public void spawn()
@@ -111,14 +120,62 @@ public class Villager : MonoBehaviour
         audioSource.Play();
         Instantiate(spawnParticles, transform.position, Quaternion.identity);
         canMove = true;
+        isRunning = false;
+        isScared = false;
+        isStunned = false;
 
-        //Create villager route 
+        //Create villager route
         if (miniGameManager.Instance.waypoints != null)
         {
             for (int i = 0; i < NUM_WAYPOINTS; i++)
             {
                 route.Add(miniGameManager.Instance.waypoints[Random.Range(0, miniGameManager.Instance.waypoints.Count)]);
             }
+        }
+
+        switch (type)
+        {
+            case "mom":
+                for (int i = 0; i < miniGameManager.Instance.momWaypoints.Count; i++)
+                {
+                    initialRoute.Add(miniGameManager.Instance.momWaypoints[Random.Range(0, miniGameManager.Instance.momWaypoints.Count)]);
+                }
+                break;
+
+            case "child":
+                for (int i = 0; i < miniGameManager.Instance.childWaypoints.Count; i++)
+                {
+                    initialRoute.Add(miniGameManager.Instance.childWaypoints[Random.Range(0, miniGameManager.Instance.childWaypoints.Count)]);
+                }
+                break;
+
+            case "adult":
+                for (int i = 0; i < miniGameManager.Instance.adultWaypoints.Count; i++)
+                {
+                    initialRoute.Add(miniGameManager.Instance.adultWaypoints[Random.Range(0, miniGameManager.Instance.adultWaypoints.Count)]);
+                }
+                break;
+
+            case "elder":
+                for (int i = 0; i < miniGameManager.Instance.elderWaypoints.Count; i++)
+                {
+                    initialRoute.Add(miniGameManager.Instance.elderWaypoints[Random.Range(0, miniGameManager.Instance.elderWaypoints.Count)]);
+                }
+                break;
+
+            case "shieldMan":
+                for (int i = 0; i < miniGameManager.Instance.shieldmanWaypoints.Count; i++)
+                {
+                    initialRoute.Add(miniGameManager.Instance.shieldmanWaypoints[Random.Range(0, miniGameManager.Instance.shieldmanWaypoints.Count)]);
+                }
+                break;
+
+            case "swashbuckler":
+                for (int i = 0; i < miniGameManager.Instance.swashbucklerWaypoints.Count; i++)
+                {
+                    initialRoute.Add(miniGameManager.Instance.swashbucklerWaypoints[Random.Range(0, miniGameManager.Instance.swashbucklerWaypoints.Count)]);
+                }
+                break;
         }
 
         currentWaypointIndex = 0;
@@ -157,6 +214,12 @@ public class Villager : MonoBehaviour
         isScared = true;
         Invoke("resetIsScared", TIME_SCARED);
 
+        if (type == "child" && !miniGameManager.Instance.childMoveFree)
+        {
+            miniGameManager.Instance.childMoveFree = true;
+            miniGameManager.Instance.momMoveFree = true;
+        }
+
         //not run when scared, only nearby villagers run
         /*if (canMove)
         {
@@ -187,6 +250,7 @@ public class Villager : MonoBehaviour
             Invoke("setOriginalSpeed", runningTime);
         }
     }
+
     public void setOriginalSpeed()
     {
         agent.speed = velocity;
@@ -219,30 +283,118 @@ public class Villager : MonoBehaviour
 
     public virtual void move()
     {
-        if (miniGameManager.Instance.waypoints != null && canMove)
+        bool moveFree = false;
+        switch (type)
         {
-            if ((transform.position - route[currentWaypointIndex].position).magnitude <= agent.stoppingDistance + 0.2f)
+            case "child":
+                moveFree = miniGameManager.Instance.childMoveFree;
+                break;
+
+            case "mom":
+                moveFree = miniGameManager.Instance.momMoveFree;
+                break;
+
+            case "adult":
+                moveFree = false;
+                break;
+
+            case "swashbuckler":
+                moveFree = miniGameManager.Instance.villagersMoveFree;
+                break;
+
+            case "shieldMan":
+                moveFree = miniGameManager.Instance.villagersMoveFree;
+                break;
+
+            case "elder":
+                moveFree = false;
+                break;
+
+            case "sorcerer":
+                moveFree = true;
+                break;
+        }
+
+        if (!GetComponent<Mom>() || !GetComponent<Mom>().isGoingToChild || GetComponent<Mom>().currentTarget == null)
+        {
+            if (moveFree)
             {
-                //check if it's last waypoint
-                if (currentWaypointIndex >= route.Count - 1)
+                if (miniGameManager.Instance.waypoints != null && canMove)
                 {
-                    //set new villager route
-                    route.Clear();
-                    for (int i = 0; i < NUM_WAYPOINTS; i++)
+                    if ((transform.position - route[currentWaypointIndex].position).magnitude <= agent.stoppingDistance + 0.2f)
                     {
-                        route.Add(miniGameManager.Instance.waypoints[Random.Range(0, miniGameManager.Instance.waypoints.Count)]);
+                        //check if it's last waypoint
+                        if (currentWaypointIndex >= route.Count - 1)
+                        {
+                            //set new villager route
+                            route.Clear();
+                            for (int i = 0; i < NUM_WAYPOINTS; i++)
+                            {
+                                route.Add(miniGameManager.Instance.waypoints[Random.Range(0, miniGameManager.Instance.waypoints.Count)]);
+                            }
+                            if (type == "mom" && !miniGameManager.Instance.momMoveFree)
+                            {
+                                route[0] = miniGameManager.Instance.childWaypoints[0];
+                            }
+                            currentWaypointIndex = 0;
+                        }
+                        else
+                        {
+                            currentWaypointIndex++;
+                        }
                     }
-                    currentWaypointIndex = 0;
-                }
-                else
-                {
-                    currentWaypointIndex++;
+                    else
+                    {
+                        //keep moving to waypoint
+                        if (CanReachPosition(route[currentWaypointIndex].position))
+                        {
+                            agent.SetDestination(route[currentWaypointIndex].position);
+                        }
+                        else
+                        {
+                            if (currentWaypointIndex >= route.Count - 1)
+                            {
+                                //set new villager route
+                                route.Clear();
+                                for (int i = 0; i < NUM_WAYPOINTS; i++)
+                                {
+                                    route.Add(miniGameManager.Instance.waypoints[Random.Range(0, miniGameManager.Instance.waypoints.Count)]);
+                                }
+                                currentWaypointIndex = 0;
+                            }
+                            else
+                            {
+                                currentWaypointIndex++;
+                            }
+
+                            agent.SetDestination(route[currentWaypointIndex].position);
+                        }
+                    }
                 }
             }
             else
             {
-                //keep moving to waypoint
-                agent.SetDestination(route[currentWaypointIndex].position);
+                if (initialRoute.Count > 0 && canMove)
+                {
+                    if ((transform.position - initialRoute[currentWaypointIndex].position).magnitude <= agent.stoppingDistance + 0.2f)
+                    {
+                        //check if it's last waypoint
+                        if (currentWaypointIndex >= initialRoute.Count - 1)
+                        {
+                            //set new villager route
+                            currentWaypointIndex = 0;
+                        }
+                        else
+                        {
+                            currentWaypointIndex++;
+                        }
+                    }
+                    else
+                    {
+                        //keep moving to waypoint
+                        agent.SetDestination(initialRoute[currentWaypointIndex].position);
+                    }
+                }
             }
         }
     }

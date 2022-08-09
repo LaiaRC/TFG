@@ -437,12 +437,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 605393a331ed2a246884503d5d645dc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 2
+  velocity: 3
   maxScarePoints: 10
   currentScarePoints: 0
   damage: 2
   level: 2
-  range: 7
+  range: 4
   currentState: 
   canAttack: 1
   canMove: 1
@@ -452,7 +452,7 @@ MonoBehaviour:
   runningTime: 3
   runningSpeed: 6
   scareSpeed: 5
-  attackRate: 2
+  attackRate: 1
   isStunned: 0
   drop: {fileID: 3767981418247683008, guid: ef6362febd6627045bf6afc84994991d, type: 3}
   dropQuantity: 1

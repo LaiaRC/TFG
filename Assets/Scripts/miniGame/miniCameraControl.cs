@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class miniCameraControl : MonoBehaviour
 {
-    Vector3 touchStart;
-    Vector3 touchStartZoom;
+    private Vector3 touchStart;
+    private Vector3 touchStartZoom;
     public float zoomOutMin = 7;
     public float zoomOutMax = 22;
     public float zoomFactor = 0.01f;
     public float zoomThreshold = 0.5f;
     public float maxX = 20;
     public float maxY = 20;
+    public float offX;
+    public float offY;
 
     private Vector3 initialPos;
     private bool isFirstTouch = false;
@@ -24,9 +26,8 @@ public class miniCameraControl : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-
         if (Input.touchCount <= 0)
         {
             isFirstTouch = true;
@@ -43,7 +44,6 @@ public class miniCameraControl : MonoBehaviour
                     touchStart = Camera.main.ScreenToWorldPoint(touch.position);
                     isFirstTouch = false;
                 }
-
 
                 Vector3 direction = touchStart - Camera.main.ScreenToWorldPoint(touch.position);
                 Camera.main.transform.position += direction;
@@ -81,12 +81,11 @@ public class miniCameraControl : MonoBehaviour
                 zoom(difference * zoomFactor);
             }
         }
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -maxX, maxX), Mathf.Clamp(transform.position.y, -maxY, maxY), Mathf.Clamp(transform.position.z, -10, -10));
-        
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, initialPos.x - maxX, initialPos.x + maxX), Mathf.Clamp(transform.position.y, initialPos.y - maxY, initialPos.y + maxY), Mathf.Clamp(transform.position.z, -10, -10));
     }
-    void zoom(float increment)
-    {
 
+    private void zoom(float increment)
+    {
         Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - increment, zoomOutMin, zoomOutMax);
     }
 

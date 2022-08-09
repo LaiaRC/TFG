@@ -17,7 +17,7 @@ public class Projectile : MonoBehaviour
     public static string VILLAGER = "villager";
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (gameObject.activeInHierarchy)
         {
@@ -32,7 +32,14 @@ public class Projectile : MonoBehaviour
                     transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
                 }
 
-                transform.position = Vector3.SmoothDamp(transform.position, objective.transform.position, ref velocity, smoothTime);
+                if ((transform.position - objective.transform.position).magnitude < 15f)
+                {
+                    transform.position = Vector3.SmoothDamp(transform.position, objective.transform.position, ref velocity, smoothTime);
+                }
+                else
+                {
+                    gameObject.SetActive(false);
+                }
                 if ((transform.position - objective.transform.position).magnitude <= 2f)
                 {
                     if (type.Equals(MONSTER))

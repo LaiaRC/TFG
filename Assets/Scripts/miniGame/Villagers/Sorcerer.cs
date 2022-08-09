@@ -18,7 +18,7 @@ public class Sorcerer : Villager
     public bool isMovingRight = false;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         agent.updateRotation = false;
@@ -29,7 +29,7 @@ public class Sorcerer : Villager
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         //Update direction
         isMovingRight = transform.GetComponent<CharacterMovement>().movingRight;
@@ -117,7 +117,6 @@ public class Sorcerer : Villager
             }
         }
 
-
         if (monsters.Count > 0)
         {
             foreach (Collider2D monster in monsters)
@@ -139,26 +138,13 @@ public class Sorcerer : Villager
     }
 
     public void takeAction()
-    {        
+    {
         if (checkScaredVillagers() && !hasTeleported)
         {
             if (!hasTeleported)
             {
                 //Show teleport area
                 teleportRange.SetActive(true);
-
-                //area damage monsters before teleporting
-                if (checkMonstersInRange())
-                {
-                    List<GameObject> monsters = getMonsters();
-                    if (monsters != null)
-                    {
-                        foreach (GameObject monster in monsters)
-                        {
-                            monster.GetComponent<Monster>().takeDamage(damage);
-                        }
-                    }
-                }
 
                 //play teleport before animation
                 if (!wasMovingRight)
@@ -175,7 +161,7 @@ public class Sorcerer : Villager
                 hasTeleported = true;
 
                 //wait until animation finishes to actually teleport
-                Invoke(nameof(teleport), 0.4f);                
+                Invoke(nameof(teleport), 0.4f);
             }
         }
         else
@@ -213,7 +199,7 @@ public class Sorcerer : Villager
                                 transform.GetChild(0).GetComponent<Animator>().Play("sorcerer_attack_right");
                             }
 
-                            //Get anim position 
+                            //Get anim position
                             Vector3 animPosition = transform.GetChild(0).transform.position;
 
                             //Cast projectile
@@ -226,7 +212,7 @@ public class Sorcerer : Villager
                     }
                 }
             }
-        }        
+        }
     }
 
     public bool checkScaredVillagers()
@@ -273,11 +259,13 @@ public class Sorcerer : Villager
         return monsters;
     }
 
-    public int RandomRangeExcept(int min, int max, int except){
+    public int RandomRangeExcept(int min, int max, int except)
+    {
         int number = 0;
-        do {
+        do
+        {
             number = Random.Range(min, max);
-        } while (number == except) ;
+        } while (number == except);
 
         return number;
     }
@@ -310,19 +298,6 @@ public class Sorcerer : Villager
         {
             //Play right animation
             transform.GetChild(0).GetComponent<Animator>().Play("sorcerer_teleport_right_after");
-        }
-
-        //area damage monsters after teleporting
-        if (checkMonstersInRange())
-        {
-            List<GameObject> monsters = getMonsters();
-            if (monsters != null)
-            {
-                foreach (GameObject monster in monsters)
-                {
-                    monster.GetComponent<Monster>().takeDamage(damage);
-                }
-            }
         }
 
         //Hide teleport area

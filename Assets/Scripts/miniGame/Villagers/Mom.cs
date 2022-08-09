@@ -13,8 +13,12 @@ public class Mom : Villager
     public bool wasMovingRight = false;
     public bool isMovingRight = false;
 
+    public bool isGoingToChild = false;
+    public Transform currentTarget;
+    public Vector3 currentTargetDEBUG;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
@@ -25,7 +29,7 @@ public class Mom : Villager
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         //Update direction
         isMovingRight = transform.GetComponent<CharacterMovement>().movingRight;
@@ -33,6 +37,12 @@ public class Mom : Villager
         {
             //is moving
             wasMovingRight = isMovingRight;
+        }
+
+        if (currentTarget != null && (transform.position - currentTarget.position).magnitude <= agent.stoppingDistance + 0.5f)
+        {
+            currentTarget = null;
+            isGoingToChild = false;
         }
 
         if (miniGameManager.Instance.gameOver)
@@ -51,8 +61,7 @@ public class Mom : Villager
         }
     }
 
-    override 
-    public void checkNearScares()
+    public override void checkNearScares()
     {
         //only runs if someone near is scared by a monster above level 1
         Collider2D[] collisions = Physics2D.OverlapCircleAll(transform.position, range);
@@ -66,7 +75,7 @@ public class Mom : Villager
                     {
                         if (monster.GetComponent<Monster>())
                         {
-                            if(monster.GetComponent<Monster>().level > level)
+                            if (monster.GetComponent<Monster>().level > level)
                             {
                                 run(scareSpeed);
                             }
@@ -106,7 +115,6 @@ public class Mom : Villager
                 childs.Add(collision);
             }
         }
-
 
         if (childs.Count > 0)
         {
@@ -148,7 +156,7 @@ public class Mom : Villager
 
         Collider2D[] collisions = Physics2D.OverlapCircleAll(transform.position, range);
 
-        List<Collider2D> monsters = new List<Collider2D>(); 
+        List<Collider2D> monsters = new List<Collider2D>();
         Transform closestMonster = null;
 
         bool onlyJackOLantern = true;
@@ -166,7 +174,7 @@ public class Mom : Villager
         {
             if (!onlyJackOLantern)
             {
-                if (collision.GetComponent<Monster>() && collision.GetComponent<Monster>().level <= level && !collision.GetComponent<JackOLantern>())
+                if (collision.GetComponent<Monster>() && collision.GetComponent<Monster>().level <= level)
                 {
                     monsters.Add(collision);
                 }
@@ -179,7 +187,6 @@ public class Mom : Villager
                 }
             }
         }
-
 
         if (monsters.Count > 0)
         {
@@ -203,12 +210,15 @@ public class Mom : Villager
 
     public void takeAction()
     {
-        if (checkScaredChild())
+        if (checkScaredChild() && !isGoingToChild)
         {
-            Transform currentTarget = getScaredChild();
+            currentTarget = getScaredChild();
             runToChild(runningSpeed);
             isProtecting = true;
-            agent.SetDestination(currentTarget.position);
+            isGoingToChild = true;
+            currentTargetDEBUG = currentTarget.position;
+            Invoke("cancelTarget", 15f);
+            if (currentTarget != null) agent.SetDestination(currentTarget.position);
         }
         else
         {
@@ -226,7 +236,7 @@ public class Mom : Villager
                 Transform currentTarget = getMonsterInRange();
                 if (currentTarget != null)
                 {
-                    if ((transform.position - currentTarget.position).magnitude <= agent.stoppingDistance + 0.2f)
+                    if ((transform.position - currentTarget.position).magnitude <= range)
                     {
                         if (canAttack)
                         {
@@ -259,6 +269,12 @@ public class Mom : Villager
         }
     }
 
+    private void cancelTarget()
+    {
+        currentTarget = null;
+        isGoingToChild = false;
+    }
+
     public void runToChild(float speed)
     {
         if (canMove)
@@ -272,5 +288,7 @@ public class Mom : Villager
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, childDetectionRange);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, range);
     }
 }
