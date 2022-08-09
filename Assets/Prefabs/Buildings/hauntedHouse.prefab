@@ -1263,6 +1263,7 @@ MonoBehaviour:
   extraNumResources: 0
   isProducer: 0
   isConverter: 1
+  numResources: {fileID: 0}
   activeResource: plasma
   timeLeft: 0
   time: 0
@@ -2320,7 +2321,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3443679016792359464
 RectTransform:
   m_ObjectHideFlags: 0
