@@ -1294,7 +1294,7 @@ MonoBehaviour:
   placed: 0
   area:
     m_Position: {x: 0, y: 0, z: 0}
-    m_Size: {x: 4, y: 4, z: 0}
+    m_Size: {x: 4, y: 4, z: 1}
   confirmUI: {fileID: 4277186875537614106}
   upgrade_cost:
   - list:
@@ -1345,6 +1345,7 @@ MonoBehaviour:
   extraNumResources: 0
   isProducer: 0
   isConverter: 1
+  numResources: {fileID: 0}
   activeResource: blackCatHair
   timeLeft: 0
   time: 0

@@ -1447,7 +1447,7 @@ MonoBehaviour:
     m_Size: {x: 0, y: 0, z: 0}
   placed: 0
   area:
-    m_Position: {x: -15, y: -3, z: 0}
+    m_Position: {x: -11, y: -1, z: 0}
     m_Size: {x: 28, y: 14, z: 1}
   confirmUI: {fileID: 1688311054014621016}
   upgrade_cost:

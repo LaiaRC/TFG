@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
     public string hidenMonster = "jackOLantern";
     public int hidenMonsterIndex = 1;
     public GameObject resourcePanel;
+    public GameObject inventoryContainer;
 
     public Camera mainCamera;
 
@@ -178,13 +179,13 @@ public class GameManager : MonoBehaviour
     {
         foreach (KeyValuePair<string, int> inventoryResource in Data.Instance.INVENTORY)
         {
-            for (int i = 0; i < monstersKeys.Count; i++)
-            {
-                if (inventoryResource.Key.Equals(monstersKeys[i]))
-                {
+            //for (int i = 0; i < monstersKeys.Count; i++)
+            //{
+              //  if (inventoryResource.Key.Equals(monstersKeys[i]))
+                //{
                     info += "\n -" + inventoryResource.Key + ": " + inventoryResource.Value;
-                }
-            }
+               // }
+            //}
         }
         //debugInventoryInfo.SetText("isDialogOpen: " + isDialogOpen + "\n" + "draggingItemShop: " + draggingItemShop + "\n" + "draggingFromShop: " + draggingFromShop + "\n");
         debugInventoryInfo.text = info;
@@ -585,7 +586,7 @@ public class GameManager : MonoBehaviour
             Data.Instance.INVENTORY.Add(resource.Key, 10000);
         }
 
-        Data.Instance.INVENTORY.Add(Data.SKELETON, 5);
+        /*Data.Instance.INVENTORY.Add(Data.SKELETON, 5);
         Data.Instance.INVENTORY.Add(Data.JACK_LANTERN, 5);
         Data.Instance.INVENTORY.Add(Data.GOBLIN, 5);
         Data.Instance.INVENTORY.Add(Data.BAT, 10);
@@ -593,7 +594,7 @@ public class GameManager : MonoBehaviour
         Data.Instance.INVENTORY.Add(Data.GHOST, 5);
         Data.Instance.INVENTORY.Add(Data.CLOWN, 5);
         Data.Instance.INVENTORY.Add(Data.VAMPIRE, 5);
-        Data.Instance.INVENTORY.Add(Data.WITCH, 5);
+        Data.Instance.INVENTORY.Add(Data.WITCH, 5);*/
     }
 
     public void buildConstructions()
@@ -608,8 +609,8 @@ public class GameManager : MonoBehaviour
                     Vector3 constructionPosition = new Vector3(construction.Value[POS_X], construction.Value[POS_Y], 0);
 
                     Vector3Int positionIntAux = GridBuildingSystem.current.gridLayout.LocalToCell(constructionPosition);
+                    buildings[i].GetComponent<Construction>().area.position = new Vector3Int((int)(constructionPosition.x - buildings[i].GetComponent<Construction>().area.size.x / 1.8), (int)(constructionPosition.y - buildings[i].GetComponent<Construction>().area.size.y / 5), (int)constructionPosition.z);
                     BoundsInt areaTempAux = buildings[i].GetComponent<Construction>().area;
-                    areaTempAux.position = positionIntAux;
 
                     if (GridBuildingSystem.current.canTakeArea(areaTempAux))
                     {
@@ -715,10 +716,16 @@ public class GameManager : MonoBehaviour
                             temp.numType = (int)construction.Value[NUM_TYPE];
                             temp.activeResourceTime = construction.Value[ACTIVE_RESOURCE_TIME];
                             temp.updateUI();
-                            Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(constructionPosition);
+
+                            Vector3Int positionInt = GridBuildingSystem.current.gridLayout.WorldToCell(temp.gameObject.transform.position);
+                            temp.area.position = new Vector3Int((int)(temp.transform.position.x - temp.area.size.x / 1.8), (int)(temp.transform.position.y - temp.area.size.y / 5), (int)temp.transform.position.z);
+                            BoundsInt buildingArea = temp.area;
+                            GridBuildingSystem.current.takeArea(buildingArea);
+
+                            /*Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(constructionPosition);
                             BoundsInt areaTemp = temp.area;
-                            areaTemp.position = positionInt;
-                            GridBuildingSystem.current.takeArea(areaTemp);
+                            areaTemp.position = new Vector3Int((int)(temp.transform.position.x - temp.area.size.x / 1.8), (int)(temp.transform.position.y - temp.area.size.y / 5), (int)temp.transform.position.z);
+                            GridBuildingSystem.current.takeArea(areaTemp);*/
 
                             #endregion GENERAL BUILDING
                         }
@@ -853,12 +860,6 @@ public class GameManager : MonoBehaviour
 
     public void loadMiniGame()
     {
-        loadingScreen.SetActive(true);
-        Invoke("load", 3f);
-    }
-
-    public void load()
-    {
         bool hasMonster = false;
         for (int i = 0; i < monstersKeys.Count; i++)
         {
@@ -867,7 +868,16 @@ public class GameManager : MonoBehaviour
                 hasMonster = true;
             }
         }
-        if (hasMonster) SceneManager.LoadScene("miniGame");
+        if (hasMonster)
+        {
+            loadingScreen.SetActive(true);
+            Invoke("load", 3f);
+        }
+    }
+
+    public void load()
+    {        
+        SceneManager.LoadScene("miniGame");
     }
 
     public void applyBoost(string id)
@@ -1047,6 +1057,12 @@ public class GameManager : MonoBehaviour
                         }
 
                         boostShop.GetComponent<BoostShop>().setMonsterTabs();
+
+                        //Set new monster to inventory
+                        if (!Data.Instance.INVENTORY.ContainsKey(Data.JACK_LANTERN))
+                        {
+                            Data.Instance.INVENTORY.Add(Data.JACK_LANTERN, 0);
+                        }
                     }
                 }
 
@@ -1076,6 +1092,12 @@ public class GameManager : MonoBehaviour
                         }
 
                         boostShop.GetComponent<BoostShop>().setMonsterTabs();
+
+                        //Set new monster to inventory
+                        if (!Data.Instance.INVENTORY.ContainsKey(Data.BAT))
+                        {
+                            Data.Instance.INVENTORY.Add(Data.BAT, 0);
+                        }
                     }
                 }
 
@@ -1106,6 +1128,12 @@ public class GameManager : MonoBehaviour
                         }
 
                         boostShop.GetComponent<BoostShop>().setMonsterTabs();
+
+                        //Set new monster to inventory
+                        if (!Data.Instance.INVENTORY.ContainsKey(Data.GOBLIN))
+                        {
+                            Data.Instance.INVENTORY.Add(Data.GOBLIN, 0);
+                        }
                     }
                 }
 
@@ -1136,6 +1164,12 @@ public class GameManager : MonoBehaviour
                         }
 
                         boostShop.GetComponent<BoostShop>().setMonsterTabs();
+
+                        //Set new monster to inventory
+                        if (!Data.Instance.INVENTORY.ContainsKey(Data.GHOST))
+                        {
+                            Data.Instance.INVENTORY.Add(Data.GHOST, 0);
+                        }
                     }
                 }
 
@@ -1166,6 +1200,12 @@ public class GameManager : MonoBehaviour
                         }
 
                         boostShop.GetComponent<BoostShop>().setMonsterTabs();
+
+                        //Set new monster to inventory
+                        if (!Data.Instance.INVENTORY.ContainsKey(Data.CLOWN))
+                        {
+                            Data.Instance.INVENTORY.Add(Data.CLOWN, 0);
+                        }
                     }
                 }
 
@@ -1196,6 +1236,12 @@ public class GameManager : MonoBehaviour
                         }
 
                         boostShop.GetComponent<BoostShop>().setMonsterTabs();
+
+                        //Set new monster to inventory
+                        if (!Data.Instance.INVENTORY.ContainsKey(Data.ZOMBIE))
+                        {
+                            Data.Instance.INVENTORY.Add(Data.ZOMBIE, 0);
+                        }
                     }
                 }
 
@@ -1225,6 +1271,12 @@ public class GameManager : MonoBehaviour
                         }
 
                         boostShop.GetComponent<BoostShop>().setMonsterTabs();
+
+                        //Set new monster to inventory
+                        if (!Data.Instance.INVENTORY.ContainsKey(Data.VAMPIRE))
+                        {
+                            Data.Instance.INVENTORY.Add(Data.VAMPIRE, 0);
+                        }
                     }
                 }
 
@@ -1254,6 +1306,12 @@ public class GameManager : MonoBehaviour
                         }
 
                         boostShop.GetComponent<BoostShop>().setMonsterTabs();
+
+                        //Set new monster to inventory
+                        if (!Data.Instance.INVENTORY.ContainsKey(Data.WITCH))
+                        {
+                            Data.Instance.INVENTORY.Add(Data.WITCH, 0);
+                        }
                     }
                 }
 
@@ -1283,6 +1341,12 @@ public class GameManager : MonoBehaviour
                         }
 
                         boostShop.GetComponent<BoostShop>().setMonsterTabs();
+
+                        //Set new monster to inventory
+                        if (!Data.Instance.INVENTORY.ContainsKey(Data.REAPER))
+                        {
+                            Data.Instance.INVENTORY.Add(Data.REAPER, 0);
+                        }
                     }
                 }
 
@@ -1423,7 +1487,7 @@ public class GameManager : MonoBehaviour
     public void hideAllDialogs()
     {
         canvas.GetComponent<Transform>().Find("DescriptionDialog").gameObject.SetActive(false);
-        canvas.GetComponent<Transform>().Find("OfflineDialog").gameObject.SetActive(false);
+
         inventoryDialog.SetActive(false);
         portalDialog.SetActive(false);
 
@@ -1458,10 +1522,11 @@ public class GameManager : MonoBehaviour
 
     public void fillInventoryDialog()
     {
+
         //Clear all panels
-        foreach (Transform child in inventoryDialog.transform.Find("Scrollback").transform.GetChild(0).transform)
+        for (int i = 0; i < inventoryContainer.transform.childCount; i++)
         {
-            GameObject.Destroy(child.gameObject);
+            Destroy(inventoryContainer.transform.GetChild(i).gameObject);
         }
 
         List<InventoryObject> dropsPanels = new List<InventoryObject>();
@@ -1471,46 +1536,49 @@ public class GameManager : MonoBehaviour
         //Fill grid with offline resources
         foreach (KeyValuePair<string, int> resource in Data.Instance.INVENTORY)
         {
-            InventoryObject aux = new InventoryObject();
+            if (!resource.Key.Contains("Old"))
+            {
+                InventoryObject aux = new InventoryObject();
 
-            if (Data.Instance.RESOURCES.TryGetValue(resource.Key, out Resource res))
-            {
-                aux.icon = res.icon;
-            }
-            else
-            {
-                //It's a monster
-                if (Data.Instance.MONSTERS.TryGetValue(resource.Key, out MonsterInfo monster))
+                if (Data.Instance.RESOURCES.TryGetValue(resource.Key, out Resource res))
                 {
-                    aux.icon = monster.icon;
+                    aux.icon = res.icon;
                 }
-            }
-
-            aux.quantity = resource.Value.ToString();
-
-            bool isResource = true;
-
-            for (int i = 0; i < monstersKeys.Count; i++)
-            {
-                if (resource.Key.Equals(monstersKeys[i]))
+                else
                 {
-                    monsterPanels.Add(aux);
-                    isResource = false;
+                    //It's a monster
+                    if (Data.Instance.MONSTERS.TryGetValue(resource.Key, out MonsterInfo monster))
+                    {
+                        aux.icon = monster.icon;
+                    }
                 }
-            }
 
-            for (int i = 0; i < dropsKeys.Count; i++)
-            {
-                if (resource.Key.Equals(dropsKeys[i]))
+                aux.quantity = resource.Value.ToString();
+
+                bool isResource = true;
+
+                for (int i = 0; i < monstersKeys.Count; i++)
                 {
-                    dropsPanels.Add(aux);
-                    isResource = false;
+                    if (resource.Key.Equals(monstersKeys[i]))
+                    {
+                        monsterPanels.Add(aux);
+                        isResource = false;
+                    }
                 }
-            }
 
-            if (isResource)
-            {
-                resourcesPanels.Add(aux);
+                for (int i = 0; i < dropsKeys.Count; i++)
+                {
+                    if (resource.Key.Equals(dropsKeys[i]))
+                    {
+                        dropsPanels.Add(aux);
+                        isResource = false;
+                    }
+                }
+
+                if (isResource)
+                {
+                    resourcesPanels.Add(aux);
+                }                
             }
         }
 
@@ -1527,11 +1595,11 @@ public class GameManager : MonoBehaviour
             panel.transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite = monster.icon;
             panel.transform.GetChild(0).transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(monster.quantity);
         }
-        foreach (InventoryObject resource in resourcesPanels)
+        foreach (InventoryObject resourceAux in resourcesPanels)
         {
             GameObject panel = Instantiate(resourcePanel, inventoryDialog.transform.Find("Scrollback").transform.GetChild(0).transform);
-            panel.transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite = resource.icon;
-            panel.transform.GetChild(0).transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(resource.quantity);
+            panel.transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite = resourceAux.icon;
+            panel.transform.GetChild(0).transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(resourceAux.quantity);
         }
     }
 }

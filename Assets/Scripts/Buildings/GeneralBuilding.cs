@@ -54,8 +54,7 @@ public class GeneralBuilding : Building
     }
     // Start is called before the first frame update
     void Start()
-    {
-        
+    {       
 
         constructionType = 0;
 
@@ -108,6 +107,15 @@ public class GeneralBuilding : Building
     {
         if (placed)
         {
+            if (!addedToInventory)
+            {
+                //Set new resource to inventory
+                if (!Data.Instance.INVENTORY.ContainsKey(resources[level - 1]))
+                {
+                    Data.Instance.INVENTORY.Add(resources[level - 1], 0);
+                }
+                addedToInventory = true;
+            }
             if (isProducing)
             {
 

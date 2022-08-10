@@ -150,6 +150,12 @@ public class SummoningCircle : Building
 
     private void Start()
     {
+        //Set first monster to inventory
+        if (!Data.Instance.INVENTORY.ContainsKey(Data.SKELETON))
+        {
+            Data.Instance.INVENTORY.Add(Data.SKELETON, 0);
+        }
+
         constructionType = 1;
 
         if (activeMonster == NONE)

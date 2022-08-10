@@ -65,6 +65,7 @@ public class Building : Construction
     public float activeResourceTime = 0;   //temps que triga a fer-se el active resource
     protected bool showUI = false;
     protected bool enoughResources = false;
+    protected bool addedToInventory = false;
 
     public void setCanvasInterior()
     {
@@ -429,6 +430,12 @@ public class Building : Construction
                     this.level++;
                     resourcesButtons[level - 1].GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
                     resourceButtonsIcons[level - 1].GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
+
+                    //Set new resource to inventory
+                    if (!Data.Instance.INVENTORY.ContainsKey(resources[level - 1]))
+                    {
+                        Data.Instance.INVENTORY.Add(resources[level - 1], 0);
+                    }
                 }
             }
         }

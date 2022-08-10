@@ -135,7 +135,6 @@ public class GridBuildingSystem : MonoBehaviour
         
 
         temp = Instantiate(building, Camera.main.ScreenToWorldPoint(position), Quaternion.identity).GetComponent<Construction>();
-        Debug.Log(temp.gameObject.name);
 
         FollowBuilding();
     }
@@ -165,7 +164,6 @@ public class GridBuildingSystem : MonoBehaviour
         Vector3Int positionInt = gridLayout.WorldToCell(temp.gameObject.transform.position);
         temp.area.position = new Vector3Int((int)(temp.transform.position.x - temp.area.size.x/1.8), (int)(temp.transform.position.y - temp.area.size.y/5), (int)temp.transform.position.z);
         BoundsInt buildingArea = temp.area;
-        temp.area.position = positionInt;
 
         TileBase[] baseArray = GetTilesBlock(buildingArea, MainTilemap);
 
@@ -177,7 +175,7 @@ public class GridBuildingSystem : MonoBehaviour
             if(baseArray[i] == tileBases[TileType.White])
             {
                 tileArray[i] = tileBases[TileType.Green];
-
+                
             }
             else
             {
@@ -201,6 +199,7 @@ public class GridBuildingSystem : MonoBehaviour
                 return false;
             }
         }
+
         return true;
     }
 
