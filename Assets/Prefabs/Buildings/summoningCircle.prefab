@@ -2417,7 +2417,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: summoningCircle
   construction_name: 
-  production_cost: []
+  production_cost:
+  - list:
+    - resourceNameKey: plasma
+      quantity: 50
+    - resourceNameKey: rottenFlesh
+      quantity: 100
   numType: 0
   constructionType: 0
   position: {x: 0, y: 0, z: 0}

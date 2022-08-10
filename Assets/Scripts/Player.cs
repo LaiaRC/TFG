@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
                 //We should have hit something with a 2D Physics collider!
                 GameObject touchedObject = hitInformation.transform.gameObject;
 
-                if (touchedObject.GetComponent<Building>() != null && !dragged)
+                if (touchedObject.GetComponent<Building>() != null && !dragged && !GameManager.Instance.isOnCanvas)
                 {
                     //Building touched
                     if (touchedObject.GetComponent<Building>().placed)
@@ -46,11 +46,12 @@ public class Player : MonoBehaviour
                         touchedObject.GetComponent<Building>().showBuildingInterior();
                         if (GameManager.Instance.isOnBuildingMode)
                         {
+                            GameManager.Instance.toggleBuildMode();
                             GameManager.Instance.closeShop();
                         }
                     }
                 }
-                else if (touchedObject.GetComponent<SummoningCircle>() != null && !dragged) //maybe no cal
+                else if (touchedObject.GetComponent<SummoningCircle>() != null && !dragged && !GameManager.Instance.isOnCanvas) //maybe no cal
                 {
                     //Summoning circle building touched
                     if (touchedObject.GetComponent<SummoningCircle>().placed)
@@ -58,15 +59,17 @@ public class Player : MonoBehaviour
                         touchedObject.GetComponent<SummoningCircle>().showBuildingInterior();
                         if (GameManager.Instance.isOnBuildingMode)
                         {
+                            GameManager.Instance.toggleBuildMode();
                             GameManager.Instance.closeShop();
                         }
                     }
                 }
-                else if (touchedObject.GetComponent<BoostShop>() != null && !dragged)
+                else if (touchedObject.GetComponent<BoostShop>() != null && !dragged && !GameManager.Instance.isOnCanvas)
                 {
                     touchedObject.GetComponent<BoostShop>().showShop();
                     if (GameManager.Instance.isOnBuildingMode)
                     {
+                        GameManager.Instance.toggleBuildMode();
                         GameManager.Instance.closeShop();
                     }
                 }

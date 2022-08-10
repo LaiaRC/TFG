@@ -6,7 +6,7 @@ public class Data : MonoBehaviour
 {
     public Dictionary<string, GameObject> BUILDINGS = new Dictionary<string, GameObject>();
     public Dictionary<string, Resource> RESOURCES = new Dictionary<string, Resource>();
-    public Dictionary<string, DropInfo> DROPS = new Dictionary<string, DropInfo>(); 
+    public Dictionary<string, DropInfo> DROPS = new Dictionary<string, DropInfo>();
     public Dictionary<string, MonsterInfo> MONSTERS = new Dictionary<string, MonsterInfo>();
     public Dictionary<string, int> BUILDING_INVENTORY = new Dictionary<string, int>();
 
@@ -22,8 +22,8 @@ public class Data : MonoBehaviour
     public List<Sprite> dropsIcons;
     public List<Sprite> villagersIcons;
 
-
     #region RESOURCES KEYS
+
     public static string BONE = "bone";
     public static string ROTTEN_FLESH = "rottenFlesh";
     public static string TOMBSTONE = "tombstone";
@@ -60,7 +60,8 @@ public class Data : MonoBehaviour
     public static string POISONAPPLE = "poisonApple";
     public static string FANG = "fang";
     public static string WOLFCLAW = "wolfClaw";
-    #endregion
+
+    #endregion RESOURCES KEYS
 
     #region DROPS KEYS
 
@@ -72,7 +73,8 @@ public class Data : MonoBehaviour
     public static string SHIELD = "shield";
     public static string STICK = "stick";
     public static string GEM = "gem";
-    #endregion
+
+    #endregion DROPS KEYS
 
     #region MONSTER KEYS
 
@@ -86,9 +88,11 @@ public class Data : MonoBehaviour
     public static string WITCH = "witch";
     public static string CLOWN = "clown";
     public static string REAPER = "reaper";
-    #endregion
+
+    #endregion MONSTER KEYS
 
     #region BOOSTS KEYS
+
     public static string PRODUCER_BOOST = "gargoyle";
     public static string CONVERTER_BOOST = "obelisk";
     public static string SUMMONING_BOOST = "bloodMoonTower";
@@ -97,9 +101,11 @@ public class Data : MonoBehaviour
     public static string SCARES_BOOST = "mageGuardian";
     public static string DROPS_BOOST = "demonLord";
     public static string MERCHANT_BOOST = "merchant";
-    #endregion
+
+    #endregion BOOSTS KEYS
 
     #region CONSTRUCTION KEYS
+
     public static int POS_X = 0;
     public static int POS_Y = 1;
     public static int LEVEL = 2; //HIDDEN_MONSTER_INDEX (summoningCircle)
@@ -112,9 +118,11 @@ public class Data : MonoBehaviour
     public static int CONSTRUCTION_TYPE = 9;
     public static int IS_PRODUCER = 10;
     public static int IS_CONVERTER = 11;
-    #endregion
+
+    #endregion CONSTRUCTION KEYS
 
     #region SINGLETON PATTERN
+
     public static Data Instance;
 
     //crear diccionaris publics de inventari i de crafteos
@@ -135,7 +143,7 @@ public class Data : MonoBehaviour
             this.villagersIcons = GameManager.Instance.villagersIcons;
         }
 
-        #region RESOURCES 
+        #region RESOURCES
 
         #region BUILDING RESOURCES
 
@@ -174,9 +182,11 @@ public class Data : MonoBehaviour
         requirements3[1] = requirement3B;
 
         RESOURCES.Add(TOMBSTONE, new Resource("Tombstone", TOMBSTONE, false, 60, false, requirements3, resourcesIcons[33]));
-        #endregion
+
+        #endregion GRAVEYARD
 
         #region FOREST
+
         //SpiderWeb
         Requirement[] requirements4;
         Requirement requirement4 = new Requirement();
@@ -217,7 +227,8 @@ public class Data : MonoBehaviour
         requirements6[1] = requirement3B;
 
         RESOURCES.Add(DEADTREEBRANCH, new Resource("Dead tree branch", DEADTREEBRANCH, false, 90, false, requirements6, resourcesIcons[9]));
-        #endregion
+
+        #endregion FOREST
 
         #region VEGETABLE PATCH
 
@@ -235,7 +246,8 @@ public class Data : MonoBehaviour
         Requirement[] requirements9;
         requirements9 = new Requirement[0];
         RESOURCES.Add(BLACKROSE, new Resource("Black rose", BLACKROSE, true, 50, false, requirements9, resourcesIcons[3]));
-        #endregion
+
+        #endregion VEGETABLE PATCH
 
         #region SWAMP
 
@@ -253,7 +265,8 @@ public class Data : MonoBehaviour
         Requirement[] requirements12;
         requirements12 = new Requirement[0];
         RESOURCES.Add(FROGLEG, new Resource("Frog leg", FROGLEG, true, 90, false, requirements12, resourcesIcons[14]));
-        #endregion
+
+        #endregion SWAMP
 
         #region WELL
 
@@ -271,7 +284,8 @@ public class Data : MonoBehaviour
         Requirement[] requirements15;
         requirements15 = new Requirement[0];
         RESOURCES.Add(RUSTYNAIL, new Resource("Rusty nail", RUSTYNAIL, true, 40, false, requirements15, resourcesIcons[27]));
-        #endregion
+
+        #endregion WELL
 
         #region ABANDONED HOSPITAL
 
@@ -308,7 +322,8 @@ public class Data : MonoBehaviour
         requirements18[1] = requirement18B;
 
         RESOURCES.Add(BLOOD, new Resource("Blood", BLOOD, false, 180, false, requirements18, resourcesIcons[4]));
-        #endregion
+
+        #endregion ABANDONED HOSPITAL
 
         #region HAUNTED HOUSE
 
@@ -357,7 +372,8 @@ public class Data : MonoBehaviour
         requirements21[1] = requirement21B;
 
         RESOURCES.Add(SPIRITSOUL, new Resource("Spirit soul", SPIRITSOUL, false, 20, false, requirements21, resourcesIcons[31]));
-        #endregion
+
+        #endregion HAUNTED HOUSE
 
         #region CRYPT
 
@@ -411,7 +427,8 @@ public class Data : MonoBehaviour
         requirements24[1] = requirement24B;
 
         RESOURCES.Add(COFFIN, new Resource("Coffin", COFFIN, false, 20, false, requirements24, resourcesIcons[7]));
-        #endregion
+
+        #endregion CRYPT
 
         #region WITCH COVEN
 
@@ -465,7 +482,8 @@ public class Data : MonoBehaviour
         requirements27[1] = requirement27B;
 
         RESOURCES.Add(WITCHHAT, new Resource("Witch hat", WITCHHAT, false, 240, false, requirements27, resourcesIcons[34]));
-        #endregion
+
+        #endregion WITCH COVEN
 
         #region HELL ISLAND
 
@@ -519,7 +537,8 @@ public class Data : MonoBehaviour
         requirements30[1] = requirement30B;
 
         RESOURCES.Add(HELLFIRE, new Resource("Hell fire", HELLFIRE, false, 270, false, requirements30, resourcesIcons[16]));
-        #endregion
+
+        #endregion HELL ISLAND
 
         #region MAGIC WORKSHOP
 
@@ -563,7 +582,8 @@ public class Data : MonoBehaviour
         requirements33[1] = requirement33B;
 
         RESOURCES.Add(SPELLBOOK, new Resource("Spellbook", SPELLBOOK, false, 20, false, requirements33, resourcesIcons[29]));
-        #endregion
+
+        #endregion MAGIC WORKSHOP
 
         #region DEEP FOREST
 
@@ -602,12 +622,15 @@ public class Data : MonoBehaviour
         requirements36[0] = requirement36;
 
         RESOURCES.Add(WOLFCLAW, new Resource("Wolf's claw", WOLFCLAW, false, 30, false, requirements36, resourcesIcons[35]));
-        #endregion
-        #endregion
-        
+
+        #endregion DEEP FOREST
+
+        #endregion BUILDING RESOURCES
+
         if (GameManager.Instance != null)
         {
             #region DROPS
+
             RESOURCES.Add(LOLLIPOP, new DropInfo(LOLLIPOP, "Lollipop", "child", dropsIcons[0], villagersIcons[0]));
             RESOURCES.Add(RING, new DropInfo(RING, "Ring", "mom", dropsIcons[1], villagersIcons[1]));
             RESOURCES.Add(BEER, new DropInfo(BEER, "Beer", "adult", dropsIcons[2], villagersIcons[2]));
@@ -616,11 +639,14 @@ public class Data : MonoBehaviour
             RESOURCES.Add(STICK, new DropInfo(STICK, "Stick", "elder", dropsIcons[5], villagersIcons[5]));
             RESOURCES.Add(GEM, new DropInfo(GEM, "Gem", "sorcerer", dropsIcons[6], villagersIcons[6]));
             RESOURCES.Add(SCARE, new DropInfo(SCARE, "Scare", "villagers", dropsIcons[7], null));
-            #endregion
+
+            #endregion DROPS
         }
-        #endregion
+
+        #endregion RESOURCES
 
         #region PLAYER
+
         if (GameManager.Instance != null)
         {
             PLAYER.Add("Hour", GameManager.Instance.localDate.Hour);
@@ -641,15 +667,16 @@ public class Data : MonoBehaviour
             PLAYER.Add("Year", OfflineCalculator.Instance.localDate.Year);
             PLAYER.Add("Tuto", 0);
         }
-        #endregion
 
-        #region MONSTERS 
+        #endregion PLAYER
+
+        #region MONSTERS
 
         //Skeleton
         List<Requirement> reqSkeleton = new List<Requirement>();
 
-        reqSkeleton.Add(new Requirement(BONE, 3000));
-        reqSkeleton.Add(new Requirement(PLASMA, 1500));
+        reqSkeleton.Add(new Requirement(BONE, 400));
+        reqSkeleton.Add(new Requirement(PLASMA, 40));
 
         List<List<Requirement>> reqUpgradeSkeleton = new List<List<Requirement>>();
 
@@ -699,7 +726,8 @@ public class Data : MonoBehaviour
         levelSkeleton.Add(1);
         levelSkeleton.Add(1);
         levelSkeleton.Add(2);
-        #endregion
+
+        #endregion STATS
 
         string desSkeleton = "It's the most basic type of monster. Can only be invoked outside the village.";
         MONSTERS.Add(SKELETON, new MonsterInfo(SKELETON, "Skeleton", 3600, reqSkeleton, reqUpgradeSkeleton, reqUnlockSkeleton, velSkeleton, healthSkeleton, damageSkeleton, aRateSkeleton, aRangeSkeleton, levelSkeleton, monstersIcons[0], desSkeleton, 1, true));
@@ -707,8 +735,8 @@ public class Data : MonoBehaviour
         //JackOLantern
         List<Requirement> reqJack = new List<Requirement>();
 
-        reqJack.Add(new Requirement(PUMPKIN, 3000));
-        reqJack.Add(new Requirement(LANTERN, 1500));
+        reqJack.Add(new Requirement(PUMPKIN, 200));
+        reqJack.Add(new Requirement(LANTERN, 80));
 
         List<List<Requirement>> reqUpgradeJack = new List<List<Requirement>>();
         List<Requirement> reqUpgradeJack1 = new List<Requirement>();
@@ -758,7 +786,8 @@ public class Data : MonoBehaviour
         levelJack.Add(1);
         levelJack.Add(2);
         levelJack.Add(3);
-        #endregion
+
+        #endregion STATS
 
         string desJack = "Is used as an obstacle to block the path of the villagers. It can be invoked inside the village but doesn't move.";
 
@@ -767,8 +796,8 @@ public class Data : MonoBehaviour
         //Bat
         List<Requirement> reqBat = new List<Requirement>();
 
-        reqBat.Add(new Requirement(BATWING, 2500));
-        reqBat.Add(new Requirement(DEADTREEBRANCH, 1000));
+        reqBat.Add(new Requirement(BATWING, 250));
+        reqBat.Add(new Requirement(DEADTREEBRANCH, 10));
 
         List<List<Requirement>> reqUpgradeBat = new List<List<Requirement>>();
         List<Requirement> reqUpgradeBat1 = new List<Requirement>();
@@ -818,7 +847,8 @@ public class Data : MonoBehaviour
         levelBat.Add(2);
         levelBat.Add(2);
         levelBat.Add(3);
-        #endregion
+
+        #endregion STATS
 
         string desBat = "Flies and passes through terrain obstacles and Shield Man. Can only be invoked outside village.";
 
@@ -827,8 +857,8 @@ public class Data : MonoBehaviour
         //Goblin
         List<Requirement> reqGoblin = new List<Requirement>();
 
-        reqGoblin.Add(new Requirement(DEADFISH, 2500));
-        reqGoblin.Add(new Requirement(SWAMPWATER, 1000));
+        reqGoblin.Add(new Requirement(DEADFISH, 666));
+        reqGoblin.Add(new Requirement(SWAMPWATER, 333));
 
         List<List<Requirement>> reqUpgradeGoblin = new List<List<Requirement>>();
         List<Requirement> reqUpgradeGoblin1 = new List<Requirement>();
@@ -878,7 +908,8 @@ public class Data : MonoBehaviour
         levelGoblin.Add(2);
         levelGoblin.Add(2);
         levelGoblin.Add(3);
-        #endregion
+
+        #endregion STATS
 
         string desGoblin = "The quickest and sneakiest monster. Can only be invoked outside village.";
 
@@ -938,7 +969,8 @@ public class Data : MonoBehaviour
         levelGhost.Add(3);
         levelGhost.Add(3);
         levelGhost.Add(4);
-        #endregion
+
+        #endregion STATS
 
         string desGhost = "Can be invoked from a dead monster's tomb inside the village. It is ethereal and passes through obstacles and Shield Man.";
 
@@ -998,7 +1030,8 @@ public class Data : MonoBehaviour
         levelClown.Add(3);
         levelClown.Add(3);
         levelClown.Add(4);
-        #endregion
+
+        #endregion STATS
 
         string desClown = "A truly show man, it distracts villagers in range, paralizing them. Can be invoked inside village and each second loses 1HP";
 
@@ -1026,7 +1059,6 @@ public class Data : MonoBehaviour
         List<Requirement> reqUnlockZombie = new List<Requirement>();
 
         reqUnlockZombie.Add(new Requirement(DEATHESSENCE, 30));
-
 
         #region STATS
 
@@ -1059,7 +1091,8 @@ public class Data : MonoBehaviour
         levelZombie.Add(3);
         levelZombie.Add(4);
         levelZombie.Add(4);
-        #endregion
+
+        #endregion STATS
 
         string desZombie = "The slowest monster but the one that deals more damage. It can be invoked from sewers inside the village.";
 
@@ -1119,7 +1152,8 @@ public class Data : MonoBehaviour
         levelVampire.Add(4);
         levelVampire.Add(4);
         levelVampire.Add(5);
-        #endregion
+
+        #endregion STATS
 
         string desVampire = "Heals himself over time. It also transforms into a bat and avoids obstacles and Shield Man but can only be invoked outside village.";
 
@@ -1179,7 +1213,8 @@ public class Data : MonoBehaviour
         levelWitch.Add(4);
         levelWitch.Add(5);
         levelWitch.Add(5);
-        #endregion
+
+        #endregion STATS
 
         string desWitch = "Invokes skeletons over time and makes ranged attacks. It has great resistance.";
 
@@ -1244,17 +1279,17 @@ public class Data : MonoBehaviour
         levelReaper.Add(6);
         levelReaper.Add(6);
         levelReaper.Add(6);
-        #endregion
+
+        #endregion STATS
 
         string desReaper = "If you want things done properly, do them yourself. The ultimate weapon to bring back Halloween's true spirit.";
 
         MONSTERS.Add(REAPER, new MonsterInfo(REAPER, "The Reaper", 28800, reqReaper, reqUpgradeReaper, reqUnlockReaper, velReaper, healthReaper, damageReaper, aRateReaper, aRangeReaper, levelReaper, monstersIcons[9], desReaper, 1, false));
 
-        #endregion
+        #endregion MONSTERS
 
         if (GameManager.Instance != null)
-        {            
-
+        {
             #region DROPS
 
             DROPS.Add(LOLLIPOP, new DropInfo(LOLLIPOP, "Lollipop", "child", dropsIcons[0], villagersIcons[0]));
@@ -1265,9 +1300,11 @@ public class Data : MonoBehaviour
             DROPS.Add(STICK, new DropInfo(STICK, "Stick", "elder", dropsIcons[5], villagersIcons[5]));
             DROPS.Add(GEM, new DropInfo(GEM, "Gem", "sorcerer", dropsIcons[6], villagersIcons[6]));
             DROPS.Add(SCARE, new DropInfo(SCARE, "Scare", "villagers", dropsIcons[7], null));
-            #endregion
+
+            #endregion DROPS
 
             #region MONSTERS STATS
+
             MONSTERS_STATS.Add(SKELETON, new int[] { 0, 1 });
             MONSTERS_STATS.Add(JACK_LANTERN, new int[] { 0, 1 });
             MONSTERS_STATS.Add(BAT, new int[] { 0, 1 });
@@ -1278,15 +1315,17 @@ public class Data : MonoBehaviour
             MONSTERS_STATS.Add(VAMPIRE, new int[] { 0, 1 });
             MONSTERS_STATS.Add(WITCH, new int[] { 0, 1 });
             MONSTERS_STATS.Add(REAPER, new int[] { 0, 1 });
-            #endregion
+
+            #endregion MONSTERS STATS
         }
     }
-    #endregion
+
+    #endregion SINGLETON PATTERN
 
     //Al start de la shopManager es passa el array de buldings (prefabs) omplert manualment cap aqui i es guarda en el diccionari
     public void setBuildings(List<GameObject> buildings)
     {
-        foreach(GameObject building in buildings)
+        foreach (GameObject building in buildings)
         {
             BUILDINGS.Add(building.GetComponent<Construction>().id, building);
         }

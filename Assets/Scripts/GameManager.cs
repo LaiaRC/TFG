@@ -181,10 +181,10 @@ public class GameManager : MonoBehaviour
         {
             //for (int i = 0; i < monstersKeys.Count; i++)
             //{
-              //  if (inventoryResource.Key.Equals(monstersKeys[i]))
-                //{
-                    info += "\n -" + inventoryResource.Key + ": " + inventoryResource.Value;
-               // }
+            //  if (inventoryResource.Key.Equals(monstersKeys[i]))
+            //{
+            info += "\n -" + inventoryResource.Key + ": " + inventoryResource.Value;
+            // }
             //}
         }
         //debugInventoryInfo.SetText("isDialogOpen: " + isDialogOpen + "\n" + "draggingItemShop: " + draggingItemShop + "\n" + "draggingFromShop: " + draggingFromShop + "\n");
@@ -299,8 +299,11 @@ public class GameManager : MonoBehaviour
     public void closeShop()
     {
         //Hide description panel just in case
-        hideDescriptionDialog();
-        buildModeAnimator.Play("buildPanelClosing");
+        if (!isOnBuildingMode)
+        {
+            hideDescriptionDialog();
+            buildModeAnimator.Play("buildPanelClosing");
+        }
     }
 
     public void showDescriptionDialog()
@@ -356,32 +359,35 @@ public class GameManager : MonoBehaviour
 
     public void showPortalDialog()
     {
-        //check if has at least one monster
-        bool hasMonster = false;
-
-        for (int i = 0; i < monstersKeys.Count; i++)
+        if (!isOnCanvas)
         {
-            if (Data.Instance.INVENTORY.ContainsKey(monstersKeys[i]))
+            //check if has at least one monster
+            bool hasMonster = false;
+
+            for (int i = 0; i < monstersKeys.Count; i++)
             {
-                hasMonster = true;
+                if (Data.Instance.INVENTORY.ContainsKey(monstersKeys[i]))
+                {
+                    hasMonster = true;
+                }
             }
-        }
 
-        if (hasMonster)
-        {
-            portalDialog.transform.Find("MonsterText").gameObject.SetActive(false);
+            if (hasMonster)
+            {
+                portalDialog.transform.Find("MonsterText").gameObject.SetActive(false);
 
-            //Load monster cards (TODO)
-        }
-        else
-        {
-            portalDialog.transform.Find("MonsterText").gameObject.SetActive(true);
-        }
+                //Load monster cards (TODO)
+            }
+            else
+            {
+                portalDialog.transform.Find("MonsterText").gameObject.SetActive(true);
+            }
 
-        isDialogOpen = true;
-        canvas.GetComponent<Transform>().Find("BlackPanel").gameObject.SetActive(true);
-        portalDialog.SetActive(true);
-        canvas.GetComponent<Transform>().Find("UIBlock").gameObject.SetActive(false);
+            isDialogOpen = true;
+            canvas.GetComponent<Transform>().Find("BlackPanel").gameObject.SetActive(true);
+            portalDialog.SetActive(true);
+            canvas.GetComponent<Transform>().Find("UIBlock").gameObject.SetActive(false);
+        }
     }
 
     public void hidePortalDialog()
@@ -876,7 +882,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void load()
-    {        
+    {
         SceneManager.LoadScene("miniGame");
     }
 
@@ -1491,6 +1497,18 @@ public class GameManager : MonoBehaviour
         inventoryDialog.SetActive(false);
         portalDialog.SetActive(false);
 
+        canvas.GetComponent<Transform>().Find("UIBlock").gameObject.SetActive(true);
+        Invoke("setDialogOpen", 0.05f);
+    }
+
+    public void hideAllDialogsBlackPanel()
+    {
+        canvas.GetComponent<Transform>().Find("DescriptionDialog").gameObject.SetActive(false);
+
+        inventoryDialog.SetActive(false);
+        portalDialog.SetActive(false);
+        hideOfflineDialog();
+
         canvas.GetComponent<Transform>().Find("BlackPanel").gameObject.SetActive(false);
         canvas.GetComponent<Transform>().Find("UIBlock").gameObject.SetActive(true);
         Invoke("setDialogOpen", 0.05f);
@@ -1522,7 +1540,6 @@ public class GameManager : MonoBehaviour
 
     public void fillInventoryDialog()
     {
-
         //Clear all panels
         for (int i = 0; i < inventoryContainer.transform.childCount; i++)
         {
@@ -1578,7 +1595,7 @@ public class GameManager : MonoBehaviour
                 if (isResource)
                 {
                     resourcesPanels.Add(aux);
-                }                
+                }
             }
         }
 
