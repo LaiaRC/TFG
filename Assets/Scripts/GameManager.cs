@@ -592,7 +592,7 @@ public class GameManager : MonoBehaviour
             Data.Instance.INVENTORY.Add(resource.Key, 10000);
         }
 
-        /*Data.Instance.INVENTORY.Add(Data.SKELETON, 5);
+        Data.Instance.INVENTORY.Add(Data.SKELETON, 5);
         Data.Instance.INVENTORY.Add(Data.JACK_LANTERN, 5);
         Data.Instance.INVENTORY.Add(Data.GOBLIN, 5);
         Data.Instance.INVENTORY.Add(Data.BAT, 10);
@@ -600,7 +600,8 @@ public class GameManager : MonoBehaviour
         Data.Instance.INVENTORY.Add(Data.GHOST, 5);
         Data.Instance.INVENTORY.Add(Data.CLOWN, 5);
         Data.Instance.INVENTORY.Add(Data.VAMPIRE, 5);
-        Data.Instance.INVENTORY.Add(Data.WITCH, 5);*/
+        Data.Instance.INVENTORY.Add(Data.WITCH, 5);
+        Data.Instance.INVENTORY.Add(Data.REAPER, 1);
     }
 
     public void buildConstructions()

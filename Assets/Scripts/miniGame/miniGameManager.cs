@@ -60,6 +60,7 @@ public class miniGameManager : MonoBehaviour
     public bool momMoveFree = false;
     public bool childMoveFree = false;
     public bool elderMoveFree = false;
+    public bool hasReaper = false;
 
     //UI
     public Canvas canvas;
@@ -128,6 +129,7 @@ public class miniGameManager : MonoBehaviour
     public static string VAMPIRE_BUTTON = "vampireButton";
     public static string WITCH_BUTTON = "witchButton";
     public static string CLOWN_BUTTON = "clownButton";
+    public static string REAPER_BUTTON = "reaperButton";
 
     //Dictionary variables
     public static string SKELETON = "skeleton";
@@ -140,6 +142,7 @@ public class miniGameManager : MonoBehaviour
     public static string VAMPIRE = "vampire";
     public static string WITCH = "witch";
     public static string CLOWN = "clown";
+    public static string REAPER = "reaper";
 
     public static string LOLLIPOP = "lollipop";
     public static string RING = "ring";
@@ -242,6 +245,11 @@ public class miniGameManager : MonoBehaviour
             }
         }
 
+        if (maxLevel == 6)
+        {
+            hasReaper = true;
+        }
+
         switch (maxLevel)
         {
             case 3:
@@ -257,6 +265,13 @@ public class miniGameManager : MonoBehaviour
                 break;
 
             case 5:
+                adultSpawn.SetActive(true);
+                swashbucklerSpawn.SetActive(true);
+                elderSpawn.SetActive(true);
+                sorcererSpawn.SetActive(true);
+                break;
+
+            default:
                 adultSpawn.SetActive(true);
                 swashbucklerSpawn.SetActive(true);
                 elderSpawn.SetActive(true);
@@ -382,7 +397,7 @@ public class miniGameManager : MonoBehaviour
             }
         }
 
-        if (!firstMonster)
+        if (!firstMonster && !hasReaper)
         {
             if (time < MINIGAME_MAX_TIME && numMonstersDied < numMaxMonsters)
             {
@@ -399,6 +414,10 @@ public class miniGameManager : MonoBehaviour
                 gameOver = true;
                 showStats();
             }
+        }
+        else if (hasReaper)
+        {
+            timer.SetText("666");
         }
     }
 
@@ -453,6 +472,13 @@ public class miniGameManager : MonoBehaviour
                 if (currentFlag > 0)
                 {
                     invokeMonster(WITCH, touchPosWorld);
+                }
+            }
+            if (selectedCard == REAPER_BUTTON)
+            {
+                if (currentFlag > 0)
+                {
+                    invokeMonster(REAPER, touchPosWorld);
                 }
             }
         }
@@ -692,6 +718,12 @@ public class miniGameManager : MonoBehaviour
                 case "clownButton":
                     outsideSpawnIndicator.SetActive(false);
                     insideSpawnIndicator.SetActive(true);
+                    sewerSpawnIndicator.SetActive(false);
+                    break;
+
+                case "reaperButton":
+                    outsideSpawnIndicator.SetActive(true);
+                    insideSpawnIndicator.SetActive(false);
                     sewerSpawnIndicator.SetActive(false);
                     break;
             }

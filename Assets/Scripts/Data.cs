@@ -673,6 +673,7 @@ public class Data : MonoBehaviour
         #region MONSTERS
 
         #region SKELETON
+
         //Skeleton
         List<Requirement> reqSkeleton = new List<Requirement>();
 
@@ -732,9 +733,11 @@ public class Data : MonoBehaviour
 
         string desSkeleton = "It's the most basic type of monster. Can only be invoked outside the village.";
         MONSTERS.Add(SKELETON, new MonsterInfo(SKELETON, "Skeleton", 3600, reqSkeleton, reqUpgradeSkeleton, reqUnlockSkeleton, velSkeleton, healthSkeleton, damageSkeleton, aRateSkeleton, aRangeSkeleton, levelSkeleton, monstersIcons[0], desSkeleton, 1, true));
-        #endregion
+
+        #endregion SKELETON
 
         #region JACK O LANTERN
+
         //JackOLantern
         List<Requirement> reqJack = new List<Requirement>();
 
@@ -796,9 +799,10 @@ public class Data : MonoBehaviour
 
         MONSTERS.Add(JACK_LANTERN, new MonsterInfo(JACK_LANTERN, "Jack-o'-lantern", 5400, reqJack, reqUpgradeJack, reqUnlockJack, velJack, healthJack, damageJack, aRateJack, aRangeJack, levelJack, monstersIcons[1], desJack, 1, false));
 
-        #endregion
+        #endregion JACK O LANTERN
 
         #region BAT
+
         //Bat
         List<Requirement> reqBat = new List<Requirement>();
 
@@ -860,7 +864,7 @@ public class Data : MonoBehaviour
 
         MONSTERS.Add(BAT, new MonsterInfo(BAT, "Bat", 7200, reqBat, reqUpgradeBat, reqUnlockBat, velBat, healthBat, damageBat, aRateBat, aRangeBat, levelBat, monstersIcons[2], desBat, 1, false));
 
-        #endregion
+        #endregion BAT
 
         #region GOBLIN
 
@@ -925,7 +929,7 @@ public class Data : MonoBehaviour
 
         MONSTERS.Add(GOBLIN, new MonsterInfo(GOBLIN, "Goblin", 9000, reqGoblin, reqUpgradeGoblin, reqUnlockGoblin, velGoblin, healthGoblin, damageGoblin, aRateGoblin, aRangeGoblin, levelGoblin, monstersIcons[3], desGoblin, 1, false));
 
-        #endregion
+        #endregion GOBLIN
 
         #region GHOST
 
@@ -990,9 +994,10 @@ public class Data : MonoBehaviour
 
         MONSTERS.Add(GHOST, new MonsterInfo(GHOST, "Ghost", 10800, reqGhost, reqUpgradeGhost, reqUnlockGhost, velGhost, healthGhost, damageGhost, aRateGhost, aRangeGhost, levelGhost, monstersIcons[4], desGhost, 1, false));
 
-        #endregion
+        #endregion GHOST
 
         #region CLOWN
+
         //Clown
         List<Requirement> reqClown = new List<Requirement>();
 
@@ -1053,9 +1058,11 @@ public class Data : MonoBehaviour
         string desClown = "A truly show man, it distracts villagers in range, paralizing them. Can be invoked inside village and each second loses 1HP";
 
         MONSTERS.Add(CLOWN, new MonsterInfo(CLOWN, "Clown", 12600, reqClown, reqUpgradeClown, reqUnlockClown, velClown, healthClown, damageClown, aRateClown, aRangeClown, levelClown, monstersIcons[5], desClown, 1, false));
-        #endregion
+
+        #endregion CLOWN
 
         #region ZOMBIE
+
         //Zombie
         List<Requirement> reqZombie = new List<Requirement>();
 
@@ -1117,7 +1124,7 @@ public class Data : MonoBehaviour
 
         MONSTERS.Add(ZOMBIE, new MonsterInfo(ZOMBIE, "Zombie", 14400, reqZombie, reqUpgradeZombie, reqUnlockZombie, velZombie, healthZombie, damageZombie, aRateZombie, aRangeZombie, levelZombie, monstersIcons[6], desZombie, 1, false));
 
-        #endregion
+        #endregion ZOMBIE
 
         #region VAMPIRE
 
@@ -1182,9 +1189,10 @@ public class Data : MonoBehaviour
 
         MONSTERS.Add(VAMPIRE, new MonsterInfo(VAMPIRE, "Vampire", 16200, reqVampire, reqUpgradeVampire, reqUnlockVampire, velVampire, healthVampire, damageVampire, aRateVampire, aRangeVampire, levelVampire, monstersIcons[7], desVampire, 1, false));
 
-        #endregion
+        #endregion VAMPIRE
 
         #region WITCH
+
         //Witch
         List<Requirement> reqWitch = new List<Requirement>();
 
@@ -1245,9 +1253,11 @@ public class Data : MonoBehaviour
         string desWitch = "Invokes skeletons over time and makes ranged attacks. It has great resistance.";
 
         MONSTERS.Add(WITCH, new MonsterInfo(WITCH, "Witch", 18000, reqWitch, reqUpgradeWitch, reqUnlockWitch, velWitch, healthWitch, damageWitch, aRateWitch, aRangeWitch, levelWitch, monstersIcons[8], desWitch, 1, false));
-        #endregion
 
-        #region REAPER 
+        #endregion WITCH
+
+        #region REAPER
+
         //Reaper
         List<Requirement> reqReaper = new List<Requirement>();
 
@@ -1279,19 +1289,19 @@ public class Data : MonoBehaviour
         #region STATS
 
         List<float> velReaper = new List<float>();
-        velReaper.Add(8);
-        velReaper.Add(8);
-        velReaper.Add(8);
+        velReaper.Add(12);
+        velReaper.Add(12);
+        velReaper.Add(12);
 
         List<int> healthReaper = new List<int>();
-        healthReaper.Add(100);
-        healthReaper.Add(100);
-        healthReaper.Add(100);
+        healthReaper.Add(6666666);
+        healthReaper.Add(6666666);
+        healthReaper.Add(6666666);
 
         List<int> damageReaper = new List<int>();
-        damageReaper.Add(20);
-        damageReaper.Add(20);
-        damageReaper.Add(20);
+        damageReaper.Add(6666666);
+        damageReaper.Add(6666666);
+        damageReaper.Add(6666666);
 
         List<float> aRateReaper = new List<float>();
         aRateReaper.Add(0.5f);
@@ -1299,9 +1309,9 @@ public class Data : MonoBehaviour
         aRateReaper.Add(0.5f);
 
         List<float> aRangeReaper = new List<float>();
-        aRangeReaper.Add(8);
-        aRangeReaper.Add(8);
-        aRangeReaper.Add(8);
+        aRangeReaper.Add(10);
+        aRangeReaper.Add(10);
+        aRangeReaper.Add(10);
 
         List<int> levelReaper = new List<int>();
         levelReaper.Add(6);
@@ -1314,7 +1324,7 @@ public class Data : MonoBehaviour
 
         MONSTERS.Add(REAPER, new MonsterInfo(REAPER, "The Reaper", 28800, reqReaper, reqUpgradeReaper, reqUnlockReaper, velReaper, healthReaper, damageReaper, aRateReaper, aRangeReaper, levelReaper, monstersIcons[9], desReaper, 1, false));
 
-        #endregion
+        #endregion REAPER
 
         #endregion MONSTERS
 

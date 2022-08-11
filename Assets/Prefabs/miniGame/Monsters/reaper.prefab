@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1331844805969841848}
   - component: {fileID: 1331844805969841847}
   - component: {fileID: 5703580843732341691}
+  - component: {fileID: 6910361041154215258}
   - component: {fileID: 4193158759527945054}
   m_Layer: 2
   m_Name: reaper
@@ -47,18 +48,18 @@ NavMeshAgent:
   m_GameObject: {fileID: 1331844805969841846}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.29
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
+  m_Height: 0.51
+  m_BaseOffset: 0.48
+  m_WalkableMask: 25
   m_ObstacleAvoidanceType: 4
 --- !u!212 &1910807250142630662
 SpriteRenderer:
@@ -338,6 +339,46 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1.17, y: 1.41}
   m_Direction: 0
+--- !u!114 &6910361041154215258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331844805969841846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8c1196ecd584694fb62544f1b8282ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocity: 12
+  health: 999999
+  damage: 999999
+  detectionRange: 400
+  attackRange: 10
+  attackRate: 1
+  canBeInvokedInside: 0
+  canFly: 1
+  currentState: idle
+  favVillager: 
+  level: 6
+  animator: {fileID: 1331844805969841850}
+  tomb: {fileID: 5866804560099724069, guid: 8bd94ee69525f0842b6391c7a96c09b6, type: 3}
+  deathParticles: {fileID: 8424145595034750950, guid: 4639acc55e55f80479971d9024c5766f, type: 3}
+  spawnParticles: {fileID: 8954618723891437491, guid: 80f723d40629fa640961af8fa00b4b66, type: 3}
+  deathSound: {fileID: 1594651801849776520, guid: 996f4c57fa6b80447ba970292d38562c, type: 3}
+  audioSource: {fileID: 1331844805969841848}
+  audioSourceAux: {fileID: 1331844805969841847}
+  sounds:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  healthBar: {fileID: 4110335927728442690, guid: 4be1c02213a25e84bb1477354cbe9666, type: 3}
+  fillColor: {r: 0.068331, g: 1, b: 0, a: 0}
+  backgroundColor: {r: 0, g: 0.2264151, b: 0.036714535, a: 0}
+  isAttacking: 0
 --- !u!114 &4193158759527945054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,7 +397,7 @@ MonoBehaviour:
   movingRight: 0
   isMoving: 0
   velocity: {x: 0, y: 0, z: 0}
-  speed: 0
+  speed: 12
 --- !u!1 &3933314819902813587
 GameObject:
   m_ObjectHideFlags: 0
