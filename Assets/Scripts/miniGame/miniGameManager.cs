@@ -484,11 +484,11 @@ public class miniGameManager : MonoBehaviour
         }
         else if (touchedObject.tag == "sewer")
         {
-            if (selectedCard == ZOMBIE_BUTTON)
+            if (selectedCard == GOBLIN_BUTTON)
             {
                 if (currentFlag > 0)
                 {
-                    invokeMonster(ZOMBIE, touchPosWorld);
+                    invokeMonster(GOBLIN, touchPosWorld);
                 }
             }
         }
@@ -680,9 +680,9 @@ public class miniGameManager : MonoBehaviour
                     break;
 
                 case "zombieButton":
-                    outsideSpawnIndicator.SetActive(false);
+                    outsideSpawnIndicator.SetActive(true);
                     insideSpawnIndicator.SetActive(false);
-                    sewerSpawnIndicator.SetActive(true);
+                    sewerSpawnIndicator.SetActive(false);
                     break;
 
                 case "jackOLanternButton":
@@ -700,7 +700,7 @@ public class miniGameManager : MonoBehaviour
                 case "goblinButton":
                     outsideSpawnIndicator.SetActive(true);
                     insideSpawnIndicator.SetActive(false);
-                    sewerSpawnIndicator.SetActive(false);
+                    sewerSpawnIndicator.SetActive(true);
                     break;
 
                 case "vampireButton":

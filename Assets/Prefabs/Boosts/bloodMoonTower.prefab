@@ -120,8 +120,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Building, Assembly-CSharp
+      - m_Target: {fileID: 4792922712428399056}
+        m_TargetAssemblyTypeName: Construction, Assembly-CSharp
         m_MethodName: cancelBuilding
         m_Mode: 1
         m_Arguments:
@@ -407,7 +407,7 @@ MonoBehaviour:
   area:
     m_Position: {x: 0, y: 0, z: 0}
     m_Size: {x: 4, y: 4, z: 0}
-  confirmUI: {fileID: 0}
+  confirmUI: {fileID: 1940943099602456370}
   affectedBuildings: []
   affectedBuildingsIcons: []
   type: general
@@ -532,8 +532,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Building, Assembly-CSharp
+      - m_Target: {fileID: 4792922712428399056}
+        m_TargetAssemblyTypeName: Construction, Assembly-CSharp
         m_MethodName: confirmBuilding
         m_Mode: 1
         m_Arguments:

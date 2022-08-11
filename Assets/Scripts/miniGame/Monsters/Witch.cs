@@ -70,7 +70,18 @@ public class Witch : Monster
                 if (miniGameManager.Instance.MONSTERS.TryGetValue(miniGameManager.SKELETON, out GameObject skeleton))
                 {
                     GameObject aux1 = Instantiate(skeleton, (Vector2)transform.position + (Random.insideUnitCircle * invocationRange), Quaternion.identity);
-                    aux1.GetComponent<Monster>().health = 2;
+
+                    //Set monster stats (not affecting the prefab)
+                    if (Data.Instance.MONSTERS.TryGetValue(miniGameManager.SKELETON, out MonsterInfo monsterInfo))
+                    {
+                        aux1.GetComponent<Monster>().velocity = monsterInfo.velocity[monsterInfo.upgradeLevel - 1];
+                        aux1.GetComponent<Monster>().health = monsterInfo.health[monsterInfo.upgradeLevel - 1];
+                        aux1.GetComponent<Monster>().damage = monsterInfo.damage[monsterInfo.upgradeLevel - 1];
+                        aux1.GetComponent<Monster>().attackRate = monsterInfo.attackRate[monsterInfo.upgradeLevel - 1];
+                        aux1.GetComponent<Monster>().attackRange = monsterInfo.attackRange[monsterInfo.upgradeLevel - 1];
+                        aux1.GetComponent<Monster>().level = monsterInfo.level[monsterInfo.upgradeLevel - 1];
+                    }
+
                     aliveSkeletons.Add(aux1);
                     miniGameManager.Instance.numMaxMonsters++;
 
@@ -78,7 +89,18 @@ public class Witch : Monster
                     if (aliveSkeletons.Count < MAX_SKELETONS)
                     {
                         GameObject aux2 = Instantiate(skeleton, (Vector2)transform.position + (Random.insideUnitCircle * invocationRange), Quaternion.identity);
-                        aux2.GetComponent<Monster>().health = 2;
+
+                        //Set monster stats (not affecting the prefab)
+                        if (Data.Instance.MONSTERS.TryGetValue(miniGameManager.SKELETON, out MonsterInfo monsterInfo2))
+                        {
+                            aux2.GetComponent<Monster>().velocity = monsterInfo2.velocity[monsterInfo2.upgradeLevel - 1];
+                            aux2.GetComponent<Monster>().health = monsterInfo2.health[monsterInfo2.upgradeLevel - 1];
+                            aux2.GetComponent<Monster>().damage = monsterInfo2.damage[monsterInfo2.upgradeLevel - 1];
+                            aux2.GetComponent<Monster>().attackRate = monsterInfo2.attackRate[monsterInfo2.upgradeLevel - 1];
+                            aux2.GetComponent<Monster>().attackRange = monsterInfo2.attackRange[monsterInfo2.upgradeLevel - 1];
+                            aux2.GetComponent<Monster>().level = monsterInfo2.level[monsterInfo2.upgradeLevel - 1];
+                        }
+
                         aliveSkeletons.Add(aux2);
                         miniGameManager.Instance.numMaxMonsters++;
                     }

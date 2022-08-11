@@ -8,16 +8,11 @@ public class ShieldMan : Villager
     public NavMeshObstacle navMeshObstacle;
     public float blockingTime;
     public bool isBlocking = false;
-    public bool isPermanentBlocking = false;
     public List<OffMeshLink> links;
     public CircleCollider2D collider;
 
-    protected List<Transform> flags = new List<Transform>();
     protected Vector3 destination = Vector3.zero;
     protected float radius = 5f;
-    protected int destinationFlag = 0;
-    protected float time = 0;
-    protected float timeStopped = 0;
 
     public bool wasMovingRight = false;
     public bool isMovingRight = false;
@@ -31,16 +26,7 @@ public class ShieldMan : Villager
         agent.speed = velocity;
         //agent.agentTypeID = AgentTypeID.GetAgenTypeIDByName(element.ElementName);
 
-        spawn();
-
-        for (int i = 0; i < miniGameManager.Instance.activeFlags.Count; i++)
-        {
-            flags.Add(miniGameManager.Instance.activeFlags[i].GetComponent<Transform>());
-        }
-
-        destinationFlag = Random.Range(0, flags.Count);
-        destination = ((Vector2)flags[destinationFlag].position + (Random.insideUnitCircle * radius));
-        destination.z = 0;
+        spawn();        
 
         agent.stoppingDistance = 4;
         collider = transform.GetComponent<CircleCollider2D>();
@@ -63,43 +49,18 @@ public class ShieldMan : Villager
         }
         else
         {
-            time += Time.deltaTime;
-            if (!isBlocking && !isPermanentBlocking && !isStunned)
+            if (!isBlocking && !isStunned)
             {
                 takeAction();
             }
-            else if (!isPermanentBlocking && !isStunned)
+            else if (!isStunned)
             {
                 //attacks while it's blocking
                 attack();
-            }
-
-            if (!isStunned)
-            {
-                //Is not moving
-                if (agent.velocity.magnitude < 0.15f)
-                {
-                    timeStopped += Time.deltaTime;
-                }
-                else
-                {
-                    timeStopped = 0;
-                }
-
-                //check that permanentBlock applies
-                if (!isPermanentBlocking && !isBlocking && timeStopped > 15)
-                {
-                    permanentBlock();
-                }
-            }
-            else
-            {
-                //If is stunned reset timeStopeed (it doesn't count)
-                timeStopped = 0;
-            }
+            }            
 
             //Play block animation if it's blocking
-            if (isBlocking || isPermanentBlocking)
+            if (isBlocking)
             {
                 playBlockAnimation();
             }
@@ -178,34 +139,13 @@ public class ShieldMan : Villager
             }
         }
         return closestMonster;
-    }
-
-    public void goToFlag()
-    {
-        if ((transform.position - destination).magnitude <= range)
-        {
-            //Once arrived to the chosen flag block permanently
-            permanentBlock();
-        }
-        else
-        {
-            //keep moving to waypoint
-            agent.SetDestination(flags[destinationFlag].position);
-        }
-    }
+    }    
 
     public void takeAction()
     {
         if (!checkMonstersInRange())
         {
-            if (time <= 30)
-            {
-                move();
-            }
-            else
-            {
-                goToFlag();
-            }
+            move();
         }
         else
         {
@@ -214,7 +154,7 @@ public class ShieldMan : Villager
             Transform currentTarget = getMonsterInRange();
             if (currentTarget != null)
             {
-                if ((transform.position - currentTarget.position).magnitude <= agent.stoppingDistance + 0.2f)
+                if ((transform.position - currentTarget.position).magnitude <= agent.stoppingDistance + 0.2f) //fer range
                 {
                     block();
                 }
@@ -237,7 +177,7 @@ public class ShieldMan : Villager
                 Transform currentTarget = getMonsterInRange();
                 if (currentTarget != null)
                 {
-                    if ((transform.position - currentTarget.position).magnitude <= 5 + 0.2f)
+                    if ((transform.position - currentTarget.position).magnitude <= range) //fer ranged
                     {
                         attackTime += Time.deltaTime;
                         if (attackTime >= attackRate)
@@ -289,20 +229,6 @@ public class ShieldMan : Villager
         }
         collider.radius = 2.5f;
         Invoke("stopBlocking", blockingTime);
-    }
-
-    public void permanentBlock()
-    {
-        isPermanentBlocking = true;
-        agent.speed = 0;
-        isRunning = false;
-        agent.enabled = false;
-        navMeshObstacle.enabled = true;
-        for (int i = 0; i < links.Count; i++)
-        {
-            links[i].enabled = true;
-        }
-        collider.radius = 2.5f;
     }
 
     public void stopBlocking()
