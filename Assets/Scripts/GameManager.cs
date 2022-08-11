@@ -359,17 +359,17 @@ public class GameManager : MonoBehaviour
         if (!isOnCanvas)
         {
             //check if has at least one monster
-            bool hasMonster = false;
+            int numMonsters = 0;
 
             for (int i = 0; i < monstersKeys.Count; i++)
             {
                 if (Data.Instance.INVENTORY.ContainsKey(monstersKeys[i]))
                 {
-                    hasMonster = true;
+                    numMonsters += Data.Instance.INVENTORY[monstersKeys[i]];
                 }
             }
 
-            if (hasMonster)
+            if (numMonsters > 0)
             {
                 portalDialog.transform.Find("MonsterText").gameObject.SetActive(false);
 
@@ -864,15 +864,15 @@ public class GameManager : MonoBehaviour
 
     public void loadMiniGame()
     {
-        bool hasMonster = false;
+        int numMonsters = 0;
         for (int i = 0; i < monstersKeys.Count; i++)
         {
             if (Data.Instance.INVENTORY.ContainsKey(monstersKeys[i])) //Load minigame only if it has minim 1 monster
             {
-                hasMonster = true;
+                numMonsters += Data.Instance.INVENTORY[monstersKeys[i]];
             }
         }
-        if (hasMonster)
+        if (numMonsters > 0)
         {
             SaveManager.Instance.Save();
             loadingScreen.SetActive(true);
@@ -1589,51 +1589,56 @@ public class GameManager : MonoBehaviour
         List<InventoryObject> monsterPanels = new List<InventoryObject>();
         List<InventoryObject> resourcesPanels = new List<InventoryObject>();
 
-        //Fill grid with offline resources
+        //Fill grid with inventory resources
         foreach (KeyValuePair<string, int> resource in Data.Instance.INVENTORY)
         {
             if (!resource.Key.Contains("Old"))
             {
-                InventoryObject aux = new InventoryObject();
+                //check quantity
+                if (resource.Value > 0)
+                {
 
-                if (Data.Instance.RESOURCES.TryGetValue(resource.Key, out Resource res))
-                {
-                    aux.icon = res.icon;
-                }
-                else
-                {
-                    //It's a monster
-                    if (Data.Instance.MONSTERS.TryGetValue(resource.Key, out MonsterInfo monster))
+                    InventoryObject aux = new InventoryObject();
+
+                    if (Data.Instance.RESOURCES.TryGetValue(resource.Key, out Resource res))
                     {
-                        aux.icon = monster.icon;
+                        aux.icon = res.icon;
                     }
-                }
-
-                aux.quantity = resource.Value.ToString();
-
-                bool isResource = true;
-
-                for (int i = 0; i < monstersKeys.Count; i++)
-                {
-                    if (resource.Key.Equals(monstersKeys[i]))
+                    else
                     {
-                        monsterPanels.Add(aux);
-                        isResource = false;
+                        //It's a monster
+                        if (Data.Instance.MONSTERS.TryGetValue(resource.Key, out MonsterInfo monster))
+                        {
+                            aux.icon = monster.icon;
+                        }
                     }
-                }
 
-                for (int i = 0; i < dropsKeys.Count; i++)
-                {
-                    if (resource.Key.Equals(dropsKeys[i]))
+                    aux.quantity = resource.Value.ToString();
+
+                    bool isResource = true;
+
+                    for (int i = 0; i < monstersKeys.Count; i++)
                     {
-                        dropsPanels.Add(aux);
-                        isResource = false;
+                        if (resource.Key.Equals(monstersKeys[i]))
+                        {
+                            monsterPanels.Add(aux);
+                            isResource = false;
+                        }
                     }
-                }
 
-                if (isResource)
-                {
-                    resourcesPanels.Add(aux);
+                    for (int i = 0; i < dropsKeys.Count; i++)
+                    {
+                        if (resource.Key.Equals(dropsKeys[i]))
+                        {
+                            dropsPanels.Add(aux);
+                            isResource = false;
+                        }
+                    }
+
+                    if (isResource)
+                    {
+                        resourcesPanels.Add(aux);
+                    }
                 }
             }
         }

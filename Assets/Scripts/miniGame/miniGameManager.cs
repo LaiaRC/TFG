@@ -228,8 +228,13 @@ public class miniGameManager : MonoBehaviour
                 if (monster.Key.Equals(GameManager.Instance.monstersKeys[i]))
                 {
                     //It's a monster
-                    UNITS_MONSTERS.Add(monster.Key, monster.Value);
-                    numMaxMonsters += monster.Value;
+
+                    //check that quantity is not 0
+                    if (monster.Value > 0)
+                    {
+                        UNITS_MONSTERS.Add(monster.Key, monster.Value);
+                        numMaxMonsters += monster.Value;
+                    }
                 }
             }
         }
