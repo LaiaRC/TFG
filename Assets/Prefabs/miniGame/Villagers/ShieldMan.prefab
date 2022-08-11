@@ -843,12 +843,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26a7346e10676304b9c9837f009f3215, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 2
-  maxScarePoints: 18
+  velocity: 4
+  maxScarePoints: 45
   currentScarePoints: 0
-  damage: 4
+  damage: 5
   level: 4
-  range: 6
+  range: 5
   currentState: 
   canAttack: 1
   canMove: 1
@@ -856,8 +856,8 @@ MonoBehaviour:
   isScared: 0
   type: shieldMan
   runningTime: 5
-  runningSpeed: 5
-  scareSpeed: 5
+  runningSpeed: 4
+  scareSpeed: 4
   attackRate: 1
   isStunned: 0
   drop: {fileID: 3767981418247683008, guid: c7031d96bbba6c14487dae14f105f276, type: 3}

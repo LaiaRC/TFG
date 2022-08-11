@@ -672,6 +672,7 @@ public class Data : MonoBehaviour
 
         #region MONSTERS
 
+        #region SKELETON
         //Skeleton
         List<Requirement> reqSkeleton = new List<Requirement>();
 
@@ -681,12 +682,12 @@ public class Data : MonoBehaviour
         List<List<Requirement>> reqUpgradeSkeleton = new List<List<Requirement>>();
 
         List<Requirement> reqUpgradeSkeleton1 = new List<Requirement>();
-        reqUpgradeSkeleton1.Add(new Requirement(PLASMA, 3000));
-        reqUpgradeSkeleton1.Add(new Requirement(BONE, 1500));
+        reqUpgradeSkeleton1.Add(new Requirement(BANDAGES, 20));
+        reqUpgradeSkeleton1.Add(new Requirement(POISONIVY, 150));
 
         List<Requirement> reqUpgradeSkeleton2 = new List<Requirement>();
-        reqUpgradeSkeleton2.Add(new Requirement(DIVINATIONBALL, 2000));
-        reqUpgradeSkeleton2.Add(new Requirement(BONE, 1500));
+        reqUpgradeSkeleton2.Add(new Requirement(BLACKCATHAIR, 150));
+        reqUpgradeSkeleton2.Add(new Requirement(PLASMA, 150));
 
         reqUpgradeSkeleton.Add(reqUpgradeSkeleton1);
         reqUpgradeSkeleton.Add(reqUpgradeSkeleton2);
@@ -698,14 +699,14 @@ public class Data : MonoBehaviour
         #region STATS
 
         List<float> velSkeleton = new List<float>();
-        velSkeleton.Add(4);
-        velSkeleton.Add(4.5f);
-        velSkeleton.Add(5);
+        velSkeleton.Add(3);
+        velSkeleton.Add(3);
+        velSkeleton.Add(3.5f);
 
         List<int> healthSkeleton = new List<int>();
-        healthSkeleton.Add(2);
-        healthSkeleton.Add(2);
-        healthSkeleton.Add(3);
+        healthSkeleton.Add(10);
+        healthSkeleton.Add(10);
+        healthSkeleton.Add(15);
 
         List<int> damageSkeleton = new List<int>();
         damageSkeleton.Add(1);
@@ -714,13 +715,13 @@ public class Data : MonoBehaviour
 
         List<float> aRateSkeleton = new List<float>();
         aRateSkeleton.Add(2);
-        aRateSkeleton.Add(1.5f);
-        aRateSkeleton.Add(1);
+        aRateSkeleton.Add(2);
+        aRateSkeleton.Add(2);
 
         List<float> aRangeSkeleton = new List<float>();
-        aRangeSkeleton.Add(4.5f);
         aRangeSkeleton.Add(5);
-        aRangeSkeleton.Add(5.5f);
+        aRangeSkeleton.Add(5);
+        aRangeSkeleton.Add(5);
 
         List<int> levelSkeleton = new List<int>();
         levelSkeleton.Add(1);
@@ -731,7 +732,9 @@ public class Data : MonoBehaviour
 
         string desSkeleton = "It's the most basic type of monster. Can only be invoked outside the village.";
         MONSTERS.Add(SKELETON, new MonsterInfo(SKELETON, "Skeleton", 3600, reqSkeleton, reqUpgradeSkeleton, reqUnlockSkeleton, velSkeleton, healthSkeleton, damageSkeleton, aRateSkeleton, aRangeSkeleton, levelSkeleton, monstersIcons[0], desSkeleton, 1, true));
+        #endregion
 
+        #region JACK O LANTERN
         //JackOLantern
         List<Requirement> reqJack = new List<Requirement>();
 
@@ -742,11 +745,11 @@ public class Data : MonoBehaviour
         List<Requirement> reqUpgradeJack1 = new List<Requirement>();
         List<Requirement> reqUpgradeJack2 = new List<Requirement>();
 
-        reqUpgradeJack1.Add(new Requirement(PLASMA, 3000));
-        reqUpgradeJack1.Add(new Requirement(BONE, 1500));
+        reqUpgradeJack1.Add(new Requirement(MUD, 100));
+        reqUpgradeJack1.Add(new Requirement(GARGOYLESTONE, 50));
 
-        reqUpgradeJack2.Add(new Requirement(PLASMA, 30));
-        reqUpgradeJack2.Add(new Requirement(BONE, 1500));
+        reqUpgradeJack2.Add(new Requirement(BLACKCATHAIR, 300));
+        reqUpgradeJack2.Add(new Requirement(HORNS, 200));
 
         reqUpgradeJack.Add(reqUpgradeJack1);
         reqUpgradeJack.Add(reqUpgradeJack2);
@@ -763,9 +766,9 @@ public class Data : MonoBehaviour
         velJack.Add(0);
 
         List<int> healthJack = new List<int>();
-        healthJack.Add(6);
-        healthJack.Add(8);
-        healthJack.Add(10);
+        healthJack.Add(20);
+        healthJack.Add(25);
+        healthJack.Add(35);
 
         List<int> damageJack = new List<int>();
         damageJack.Add(0);
@@ -793,21 +796,24 @@ public class Data : MonoBehaviour
 
         MONSTERS.Add(JACK_LANTERN, new MonsterInfo(JACK_LANTERN, "Jack-o'-lantern", 5400, reqJack, reqUpgradeJack, reqUnlockJack, velJack, healthJack, damageJack, aRateJack, aRangeJack, levelJack, monstersIcons[1], desJack, 1, false));
 
+        #endregion
+
+        #region BAT
         //Bat
         List<Requirement> reqBat = new List<Requirement>();
 
-        reqBat.Add(new Requirement(BATWING, 250));
-        reqBat.Add(new Requirement(DEADTREEBRANCH, 10));
+        reqBat.Add(new Requirement(OUIJABOARD, 40));
+        reqBat.Add(new Requirement(GARGOYLESTONE, 40));
 
         List<List<Requirement>> reqUpgradeBat = new List<List<Requirement>>();
         List<Requirement> reqUpgradeBat1 = new List<Requirement>();
         List<Requirement> reqUpgradeBat2 = new List<Requirement>();
 
-        reqUpgradeBat1.Add(new Requirement(PLASMA, 3000));
-        reqUpgradeBat1.Add(new Requirement(BONE, 1500));
+        reqUpgradeBat1.Add(new Requirement(SPIDERWEB, 500));
+        reqUpgradeBat1.Add(new Requirement(BANDAGES, 400));
 
-        reqUpgradeBat2.Add(new Requirement(EYE, 3000));
-        reqUpgradeBat2.Add(new Requirement(BONE, 1500));
+        reqUpgradeBat2.Add(new Requirement(TOMBSTONE, 150));
+        reqUpgradeBat2.Add(new Requirement(OUIJABOARD, 250));
 
         reqUpgradeBat.Add(reqUpgradeBat1);
         reqUpgradeBat.Add(reqUpgradeBat2);
@@ -819,29 +825,29 @@ public class Data : MonoBehaviour
         #region STATS
 
         List<float> velBat = new List<float>();
-        velBat.Add(5);
-        velBat.Add(5.5f);
-        velBat.Add(6);
+        velBat.Add(2.5f);
+        velBat.Add(3);
+        velBat.Add(3);
 
         List<int> healthBat = new List<int>();
-        healthBat.Add(2);
-        healthBat.Add(3);
-        healthBat.Add(4);
+        healthBat.Add(7);
+        healthBat.Add(13);
+        healthBat.Add(16);
 
         List<int> damageBat = new List<int>();
         damageBat.Add(2);
+        damageBat.Add(2);
         damageBat.Add(3);
-        damageBat.Add(4);
 
         List<float> aRateBat = new List<float>();
-        aRateBat.Add(2);
         aRateBat.Add(1.5f);
-        aRateBat.Add(1);
+        aRateBat.Add(1.5f);
+        aRateBat.Add(1.5f);
 
         List<float> aRangeBat = new List<float>();
-        aRangeBat.Add(4.5f);
         aRangeBat.Add(5);
-        aRangeBat.Add(5.5f);
+        aRangeBat.Add(5);
+        aRangeBat.Add(5);
 
         List<int> levelBat = new List<int>();
         levelBat.Add(2);
@@ -854,21 +860,25 @@ public class Data : MonoBehaviour
 
         MONSTERS.Add(BAT, new MonsterInfo(BAT, "Bat", 7200, reqBat, reqUpgradeBat, reqUnlockBat, velBat, healthBat, damageBat, aRateBat, aRangeBat, levelBat, monstersIcons[2], desBat, 1, false));
 
+        #endregion
+
+        #region GOBLIN
+
         //Goblin
         List<Requirement> reqGoblin = new List<Requirement>();
 
-        reqGoblin.Add(new Requirement(DEADFISH, 666));
-        reqGoblin.Add(new Requirement(SWAMPWATER, 333));
+        reqGoblin.Add(new Requirement(DEADFISH, 400));
+        reqGoblin.Add(new Requirement(BLACKCATHAIR, 50));
 
         List<List<Requirement>> reqUpgradeGoblin = new List<List<Requirement>>();
         List<Requirement> reqUpgradeGoblin1 = new List<Requirement>();
         List<Requirement> reqUpgradeGoblin2 = new List<Requirement>();
 
-        reqUpgradeGoblin1.Add(new Requirement(SWAMPWATER, 2500));
-        reqUpgradeGoblin1.Add(new Requirement(DEADFISH, 1000));
+        reqUpgradeGoblin1.Add(new Requirement(EYE, 30));
+        reqUpgradeGoblin1.Add(new Requirement(DEADFISH, 500));
 
-        reqUpgradeGoblin2.Add(new Requirement(EYE, 2500));
-        reqUpgradeGoblin2.Add(new Requirement(DEADFISH, 1000));
+        reqUpgradeGoblin2.Add(new Requirement(BLACKROSE, 300));
+        reqUpgradeGoblin2.Add(new Requirement(RUSTYNAIL, 500));
 
         reqUpgradeGoblin.Add(reqUpgradeGoblin1);
         reqUpgradeGoblin.Add(reqUpgradeGoblin2);
@@ -880,29 +890,29 @@ public class Data : MonoBehaviour
         #region STATS
 
         List<float> velGoblin = new List<float>();
+        velGoblin.Add(5);
+        velGoblin.Add(5.5f);
         velGoblin.Add(6);
-        velGoblin.Add(7);
-        velGoblin.Add(8);
 
         List<int> healthGoblin = new List<int>();
-        healthGoblin.Add(3);
-        healthGoblin.Add(3);
-        healthGoblin.Add(4);
+        healthGoblin.Add(12);
+        healthGoblin.Add(16);
+        healthGoblin.Add(20);
 
         List<int> damageGoblin = new List<int>();
-        damageGoblin.Add(2);
-        damageGoblin.Add(3);
-        damageGoblin.Add(4);
+        damageGoblin.Add(1);
+        damageGoblin.Add(1);
+        damageGoblin.Add(1);
 
         List<float> aRateGoblin = new List<float>();
-        aRateGoblin.Add(1);
+        aRateGoblin.Add(0.5f);
         aRateGoblin.Add(0.5f);
         aRateGoblin.Add(0.25f);
 
         List<float> aRangeGoblin = new List<float>();
-        aRangeGoblin.Add(4.5f);
-        aRangeGoblin.Add(5);
-        aRangeGoblin.Add(5.5f);
+        aRangeGoblin.Add(6);
+        aRangeGoblin.Add(6);
+        aRangeGoblin.Add(6);
 
         List<int> levelGoblin = new List<int>();
         levelGoblin.Add(2);
@@ -915,21 +925,25 @@ public class Data : MonoBehaviour
 
         MONSTERS.Add(GOBLIN, new MonsterInfo(GOBLIN, "Goblin", 9000, reqGoblin, reqUpgradeGoblin, reqUnlockGoblin, velGoblin, healthGoblin, damageGoblin, aRateGoblin, aRangeGoblin, levelGoblin, monstersIcons[3], desGoblin, 1, false));
 
+        #endregion
+
+        #region GHOST
+
         //Ghost
         List<Requirement> reqGhost = new List<Requirement>();
 
-        reqGhost.Add(new Requirement(IMMORTALITYELIXIR, 2000));
-        reqGhost.Add(new Requirement(SPIRITSOUL, 800));
+        reqGhost.Add(new Requirement(TOMBSTONE, 40));
+        reqGhost.Add(new Requirement(DIVINATIONBALL, 150));
 
         List<List<Requirement>> reqUpgradeGhost = new List<List<Requirement>>();
         List<Requirement> reqUpgradeGhost1 = new List<Requirement>();
         List<Requirement> reqUpgradeGhost2 = new List<Requirement>();
 
-        reqUpgradeGhost1.Add(new Requirement(SWAMPWATER, 2500));
-        reqUpgradeGhost1.Add(new Requirement(DEADFISH, 1000));
+        reqUpgradeGhost1.Add(new Requirement(SPELLBOOK, 75));
+        reqUpgradeGhost1.Add(new Requirement(PUMPKIN, 100));
 
-        reqUpgradeGhost2.Add(new Requirement(DEATHESSENCE, 2500));
-        reqUpgradeGhost2.Add(new Requirement(DEADFISH, 1000));
+        reqUpgradeGhost2.Add(new Requirement(DEADTREEBRANCH, 200));
+        reqUpgradeGhost2.Add(new Requirement(HORNS, 100));
 
         reqUpgradeGhost.Add(reqUpgradeGhost1);
         reqUpgradeGhost.Add(reqUpgradeGhost2);
@@ -941,29 +955,29 @@ public class Data : MonoBehaviour
         #region STATS
 
         List<float> velGhost = new List<float>();
-        velGhost.Add(4.5f);
-        velGhost.Add(5);
-        velGhost.Add(5.5f);
+        velGhost.Add(3.5f);
+        velGhost.Add(3.5f);
+        velGhost.Add(3.5f);
 
         List<int> healthGhost = new List<int>();
-        healthGhost.Add(6);
-        healthGhost.Add(7);
-        healthGhost.Add(8);
+        healthGhost.Add(20);
+        healthGhost.Add(25);
+        healthGhost.Add(30);
 
         List<int> damageGhost = new List<int>();
-        damageGhost.Add(3);
-        damageGhost.Add(3);
         damageGhost.Add(4);
+        damageGhost.Add(4);
+        damageGhost.Add(5);
 
         List<float> aRateGhost = new List<float>();
-        aRateGhost.Add(1.5f);
+        aRateGhost.Add(1);
         aRateGhost.Add(1);
         aRateGhost.Add(1);
 
         List<float> aRangeGhost = new List<float>();
-        aRangeGhost.Add(4.5f);
         aRangeGhost.Add(5);
-        aRangeGhost.Add(5.5f);
+        aRangeGhost.Add(5);
+        aRangeGhost.Add(5);
 
         List<int> levelGhost = new List<int>();
         levelGhost.Add(3);
@@ -976,21 +990,24 @@ public class Data : MonoBehaviour
 
         MONSTERS.Add(GHOST, new MonsterInfo(GHOST, "Ghost", 10800, reqGhost, reqUpgradeGhost, reqUnlockGhost, velGhost, healthGhost, damageGhost, aRateGhost, aRangeGhost, levelGhost, monstersIcons[4], desGhost, 1, false));
 
+        #endregion
+
+        #region CLOWN
         //Clown
         List<Requirement> reqClown = new List<Requirement>();
 
-        reqClown.Add(new Requirement(BLACKCATHAIR, 2000));
-        reqClown.Add(new Requirement(HORNS, 2000));
+        reqClown.Add(new Requirement(EYE, 200));
+        reqClown.Add(new Requirement(SKULL, 40));
 
         List<List<Requirement>> reqUpgradeClown = new List<List<Requirement>>();
         List<Requirement> reqUpgradeClown1 = new List<Requirement>();
         List<Requirement> reqUpgradeClown2 = new List<Requirement>();
 
-        reqUpgradeClown1.Add(new Requirement(SWAMPWATER, 2500));
-        reqUpgradeClown1.Add(new Requirement(DEADFISH, 1000));
+        reqUpgradeClown1.Add(new Requirement(HORNS, 150));
+        reqUpgradeClown1.Add(new Requirement(SPIRITSOUL, 300));
 
-        reqUpgradeClown2.Add(new Requirement(DIVINATIONBALL, 2500));
-        reqUpgradeClown2.Add(new Requirement(DEADFISH, 1000));
+        reqUpgradeClown2.Add(new Requirement(WITCHHAT, 25));
+        reqUpgradeClown2.Add(new Requirement(RUSTYNAIL, 500));
 
         reqUpgradeClown.Add(reqUpgradeClown1);
         reqUpgradeClown.Add(reqUpgradeClown2);
@@ -1007,9 +1024,9 @@ public class Data : MonoBehaviour
         velClown.Add(0);
 
         List<int> healthClown = new List<int>();
-        healthClown.Add(4);
         healthClown.Add(5);
-        healthClown.Add(6);
+        healthClown.Add(7);
+        healthClown.Add(10);
 
         List<int> damageClown = new List<int>();
         damageClown.Add(0);
@@ -1023,8 +1040,8 @@ public class Data : MonoBehaviour
 
         List<float> aRangeClown = new List<float>();
         aRangeClown.Add(6);
+        aRangeClown.Add(6.5f);
         aRangeClown.Add(7);
-        aRangeClown.Add(8);
 
         List<int> levelClown = new List<int>();
         levelClown.Add(3);
@@ -1036,22 +1053,24 @@ public class Data : MonoBehaviour
         string desClown = "A truly show man, it distracts villagers in range, paralizing them. Can be invoked inside village and each second loses 1HP";
 
         MONSTERS.Add(CLOWN, new MonsterInfo(CLOWN, "Clown", 12600, reqClown, reqUpgradeClown, reqUnlockClown, velClown, healthClown, damageClown, aRateClown, aRangeClown, levelClown, monstersIcons[5], desClown, 1, false));
+        #endregion
 
+        #region ZOMBIE
         //Zombie
         List<Requirement> reqZombie = new List<Requirement>();
 
-        reqZombie.Add(new Requirement(ROTTEN_FLESH, 5000));
-        reqZombie.Add(new Requirement(DEATHESSENCE, 300));
+        reqZombie.Add(new Requirement(SWAMPWATER, 400));
+        reqZombie.Add(new Requirement(POISONAPPLE, 200));
 
         List<List<Requirement>> reqUpgradeZombie = new List<List<Requirement>>();
         List<Requirement> reqUpgradeZombie1 = new List<Requirement>();
         List<Requirement> reqUpgradeZombie2 = new List<Requirement>();
 
-        reqUpgradeZombie1.Add(new Requirement(SWAMPWATER, 2500));
-        reqUpgradeZombie1.Add(new Requirement(DEADFISH, 1000));
+        reqUpgradeZombie1.Add(new Requirement(POISONAPPLE, 200));
+        reqUpgradeZombie1.Add(new Requirement(BATWING, 50));
 
-        reqUpgradeZombie2.Add(new Requirement(BLACKROSE, 2500));
-        reqUpgradeZombie2.Add(new Requirement(DEADFISH, 1000));
+        reqUpgradeZombie2.Add(new Requirement(DIVINATIONBALL, 500));
+        reqUpgradeZombie2.Add(new Requirement(DEADFISH, 30));
 
         reqUpgradeZombie.Add(reqUpgradeZombie1);
         reqUpgradeZombie.Add(reqUpgradeZombie2);
@@ -1063,14 +1082,14 @@ public class Data : MonoBehaviour
         #region STATS
 
         List<float> velZombie = new List<float>();
-        velZombie.Add(3);
         velZombie.Add(4);
+        velZombie.Add(4.5f);
         velZombie.Add(4.5f);
 
         List<int> healthZombie = new List<int>();
-        healthZombie.Add(8);
-        healthZombie.Add(9);
-        healthZombie.Add(10);
+        healthZombie.Add(35);
+        healthZombie.Add(42);
+        healthZombie.Add(50);
 
         List<int> damageZombie = new List<int>();
         damageZombie.Add(5);
@@ -1078,14 +1097,14 @@ public class Data : MonoBehaviour
         damageZombie.Add(8);
 
         List<float> aRateZombie = new List<float>();
-        aRateZombie.Add(2);
-        aRateZombie.Add(1.5f);
-        aRateZombie.Add(1);
+        aRateZombie.Add(3);
+        aRateZombie.Add(3);
+        aRateZombie.Add(3);
 
         List<float> aRangeZombie = new List<float>();
-        aRangeZombie.Add(4);
-        aRangeZombie.Add(4.5f);
-        aRangeZombie.Add(5);
+        aRangeZombie.Add(3);
+        aRangeZombie.Add(3);
+        aRangeZombie.Add(3);
 
         List<int> levelZombie = new List<int>();
         levelZombie.Add(3);
@@ -1098,21 +1117,25 @@ public class Data : MonoBehaviour
 
         MONSTERS.Add(ZOMBIE, new MonsterInfo(ZOMBIE, "Zombie", 14400, reqZombie, reqUpgradeZombie, reqUnlockZombie, velZombie, healthZombie, damageZombie, aRateZombie, aRangeZombie, levelZombie, monstersIcons[6], desZombie, 1, false));
 
+        #endregion
+
+        #region VAMPIRE
+
         //Vampire
         List<Requirement> reqVampire = new List<Requirement>();
 
-        reqVampire.Add(new Requirement(BLOOD, 1000));
-        reqVampire.Add(new Requirement(COFFIN, 300));
+        reqVampire.Add(new Requirement(BLOOD, 20));
+        reqVampire.Add(new Requirement(COFFIN, 5));
 
         List<List<Requirement>> reqUpgradeVampire = new List<List<Requirement>>();
         List<Requirement> reqUpgradeVampire1 = new List<Requirement>();
         List<Requirement> reqUpgradeVampire2 = new List<Requirement>();
 
-        reqUpgradeVampire1.Add(new Requirement(SWAMPWATER, 2500));
-        reqUpgradeVampire1.Add(new Requirement(DEADFISH, 1000));
+        reqUpgradeVampire1.Add(new Requirement(FROGLEG, 500));
+        reqUpgradeVampire1.Add(new Requirement(TOMBSTONE, 50));
 
-        reqUpgradeVampire2.Add(new Requirement(HELLFIRE, 2500));
-        reqUpgradeVampire2.Add(new Requirement(DEADFISH, 1000));
+        reqUpgradeVampire2.Add(new Requirement(HELLFIRE, 60));
+        reqUpgradeVampire2.Add(new Requirement(GARGOYLESTONE, 50));
 
         reqUpgradeVampire.Add(reqUpgradeVampire1);
         reqUpgradeVampire.Add(reqUpgradeVampire2);
@@ -1124,29 +1147,29 @@ public class Data : MonoBehaviour
         #region STATS
 
         List<float> velVampire = new List<float>();
-        velVampire.Add(5.5f);
-        velVampire.Add(6);
-        velVampire.Add(6.5f);
+        velVampire.Add(4.5f);
+        velVampire.Add(4.5f);
+        velVampire.Add(4.5f);
 
         List<int> healthVampire = new List<int>();
-        healthVampire.Add(9);
-        healthVampire.Add(10);
-        healthVampire.Add(11);
+        healthVampire.Add(22);
+        healthVampire.Add(26);
+        healthVampire.Add(30);
 
         List<int> damageVampire = new List<int>();
-        damageVampire.Add(5);
+        damageVampire.Add(4);
         damageVampire.Add(5);
         damageVampire.Add(6);
 
         List<float> aRateVampire = new List<float>();
-        aRateVampire.Add(1.5f);
+        aRateVampire.Add(1);
         aRateVampire.Add(1);
         aRateVampire.Add(1);
 
         List<float> aRangeVampire = new List<float>();
         aRangeVampire.Add(5);
-        aRangeVampire.Add(5.5f);
-        aRangeVampire.Add(6);
+        aRangeVampire.Add(5);
+        aRangeVampire.Add(5);
 
         List<int> levelVampire = new List<int>();
         levelVampire.Add(4);
@@ -1159,21 +1182,24 @@ public class Data : MonoBehaviour
 
         MONSTERS.Add(VAMPIRE, new MonsterInfo(VAMPIRE, "Vampire", 16200, reqVampire, reqUpgradeVampire, reqUnlockVampire, velVampire, healthVampire, damageVampire, aRateVampire, aRangeVampire, levelVampire, monstersIcons[7], desVampire, 1, false));
 
+        #endregion
+
+        #region WITCH
         //Witch
         List<Requirement> reqWitch = new List<Requirement>();
 
-        reqWitch.Add(new Requirement(WITCHHAT, 2000));
-        reqWitch.Add(new Requirement(SPELLBOOK, 4000));
+        reqWitch.Add(new Requirement(WITCHHAT, 20));
+        reqWitch.Add(new Requirement(HELLFIRE, 20));
 
         List<List<Requirement>> reqUpgradeWitch = new List<List<Requirement>>();
         List<Requirement> reqUpgradeWitch1 = new List<Requirement>();
         List<Requirement> reqUpgradeWitch2 = new List<Requirement>();
 
-        reqUpgradeWitch1.Add(new Requirement(SWAMPWATER, 2500));
-        reqUpgradeWitch1.Add(new Requirement(DEADFISH, 1000));
+        reqUpgradeWitch1.Add(new Requirement(WOLFCLAW, 200));
+        reqUpgradeWitch1.Add(new Requirement(IMMORTALITYELIXIR, 20));
 
-        reqUpgradeWitch2.Add(new Requirement(GEM, 2500));
-        reqUpgradeWitch2.Add(new Requirement(DEADFISH, 1000));
+        reqUpgradeWitch2.Add(new Requirement(COFFIN, 30));
+        reqUpgradeWitch2.Add(new Requirement(BROOMSTICK, 50));
 
         reqUpgradeWitch.Add(reqUpgradeWitch1);
         reqUpgradeWitch.Add(reqUpgradeWitch2);
@@ -1185,29 +1211,29 @@ public class Data : MonoBehaviour
         #region STATS
 
         List<float> velWitch = new List<float>();
-        velWitch.Add(4);
-        velWitch.Add(4.5f);
-        velWitch.Add(5);
+        velWitch.Add(2.5f);
+        velWitch.Add(2.5f);
+        velWitch.Add(3);
 
         List<int> healthWitch = new List<int>();
-        healthWitch.Add(11);
-        healthWitch.Add(13);
-        healthWitch.Add(15);
+        healthWitch.Add(26);
+        healthWitch.Add(32);
+        healthWitch.Add(36);
 
         List<int> damageWitch = new List<int>();
         damageWitch.Add(4);
         damageWitch.Add(5);
-        damageWitch.Add(6);
+        damageWitch.Add(7);
 
         List<float> aRateWitch = new List<float>();
-        aRateWitch.Add(2);
-        aRateWitch.Add(1.5f);
+        aRateWitch.Add(1);
+        aRateWitch.Add(1);
         aRateWitch.Add(1);
 
         List<float> aRangeWitch = new List<float>();
-        aRangeWitch.Add(4.5f);
-        aRangeWitch.Add(5);
-        aRangeWitch.Add(5.5f);
+        aRangeWitch.Add(6);
+        aRangeWitch.Add(6.5f);
+        aRangeWitch.Add(7);
 
         List<int> levelWitch = new List<int>();
         levelWitch.Add(4);
@@ -1219,7 +1245,9 @@ public class Data : MonoBehaviour
         string desWitch = "Invokes skeletons over time and makes ranged attacks. It has great resistance.";
 
         MONSTERS.Add(WITCH, new MonsterInfo(WITCH, "Witch", 18000, reqWitch, reqUpgradeWitch, reqUnlockWitch, velWitch, healthWitch, damageWitch, aRateWitch, aRangeWitch, levelWitch, monstersIcons[8], desWitch, 1, false));
+        #endregion
 
+        #region REAPER 
         //Reaper
         List<Requirement> reqReaper = new List<Requirement>();
 
@@ -1285,6 +1313,8 @@ public class Data : MonoBehaviour
         string desReaper = "If you want things done properly, do them yourself. The ultimate weapon to bring back Halloween's true spirit.";
 
         MONSTERS.Add(REAPER, new MonsterInfo(REAPER, "The Reaper", 28800, reqReaper, reqUpgradeReaper, reqUnlockReaper, velReaper, healthReaper, damageReaper, aRateReaper, aRangeReaper, levelReaper, monstersIcons[9], desReaper, 1, false));
+
+        #endregion
 
         #endregion MONSTERS
 

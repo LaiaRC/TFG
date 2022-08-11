@@ -12,7 +12,7 @@ public class Vampire : Monster
 
     protected int maxHealth;
     protected float time;
-    protected static int HEALING_POINTS = 2;
+    protected static int HEALING_POINTS = 1;
     protected bool isOnLink = false;
     protected float linkSpeed = 0.5f;
 

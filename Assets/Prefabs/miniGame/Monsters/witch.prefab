@@ -379,7 +379,7 @@ MonoBehaviour:
   fillColor: {r: 0, g: 1, b: 0, a: 1}
   backgroundColor: {r: 0.5882353, g: 1, b: 0.5882353, a: 1}
   isAttacking: 0
-  invocationRate: 5
+  invocationRate: 10
   invocationRange: 3.5
 --- !u!114 &4177392398562506096
 MonoBehaviour:

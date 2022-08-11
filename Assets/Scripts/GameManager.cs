@@ -1004,6 +1004,20 @@ public class GameManager : MonoBehaviour
 
                 break;
 
+            case "well":
+                //Unlock another welll
+                foreach (ShopItemHolder item in buildingShopItems)
+                {
+                    if (item.titleText.text.Contains("Well"))
+                    {
+                        item.maxQuantity += 1;
+                        item.hasReachedLimit = false;
+                        item.updateTextAmount(item.currentQuantity);
+                        item.setRequirementTextConfig();
+                    }
+                }
+                break;
+
             case "abandonedHospital":
                 //Unlock another graveyard
                 foreach (ShopItemHolder item in buildingShopItems)

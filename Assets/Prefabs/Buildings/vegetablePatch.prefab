@@ -1831,8 +1831,8 @@ MonoBehaviour:
     m_Size: {x: 0, y: 0, z: 0}
   placed: 0
   area:
-    m_Position: {x: -27, y: 13, z: 0}
-    m_Size: {x: 30, y: 19, z: 1}
+    m_Position: {x: -14, y: -3, z: 0}
+    m_Size: {x: 27, y: 16, z: 1}
   confirmUI: {fileID: 6945989185380472391}
   upgrade_cost:
   - list:

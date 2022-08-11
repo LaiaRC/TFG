@@ -453,12 +453,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 673e88092a594e64aab9ddda026f4ff0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 3
-  maxScarePoints: 12
+  velocity: 4.5
+  maxScarePoints: 25
   currentScarePoints: 0
-  damage: 3
+  damage: 4
   level: 3
-  range: 4
+  range: 5
   currentState: 
   canAttack: 1
   canMove: 1
@@ -466,8 +466,8 @@ MonoBehaviour:
   isScared: 0
   type: swashbuckler
   runningTime: 3
-  runningSpeed: 6
-  scareSpeed: 6
+  runningSpeed: 4.5
+  scareSpeed: 4.5
   attackRate: 0.5
   isStunned: 0
   drop: {fileID: 3767981418247683008, guid: b98199cacfd9d2a4fa73652b0a0980f7, type: 3}

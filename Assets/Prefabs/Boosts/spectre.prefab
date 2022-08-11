@@ -755,16 +755,16 @@ MonoBehaviour:
   production_cost:
   - list:
     - resourceNameKey: scare
-      quantity: 10
-  - list:
-    - resourceNameKey: scare
-      quantity: 20
-  - list:
-    - resourceNameKey: scare
       quantity: 30
   - list:
     - resourceNameKey: scare
       quantity: 40
+  - list:
+    - resourceNameKey: scare
+      quantity: 50
+  - list:
+    - resourceNameKey: scare
+      quantity: 60
   numType: 0
   constructionType: 0
   position: {x: 0, y: 0, z: 0}

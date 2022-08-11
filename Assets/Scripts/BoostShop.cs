@@ -20,6 +20,7 @@ public class BoostShop : MonoBehaviour
     public static string FOREST = "forest";
     public static string VEGETABLE_PATCH = "vegetablePatch";
     public static string SWAMP = "swamp";
+    public static string WELL = "well";
     public static string ABANDONED_HOSPITAL = "abandonedHospital";
     public static string CRYPT2 = "crypt2";
     #endregion
@@ -32,32 +33,34 @@ public class BoostShop : MonoBehaviour
         canvas.SetActive(false);
 
         //Fill BOOST dictionary
-        BOOSTS.Add(CRYPT, new Requirement(Data.LOLLIPOP, 10));
-        BOOSTS.Add(MAGIC_WORKSHOP, new Requirement(Data.RING, 10));
-        BOOSTS.Add(DEEP_FOREST, new Requirement(Data.BEER, 10));
-        BOOSTS.Add(HELLFIRE, new Requirement(Data.SWORD, 10));
-        BOOSTS.Add(GRAVEYARD, new Requirement(Data.SHIELD, 20));
-        BOOSTS.Add(FOREST, new Requirement(Data.STICK, 20));
-        BOOSTS.Add(VEGETABLE_PATCH, new Requirement(Data.GEM, 20));
-        BOOSTS.Add(SWAMP, new Requirement(Data.BEER, 70));
-        BOOSTS.Add(ABANDONED_HOSPITAL, new Requirement(Data.LOLLIPOP, 100));
-        BOOSTS.Add(CRYPT2, new Requirement(Data.GEM, 40));
+        BOOSTS.Add(CRYPT, new Requirement(Data.LOLLIPOP, 1));
+        BOOSTS.Add(MAGIC_WORKSHOP, new Requirement(Data.RING, 50));
+        BOOSTS.Add(DEEP_FOREST, new Requirement(Data.BEER, 50));
+        BOOSTS.Add(HELLFIRE, new Requirement(Data.SHIELD, 50));
 
-        BOOSTS.Add(Data.JACK_LANTERN, new Requirement(Data.LOLLIPOP, 10));
+        BOOSTS.Add(VEGETABLE_PATCH, new Requirement(Data.LOLLIPOP, 50));
+        BOOSTS.Add(SWAMP, new Requirement(Data.RING, 50));
+        BOOSTS.Add(WELL, new Requirement(Data.BEER, 50));
+        BOOSTS.Add(GRAVEYARD, new Requirement(Data.SWORD, 50));
+        BOOSTS.Add(FOREST, new Requirement(Data.SHIELD, 50));        
+        BOOSTS.Add(ABANDONED_HOSPITAL, new Requirement(Data.STICK, 50));
+        BOOSTS.Add(CRYPT2, new Requirement(Data.GEM, 50));
+
+        BOOSTS.Add(Data.JACK_LANTERN, new Requirement(Data.LOLLIPOP, 5));
         BOOSTS.Add(Data.BAT, new Requirement(Data.LOLLIPOP, 20));
-        BOOSTS.Add(Data.GOBLIN, new Requirement(Data.LOLLIPOP, 30));
-        BOOSTS.Add(Data.GHOST, new Requirement(Data.RING, 10));
-        BOOSTS.Add(Data.CLOWN, new Requirement(Data.BEER, 10));
-        BOOSTS.Add(Data.ZOMBIE, new Requirement(Data.SWORD, 10));
-        BOOSTS.Add(Data.VAMPIRE, new Requirement(Data.STICK, 10));
-        BOOSTS.Add(Data.WITCH, new Requirement(Data.SHIELD, 10));
-        BOOSTS.Add(Data.REAPER, new Requirement(Data.GEM, 30));
+        BOOSTS.Add(Data.GOBLIN, new Requirement(Data.RING, 15));
+        BOOSTS.Add(Data.GHOST, new Requirement(Data.RING, 40));
+        BOOSTS.Add(Data.CLOWN, new Requirement(Data.BEER, 30));
+        BOOSTS.Add(Data.ZOMBIE, new Requirement(Data.SWORD, 50));
+        BOOSTS.Add(Data.VAMPIRE, new Requirement(Data.SHIELD, 50));
+        BOOSTS.Add(Data.WITCH, new Requirement(Data.STICK, 50));
+        BOOSTS.Add(Data.REAPER, new Requirement(Data.GEM, 50));
 
         BOOSTS.Add(Data.MERCHANT_BOOST, new Requirement(Data.LOLLIPOP, 10));
-        BOOSTS.Add(Data.OFFLINE_MAXTIME_BOOST, new Requirement(Data.LOLLIPOP, 20));
-        BOOSTS.Add(Data.OFFLINE_PRODUCTIVITY_BOOST, new Requirement(Data.LOLLIPOP, 30));
-        BOOSTS.Add(Data.SCARES_BOOST, new Requirement(Data.RING, 10));
-        BOOSTS.Add(Data.DROPS_BOOST, new Requirement(Data.RING, 20));
+        BOOSTS.Add(Data.OFFLINE_MAXTIME_BOOST, new Requirement(Data.LOLLIPOP, 25));
+        BOOSTS.Add(Data.OFFLINE_PRODUCTIVITY_BOOST, new Requirement(Data.RING, 50));
+        BOOSTS.Add(Data.SCARES_BOOST, new Requirement(Data.BEER, 40));
+        BOOSTS.Add(Data.DROPS_BOOST, new Requirement(Data.SWORD, 50));
 
         foreach (KeyValuePair<string, Requirement> boost in BOOSTS)
         {

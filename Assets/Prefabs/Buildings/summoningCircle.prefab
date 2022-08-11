@@ -2421,8 +2421,13 @@ MonoBehaviour:
   - list:
     - resourceNameKey: plasma
       quantity: 50
-    - resourceNameKey: rottenFlesh
-      quantity: 100
+    - resourceNameKey: bone
+      quantity: 300
+  - list:
+    - resourceNameKey: plasma
+      quantity: 50
+    - resourceNameKey: bone
+      quantity: 300
   numType: 0
   constructionType: 0
   position: {x: 0, y: 0, z: 0}
@@ -2431,7 +2436,7 @@ MonoBehaviour:
     m_Size: {x: 6, y: 3, z: 0}
   placed: 0
   area:
-    m_Position: {x: 0, y: 0, z: 0}
+    m_Position: {x: -17, y: -20, z: 0}
     m_Size: {x: 0, y: 0, z: 0}
   confirmUI: {fileID: 5952241299897516215}
   upgrade_cost: []

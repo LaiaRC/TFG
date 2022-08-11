@@ -543,7 +543,7 @@ public class miniGameManager : MonoBehaviour
                     GameObject monsterObj = Instantiate(monster, new Vector3(position.x, position.y, 0), Quaternion.identity);
 
                     //Set monster stats (not affecting the prefab)
-                    /*if (Data.Instance.MONSTERS.TryGetValue(monsterName, out MonsterInfo monsterInfo))
+                    if (Data.Instance.MONSTERS.TryGetValue(monsterName, out MonsterInfo monsterInfo))
                     {
                         monsterObj.GetComponent<Monster>().velocity = monsterInfo.velocity[monsterInfo.upgradeLevel - 1];
                         monsterObj.GetComponent<Monster>().health = monsterInfo.health[monsterInfo.upgradeLevel - 1];
@@ -551,7 +551,7 @@ public class miniGameManager : MonoBehaviour
                         monsterObj.GetComponent<Monster>().attackRate = monsterInfo.attackRate[monsterInfo.upgradeLevel - 1];
                         monsterObj.GetComponent<Monster>().attackRange = monsterInfo.attackRange[monsterInfo.upgradeLevel - 1];
                         monsterObj.GetComponent<Monster>().level = monsterInfo.level[monsterInfo.upgradeLevel - 1];
-                    }*/
+                    }
 
                     numMonstersInvoked++;
                     UNITS_MONSTERS[monsterName] = quantity - 1;
