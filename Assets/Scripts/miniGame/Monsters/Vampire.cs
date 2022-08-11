@@ -17,7 +17,7 @@ public class Vampire : Monster
     protected float linkSpeed = 0.5f;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
@@ -36,7 +36,7 @@ public class Vampire : Monster
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (miniGameManager.Instance.gameOver)
         {
@@ -72,22 +72,37 @@ public class Vampire : Monster
             healthBar.setValue(health);
         }
     }
+
     public void checkIsOnLink()
     {
         //check if it's on offmesh link
-        if (agent.isOnOffMeshLink && isOnLink == false)
+        if ((agent.isOnOffMeshLink && isOnLink == false))
         {
             isOnLink = true;
             anim.GetComponent<SpriteRenderer>().sprite = batSprite;
-            anim.GetComponent<Transform>().localScale = new Vector3(1.5f, 1.5f, 1.5f);
+            //anim.GetComponent<Transform>().localScale = new Vector3(1.5f, 1.5f, 1.5f);
             agent.speed = agent.speed * linkSpeed;
         }
         else if (!agent.isOnOffMeshLink && isOnLink == true)
         {
             isOnLink = false;
             anim.GetComponent<SpriteRenderer>().sprite = vampireSprite;
-            anim.GetComponent<Transform>().localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            //anim.GetComponent<Transform>().localScale = new Vector3(0.5f, 0.5f, 0.5f);
             agent.speed = velocity;
+        }
+
+        NavMeshHit hit;
+        if (agent.SamplePathPosition(NavMesh.GetAreaFromName("Fly"), 0.2f, out hit))
+        {
+            Debug.Log("Flying");
+            anim.GetComponent<Animator>().Play("MovementBat");
+            anim.GetComponent<SpriteRenderer>().sprite = batSprite;
+        }
+        else
+        {
+            Debug.Log("Walking");
+            anim.GetComponent<Animator>().Play("Movement");
+            anim.GetComponent<SpriteRenderer>().sprite = vampireSprite;
         }
     }
 }

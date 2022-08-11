@@ -380,7 +380,7 @@ MonoBehaviour:
   backgroundColor: {r: 0.5882353, g: 1, b: 0.5882353, a: 1}
   isAttacking: 0
   healRate: 2
-  vampireSprite: {fileID: -6729328822688834367, guid: b74c09d89d131b3449c5403b6b1b1fda, type: 3}
+  vampireSprite: {fileID: 4142362919661258891, guid: fe1cb5e7ce6bb2f4faca2dcb1a190440, type: 3}
   batSprite: {fileID: -3473715328133479013, guid: 2eaa688eb4aa12740a1865aba041faf4, type: 3}
   anim: {fileID: 3933314819902813587}
 --- !u!114 &661457040722620862
