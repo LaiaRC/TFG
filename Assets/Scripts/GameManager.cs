@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     public float offlineBoostTimeModifier = 0;
     public bool isHellfireUnlocked = false;
     public int isTutoDone = 0;
+    public int isRestart = 0;
     public GameObject loadingScreen;
 
     public GameObject shop;
@@ -57,8 +58,8 @@ public class GameManager : MonoBehaviour
     public List<String> dropsKeys;
     public List<ShopItemHolder> buildingShopItems = new List<ShopItemHolder>();
     public List<string> unlockedMonsters = new List<string>();
-    public string hidenMonster = "jackOLantern";
-    public int hidenMonsterIndex = 1;
+    public string hidenMonster = "";
+    public int hidenMonsterIndex = 0;
     public GameObject resourcePanel;
     public GameObject inventoryContainer;
 
@@ -88,6 +89,7 @@ public class GameManager : MonoBehaviour
     public static int MONTH = 4;
     public static int YEAR = 5;
     public static int TUTO_DONE = 6;
+    public static int IS_RESTART = 7;
 
     //Monster stats dictionary
     public static int IS_UNLOCKED = 0;
@@ -157,11 +159,6 @@ public class GameManager : MonoBehaviour
 
         //Load game
         SaveManager.Instance.Load();
-
-        if (hidenMonster == "")
-        {
-            hidenMonster = "jackOLantern"; //Just in case
-        }
 
         hideAllDialogs();
 
@@ -544,7 +541,7 @@ public class GameManager : MonoBehaviour
                     if (!resource.Key.Contains("Old") && resourceOld.Key.Contains(resource.Key) && resourceOld.Key != resource.Key)
                     {
                         //Check broomstickOld and stick
-                        if (!(resourceOld.Key.Equals("broomstickOld") && resource.Key.Equals("stick")))
+                        if (!(resourceOld.Key.Equals("broomstickOld") && resource.Key.Equals("stick")) && !(resourceOld.Key.Equals("batWingOld") && resource.Key.Equals("bat")) && !(resourceOld.Key.Equals("witchHatOld") && resource.Key.Equals("witch")))
                         {
                             if (resourceOld.Value != resource.Value)
                             {
@@ -592,7 +589,7 @@ public class GameManager : MonoBehaviour
             Data.Instance.INVENTORY.Add(resource.Key, 10000);
         }
 
-        Data.Instance.INVENTORY.Add(Data.SKELETON, 5);
+        /*Data.Instance.INVENTORY.Add(Data.SKELETON, 5);
         Data.Instance.INVENTORY.Add(Data.JACK_LANTERN, 5);
         Data.Instance.INVENTORY.Add(Data.GOBLIN, 5);
         Data.Instance.INVENTORY.Add(Data.BAT, 10);
@@ -601,7 +598,7 @@ public class GameManager : MonoBehaviour
         Data.Instance.INVENTORY.Add(Data.CLOWN, 5);
         Data.Instance.INVENTORY.Add(Data.VAMPIRE, 5);
         Data.Instance.INVENTORY.Add(Data.WITCH, 5);
-        Data.Instance.INVENTORY.Add(Data.REAPER, 1);
+        Data.Instance.INVENTORY.Add(Data.REAPER, 1);*/
     }
 
     public void buildConstructions()
@@ -877,6 +874,7 @@ public class GameManager : MonoBehaviour
         }
         if (hasMonster)
         {
+            SaveManager.Instance.Save();
             loadingScreen.SetActive(true);
             Invoke("load", 3f);
         }
@@ -1054,36 +1052,37 @@ public class GameManager : MonoBehaviour
             #region MONSTER BOOSTS
 
             case "jackOLantern":
-
                 if (Data.Instance.MONSTERS.TryGetValue(Data.JACK_LANTERN, out MonsterInfo monsterAux1))
                 {
-                    if (!monsterAux1.isUnlocked)
+                    //Update monster stats dictionary
+                    if (!monsterAux1.isUnlocked || isRestart == 1)
                     {
-                        monsterAux1.isUnlocked = true;
-
-                        //Update monster stats dictionary
                         Data.Instance.MONSTERS_STATS[Data.JACK_LANTERN] = new int[] { 1, 1 }; //check to modify to see if in load it is set to 1,1 again
-
-                        unlockedMonsters.Add(Data.JACK_LANTERN); //it is added twice?
+                        Data.Instance.MONSTERS[Data.JACK_LANTERN].upgradeLevel = 1;
+                    }
+                    monsterAux1.isUnlocked = true;
+                    unlockedMonsters.Add(Data.JACK_LANTERN); //it is added twice?
+                    if (hidenMonsterIndex < 2)
+                    {
                         hidenMonster = Data.BAT;
                         hidenMonsterIndex = 2;
+                    }
 
-                        //Get summoning circle
-                        for (int i = 0; i < constructionsBuilt.Count; i++)
+                    //Get summoning circle
+                    for (int i = 0; i < constructionsBuilt.Count; i++)
+                    {
+                        if (constructionsBuilt[i].GetComponent<SummoningCircle>() != null)
                         {
-                            if (constructionsBuilt[i].GetComponent<SummoningCircle>() != null)
-                            {
-                                constructionsBuilt[i].GetComponent<SummoningCircle>().setUI(constructionsBuilt[i].GetComponent<SummoningCircle>().selectedTab);
-                            }
+                            constructionsBuilt[i].GetComponent<SummoningCircle>().setUI(constructionsBuilt[i].GetComponent<SummoningCircle>().selectedTab);
                         }
+                    }
 
-                        boostShop.GetComponent<BoostShop>().setMonsterTabs();
+                    boostShop.GetComponent<BoostShop>().setMonsterTabs();
 
-                        //Set new monster to inventory
-                        if (!Data.Instance.INVENTORY.ContainsKey(Data.JACK_LANTERN))
-                        {
-                            Data.Instance.INVENTORY.Add(Data.JACK_LANTERN, 0);
-                        }
+                    //Set new monster to inventory
+                    if (!Data.Instance.INVENTORY.ContainsKey(Data.JACK_LANTERN))
+                    {
+                        Data.Instance.INVENTORY.Add(Data.JACK_LANTERN, 0);
                     }
                 }
 
@@ -1093,32 +1092,34 @@ public class GameManager : MonoBehaviour
 
                 if (Data.Instance.MONSTERS.TryGetValue(Data.BAT, out MonsterInfo monsterAux))
                 {
-                    if (!monsterAux.isUnlocked)
+                    if (!monsterAux.isUnlocked || isRestart == 1)
                     {
-                        monsterAux.isUnlocked = true;
-
                         //Update monster stats dictionary
                         Data.Instance.MONSTERS_STATS[Data.BAT] = new int[] { 1, 1 };
-
-                        unlockedMonsters.Add(Data.BAT);
+                        Data.Instance.MONSTERS[Data.BAT].upgradeLevel = 1;
+                    }
+                    monsterAux.isUnlocked = true;
+                    unlockedMonsters.Add(Data.BAT);
+                    if (hidenMonsterIndex < 3)
+                    {
                         hidenMonster = Data.GOBLIN;
                         hidenMonsterIndex = 3;
-                        //Get summoning circle
-                        for (int i = 0; i < constructionsBuilt.Count; i++)
+                    }
+                    //Get summoning circle
+                    for (int i = 0; i < constructionsBuilt.Count; i++)
+                    {
+                        if (constructionsBuilt[i].GetComponent<SummoningCircle>() != null)
                         {
-                            if (constructionsBuilt[i].GetComponent<SummoningCircle>() != null)
-                            {
-                                constructionsBuilt[i].GetComponent<SummoningCircle>().setUI(constructionsBuilt[i].GetComponent<SummoningCircle>().selectedTab);
-                            }
+                            constructionsBuilt[i].GetComponent<SummoningCircle>().setUI(constructionsBuilt[i].GetComponent<SummoningCircle>().selectedTab);
                         }
+                    }
 
-                        boostShop.GetComponent<BoostShop>().setMonsterTabs();
+                    boostShop.GetComponent<BoostShop>().setMonsterTabs();
 
-                        //Set new monster to inventory
-                        if (!Data.Instance.INVENTORY.ContainsKey(Data.BAT))
-                        {
-                            Data.Instance.INVENTORY.Add(Data.BAT, 0);
-                        }
+                    //Set new monster to inventory
+                    if (!Data.Instance.INVENTORY.ContainsKey(Data.BAT))
+                    {
+                        Data.Instance.INVENTORY.Add(Data.BAT, 0);
                     }
                 }
 
@@ -1128,33 +1129,35 @@ public class GameManager : MonoBehaviour
 
                 if (Data.Instance.MONSTERS.TryGetValue(Data.GOBLIN, out MonsterInfo monsterAux2))
                 {
-                    if (!monsterAux2.isUnlocked)
+                    if (!monsterAux2.isUnlocked || isRestart == 1)
                     {
-                        monsterAux2.isUnlocked = true;
-
                         //Update monster stats dictionary
                         Data.Instance.MONSTERS_STATS[Data.GOBLIN] = new int[] { 1, 1 };
-
-                        unlockedMonsters.Add(Data.GOBLIN);
+                        Data.Instance.MONSTERS[Data.GOBLIN].upgradeLevel = 1;
+                    }
+                    monsterAux2.isUnlocked = true;
+                    unlockedMonsters.Add(Data.GOBLIN);
+                    if (hidenMonsterIndex < 4)
+                    {
                         hidenMonster = Data.GHOST;
                         hidenMonsterIndex = 4;
+                    }
 
-                        //Get summoning circle
-                        for (int i = 0; i < constructionsBuilt.Count; i++)
+                    //Get summoning circle
+                    for (int i = 0; i < constructionsBuilt.Count; i++)
+                    {
+                        if (constructionsBuilt[i].GetComponent<SummoningCircle>() != null)
                         {
-                            if (constructionsBuilt[i].GetComponent<SummoningCircle>() != null)
-                            {
-                                constructionsBuilt[i].GetComponent<SummoningCircle>().setUI(constructionsBuilt[i].GetComponent<SummoningCircle>().selectedTab);
-                            }
+                            constructionsBuilt[i].GetComponent<SummoningCircle>().setUI(constructionsBuilt[i].GetComponent<SummoningCircle>().selectedTab);
                         }
+                    }
 
-                        boostShop.GetComponent<BoostShop>().setMonsterTabs();
+                    boostShop.GetComponent<BoostShop>().setMonsterTabs();
 
-                        //Set new monster to inventory
-                        if (!Data.Instance.INVENTORY.ContainsKey(Data.GOBLIN))
-                        {
-                            Data.Instance.INVENTORY.Add(Data.GOBLIN, 0);
-                        }
+                    //Set new monster to inventory
+                    if (!Data.Instance.INVENTORY.ContainsKey(Data.GOBLIN))
+                    {
+                        Data.Instance.INVENTORY.Add(Data.GOBLIN, 0);
                     }
                 }
 
@@ -1164,33 +1167,35 @@ public class GameManager : MonoBehaviour
 
                 if (Data.Instance.MONSTERS.TryGetValue(Data.GHOST, out MonsterInfo monsterAux3))
                 {
-                    if (!monsterAux3.isUnlocked)
+                    if (!monsterAux3.isUnlocked || isRestart == 1)
                     {
-                        monsterAux3.isUnlocked = true;
-
                         //Update monster stats dictionary
                         Data.Instance.MONSTERS_STATS[Data.GHOST] = new int[] { 1, 1 };
-
-                        unlockedMonsters.Add(Data.GHOST);
+                        Data.Instance.MONSTERS[Data.GHOST].upgradeLevel = 1;
+                    }
+                    monsterAux3.isUnlocked = true;
+                    unlockedMonsters.Add(Data.GHOST);
+                    if (hidenMonsterIndex < 5)
+                    {
                         hidenMonster = Data.CLOWN;
                         hidenMonsterIndex = 5;
+                    }
 
-                        //Get summoning circle
-                        for (int i = 0; i < constructionsBuilt.Count; i++)
+                    //Get summoning circle
+                    for (int i = 0; i < constructionsBuilt.Count; i++)
+                    {
+                        if (constructionsBuilt[i].GetComponent<SummoningCircle>() != null)
                         {
-                            if (constructionsBuilt[i].GetComponent<SummoningCircle>() != null)
-                            {
-                                constructionsBuilt[i].GetComponent<SummoningCircle>().setUI(constructionsBuilt[i].GetComponent<SummoningCircle>().selectedTab);
-                            }
+                            constructionsBuilt[i].GetComponent<SummoningCircle>().setUI(constructionsBuilt[i].GetComponent<SummoningCircle>().selectedTab);
                         }
+                    }
 
-                        boostShop.GetComponent<BoostShop>().setMonsterTabs();
+                    boostShop.GetComponent<BoostShop>().setMonsterTabs();
 
-                        //Set new monster to inventory
-                        if (!Data.Instance.INVENTORY.ContainsKey(Data.GHOST))
-                        {
-                            Data.Instance.INVENTORY.Add(Data.GHOST, 0);
-                        }
+                    //Set new monster to inventory
+                    if (!Data.Instance.INVENTORY.ContainsKey(Data.GHOST))
+                    {
+                        Data.Instance.INVENTORY.Add(Data.GHOST, 0);
                     }
                 }
 
@@ -1200,33 +1205,35 @@ public class GameManager : MonoBehaviour
 
                 if (Data.Instance.MONSTERS.TryGetValue(Data.CLOWN, out MonsterInfo monsterAux4))
                 {
-                    if (!monsterAux4.isUnlocked)
+                    if (!monsterAux4.isUnlocked || isRestart == 1)
                     {
-                        monsterAux4.isUnlocked = true;
-
                         //Update monster stats dictionary
                         Data.Instance.MONSTERS_STATS[Data.CLOWN] = new int[] { 1, 1 };
-
-                        unlockedMonsters.Add(Data.CLOWN);
+                        Data.Instance.MONSTERS[Data.CLOWN].upgradeLevel = 1;
+                    }
+                    monsterAux4.isUnlocked = true;
+                    unlockedMonsters.Add(Data.CLOWN);
+                    if (hidenMonsterIndex < 6)
+                    {
                         hidenMonster = Data.ZOMBIE;
                         hidenMonsterIndex = 6;
+                    }
 
-                        //Get summoning circle
-                        for (int i = 0; i < constructionsBuilt.Count; i++)
+                    //Get summoning circle
+                    for (int i = 0; i < constructionsBuilt.Count; i++)
+                    {
+                        if (constructionsBuilt[i].GetComponent<SummoningCircle>() != null)
                         {
-                            if (constructionsBuilt[i].GetComponent<SummoningCircle>() != null)
-                            {
-                                constructionsBuilt[i].GetComponent<SummoningCircle>().setUI(constructionsBuilt[i].GetComponent<SummoningCircle>().selectedTab);
-                            }
+                            constructionsBuilt[i].GetComponent<SummoningCircle>().setUI(constructionsBuilt[i].GetComponent<SummoningCircle>().selectedTab);
                         }
+                    }
 
-                        boostShop.GetComponent<BoostShop>().setMonsterTabs();
+                    boostShop.GetComponent<BoostShop>().setMonsterTabs();
 
-                        //Set new monster to inventory
-                        if (!Data.Instance.INVENTORY.ContainsKey(Data.CLOWN))
-                        {
-                            Data.Instance.INVENTORY.Add(Data.CLOWN, 0);
-                        }
+                    //Set new monster to inventory
+                    if (!Data.Instance.INVENTORY.ContainsKey(Data.CLOWN))
+                    {
+                        Data.Instance.INVENTORY.Add(Data.CLOWN, 0);
                     }
                 }
 
@@ -1236,33 +1243,35 @@ public class GameManager : MonoBehaviour
 
                 if (Data.Instance.MONSTERS.TryGetValue(Data.ZOMBIE, out MonsterInfo monsterAux5))
                 {
-                    if (!monsterAux5.isUnlocked)
+                    if (!monsterAux5.isUnlocked || isRestart == 1)
                     {
-                        monsterAux5.isUnlocked = true;
-
                         //Update monster stats dictionary
                         Data.Instance.MONSTERS_STATS[Data.ZOMBIE] = new int[] { 1, 1 };
-
-                        unlockedMonsters.Add(Data.ZOMBIE);
+                        Data.Instance.MONSTERS[Data.ZOMBIE].upgradeLevel = 1;
+                    }
+                    monsterAux5.isUnlocked = true;
+                    unlockedMonsters.Add(Data.ZOMBIE);
+                    if (hidenMonsterIndex < 7)
+                    {
                         hidenMonster = Data.VAMPIRE;
                         hidenMonsterIndex = 7;
+                    }
 
-                        //Get summoning circle
-                        for (int i = 0; i < constructionsBuilt.Count; i++)
+                    //Get summoning circle
+                    for (int i = 0; i < constructionsBuilt.Count; i++)
+                    {
+                        if (constructionsBuilt[i].GetComponent<SummoningCircle>() != null)
                         {
-                            if (constructionsBuilt[i].GetComponent<SummoningCircle>() != null)
-                            {
-                                constructionsBuilt[i].GetComponent<SummoningCircle>().setUI(constructionsBuilt[i].GetComponent<SummoningCircle>().selectedTab);
-                            }
+                            constructionsBuilt[i].GetComponent<SummoningCircle>().setUI(constructionsBuilt[i].GetComponent<SummoningCircle>().selectedTab);
                         }
+                    }
 
-                        boostShop.GetComponent<BoostShop>().setMonsterTabs();
+                    boostShop.GetComponent<BoostShop>().setMonsterTabs();
 
-                        //Set new monster to inventory
-                        if (!Data.Instance.INVENTORY.ContainsKey(Data.ZOMBIE))
-                        {
-                            Data.Instance.INVENTORY.Add(Data.ZOMBIE, 0);
-                        }
+                    //Set new monster to inventory
+                    if (!Data.Instance.INVENTORY.ContainsKey(Data.ZOMBIE))
+                    {
+                        Data.Instance.INVENTORY.Add(Data.ZOMBIE, 0);
                     }
                 }
 
@@ -1272,32 +1281,35 @@ public class GameManager : MonoBehaviour
 
                 if (Data.Instance.MONSTERS.TryGetValue(Data.VAMPIRE, out MonsterInfo monsterAux6))
                 {
-                    if (!monsterAux6.isUnlocked)
+                    if (!monsterAux6.isUnlocked || isRestart == 1)
                     {
-                        monsterAux6.isUnlocked = true;
-
                         //Update monster stats dictionary
                         Data.Instance.MONSTERS_STATS[Data.VAMPIRE] = new int[] { 1, 1 };
-
-                        unlockedMonsters.Add(Data.VAMPIRE);
+                        Data.Instance.MONSTERS[Data.VAMPIRE].upgradeLevel = 1;
+                    }
+                    monsterAux6.isUnlocked = true;
+                    unlockedMonsters.Add(Data.VAMPIRE);
+                    if (hidenMonsterIndex < 8)
+                    {
                         hidenMonster = Data.WITCH;
                         hidenMonsterIndex = 8;
-                        //Get summoning circle
-                        for (int i = 0; i < constructionsBuilt.Count; i++)
-                        {
-                            if (constructionsBuilt[i].GetComponent<SummoningCircle>() != null)
-                            {
-                                constructionsBuilt[i].GetComponent<SummoningCircle>().setUI(constructionsBuilt[i].GetComponent<SummoningCircle>().selectedTab);
-                            }
-                        }
+                    }
 
-                        boostShop.GetComponent<BoostShop>().setMonsterTabs();
-
-                        //Set new monster to inventory
-                        if (!Data.Instance.INVENTORY.ContainsKey(Data.VAMPIRE))
+                    //Get summoning circle
+                    for (int i = 0; i < constructionsBuilt.Count; i++)
+                    {
+                        if (constructionsBuilt[i].GetComponent<SummoningCircle>() != null)
                         {
-                            Data.Instance.INVENTORY.Add(Data.VAMPIRE, 0);
+                            constructionsBuilt[i].GetComponent<SummoningCircle>().setUI(constructionsBuilt[i].GetComponent<SummoningCircle>().selectedTab);
                         }
+                    }
+
+                    boostShop.GetComponent<BoostShop>().setMonsterTabs();
+
+                    //Set new monster to inventory
+                    if (!Data.Instance.INVENTORY.ContainsKey(Data.VAMPIRE))
+                    {
+                        Data.Instance.INVENTORY.Add(Data.VAMPIRE, 0);
                     }
                 }
 
@@ -1307,32 +1319,35 @@ public class GameManager : MonoBehaviour
 
                 if (Data.Instance.MONSTERS.TryGetValue(Data.WITCH, out MonsterInfo monsterAux7))
                 {
-                    if (!monsterAux7.isUnlocked)
+                    if (!monsterAux7.isUnlocked || isRestart == 1)
                     {
-                        monsterAux7.isUnlocked = true;
-
                         //Update monster stats dictionary
                         Data.Instance.MONSTERS_STATS[Data.WITCH] = new int[] { 1, 1 };
-
-                        unlockedMonsters.Add(Data.WITCH);
+                        Data.Instance.MONSTERS[Data.WITCH].upgradeLevel = 1;
+                    }
+                    monsterAux7.isUnlocked = true;
+                    unlockedMonsters.Add(Data.WITCH);
+                    if (hidenMonsterIndex < 9)
+                    {
                         hidenMonster = Data.REAPER;
                         hidenMonsterIndex = 9;
-                        //Get summoning circle
-                        for (int i = 0; i < constructionsBuilt.Count; i++)
-                        {
-                            if (constructionsBuilt[i].GetComponent<SummoningCircle>() != null)
-                            {
-                                constructionsBuilt[i].GetComponent<SummoningCircle>().setUI(constructionsBuilt[i].GetComponent<SummoningCircle>().selectedTab);
-                            }
-                        }
+                    }
 
-                        boostShop.GetComponent<BoostShop>().setMonsterTabs();
-
-                        //Set new monster to inventory
-                        if (!Data.Instance.INVENTORY.ContainsKey(Data.WITCH))
+                    //Get summoning circle
+                    for (int i = 0; i < constructionsBuilt.Count; i++)
+                    {
+                        if (constructionsBuilt[i].GetComponent<SummoningCircle>() != null)
                         {
-                            Data.Instance.INVENTORY.Add(Data.WITCH, 0);
+                            constructionsBuilt[i].GetComponent<SummoningCircle>().setUI(constructionsBuilt[i].GetComponent<SummoningCircle>().selectedTab);
                         }
+                    }
+
+                    boostShop.GetComponent<BoostShop>().setMonsterTabs();
+
+                    //Set new monster to inventory
+                    if (!Data.Instance.INVENTORY.ContainsKey(Data.WITCH))
+                    {
+                        Data.Instance.INVENTORY.Add(Data.WITCH, 0);
                     }
                 }
 
@@ -1342,32 +1357,31 @@ public class GameManager : MonoBehaviour
 
                 if (Data.Instance.MONSTERS.TryGetValue(Data.REAPER, out MonsterInfo monsterAux8))
                 {
-                    if (!monsterAux8.isUnlocked)
+                    if (!monsterAux8.isUnlocked || isRestart == 1)
                     {
-                        monsterAux8.isUnlocked = true;
-
                         //Update monster stats dictionary
                         Data.Instance.MONSTERS_STATS[Data.REAPER] = new int[] { 1, 1 };
-
-                        unlockedMonsters.Add(Data.REAPER);
-                        hidenMonster = "none";
-                        hidenMonsterIndex = 100;
-                        //Get summoning circle
-                        for (int i = 0; i < constructionsBuilt.Count; i++)
+                        Data.Instance.MONSTERS[Data.REAPER].upgradeLevel = 1;
+                    }
+                    monsterAux8.isUnlocked = true;
+                    unlockedMonsters.Add(Data.REAPER);
+                    hidenMonster = "none";
+                    hidenMonsterIndex = 100;
+                    //Get summoning circle
+                    for (int i = 0; i < constructionsBuilt.Count; i++)
+                    {
+                        if (constructionsBuilt[i].GetComponent<SummoningCircle>() != null)
                         {
-                            if (constructionsBuilt[i].GetComponent<SummoningCircle>() != null)
-                            {
-                                constructionsBuilt[i].GetComponent<SummoningCircle>().setUI(constructionsBuilt[i].GetComponent<SummoningCircle>().selectedTab);
-                            }
+                            constructionsBuilt[i].GetComponent<SummoningCircle>().setUI(constructionsBuilt[i].GetComponent<SummoningCircle>().selectedTab);
                         }
+                    }
 
-                        boostShop.GetComponent<BoostShop>().setMonsterTabs();
+                    boostShop.GetComponent<BoostShop>().setMonsterTabs();
 
-                        //Set new monster to inventory
-                        if (!Data.Instance.INVENTORY.ContainsKey(Data.REAPER))
-                        {
-                            Data.Instance.INVENTORY.Add(Data.REAPER, 0);
-                        }
+                    //Set new monster to inventory
+                    if (!Data.Instance.INVENTORY.ContainsKey(Data.REAPER))
+                    {
+                        Data.Instance.INVENTORY.Add(Data.REAPER, 0);
                     }
                 }
 
@@ -1435,6 +1449,16 @@ public class GameManager : MonoBehaviour
         foreach (KeyValuePair<string, int> boost in Data.Instance.BOOSTS)
         {
             applyBoost(boost.Key);
+        }
+
+        if (Data.Instance.MONSTERS.TryGetValue(Data.SKELETON, out MonsterInfo monsterAux1))
+        {
+            //Update monster stats dictionary
+            if (!monsterAux1.isUnlocked || isRestart == 1)
+            {
+                Data.Instance.MONSTERS_STATS[Data.SKELETON] = new int[] { 1, 1 }; //check to modify to see if in load it is set to 1,1 again
+                Data.Instance.MONSTERS[Data.SKELETON].upgradeLevel = 1;
+            }
         }
     }
 

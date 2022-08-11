@@ -8,6 +8,7 @@ using UnityEngine.Tilemaps;
 public class SummoningCircle : Building
 {
     #region building variables
+
     /*public string building_name; //nom del building
     public string id;
     public List<Requirement> production_cost;
@@ -48,11 +49,13 @@ public class SummoningCircle : Building
     public TextMeshProUGUI requirement1Text;
     public TextMeshProUGUI requirement2Text;*/
 
-    #endregion
+    #endregion building variables
 
     #region UI VARIABLES
+
     //Falta fer els tabs de seleccio de monster
     public TextMeshProUGUI monsterName;
+
     public Image monsterImage;
     public Image levelImage;
     public TextMeshProUGUI description;
@@ -87,7 +90,8 @@ public class SummoningCircle : Building
     public GameObject pauseButtonMonster;
     public GameObject goToMerchantText;
     public GameObject timeBarGroup;
-    #endregion
+
+    #endregion UI VARIABLES
 
     public List<Sprite> numbersIcons;
     public Animator animator; //.play("book") to turn page
@@ -114,9 +118,11 @@ public class SummoningCircle : Building
     public static string CLOWN = "clown";
     public static string REAPER = "reaper";
     public static string NONE = "none";
-    #endregion
+
+    #endregion MONSTER KEYS
 
     #region VILLAGER ICONS INDEX
+
     public static int CHILD = 0;
     public static int MOM = 1;
     public static int ADULT = 2;
@@ -124,9 +130,11 @@ public class SummoningCircle : Building
     public static int SHIELDMAN = 4;
     public static int ELDER = 5;
     public static int SORCERER = 6;
-    #endregion
+
+    #endregion VILLAGER ICONS INDEX
 
     #region MONSTER TABS INDEX
+
     public static int SKELETON_INDEX = 0;
     public static int ZOMBIE_INDEX = 6;
     public static int GHOST_INDEX = 4;
@@ -137,16 +145,19 @@ public class SummoningCircle : Building
     public static int WITCH_INDEX = 8;
     public static int CLOWN_INDEX = 5;
     public static int REAPER_INDEX = 9;
-    #endregion
+
+    #endregion MONSTER TABS INDEX
 
     #region TABS BACKGROUND INDEX
+
     public static int SELECTED = 0;
     public static int DESELECTED = 1;
     public static int DESELECTED_RED = 2;
     public static int SELECTED_RED = 3;
     public static int SELECTED_BLUE = 4;
     public static int DESELECTED_BLUE = 5;
-    #endregion
+
+    #endregion TABS BACKGROUND INDEX
 
     private void Start()
     {
@@ -174,7 +185,7 @@ public class SummoningCircle : Building
             {
                 activeMonsterTime = monster.time - (monster.time * timeModifier);
                 activeResourceTime = monster.time - (monster.time * timeModifier);
-            }           
+            }
         }
         canvasInterior.SetActive(false);
 
@@ -185,15 +196,14 @@ public class SummoningCircle : Building
         updateActiveMonsterBoostStart();
     }
 
-    void Update()
+    private void Update()
     {
         //Update requirements (inventory) EACH SECOND
         if (placed)
         {
-
             if (isProducing)
-            {               
-                time += Time.deltaTime;                
+            {
+                time += Time.deltaTime;
                 timeLeft = activeMonsterTime - time;
                 if (timeLeft <= 0)
                 {
@@ -210,7 +220,7 @@ public class SummoningCircle : Building
             }
             else
             {
-                timeBarMonster.fillAmount = timeLeft/activeMonsterTime;
+                timeBarMonster.fillAmount = timeLeft / activeMonsterTime;
                 timeTextMonster.SetText("-");
                 if (isPaused)
                 {
@@ -226,6 +236,7 @@ public class SummoningCircle : Building
                     }
                 }
             }
+
             #region UPDATE UI
 
             if (canvasInterior.activeInHierarchy)
@@ -237,15 +248,15 @@ public class SummoningCircle : Building
                     updateUIInventory();
                     timeToUpdate = 0;
                 }
-                if(timeToUpdateBar >= 0.25f) //Update time bar every 0.25s
-                {                    
+                if (timeToUpdateBar >= 0.25f) //Update time bar every 0.25s
+                {
                     #region TIME BAR
 
                     if (isProducing)
                     {
                         int hours = (int)timeLeft / 3600;
-                        int minutes = (int)(timeLeft - (hours*3600))/60;
-                        int secondsLeft = (int)timeLeft - (hours*3600) - (minutes * 60);
+                        int minutes = (int)(timeLeft - (hours * 3600)) / 60;
+                        int secondsLeft = (int)timeLeft - (hours * 3600) - (minutes * 60);
                         if (hours > 0)
                         {
                             if (minutes > 0)
@@ -279,19 +290,23 @@ public class SummoningCircle : Building
                     {
                         timeBarMonster.fillAmount = timeLeft / activeMonsterTime;
                     }
-                    #endregion
+
+                    #endregion TIME BAR
+
                     timeToUpdateBar = 0;
                 }
             }
-            #endregion
+
+            #endregion UPDATE UI
         }
     }
 
     public void setUI(string monsterKey)
     {
         #region BOOK INFO
-        if (Data.Instance.MONSTERS.TryGetValue(monsterKey, out MonsterInfo monsterInfo)){
 
+        if (Data.Instance.MONSTERS.TryGetValue(monsterKey, out MonsterInfo monsterInfo))
+        {
             //Check if it's unknown
             if (!monsterInfo.isUnlocked && monsterKey != GameManager.Instance.hidenMonster)
             {
@@ -313,7 +328,7 @@ public class SummoningCircle : Building
             {
                 monsterName.SetText(monsterInfo.monsterName);
                 levelImagePortrait.gameObject.SetActive(true); //just in case
-                levelImage.GetComponent<Image>().color = new Color(1,1,1,1);
+                levelImage.GetComponent<Image>().color = new Color(1, 1, 1, 1);
                 unknownGroup.SetActive(true);
 
                 //check if it's unlocked
@@ -407,7 +422,7 @@ public class SummoningCircle : Building
                     unlockButton.SetActive(true);
                     goToMerchantText.SetActive(true);
                 }
-                //only show >> if upgrading changes value (TODO) 
+                //only show >> if upgrading changes value (TODO)
                 if (monsterInfo.upgradeLevel < 3)
                 {
                     string aux = "";
@@ -499,18 +514,15 @@ public class SummoningCircle : Building
                 {
                     villagersIcons[ADULT].SetActive(true);
                     villagersIcons[SWASHBUCKLER].SetActive(true);
-
                 }
                 if (monsterInfo.level[monsterInfo.upgradeLevel - 1] > 3)
                 {
                     villagersIcons[SHIELDMAN].SetActive(true);
                     villagersIcons[ELDER].SetActive(true);
-
                 }
                 if (monsterInfo.level[monsterInfo.upgradeLevel - 1] > 4)
                 {
                     villagersIcons[SORCERER].SetActive(true);
-
                 }
 
                 //Show upgrade group if it's unlocked
@@ -575,12 +587,20 @@ public class SummoningCircle : Building
                 }
             }
         }
-        #endregion
+
+        #endregion BOOK INFO
 
         #region TABS
-        for (int i = 0; i < tabs.Count; i++) //Put all to deselected 
+
+        if (!Data.Instance.BOOSTS.ContainsKey(Data.JACK_LANTERN))
         {
-            if(i == tabs.Count - 1) //The reaper
+            GameManager.Instance.hidenMonster = Data.JACK_LANTERN;
+            GameManager.Instance.hidenMonsterIndex = getIndexMonster(Data.JACK_LANTERN);
+        }
+
+        for (int i = 0; i < tabs.Count; i++) //Put all to deselected
+        {
+            if (i == tabs.Count - 1) //The reaper
             {
                 tabs[i].GetComponent<Image>().sprite = tabBackgrounds[DESELECTED_RED];
             }
@@ -596,15 +616,15 @@ public class SummoningCircle : Building
             }
             else
             {
-                //Change alpha 
+                //Change alpha
                 tabs[i].transform.GetChild(1).GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
             }
         }
 
         //Select tab
-        
+
         //Portait
-        if(selectedTabIndex == REAPER_INDEX)
+        if (selectedTabIndex == REAPER_INDEX)
         {
             tabs[selectedTabIndex].GetComponent<Image>().sprite = tabBackgrounds[SELECTED_RED];
         }
@@ -614,7 +634,7 @@ public class SummoningCircle : Building
         }
 
         //Sprite inside
-        if(selectedTabIndex == GameManager.Instance.hidenMonsterIndex)
+        if (selectedTabIndex == GameManager.Instance.hidenMonsterIndex)
         {
             tabs[selectedTabIndex].transform.GetChild(1).GetComponent<Image>().color = new Color(0, 0, 0, 1);
         }
@@ -626,7 +646,7 @@ public class SummoningCircle : Building
         //Set sprite inside portrait
         for (int i = 0; i < tabs.Count; i++)
         {
-            if(i > GameManager.Instance.hidenMonsterIndex)
+            if (i > GameManager.Instance.hidenMonsterIndex)
             {
                 //It's unknown
                 //tabs[i].transform.GetChild(0).GetComponent<Image>().sprite = questionMark;
@@ -635,7 +655,7 @@ public class SummoningCircle : Building
             }
             else
             {
-                if(Data.Instance.MONSTERS.TryGetValue(getHiddenMonster(i), out MonsterInfo monsterA))
+                if (Data.Instance.MONSTERS.TryGetValue(getHiddenMonster(i), out MonsterInfo monsterA))
                 {
                     tabs[i].transform.GetChild(1).GetComponent<Image>().sprite = monsterA.icon;
                     tabs[i].transform.GetChild(0).gameObject.SetActive(false);
@@ -644,8 +664,6 @@ public class SummoningCircle : Building
             }
 
             //Set active monster tab background
-
-            
         }
         if (activeMonster != NONE)
         {
@@ -658,11 +676,12 @@ public class SummoningCircle : Building
                 tabs[getIndexMonster(activeMonster)].GetComponent<Image>().sprite = tabBackgrounds[DESELECTED_BLUE];
             }
         }
-        #endregion
+
+        #endregion TABS
 
         //Refresh title
         //Invoke(nameof(updateTitleGroup), 0.2f);
-    }    
+    }
 
     public void goToMerchant()
     {
@@ -672,9 +691,11 @@ public class SummoningCircle : Building
     }
 
     public void summon()
-    {        
+    {
         //Has pressed "summon"
+
         #region UNLOCKED CASE
+
         //Summon selected tab monster
         if (selectedTab != activeMonster) //check the monster isn't already being produced
         {
@@ -695,7 +716,9 @@ public class SummoningCircle : Building
 
             setUI(selectedTab); //To show timeBar
         }
-        #endregion
+
+        #endregion UNLOCKED CASE
+
         play();
     }
 
@@ -712,7 +735,7 @@ public class SummoningCircle : Building
             {
                 playButtonMonster.SetActive(true);
                 pauseButtonMonster.SetActive(false);
-            }            
+            }
         }
         else
         {
@@ -734,33 +757,43 @@ public class SummoningCircle : Building
             case 0:
                 hidenMonster = SKELETON;
                 break;
+
             case 1:
                 hidenMonster = JACK_LANTERN;
                 break;
+
             case 2:
                 hidenMonster = BAT;
                 break;
+
             case 3:
                 hidenMonster = GOBLIN;
                 break;
+
             case 4:
                 hidenMonster = GHOST;
                 break;
+
             case 5:
                 hidenMonster = CLOWN;
                 break;
+
             case 6:
                 hidenMonster = ZOMBIE;
                 break;
+
             case 7:
                 hidenMonster = VAMPIRE;
                 break;
+
             case 8:
                 hidenMonster = WITCH;
                 break;
+
             case 9:
                 hidenMonster = REAPER;
                 break;
+
             case 100:
                 hidenMonster = NONE;
                 break;
@@ -776,33 +809,43 @@ public class SummoningCircle : Building
             case 0:
                 hidenMonster = SKELETON;
                 break;
+
             case 1:
                 hidenMonster = JACK_LANTERN;
                 break;
+
             case 2:
                 hidenMonster = BAT;
                 break;
+
             case 3:
                 hidenMonster = GOBLIN;
                 break;
+
             case 4:
                 hidenMonster = GHOST;
                 break;
+
             case 5:
                 hidenMonster = CLOWN;
                 break;
+
             case 6:
                 hidenMonster = ZOMBIE;
                 break;
+
             case 7:
                 hidenMonster = VAMPIRE;
                 break;
+
             case 8:
                 hidenMonster = WITCH;
                 break;
+
             case 9:
                 hidenMonster = REAPER;
                 break;
+
             case 100:
                 hidenMonster = NONE;
                 break;
@@ -818,33 +861,43 @@ public class SummoningCircle : Building
             case "skeleton":
                 hidenMonster = 0;
                 break;
+
             case "jackOLantern":
                 hidenMonster = 1;
                 break;
+
             case "bat":
                 hidenMonster = 2;
                 break;
+
             case "goblin":
                 hidenMonster = 3;
                 break;
+
             case "ghost":
                 hidenMonster = 4;
                 break;
+
             case "clown":
                 hidenMonster = 5;
                 break;
+
             case "zombie":
                 hidenMonster = 6;
                 break;
+
             case "vampire":
                 hidenMonster = 7;
                 break;
+
             case "witch":
                 hidenMonster = 8;
                 break;
+
             case "reaper":
                 hidenMonster = 9;
                 break;
+
             case "none":
                 hidenMonster = 100;
                 break;
@@ -857,7 +910,9 @@ public class SummoningCircle : Building
         if (selectedTab != selectedMonster) //Check if it's already in that page
         {
             selectedTab = selectedMonster;
+
             #region SET TAB INDEX
+
             switch (selectedMonster)
             {
                 case "skeleton":
@@ -900,18 +955,19 @@ public class SummoningCircle : Building
                     selectedTabIndex = REAPER_INDEX;
                     break;
             }
-            #endregion
+
+            #endregion SET TAB INDEX
 
             //Turn page animation
             animator.Play("book");
             Invoke(nameof(hideInfoGroup), 0.25f);
-            Invoke(nameof(showInfoGroup), 0.4f); //When animation ends            
+            Invoke(nameof(showInfoGroup), 0.4f); //When animation ends
         }
     }
 
     public void showInfoGroup()
     {
-        infoGroup.SetActive(true);        
+        infoGroup.SetActive(true);
     }
 
     public void hideInfoGroup()
@@ -922,29 +978,25 @@ public class SummoningCircle : Building
         setPlayPauseButtons();
     }
 
-    override
-    public void pause()
+    public override void pause()
     {
         isProducing = false;
         isPaused = true;
-        timeBarMonster.fillAmount = timeLeft/activeMonsterTime;
+        timeBarMonster.fillAmount = timeLeft / activeMonsterTime;
         setPlayPauseButtons();
     }
 
-    override
-    public void play()
+    public override void play()
     {
         isProducing = true;
         isPaused = false;
         setPlayPauseButtons();
     }
 
-    override
-    public void produce()
+    public override void produce()
     {
         if (Data.Instance.MONSTERS.TryGetValue(activeMonster, out MonsterInfo monster))
         {
-
             if (checkRequirementsToProduce())
             {
                 #region PAY REQUIREMENTS
@@ -961,9 +1013,10 @@ public class SummoningCircle : Building
                     }
                 }
 
-                #endregion
+                #endregion PAY REQUIREMENTS
 
                 #region ADD TO INVENTORY
+
                 if (Data.Instance.INVENTORY.TryGetValue(activeMonster, out int quantity))
                 {
                     quantity += 1;
@@ -973,13 +1026,13 @@ public class SummoningCircle : Building
                 {
                     Data.Instance.INVENTORY.Add(activeMonster, 1);
                 }
-                #endregion
+
+                #endregion ADD TO INVENTORY
             }
         }
     }
 
-    override
-    public bool checkRequirementsToProduce()
+    public override bool checkRequirementsToProduce()
     {
         bool hasRequirements = false;
         if (Data.Instance.MONSTERS.TryGetValue(activeMonster, out MonsterInfo monster))
@@ -1001,7 +1054,7 @@ public class SummoningCircle : Building
                 }
                 else
                 {
-                    //Player don't have the requirement resource to produce 
+                    //Player don't have the requirement resource to produce
                     enoughResources = false;
                     return false;
                 }
@@ -1032,7 +1085,7 @@ public class SummoningCircle : Building
                 }
                 else
                 {
-                    //Player don't have the requirement resource to produce 
+                    //Player don't have the requirement resource to produce
                     enoughResources = false;
                     return false;
                 }
@@ -1063,7 +1116,7 @@ public class SummoningCircle : Building
                 }
                 else
                 {
-                    //Player don't have the requirement resource to produce 
+                    //Player don't have the requirement resource to produce
                     enoughResources = false;
                     return false;
                 }
@@ -1080,6 +1133,7 @@ public class SummoningCircle : Building
             if (monsterInfo.isUnlocked)
             {
                 #region SUMMON COST (SELECTED TAB)
+
                 //Summon requirement 1
 
                 //Show current amount and needed
@@ -1102,27 +1156,30 @@ public class SummoningCircle : Building
                 {
                     summonRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.requirements[1].quantity));
                 }
-                #endregion
+
+                #endregion SUMMON COST (SELECTED TAB)
             }
             else
             {
                 #region UNLOCK COST
+
                 //show unlock requirements (only 1?)
                 //Summon requirement 1
                 //Show current amount and needed
                 if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.unlockRequirements[0].resourceNameKey, out int quantity))
                 {
                     summonRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(GameManager.Instance.numToString(quantity) + "/" + GameManager.Instance.numToString(monsterInfo.unlockRequirements[0].quantity));
-
                 }
                 else
                 {
                     summonRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.unlockRequirements[0].quantity));
                 }
-                #endregion
+
+                #endregion UNLOCK COST
             }
 
             #region UPGRADE COST (SELECTED TAB)
+
             //Upgrade requirement 1
 
             if (monsterInfo.upgradeLevel < 3)
@@ -1148,12 +1205,14 @@ public class SummoningCircle : Building
                     upgradeRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][1].quantity));
                 }
             }
-            #endregion
+
+            #endregion UPGRADE COST (SELECTED TAB)
         }
 
         if (Data.Instance.MONSTERS.TryGetValue(activeMonster, out MonsterInfo mInfo))
         {
             #region TIMEGROUP (ACTIVE RESOURCE)
+
             //Summon requirement 1
             //Show current amount and needed
             if (Data.Instance.INVENTORY.TryGetValue(mInfo.requirements[0].resourceNameKey, out int quantity))
@@ -1175,8 +1234,9 @@ public class SummoningCircle : Building
             {
                 producingRequirementText2.SetText("0/" + GameManager.Instance.numToString(mInfo.requirements[1].quantity));
             }
-            #endregion
-        }        
+
+            #endregion TIMEGROUP (ACTIVE RESOURCE)
+        }
     }
 
     public void upgradeMonster()
@@ -1202,7 +1262,8 @@ public class SummoningCircle : Building
                             }
                         }
                     }
-                    #endregion
+
+                    #endregion PAY REQUIREMENTS
 
                     monster.upgradeLevel++;
 
@@ -1215,8 +1276,7 @@ public class SummoningCircle : Building
         }
     }
 
-    override
-    public int getNumActiveResource() //Get index of activeMonster
+    public override int getNumActiveResource() //Get index of activeMonster
     {
         return getIndexMonster(activeMonster);
     }
@@ -1244,12 +1304,12 @@ public class SummoningCircle : Building
         {
             timeModifier = 0;
         }
-        
+
         if (activeMonster != NONE)
         {
             //Get proportion
             float proportion = timeLeft / activeMonsterTime;
-            
+
             if (Data.Instance.MONSTERS.TryGetValue(activeMonster, out MonsterInfo monster))
             {
                 activeMonsterTime = monster.time - (monster.time * timeModifier);
@@ -1296,12 +1356,11 @@ public class SummoningCircle : Building
         }
     }
 
-    override
-    public void saveConstructionToDictionary()
+    public override void saveConstructionToDictionary()
     {
         if (!Data.Instance.CONSTRUCTIONS.ContainsKey(id + numType))
         {
-            Data.Instance.CONSTRUCTIONS.Add(id + numType, new float[] { transform.position.x, transform.position.y, level, getNumActiveResource(), timeLeft, isProducing ? 1 : 0, isPaused ? 1 : 0, numType, activeResourceTime, 1 , 0, 0});
+            Data.Instance.CONSTRUCTIONS.Add(id + numType, new float[] { transform.position.x, transform.position.y, level, getNumActiveResource(), timeLeft, isProducing ? 1 : 0, isPaused ? 1 : 0, numType, activeResourceTime, 1, 0, 0 });
         }
     }
 }

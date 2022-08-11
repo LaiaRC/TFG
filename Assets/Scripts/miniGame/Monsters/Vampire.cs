@@ -94,13 +94,11 @@ public class Vampire : Monster
         NavMeshHit hit;
         if (agent.SamplePathPosition(NavMesh.GetAreaFromName("Fly"), 0.2f, out hit))
         {
-            Debug.Log("Flying");
             anim.GetComponent<Animator>().Play("MovementBat");
             anim.GetComponent<SpriteRenderer>().sprite = batSprite;
         }
         else
         {
-            Debug.Log("Walking");
             anim.GetComponent<Animator>().Play("Movement");
             anim.GetComponent<SpriteRenderer>().sprite = vampireSprite;
         }

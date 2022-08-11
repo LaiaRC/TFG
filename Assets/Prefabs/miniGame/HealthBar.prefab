@@ -151,7 +151,7 @@ MonoBehaviour:
   targetCanvas: {fileID: 0}
   fill: {fileID: 2305046780939037169}
   background: {fileID: 9016222723808189922}
-  isMonster: 1
+  isMonster: 0
 --- !u!222 &8320250372383772171
 CanvasRenderer:
   m_ObjectHideFlags: 0

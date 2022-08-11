@@ -869,10 +869,15 @@ public class miniGameManager : MonoBehaviour
 
         //Save player (tuto)
 
-        //Save tuto done
+        //Save tuto done and restart
         if (Data.Instance.PLAYER.TryGetValue("Tuto", out int isDone))
         {
             Data.Instance.PLAYER["Tuto"] = 1;
+        }
+
+        if (Data.Instance.PLAYER.TryGetValue("isRestart", out int isRestart))
+        {
+            Data.Instance.PLAYER["isRestart"] = 1;
         }
         SaveManager.Instance.SaveTuto();
 
@@ -880,7 +885,7 @@ public class miniGameManager : MonoBehaviour
         SaveManager.Instance.Restart();
 
         //Go back to main scene
-        SceneManager.LoadScene("globalView");
+        SceneManager.LoadScene("loadingScene");
     }
 
     public void confirmFlags()

@@ -12,6 +12,7 @@ public class BoostShop : MonoBehaviour
     public Dictionary<string, Requirement> BOOSTS = new Dictionary<string, Requirement>();
 
     #region BOOSTS SHOP KEYS
+
     public static string CRYPT = "crypt";
     public static string MAGIC_WORKSHOP = "magicWorkshop";
     public static string DEEP_FOREST = "deepForest";
@@ -23,12 +24,13 @@ public class BoostShop : MonoBehaviour
     public static string WELL = "well";
     public static string ABANDONED_HOSPITAL = "abandonedHospital";
     public static string CRYPT2 = "crypt2";
-    #endregion
+
+    #endregion BOOSTS SHOP KEYS
 
     private int i = 0;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         canvas.SetActive(false);
 
@@ -42,7 +44,7 @@ public class BoostShop : MonoBehaviour
         BOOSTS.Add(SWAMP, new Requirement(Data.RING, 50));
         BOOSTS.Add(WELL, new Requirement(Data.BEER, 50));
         BOOSTS.Add(GRAVEYARD, new Requirement(Data.SWORD, 50));
-        BOOSTS.Add(FOREST, new Requirement(Data.SHIELD, 50));        
+        BOOSTS.Add(FOREST, new Requirement(Data.SHIELD, 50));
         BOOSTS.Add(ABANDONED_HOSPITAL, new Requirement(Data.STICK, 50));
         BOOSTS.Add(CRYPT2, new Requirement(Data.GEM, 50));
 
@@ -74,13 +76,12 @@ public class BoostShop : MonoBehaviour
             }
         }
 
-        setMonsterTabs();        
+        setMonsterTabs();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-       
     }
 
     public void showShop()
@@ -104,7 +105,7 @@ public class BoostShop : MonoBehaviour
         Invoke("isOnCanvasOff", 0.1f);
     }
 
-    void isOnCanvasOff()
+    private void isOnCanvasOff()
     {
         GameManager.Instance.isOnCanvas = false;
     }
@@ -121,7 +122,7 @@ public class BoostShop : MonoBehaviour
                     boostMonsterItems[i].GetComponent<BoostItem>().titleText.SetText(boostMonsterItems[i].GetComponent<BoostItem>().title);
                     boostMonsterItems[i].GetComponent<BoostItem>().descriptionText.SetText(boostMonsterItems[i].GetComponent<BoostItem>().description);
                     boostMonsterItems[i].GetComponent<BoostItem>().iconImage.sprite = boostMonsterItems[i].GetComponent<BoostItem>().icon;
-                    boostMonsterItems[i].GetComponent<BoostItem>().iconImage.color = new Color(1,1,1,1);
+                    boostMonsterItems[i].GetComponent<BoostItem>().iconImage.color = new Color(1, 1, 1, 1);
                     boostMonsterItems[i].GetComponent<BoostItem>().requirementGroup.SetActive(true);
                 }
             }
@@ -132,7 +133,7 @@ public class BoostShop : MonoBehaviour
                 boostMonsterItems[i].GetComponent<BoostItem>().titleText.SetText(boostMonsterItems[i].GetComponent<BoostItem>().title);
                 boostMonsterItems[i].GetComponent<BoostItem>().descriptionText.SetText(boostMonsterItems[i].GetComponent<BoostItem>().description);
                 boostMonsterItems[i].GetComponent<BoostItem>().iconImage.sprite = boostMonsterItems[i].GetComponent<BoostItem>().icon;
-                boostMonsterItems[i].GetComponent<BoostItem>().iconImage.color = new Color(0,0,0,1);
+                boostMonsterItems[i].GetComponent<BoostItem>().iconImage.color = new Color(0, 0, 0, 1);
                 boostMonsterItems[i].GetComponent<BoostItem>().requirementGroup.SetActive(true);
             }
         }
@@ -140,9 +141,9 @@ public class BoostShop : MonoBehaviour
 
     public void setMonsterTabs()
     {
-        if (GameManager.Instance.hidenMonster=="")
+        if (GameManager.Instance.hidenMonster == "")
         {
-            GameManager.Instance.hidenMonster = "jackOLantern";
+            //GameManager.Instance.hidenMonster = "jackOLantern";
         }
         //Put monsters to unknown
         for (int i = 0; i < boostMonsterItems.Count; i++)
@@ -163,7 +164,7 @@ public class BoostShop : MonoBehaviour
                     if (monster.Value.isUnlocked)
                     {
                         boostMonsterItems[i].GetComponent<BoostItem>().iconImage.sprite = boostMonsterItems[i].GetComponent<BoostItem>().icon;
-                        boostMonsterItems[i].GetComponent<BoostItem>().iconImage.color = new Color(1,1,1,1);
+                        boostMonsterItems[i].GetComponent<BoostItem>().iconImage.color = new Color(1, 1, 1, 1);
                         boostMonsterItems[i].GetComponent<BoostItem>().titleText.SetText(boostMonsterItems[i].GetComponent<BoostItem>().title);
                         boostMonsterItems[i].GetComponent<BoostItem>().descriptionText.SetText(boostMonsterItems[i].GetComponent<BoostItem>().description);
                         boostMonsterItems[i].GetComponent<BoostItem>().requirementGroup.SetActive(true);

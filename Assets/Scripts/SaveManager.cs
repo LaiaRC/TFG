@@ -7,14 +7,16 @@ using UnityEngine;
 
 public class SaveManager : MonoBehaviour
 {
-    string pathInventory;
-    string pathConstructions;
-    string pathPlayer;
-    string pathMonsters;
-    string pathBoosts;
+    private string pathInventory;
+    private string pathConstructions;
+    private string pathPlayer;
+    private string pathMonsters;
+    private string pathBoosts;
 
     #region SINGLETON PATTERN
+
     public static SaveManager Instance;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -29,7 +31,8 @@ public class SaveManager : MonoBehaviour
         pathMonsters = Application.persistentDataPath + "monsters.idk";
         pathBoosts = Application.persistentDataPath + "boosts.idk";
     }
-    #endregion    
+
+    #endregion SINGLETON PATTERN
 
     private void Start()
     {
@@ -39,6 +42,7 @@ public class SaveManager : MonoBehaviour
         pathMonsters = Application.persistentDataPath + "monsters.idk";
         pathBoosts = Application.persistentDataPath + "boosts.idk";
     }
+
     public void Save()
     {
         //Update buildings time
@@ -106,6 +110,7 @@ public class SaveManager : MonoBehaviour
         Data.Instance.PLAYER["Month"] = GameManager.Instance.localDate.Month;
         Data.Instance.PLAYER["Year"] = GameManager.Instance.localDate.Year;
         Data.Instance.PLAYER["Tuto"] = GameManager.Instance.isTutoDone;
+        Data.Instance.PLAYER["isRestart"] = 0; //only 1 when coming from minigame
 
         //Update inventory old value (same as current values)
         foreach (var item in Data.Instance.INVENTORY.ToList())
@@ -114,19 +119,19 @@ public class SaveManager : MonoBehaviour
             {
                 Data.Instance.INVENTORY[item.Key + "Old"] = item.Value; //Update old quantity to current quantity
             }
-            else if(!item.Key.Contains("Old"))
+            else if (!item.Key.Contains("Old"))
             {
                 Data.Instance.INVENTORY.Add(item.Key + "Old", item.Value);
             }
         }
 
         Delete();
-        
+
         var outputStreamInventory = new FileStream(pathInventory, FileMode.Create);
-        var outputStreamConstructions = new FileStream(pathConstructions, FileMode.Create);      
-        var outputStreamPlayer = new FileStream(pathPlayer, FileMode.Create);      
-        var outputStreamMonsters = new FileStream(pathMonsters, FileMode.Create);      
-        var outputStreamBoosts = new FileStream(pathBoosts, FileMode.Create);      
+        var outputStreamConstructions = new FileStream(pathConstructions, FileMode.Create);
+        var outputStreamPlayer = new FileStream(pathPlayer, FileMode.Create);
+        var outputStreamMonsters = new FileStream(pathMonsters, FileMode.Create);
+        var outputStreamBoosts = new FileStream(pathBoosts, FileMode.Create);
 
         MsgPack.Serialize(Data.Instance.INVENTORY, outputStreamInventory);
         MsgPack.Serialize(Data.Instance.CONSTRUCTIONS, outputStreamConstructions);
@@ -197,13 +202,18 @@ public class SaveManager : MonoBehaviour
         {
             FileStream inputStreamPlayer = new FileStream(pathPlayer, FileMode.Open);
             Data.Instance.PLAYER = MsgPack.Deserialize(typeof(Dictionary<string, int>), inputStreamPlayer) as Dictionary<string, int>;
-            
+
             inputStreamPlayer.Close();
 
             //update is tuto done
-            if(Data.Instance.PLAYER.TryGetValue("Tuto", out int isDone))
+            if (Data.Instance.PLAYER.TryGetValue("Tuto", out int isDone))
             {
                 GameManager.Instance.isTutoDone = isDone;
+            }
+            //update is tuto done
+            if (Data.Instance.PLAYER.TryGetValue("isRestart", out int isRestart))
+            {
+                GameManager.Instance.isRestart = isRestart;
             }
         }
         if (File.Exists(pathMonsters))
@@ -256,7 +266,11 @@ public class SaveManager : MonoBehaviour
         }
         GameManager.Instance.constructionsBuilt.Clear();
         Data.Instance.CONSTRUCTIONS.Clear();
-        Data.Instance.MONSTERS_STATS.Clear();
+        foreach (KeyValuePair<string, int[]> stat in Data.Instance.MONSTERS_STATS)
+        {
+            stat.Value[1] = 1;
+        }
+
         Data.Instance.MONSTERS.Clear();
     }
 
