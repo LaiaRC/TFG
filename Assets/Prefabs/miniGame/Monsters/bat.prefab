@@ -354,7 +354,7 @@ MonoBehaviour:
   velocity: 2.5
   health: 3
   damage: 2
-  detectionRange: 7
+  detectionRange: 13
   attackRange: 5
   attackRate: 1
   canBeInvokedInside: 0
@@ -377,7 +377,7 @@ MonoBehaviour:
   - {fileID: 0}
   healthBar: {fileID: 4110335927728442690, guid: 4be1c02213a25e84bb1477354cbe9666, type: 3}
   fillColor: {r: 0, g: 1, b: 0, a: 1}
-  backgroundColor: {r: 0.5882353, g: 1, b: 0.5882353, a: 1}
+  backgroundColor: {r: 0.3207547, g: 0.3207547, b: 0.3207547, a: 1}
   isAttacking: 0
 --- !u!114 &123799660790456584
 MonoBehaviour:
@@ -424,8 +424,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3933314819902813587}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.7, y: 1.7, z: 1.7}
+  m_LocalPosition: {x: 0, y: -0.302, z: 0}
+  m_LocalScale: {x: 2.4, y: 2.4, z: 1.7}
   m_Children: []
   m_Father: {fileID: 1331844805969841853}
   m_RootOrder: 0

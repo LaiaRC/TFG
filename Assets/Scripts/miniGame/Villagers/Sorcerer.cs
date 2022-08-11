@@ -71,7 +71,7 @@ public class Sorcerer : Villager
 
         foreach (Collider2D collision in collisions)
         {
-            if (collision.GetComponent<Monster>() && collision.GetComponent<Monster>().level <= level)
+            if (collision.GetComponent<Monster>())
             {
                 return true;
             }
@@ -93,7 +93,7 @@ public class Sorcerer : Villager
         //Check if there are jackOLanterns
         foreach (Collider2D collision in collisions)
         {
-            if (collision.GetComponent<Monster>() && collision.GetComponent<Monster>().level <= level)
+            if (collision.GetComponent<Monster>())
             {
                 if (!collision.GetComponent<JackOLantern>()) onlyJackOLantern = false;
             }
@@ -103,14 +103,14 @@ public class Sorcerer : Villager
         {
             if (!onlyJackOLantern)
             {
-                if (collision.GetComponent<Monster>() && collision.GetComponent<Monster>().level <= level && !collision.GetComponent<JackOLantern>())
+                if (collision.GetComponent<Monster>() && !collision.GetComponent<JackOLantern>())
                 {
                     monsters.Add(collision);
                 }
             }
             else
             {
-                if (collision.GetComponent<Monster>() && collision.GetComponent<Monster>().level <= level)
+                if (collision.GetComponent<Monster>())
                 {
                     monsters.Add(collision);
                 }

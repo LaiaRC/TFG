@@ -82,7 +82,7 @@ public abstract class Monster : MonoBehaviour
         canvas = GameObject.Find("Canvas").GetComponent<RectTransform>();
         audioSource.clip = sounds[SPAWN];
         audioSource.Play();
-
+        healthBar.isMonster = true;
         //spawn particles
         animator.Play("monster_spawn");
 
@@ -235,7 +235,7 @@ public abstract class Monster : MonoBehaviour
 
         foreach (Collider2D collision in collisions)
         {
-            if (collision.GetComponent<Villager>() && collision.GetComponent<Villager>().level <= level)
+            if (collision.GetComponent<Villager>())
             {
                 //Check if favourite villager
                 if (collision.GetComponent<Villager>().type == favVillager)
@@ -294,7 +294,7 @@ public abstract class Monster : MonoBehaviour
 
         foreach (Collider2D collision in collisions)
         {
-            if (collision.GetComponent<Villager>() && collision.GetComponent<Villager>().level <= level)
+            if (collision.GetComponent<Villager>())
             {
                 return true;
             }

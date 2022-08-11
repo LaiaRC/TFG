@@ -164,7 +164,7 @@ public class Mom : Villager
         //Check if there are jackOLanterns
         foreach (Collider2D collision in collisions)
         {
-            if (collision.GetComponent<Monster>() && collision.GetComponent<Monster>().level <= level)
+            if (collision.GetComponent<Monster>())
             {
                 if (!collision.GetComponent<JackOLantern>()) onlyJackOLantern = false;
             }
@@ -174,14 +174,14 @@ public class Mom : Villager
         {
             if (!onlyJackOLantern)
             {
-                if (collision.GetComponent<Monster>() && collision.GetComponent<Monster>().level <= level)
+                if (collision.GetComponent<Monster>())
                 {
                     monsters.Add(collision);
                 }
             }
             else
             {
-                if (collision.GetComponent<Monster>() && collision.GetComponent<Monster>().level <= level)
+                if (collision.GetComponent<Monster>())
                 {
                     monsters.Add(collision);
                 }

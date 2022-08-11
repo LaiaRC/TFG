@@ -11,7 +11,7 @@ public class Witch : Monster
     protected float time;
     protected List<GameObject> aliveSkeletons = new List<GameObject>();
 
-    protected static int MAX_SKELETONS = 5;
+    protected static int MAX_SKELETONS = 2;
 
     // Start is called before the first frame update
     private void Start()

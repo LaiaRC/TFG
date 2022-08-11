@@ -11,16 +11,16 @@ public class Clown : Monster
     protected float time;
     protected List<GameObject> affectedVillagers = new List<GameObject>();
     protected bool isOnList = false;
-    
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
         spawn();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (miniGameManager.Instance.gameOver)
         {
@@ -58,8 +58,7 @@ public class Clown : Monster
         }
     }
 
-    override
-    protected void spawn()
+    protected override void spawn()
     {
         canvas = GameObject.Find("Canvas").GetComponent<RectTransform>();
         audioSource.clip = sounds[SPAWN];
@@ -78,8 +77,7 @@ public class Clown : Monster
         healthBar.targetCanvas = canvas;
     }
 
-    override
-    public void die()
+    public override void die()
     {
         miniGameManager.Instance.numMonstersDied++;
         //Turn back orginal conditions to villagers
@@ -112,7 +110,7 @@ public class Clown : Monster
                 isOnList = false;
                 foreach (GameObject affectedVillager in affectedVillagers)
                 {
-                    if(villager == affectedVillager)
+                    if (villager == affectedVillager)
                     {
                         isOnList = true;
                     }
@@ -139,11 +137,11 @@ public class Clown : Monster
 
         foreach (Collider2D collision in collisions)
         {
-            if (collision.GetComponent<Villager>() && collision.GetComponent<Villager>().level <= level)
+            if (collision.GetComponent<Villager>())
             {
                 villagers.Add(collision.gameObject);
             }
         }
         return villagers;
-    }   
+    }
 }

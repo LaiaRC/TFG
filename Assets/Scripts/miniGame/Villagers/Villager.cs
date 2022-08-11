@@ -123,7 +123,7 @@ public class Villager : MonoBehaviour
         isRunning = false;
         isScared = false;
         isStunned = false;
-
+        scareBar.isMonster = false;
         //Create villager route
         if (miniGameManager.Instance.waypoints != null)
         {

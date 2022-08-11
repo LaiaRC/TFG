@@ -26,7 +26,7 @@ public class ShieldMan : Villager
         agent.speed = velocity;
         //agent.agentTypeID = AgentTypeID.GetAgenTypeIDByName(element.ElementName);
 
-        spawn();        
+        spawn();
 
         agent.stoppingDistance = 4;
         collider = transform.GetComponent<CircleCollider2D>();
@@ -57,7 +57,7 @@ public class ShieldMan : Villager
             {
                 //attacks while it's blocking
                 attack();
-            }            
+            }
 
             //Play block animation if it's blocking
             if (isBlocking)
@@ -97,7 +97,7 @@ public class ShieldMan : Villager
         //Check if there are jackOLanterns
         foreach (Collider2D collision in collisions)
         {
-            if (collision.GetComponent<Monster>() && collision.GetComponent<Monster>().level <= level)
+            if (collision.GetComponent<Monster>())
             {
                 if (!collision.GetComponent<JackOLantern>()) onlyJackOLantern = false;
             }
@@ -107,14 +107,14 @@ public class ShieldMan : Villager
         {
             if (!onlyJackOLantern)
             {
-                if (collision.GetComponent<Monster>() && collision.GetComponent<Monster>().level <= level && !collision.GetComponent<JackOLantern>())
+                if (collision.GetComponent<Monster>() && !collision.GetComponent<JackOLantern>())
                 {
                     monsters.Add(collision);
                 }
             }
             else
             {
-                if (collision.GetComponent<Monster>() && collision.GetComponent<Monster>().level <= level)
+                if (collision.GetComponent<Monster>())
                 {
                     monsters.Add(collision);
                 }
@@ -139,7 +139,7 @@ public class ShieldMan : Villager
             }
         }
         return closestMonster;
-    }    
+    }
 
     public void takeAction()
     {

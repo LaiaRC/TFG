@@ -354,7 +354,7 @@ MonoBehaviour:
   velocity: 2.25
   health: 15
   damage: 5
-  detectionRange: 7
+  detectionRange: 13
   attackRange: 5
   attackRate: 1
   canBeInvokedInside: 0
@@ -426,8 +426,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3933314819902813587}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.234, z: 0}
-  m_LocalScale: {x: 1.65, y: 1.65, z: 1.65}
+  m_LocalPosition: {x: 0, y: 0.863, z: 0}
+  m_LocalScale: {x: 3.2, y: 3.2, z: 1.65}
   m_Children: []
   m_Father: {fileID: 1331844805969841853}
   m_RootOrder: 0

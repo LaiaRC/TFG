@@ -6,15 +6,18 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
     public RectTransform healthBarPanel;
-    public Slider healthBar;
     public Transform target;
     public RectTransform targetCanvas;
     public Image fill;
     public Image background;
+    public bool isMonster;
 
-    public void Start()
+    private float maxAmount = 0;
+    private float minAmount = 0;
+
+    private void Start()
     {
-        healthBar = GetComponent<Slider>();
+        isMonster = false;
     }
 
     public void Update()
@@ -33,17 +36,17 @@ public class HealthBar : MonoBehaviour
 
     public void setMaxValue(int value)
     {
-        healthBar.maxValue = value;
+        maxAmount = value;
     }
 
     public void setMinValue(int value)
     {
-        healthBar.minValue = value;
+        minAmount = value;
     }
 
     public void setValue(int value)
     {
-        healthBar.value = value;
+        fill.fillAmount = (value / maxAmount);
     }
 
     private void RepositionHealthBar()
@@ -51,14 +54,22 @@ public class HealthBar : MonoBehaviour
         Vector2 ViewportPosition = Camera.main.WorldToViewportPoint(target.position);
         Vector2 WorldObject_ScreenPosition = new Vector2(
         ((ViewportPosition.x * targetCanvas.sizeDelta.x) - (targetCanvas.sizeDelta.x * 0.5f)),
-        ((ViewportPosition.y * targetCanvas.sizeDelta.y) - (targetCanvas.sizeDelta.y * 0.5f)) + 20f);
+        ((ViewportPosition.y * targetCanvas.sizeDelta.y) - (targetCanvas.sizeDelta.y * 0.5f)) + 40f);
         //now you can set the position of the ui element
         healthBarPanel.anchoredPosition = WorldObject_ScreenPosition;
     }
 
-    public void setColor(Color fillColor,Color backgroundColor)
+    public void setColor(Color fillColor, Color backgroundColor)
     {
-        fill.color = fillColor;
-        background.color = backgroundColor;
+        if (isMonster)
+        {
+            fill.color = Color.green;
+            background.color = Color.gray;
+        }
+        else
+        {
+            fill.color = Color.red;
+            background.color = Color.white;
+        }
     }
 }

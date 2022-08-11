@@ -42,6 +42,8 @@ public class Reaper : Monster
             {
                 setOriginalSpeed();
             }
+            Debug.Log("END!");
+            //Mostrar dialog
         }
         else
         {
