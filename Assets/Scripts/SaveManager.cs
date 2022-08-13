@@ -288,9 +288,14 @@ public class SaveManager : MonoBehaviour
         {
             File.Delete(pathPlayer);
         }
+        if (File.Exists(pathMonsters))
+        {
+            File.Delete(pathMonsters);
+        }
         GameManager.Instance.constructionsBuilt.Clear();
         Data.Instance.CONSTRUCTIONS.Clear();
         Data.Instance.INVENTORY.Clear();
+        //Data.Instance.PLAYER.Clear();
         Data.Instance.MONSTERS_STATS.Clear();
         Data.Instance.MONSTERS.Clear();
         Data.Instance.BOOSTS.Clear();

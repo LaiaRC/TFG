@@ -1745,6 +1745,7 @@ GameObject:
   - component: {fileID: 1384341458226974199}
   - component: {fileID: 983532502411858490}
   - component: {fileID: -1241027856454806009}
+  - component: {fileID: 8638336935627369502}
   m_Layer: 0
   m_Name: vegetablePatch
   m_TagString: Untagged
@@ -1834,6 +1835,16 @@ MonoBehaviour:
     m_Position: {x: -14, y: -3, z: 0}
     m_Size: {x: 27, y: 16, z: 1}
   confirmUI: {fileID: 6945989185380472391}
+  audioSource: {fileID: 8638336935627369502}
+  sounds:
+  - {fileID: 8300000, guid: c85f3365eb4929f4eb023b8fb7dc168a, type: 3}
+  - {fileID: 8300000, guid: 54cb51dc03cac3b4398c6e6c6b16be3e, type: 3}
+  - {fileID: 8300000, guid: 4d5b5259590d8bd43bb56d6a8ddda583, type: 3}
+  - {fileID: 8300000, guid: 0bc769a32f0953649a046605c76b0704, type: 3}
+  - {fileID: 8300000, guid: a783f8f47549d674980a1df4e86b06d7, type: 3}
+  - {fileID: 8300000, guid: cc248b74d112ef445bf3855ebb55ae4b, type: 3}
+  - {fileID: 8300000, guid: 86897b9ca7cbfb2458d78f9246012fbe, type: 3}
+  cancelSound: {fileID: 7790940365482012250, guid: b797f12ac8e193c47a4728f7caf870fa, type: 3}
   upgrade_cost:
   - list:
     - resourceNameKey: lantern
@@ -1890,6 +1901,102 @@ MonoBehaviour:
   isPaused: 0
   canvasInterior: {fileID: 5631550038733740489}
   activeResourceTime: 0
+--- !u!82 &8638336935627369502
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000697655669412042}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &2106002807138346697
 GameObject:
   m_ObjectHideFlags: 0

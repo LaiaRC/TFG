@@ -19,6 +19,9 @@ public class TabButton : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        GameManager.Instance.audioSource.clip = GameManager.Instance.sounds[GameManager.DEFAULT2];
+        GameManager.Instance.audioSource.Play();
+        
         tabGroup.onTabSelected(this);
     }
 }

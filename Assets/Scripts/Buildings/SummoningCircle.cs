@@ -159,6 +159,9 @@ public class SummoningCircle : Building
 
     #endregion TABS BACKGROUND INDEX
 
+    //Audio variables
+    protected static int TURNING_PAGE = 7;
+
     private void Start()
     {
         //Set first monster to inventory
@@ -679,6 +682,9 @@ public class SummoningCircle : Building
     public void goToMerchant()
     {
         //Has pressed "unlock" -> go to BoostShop
+        audioSource.clip = sounds[DEFAULT];
+        audioSource.Play();
+
         canvasInterior.SetActive(false);
         GameManager.Instance.boostShop.GetComponent<BoostShop>().showShopImmediate();
     }
@@ -900,6 +906,8 @@ public class SummoningCircle : Building
 
     public void setSelectedTab(string selectedMonster)
     {
+        GameManager.Instance.debugInventoryInfo.SetText(activeMonster + " T: " + ((int)(activeMonsterTime/60)).ToString()+ "m TL: " + timeLeft.ToString());
+        
         if (selectedTab != selectedMonster) //Check if it's already in that page
         {
             selectedTab = selectedMonster;
@@ -952,6 +960,8 @@ public class SummoningCircle : Building
             #endregion SET TAB INDEX
 
             //Turn page animation
+            audioSource.clip = sounds[TURNING_PAGE];
+            audioSource.Play();
             animator.Play("book");
             Invoke(nameof(hideInfoGroup), 0.25f);
             Invoke(nameof(showInfoGroup), 0.4f); //When animation ends
@@ -973,6 +983,9 @@ public class SummoningCircle : Building
 
     public override void pause()
     {
+        audioSource.clip = sounds[PAUSE];
+        audioSource.Play();
+
         isProducing = false;
         isPaused = true;
         timeBarMonster.fillAmount = timeLeft / activeMonsterTime;
@@ -981,6 +994,9 @@ public class SummoningCircle : Building
 
     public override void play()
     {
+        audioSource.clip = sounds[PLAY];
+        audioSource.Play();
+
         isProducing = true;
         isPaused = false;
         setPlayPauseButtons();
@@ -1242,6 +1258,9 @@ public class SummoningCircle : Building
             {
                 if (checkRequirementsToUpgrade())
                 {
+                    audioSource.clip = sounds[UPGRADE];
+                    audioSource.Play();
+
                     #region PAY REQUIREMENTS
 
                     foreach (Requirement requirement in monster.upgradeRequirements[monster.upgradeLevel - 1])
@@ -1265,6 +1284,16 @@ public class SummoningCircle : Building
 
                     setUI(selectedTab);
                 }
+                else
+                {
+                    audioSource.clip = sounds[ERROR];
+                    audioSource.Play();
+                }
+            }
+            else
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
             }
         }
     }

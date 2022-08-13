@@ -73,8 +73,11 @@ public class BoostItem : MonoBehaviour
     {
         if (checkRequirements())
         {
+            GameManager.Instance.audioSource.clip = GameManager.Instance.sounds[GameManager.CONFIRM];
+            GameManager.Instance.audioSource.Play();
+
             #region PAY REQUIREMENTS
-            
+
             if (Data.Instance.INVENTORY.TryGetValue(requirement.resourceNameKey, out int requirementQuantity))
             {
                 if (requirementQuantity >= requirement.quantity)
@@ -100,6 +103,11 @@ public class BoostItem : MonoBehaviour
             GameManager.Instance.applyBoost(id);
 
             setToOwned();
+        }
+        else
+        {
+            GameManager.Instance.audioSource.clip = GameManager.Instance.sounds[GameManager.ERROR];
+            GameManager.Instance.audioSource.Play();
         }
     }
 

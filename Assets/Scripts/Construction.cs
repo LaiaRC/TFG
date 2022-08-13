@@ -19,7 +19,13 @@ public class Construction : MonoBehaviour
     public GameObject confirmUI;
     protected Vector3 origin;
 
-    
+    public AudioSource audioSource;
+    public AudioClip[] sounds;
+    public GameObject cancelSound;
+
+    protected static int CONFIRM = 0;
+    protected static int ERROR = 1;
+
     #region Building Methods
 
     public bool canBePlaced()
@@ -48,7 +54,9 @@ public class Construction : MonoBehaviour
             //Check requirements
             if (GameManager.Instance.checkRequirements(id))
             {
-
+                audioSource.clip = sounds[CONFIRM];
+                audioSource.Play();
+                
                 //Apply cost and update inventory
                 GameManager.Instance.buy(id);
 
@@ -88,6 +96,16 @@ public class Construction : MonoBehaviour
                 //Update shop price
                 GameManager.Instance.updateShopPrices(id);
             }
+            else
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+        }
+        else
+        {
+            audioSource.clip = sounds[ERROR];
+            audioSource.Play();
         }
     }
 
@@ -103,6 +121,8 @@ public class Construction : MonoBehaviour
 
     public void cancelBuilding()
     {
+        Instantiate(cancelSound, transform.position, Quaternion.identity);
+
         GameManager.Instance.detected = false;
         GameManager.Instance.draggingItemShop = false;
         GameManager.Instance.showAllShop();

@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class Reaper : Monster
 {
+    private bool audioPlayed = false;
+    
     // Start is called before the first frame update
     private void Start()
     {
@@ -44,6 +46,16 @@ public class Reaper : Monster
             }
             Debug.Log("END!");
             //Mostrar dialog
+            if (!audioPlayed)
+            {
+                miniGameManager.Instance.audioSource.clip = miniGameManager.Instance.sounds[miniGameManager.ACHIEVEMENT];
+                miniGameManager.Instance.audioSource.Play();
+
+                miniGameManager.Instance.timerPanel.SetActive(false);
+                miniGameManager.Instance.gameOver = true;
+                Invoke("invokeStats", 5);
+                audioPlayed = true;
+            }
         }
         else
         {
@@ -59,6 +71,10 @@ public class Reaper : Monster
                     attackTime += Time.deltaTime;
                     if (attackTime >= attackRate)
                     {
+                        //audio
+                        audioSourceAux.clip = sounds[ATTACK];
+                        audioSourceAux.Play();
+
                         isAttacking = true;
 
                         //Get anim position
@@ -85,5 +101,10 @@ public class Reaper : Monster
                 }
             }
         }
+    }
+
+    public void invokeStats()
+    {
+        miniGameManager.Instance.showStats();
     }
 }

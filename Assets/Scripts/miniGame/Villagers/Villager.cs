@@ -203,9 +203,9 @@ public class Villager : MonoBehaviour
 
     public void takeScare(int scareValue)
     {
-        //audio
-        audioSource.clip = sounds[TAKE_SCARE];
-        audioSource.Play();
+        //audio (era massa carregat)
+        /*audioSource.clip = sounds[TAKE_SCARE];
+        audioSource.Play();*/
 
         currentScarePoints += scareValue;
         scareBar.setValue(currentScarePoints);

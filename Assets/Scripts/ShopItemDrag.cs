@@ -65,6 +65,9 @@ public class ShopItemDrag : MonoBehaviour, IBeginDragHandler, IEndDragHandler, I
         {
             if (!GameManager.Instance.detected)
             {
+                GameManager.Instance.audioSource.clip = GameManager.Instance.sounds[GameManager.DEFAULT];
+                GameManager.Instance.audioSource.Play();
+                
                 GameManager.Instance.detected = true;
                 GameManager.Instance.hideAllShop();
 

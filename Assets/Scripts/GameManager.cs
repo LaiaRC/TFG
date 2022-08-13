@@ -38,7 +38,9 @@ public class GameManager : MonoBehaviour
     public int isRestart = 0;
     public GameObject loadingScreen;
     public AudioClip pumpkinLaugh;
+    public AudioSource audioSourceMusic;
     public AudioSource audioSource;
+    public AudioClip[] sounds;
 
     public GameObject shop;
     public GameObject allShop;
@@ -112,6 +114,13 @@ public class GameManager : MonoBehaviour
     private string info = "";
     private bool offlineBoostApplied = false;
 
+    //Audio variables
+    public static int CLOSE = 0;
+    public static int CONFIRM = 1;
+    public static int ERROR = 2;
+    public static int DEFAULT = 3;
+    public static int DEFAULT2 = 4;
+
     #region SINGLETON PATTERN
 
     public static GameManager Instance;
@@ -176,19 +185,18 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        foreach (KeyValuePair<string, int> inventoryResource in Data.Instance.INVENTORY)
-        {
+        //foreach (KeyValuePair<string, int> inventoryResource in Data.Instance.INVENTORY)
+        //{
             //for (int i = 0; i < monstersKeys.Count; i++)
             //{
             //  if (inventoryResource.Key.Equals(monstersKeys[i]))
             //{
-            info += "\n -" + inventoryResource.Key + ": " + inventoryResource.Value;
+            //info += "\n -" + inventoryResource.Key + ": " + inventoryResource.Value;
             // }
             //}
-        }
+        //}
         //debugInventoryInfo.SetText("isDialogOpen: " + isDialogOpen + "\n" + "draggingItemShop: " + draggingItemShop + "\n" + "draggingFromShop: " + draggingFromShop + "\n");
-        debugInventoryInfo.text = info;
-        info = "";
+        //debugInventoryInfo.text = info;
 
         //Update after coming back from pause mode
         if (isPaused)
@@ -245,6 +253,9 @@ public class GameManager : MonoBehaviour
     {
         if (isOnBuildingMode && !isShopOpeningOrClosing)
         {
+            audioSource.clip = sounds[CLOSE];
+            audioSource.Play();
+
             buildModeAnimator.Play("buildPanelClosing");
             isOnBuildingMode = false;
             Invoke("hideShop", 0.4f);
@@ -252,6 +263,9 @@ public class GameManager : MonoBehaviour
         }
         else if (!isShopOpeningOrClosing)
         {
+            audioSource.clip = sounds[DEFAULT2];
+            audioSource.Play();
+
             isOnCanvas = true;
             buildModeAnimator.Play("buildPanelOpening");
             isOnBuildingMode = true;
@@ -307,6 +321,9 @@ public class GameManager : MonoBehaviour
 
     public void showDescriptionDialog()
     {
+        audioSource.clip = sounds[DEFAULT];
+        audioSource.Play();
+
         isDialogOpen = true;
         canvas.GetComponent<Transform>().Find("BlackPanel").gameObject.SetActive(true);
         canvas.GetComponent<Transform>().Find("DescriptionDialog").gameObject.SetActive(true);
@@ -315,6 +332,9 @@ public class GameManager : MonoBehaviour
 
     public void hideDescriptionDialog()
     {
+        audioSource.clip = sounds[CLOSE];
+        audioSource.Play();
+
         canvas.GetComponent<Transform>().Find("DescriptionDialog").gameObject.SetActive(false);
         canvas.GetComponent<Transform>().Find("BlackPanel").gameObject.SetActive(false);
         canvas.GetComponent<Transform>().Find("UIBlock").gameObject.SetActive(true);
@@ -323,6 +343,9 @@ public class GameManager : MonoBehaviour
 
     public void showOfflineDialog()
     {
+        audioSource.clip = sounds[DEFAULT];
+        audioSource.Play();
+        
         isDialogOpen = true;
         canvas.GetComponent<Transform>().Find("BlackPanel").gameObject.SetActive(true);
         canvas.GetComponent<Transform>().Find("OfflineDialog").gameObject.SetActive(true);
@@ -331,6 +354,9 @@ public class GameManager : MonoBehaviour
 
     public void hideOfflineDialog()
     {
+        audioSource.clip = sounds[CLOSE];
+        audioSource.Play();
+        
         canvas.GetComponent<Transform>().Find("OfflineDialog").gameObject.SetActive(false);
         canvas.GetComponent<Transform>().Find("BlackPanel").gameObject.SetActive(false);
         canvas.GetComponent<Transform>().Find("UIBlock").gameObject.SetActive(true);
@@ -342,6 +368,9 @@ public class GameManager : MonoBehaviour
         //Load inventory info (only updated when inventory opens)
         fillInventoryDialog();
 
+        audioSource.clip = sounds[DEFAULT2];
+        audioSource.Play();
+
         isDialogOpen = true;
         canvas.GetComponent<Transform>().Find("BlackPanel").gameObject.SetActive(true);
         inventoryDialog.SetActive(true);
@@ -350,6 +379,9 @@ public class GameManager : MonoBehaviour
 
     public void hideInventoryDialog()
     {
+        audioSource.clip = sounds[CLOSE];
+        audioSource.Play();
+
         inventoryDialog.SetActive(false);
         canvas.GetComponent<Transform>().Find("BlackPanel").gameObject.SetActive(false);
         canvas.GetComponent<Transform>().Find("UIBlock").gameObject.SetActive(true);
@@ -360,6 +392,9 @@ public class GameManager : MonoBehaviour
     {
         if (!isOnCanvas)
         {
+            audioSource.clip = sounds[DEFAULT];
+            audioSource.Play();
+
             //check if has at least one monster
             int numMonsters = 0;
 
@@ -391,6 +426,9 @@ public class GameManager : MonoBehaviour
 
     public void hidePortalDialog()
     {
+        audioSource.clip = sounds[CLOSE];
+        audioSource.Play();
+
         portalDialog.SetActive(false);
         canvas.GetComponent<Transform>().Find("BlackPanel").gameObject.SetActive(false);
         canvas.GetComponent<Transform>().Find("UIBlock").gameObject.SetActive(true);
@@ -654,7 +692,7 @@ public class GameManager : MonoBehaviour
             Data.Instance.INVENTORY.Add(resource.Key, 10000);
         }
 
-        Data.Instance.INVENTORY.Add(Data.SKELETON, 10);
+        /*Data.Instance.INVENTORY.Add(Data.SKELETON, 10);
         Data.Instance.INVENTORY.Add(Data.JACK_LANTERN, 10);
         Data.Instance.INVENTORY.Add(Data.GOBLIN, 10);
         Data.Instance.INVENTORY.Add(Data.BAT, 10);
@@ -662,8 +700,8 @@ public class GameManager : MonoBehaviour
         Data.Instance.INVENTORY.Add(Data.GHOST, 10);
         Data.Instance.INVENTORY.Add(Data.CLOWN, 10);
         Data.Instance.INVENTORY.Add(Data.VAMPIRE, 10);
-        Data.Instance.INVENTORY.Add(Data.WITCH, 10);
-        //Data.Instance.INVENTORY.Add(Data.REAPER, 1);
+        Data.Instance.INVENTORY.Add(Data.WITCH, 10);*/
+        Data.Instance.INVENTORY.Add(Data.REAPER, 1);
     }
 
     public void buildConstructions()
@@ -707,13 +745,18 @@ public class GameManager : MonoBehaviour
 
                             if (construction.Value[PAUSED] == 0)
                             {
+                                //temp.play(); -> no sound when loading
+                                temp.isProducing = true;
                                 temp.isPaused = false;
-                                temp.play();
+                                temp.setPlayPauseButtons();
                             }
                             else
                             {
+                                //temp.pause(); -> no sound when loading
+                                temp.isProducing = false;
                                 temp.isPaused = true;
-                                temp.pause();
+                                temp.timeBarMonster.fillAmount = temp.timeLeft / temp.activeMonsterTime;
+                                temp.setPlayPauseButtons();
                             }
 
                             temp.time = construction.Value[ACTIVE_RESOURCE_TIME] - construction.Value[TIME_LEFT];
@@ -770,13 +813,16 @@ public class GameManager : MonoBehaviour
 
                             if (construction.Value[PAUSED] == 0)
                             {
+                                //temp.play();
+                                temp.isProducing = true;
                                 temp.isPaused = false;
-                                temp.play();
                             }
                             else
                             {
+                                //temp.pause();
+                                temp.isProducing = false;
                                 temp.isPaused = true;
-                                temp.pause();
+                                temp.timeBar.fillAmount = temp.timeLeft;
                             }
 
                             temp.time = construction.Value[ACTIVE_RESOURCE_TIME] - construction.Value[TIME_LEFT];
@@ -939,11 +985,19 @@ public class GameManager : MonoBehaviour
         }
         if (numMonsters > 0)
         {
-            SaveManager.Instance.Save();
-            audioSource.clip = pumpkinLaugh;
+            audioSource.clip = sounds[CONFIRM];
             audioSource.Play();
+
+            SaveManager.Instance.Save();
+            audioSourceMusic.clip = pumpkinLaugh;
+            audioSourceMusic.Play();
             loadingScreen.SetActive(true);
             Invoke("load", 3f);
+        }
+        else
+        {
+            audioSource.clip = sounds[ERROR];
+            audioSource.Play();
         }
     }
 
@@ -1599,7 +1653,6 @@ public class GameManager : MonoBehaviour
     public void hideAllDialogs()
     {
         canvas.GetComponent<Transform>().Find("DescriptionDialog").gameObject.SetActive(false);
-
         inventoryDialog.SetActive(false);
         portalDialog.SetActive(false);
 
@@ -1609,6 +1662,9 @@ public class GameManager : MonoBehaviour
 
     public void hideAllDialogsBlackPanel()
     {
+        audioSource.clip = sounds[CLOSE];
+        audioSource.Play();
+
         canvas.GetComponent<Transform>().Find("DescriptionDialog").gameObject.SetActive(false);
 
         inventoryDialog.SetActive(false);
@@ -1729,5 +1785,10 @@ public class GameManager : MonoBehaviour
             panel.transform.GetChild(0).transform.GetChild(0).GetComponent<Image>().sprite = resourceAux.icon;
             panel.transform.GetChild(0).transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(resourceAux.quantity);
         }
+    }
+
+    public void cleanDebugText()
+    {
+        debugInventoryInfo.SetText("");
     }
 }

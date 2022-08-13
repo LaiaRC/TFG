@@ -67,6 +67,13 @@ public class Building : Construction
     protected bool enoughResources = false;
     protected bool addedToInventory = false;
 
+    //Audio variables
+    protected static int PLAY = 2;
+    protected static int PAUSE = 3;
+    protected static int UPGRADE = 4;
+    protected static int DEFAULT = 5;
+    protected static int CLOSE = 6;
+
     public void setCanvasInterior()
     {
         #region UPGRADE
@@ -295,10 +302,16 @@ public class Building : Construction
     {
         if (activeResource != this.activeResource)
         {
+            bool isUnlocked = false;
             for (int i = 0; i < level; i++)
             {
                 if (resources[i] == activeResource)
                 {
+                    isUnlocked = true;
+                    //Audio
+                    audioSource.clip = sounds[PLAY];
+                    audioSource.Play();
+                    
                     this.activeResource = activeResource;
                     if (Data.Instance.RESOURCES.TryGetValue(activeResource, out Resource resource))
                     {
@@ -358,12 +371,25 @@ public class Building : Construction
                     //Update UI
                     updateUI();
                 }
-            }            
+            }
+
+            if (!isUnlocked)
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+        }
+        else
+        {
+            audioSource.clip = sounds[DEFAULT];
+            audioSource.Play();
         }
     }
 
     public void showBuildingInterior()
     {
+        audioSource.clip = sounds[DEFAULT];
+        audioSource.Play();
 
         if (!GameManager.Instance.isOnCanvas && !GameManager.Instance.isDialogOpen)
         {
@@ -375,12 +401,18 @@ public class Building : Construction
 
     public void hideBuildingInterior()
     {
+        audioSource.clip = sounds[CLOSE];
+        audioSource.Play();
+
         canvasInterior.SetActive(false);
         Invoke("isOnCanvasOff", 0.1f);
     }        
 
     public virtual void pause()
     {
+        audioSource.clip = sounds[PAUSE];
+        audioSource.Play();
+
         isProducing = false;
         isPaused = true;
         timeBar.fillAmount = timeLeft;
@@ -388,6 +420,9 @@ public class Building : Construction
 
     public virtual void play()
     {
+        audioSource.clip = sounds[PLAY];
+        audioSource.Play();
+
         isProducing = true;
         isPaused = false;
     }
@@ -416,6 +451,9 @@ public class Building : Construction
                 }
                 if (enoughResource)
                 {
+                    audioSource.clip = sounds[UPGRADE];
+                    audioSource.Play();
+
                     foreach (RequirementBuilding requirement in building.GetComponent<Building>().upgrade_cost[level - 1].list)
                     {
                         if (Data.Instance.INVENTORY.TryGetValue(requirement.resourceNameKey, out int quantity))
@@ -436,6 +474,11 @@ public class Building : Construction
                     {
                         Data.Instance.INVENTORY.Add(resources[level - 1], 0);
                     }
+                }
+                else
+                {
+                    audioSource.clip = sounds[ERROR];
+                    audioSource.Play();
                 }
             }
         }
@@ -475,11 +518,16 @@ public class Building : Construction
 
         if (isProducing)
         {
-            play();
+            //play();
+            isProducing = true;
+            isPaused = false;
         }
         else
         {
-            pause();
+            //pause();
+            isProducing = false;
+            isPaused = true;
+            timeBar.fillAmount = timeLeft;
         }
 
         timeBar.fillAmount = timeLeft;

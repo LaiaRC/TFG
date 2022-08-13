@@ -88,6 +88,9 @@ public class BoostShop : MonoBehaviour
     {
         if (!GameManager.Instance.isOnCanvas && !GameManager.Instance.isDialogOpen)
         {
+            GameManager.Instance.audioSource.clip = GameManager.Instance.sounds[GameManager.DEFAULT];
+            GameManager.Instance.audioSource.Play();
+
             canvas.SetActive(true);
             GameManager.Instance.isOnCanvas = true;
         }
@@ -101,6 +104,9 @@ public class BoostShop : MonoBehaviour
 
     public void hideShop()
     {
+        GameManager.Instance.audioSource.clip = GameManager.Instance.sounds[GameManager.CLOSE];
+        GameManager.Instance.audioSource.Play();
+
         canvas.SetActive(false);
         Invoke("isOnCanvasOff", 0.1f);
     }

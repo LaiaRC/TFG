@@ -46,6 +46,8 @@ public class miniGameManager : MonoBehaviour
     public List<GameObject> flags;
     public List<GameObject> activeFlags;
     public List<GameObject> monsters;
+    public AudioSource audioSource;
+    public AudioClip[] sounds;
     public int numMonstersInvoked = 0;
     public int numMonstersDied = 0;
     public int numMaxMonsters = 0;
@@ -158,6 +160,15 @@ public class miniGameManager : MonoBehaviour
     public static string SORCERER_PROJECTILE = "sorcererProjectile";
     public static string VILLAGER_DEATH_PARTICLES = "villagerDeathParticles";
     public static string SCARE_PROJECTILE = "scareProjectile";
+
+    //Audio variables
+    public static int CLOSE = 0;
+    public static int CONFIRM = 1;
+    public static int ERROR = 2;
+    public static int DEFAULT = 3;
+    public static int DEFAULT2 = 4;
+    public static int GAME_OVER = 5;
+    public static int ACHIEVEMENT = 6;
 
     #region SINGLETON PATTERN
 
@@ -404,7 +415,7 @@ public class miniGameManager : MonoBehaviour
 
         if (!firstMonster && !hasReaper)
         {
-            if (time < MINIGAME_MAX_TIME && numMonstersDied < numMaxMonsters)
+            if (time < MINIGAME_MAX_TIME && numMonstersDied < numMaxMonsters) //&& !gameOver ?
             {
                 time += Time.deltaTime;
                 timer.SetText(((int)((MINIGAME_MAX_TIME - time) / 60)).ToString() + ":" + ((MINIGAME_MAX_TIME - time) - (((int)((MINIGAME_MAX_TIME - time) / 60)) * 60)).ToString("0#"));
@@ -415,9 +426,12 @@ public class miniGameManager : MonoBehaviour
             }
             else if (!gameOver)
             {
+                audioSource.clip = sounds[GAME_OVER];
+                audioSource.Play();
+
                 timerPanel.SetActive(false);
                 gameOver = true;
-                showStats();
+                Invoke("showStats", 5);
             }
         }
         else if (hasReaper)
@@ -486,6 +500,18 @@ public class miniGameManager : MonoBehaviour
                     invokeMonster(REAPER, touchPosWorld);
                 }
             }
+
+            //Error audio
+            if (selectedCard == JACK_BUTTON)
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            if (selectedCard == CLOWN_BUTTON)
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
         }
         else if (touchedObject.tag == "sewer")
         {
@@ -496,6 +522,54 @@ public class miniGameManager : MonoBehaviour
                     invokeMonster(GOBLIN, touchPosWorld);
                 }
             }
+
+            #region ERROR AUDIO
+            if (selectedCard == SKELETON_BUTTON) //The tuto card
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            if (selectedCard == ZOMBIE_BUTTON)
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            if (selectedCard == GHOST_BUTTON)
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            if (selectedCard == BAT_BUTTON)
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            if (selectedCard == VAMPIRE_BUTTON)
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            if (selectedCard == WITCH_BUTTON)
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            if (selectedCard == REAPER_BUTTON)
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            if (selectedCard == JACK_BUTTON)
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            if (selectedCard == CLOWN_BUTTON)
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            #endregion
         }
         else if (touchedObject.tag == "tomb")
         {
@@ -506,6 +580,54 @@ public class miniGameManager : MonoBehaviour
                     invokeMonster(GHOST, touchPosWorld);
                 }
             }
+
+            #region ERROR AUDIO
+            if (selectedCard == SKELETON_BUTTON) //The tuto card
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            if (selectedCard == ZOMBIE_BUTTON)
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            if (selectedCard == GOBLIN_BUTTON)
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            if (selectedCard == BAT_BUTTON)
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            if (selectedCard == VAMPIRE_BUTTON)
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            if (selectedCard == WITCH_BUTTON)
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            if (selectedCard == REAPER_BUTTON)
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            if (selectedCard == JACK_BUTTON)
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            if (selectedCard == CLOWN_BUTTON)
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            #endregion
         }
         else if (touchedObject.tag == "walkableGround")
         {
@@ -517,11 +639,57 @@ public class miniGameManager : MonoBehaviour
             {
                 invokeMonster(CLOWN, touchPosWorld);
             }
+
+            #region ERROR AUDIO
+            if (selectedCard == SKELETON_BUTTON) //The tuto card
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            if (selectedCard == ZOMBIE_BUTTON)
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            if (selectedCard == GHOST_BUTTON)
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            if (selectedCard == GOBLIN_BUTTON)
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            if (selectedCard == BAT_BUTTON)
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            if (selectedCard == VAMPIRE_BUTTON)
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            if (selectedCard == WITCH_BUTTON)
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            if (selectedCard == REAPER_BUTTON)
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            #endregion
         }
     }
 
     public void placeFlag(Vector3 position)
     {
+        audioSource.clip = sounds[DEFAULT2];
+        audioSource.Play();
+
         if (currentFlag < maxFlags)
         {
             flags[currentFlag].transform.position = new Vector3(position.x, position.y, 0);
@@ -597,8 +765,14 @@ public class miniGameManager : MonoBehaviour
                                 if (cardsGroup.transform.GetChild(i).name.Contains(monsterName))
                                 {
                                     cardsGroup.transform.GetChild(i).transform.Find("NumPanel").transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(UNITS_MONSTERS[monsterName].ToString());
+
+                                    //check if quantity is 0
+                                    if (UNITS_MONSTERS[monsterName] == 0)
+                                    {
+                                        cardsGroup.transform.GetChild(i).transform.Find("Icon").GetComponent<Image>().color = new Color32(255, 255, 255, 150);
+                                    }
                                 }
-                            }
+                            }                            
                         }
                         else
                         {
@@ -606,7 +780,7 @@ public class miniGameManager : MonoBehaviour
                             flagButton.transform.Find("NumPanel").transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(UNITS_MONSTERS[monsterName].ToString());
 
                             //update info panel
-                            infoPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText("Monsters will scare villagers until their Scare Bar is full and you will get special drops once they pass out, but  some villagers will attack your creatures!");
+                            infoPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText("Monsters will scare villagers until their Scare Bar is full and you will get special drops once they pass out, but some villagers will attack your creatures!");
                         }
                     }
                 }
@@ -633,109 +807,153 @@ public class miniGameManager : MonoBehaviour
     {
         if (selectedCard == cardSelected.name)
         {
-            //deselect card
-            selectedCard = NONE;
-            outsideSpawnIndicator.SetActive(false);
-            insideSpawnIndicator.SetActive(false);
-            sewerSpawnIndicator.SetActive(false);
-            foreach (GameObject s in tombs)
+            //check if quantity is 0
+            bool isError = false;
+
+            if (UNITS_MONSTERS.TryGetValue(getMonsterName(cardSelected.name), out int quantity))
             {
-                s.SetActive(false);
+                if (quantity <= 0)
+                {
+                    isError = true;
+                }
             }
 
-            //reset touch position
-            touchPosWorld = Vector3.zero;
+            if (isError)
+            {
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
+            }
+            else
+            {
 
-            cardSelected.GetComponent<Image>().color = new Color(1, 1, 1, 1);
-            cardSelected.transform.Find("NumPanel").GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                audioSource.clip = sounds[DEFAULT2];
+                audioSource.Play();
+
+                //deselect card
+                selectedCard = NONE;
+                outsideSpawnIndicator.SetActive(false);
+                insideSpawnIndicator.SetActive(false);
+                sewerSpawnIndicator.SetActive(false);
+                foreach (GameObject s in tombs)
+                {
+                    s.SetActive(false);
+                }
+
+                //reset touch position
+                touchPosWorld = Vector3.zero;
+
+                cardSelected.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                cardSelected.transform.Find("NumPanel").GetComponent<Image>().color = new Color(1, 1, 1, 1);
+            }
         }
         else
         {
-            //Deselect all cards
-            for (int i = 0; i < cardsGroup.transform.childCount; i++)
-            {
-                cardsGroup.transform.GetChild(i).GetComponent<Image>().color = new Color(1, 1, 1, 1);
-                cardsGroup.transform.GetChild(i).transform.GetChild(1).GetComponent<Image>().color = new Color(1, 1, 1, 1);
+            //check if quantity is 0
+            bool isError = false;
+
+            if(UNITS_MONSTERS.TryGetValue(getMonsterName(cardSelected.name), out int quantity)){
+                if(quantity <= 0)
+                {
+                    isError = true;
+                }
             }
 
-            foreach (GameObject s in tombs)
+            if (isError)
             {
-                s.SetActive(false);
+                audioSource.clip = sounds[ERROR];
+                audioSource.Play();
             }
-
-            //select card
-            selectedCard = cardSelected.name;
-
-            switch (cardSelected.name)
+            else
             {
-                case "skeletonButton":
-                    outsideSpawnIndicator.SetActive(true);
-                    insideSpawnIndicator.SetActive(false);
-                    sewerSpawnIndicator.SetActive(false);
-                    break;
+                //Deselect all cards
+                for (int i = 0; i < cardsGroup.transform.childCount; i++)
+                {
+                    cardsGroup.transform.GetChild(i).GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                    cardsGroup.transform.GetChild(i).transform.GetChild(1).GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                }
 
-                case "ghostButton":
-                    outsideSpawnIndicator.SetActive(true);
-                    insideSpawnIndicator.SetActive(false);
-                    sewerSpawnIndicator.SetActive(false);
-                    foreach (GameObject s in tombs)
-                    {
-                        s.SetActive(true);
-                    }
-                    break;
+                foreach (GameObject s in tombs)
+                {
+                    s.SetActive(false);
+                }
 
-                case "zombieButton":
-                    outsideSpawnIndicator.SetActive(true);
-                    insideSpawnIndicator.SetActive(false);
-                    sewerSpawnIndicator.SetActive(false);
-                    break;
+                //select card
+                selectedCard = cardSelected.name;
 
-                case "jackOLanternButton":
-                    outsideSpawnIndicator.SetActive(false);
-                    insideSpawnIndicator.SetActive(true);
-                    sewerSpawnIndicator.SetActive(false);
-                    break;
+                audioSource.clip = sounds[DEFAULT];
+                audioSource.Play();
 
-                case "batButton":
-                    outsideSpawnIndicator.SetActive(true);
-                    insideSpawnIndicator.SetActive(false);
-                    sewerSpawnIndicator.SetActive(false);
-                    break;
+                switch (cardSelected.name)
+                {
+                    case "skeletonButton":
+                        outsideSpawnIndicator.SetActive(true);
+                        insideSpawnIndicator.SetActive(false);
+                        sewerSpawnIndicator.SetActive(false);
+                        break;
 
-                case "goblinButton":
-                    outsideSpawnIndicator.SetActive(true);
-                    insideSpawnIndicator.SetActive(false);
-                    sewerSpawnIndicator.SetActive(true);
-                    break;
+                    case "ghostButton":
+                        outsideSpawnIndicator.SetActive(true);
+                        insideSpawnIndicator.SetActive(false);
+                        sewerSpawnIndicator.SetActive(false);
+                        foreach (GameObject s in tombs)
+                        {
+                            s.SetActive(true);
+                        }
+                        break;
 
-                case "vampireButton":
-                    outsideSpawnIndicator.SetActive(true);
-                    insideSpawnIndicator.SetActive(false);
-                    sewerSpawnIndicator.SetActive(false);
-                    break;
+                    case "zombieButton":
+                        outsideSpawnIndicator.SetActive(true);
+                        insideSpawnIndicator.SetActive(false);
+                        sewerSpawnIndicator.SetActive(false);
+                        break;
 
-                case "witchButton":
-                    outsideSpawnIndicator.SetActive(true);
-                    insideSpawnIndicator.SetActive(false);
-                    sewerSpawnIndicator.SetActive(false);
-                    break;
+                    case "jackOLanternButton":
+                        outsideSpawnIndicator.SetActive(false);
+                        insideSpawnIndicator.SetActive(true);
+                        sewerSpawnIndicator.SetActive(false);
+                        break;
 
-                case "clownButton":
-                    outsideSpawnIndicator.SetActive(false);
-                    insideSpawnIndicator.SetActive(true);
-                    sewerSpawnIndicator.SetActive(false);
-                    break;
+                    case "batButton":
+                        outsideSpawnIndicator.SetActive(true);
+                        insideSpawnIndicator.SetActive(false);
+                        sewerSpawnIndicator.SetActive(false);
+                        break;
 
-                case "reaperButton":
-                    outsideSpawnIndicator.SetActive(true);
-                    insideSpawnIndicator.SetActive(false);
-                    sewerSpawnIndicator.SetActive(false);
-                    break;
+                    case "goblinButton":
+                        outsideSpawnIndicator.SetActive(true);
+                        insideSpawnIndicator.SetActive(false);
+                        sewerSpawnIndicator.SetActive(true);
+                        break;
+
+                    case "vampireButton":
+                        outsideSpawnIndicator.SetActive(true);
+                        insideSpawnIndicator.SetActive(false);
+                        sewerSpawnIndicator.SetActive(false);
+                        break;
+
+                    case "witchButton":
+                        outsideSpawnIndicator.SetActive(true);
+                        insideSpawnIndicator.SetActive(false);
+                        sewerSpawnIndicator.SetActive(false);
+                        break;
+
+                    case "clownButton":
+                        outsideSpawnIndicator.SetActive(false);
+                        insideSpawnIndicator.SetActive(true);
+                        sewerSpawnIndicator.SetActive(false);
+                        break;
+
+                    case "reaperButton":
+                        outsideSpawnIndicator.SetActive(true);
+                        insideSpawnIndicator.SetActive(false);
+                        sewerSpawnIndicator.SetActive(false);
+                        break;
+                }
+
+                cardSelected.GetComponent<Image>().color = new Color32(SELECTED_R, SELECTED_G, SELECTED_B, 255);
+                cardSelected.transform.Find("NumPanel").GetComponent<Image>().color = new Color32(SELECTED_R, SELECTED_G, SELECTED_B, 255);
+                Invoke("selectCard", 0.05f);
             }
-
-            cardSelected.GetComponent<Image>().color = new Color32(SELECTED_R, SELECTED_G, SELECTED_B, 255);
-            cardSelected.transform.Find("NumPanel").GetComponent<Image>().color = new Color32(SELECTED_R, SELECTED_G, SELECTED_B, 255);
-            Invoke("selectCard", 0.05f);
         }
     }
 
@@ -756,6 +974,9 @@ public class miniGameManager : MonoBehaviour
 
     public void showStats()
     {
+        audioSource.clip = sounds[DEFAULT];
+        audioSource.Play();
+
         scaresText.SetText((numScares + (int)(numScares * scaresModifier)).ToString()); //fer funcio minigame manager que passi a 1.3k (copiar de gameManager)
         scaresPercentText.SetText("+" + scaresModifier * 100 + "%");
         realScaresText.SetText("(" + numScares.ToString());
@@ -825,6 +1046,9 @@ public class miniGameManager : MonoBehaviour
 
     public void close()
     {
+        audioSource.clip = sounds[CLOSE];
+        audioSource.Play();
+        
         //Save drops to inventory
         foreach (KeyValuePair<string, Drop> drop in DROPS)
         {
@@ -895,6 +1119,9 @@ public class miniGameManager : MonoBehaviour
 
     public void confirmFlags()
     {
+        audioSource.clip = sounds[CONFIRM];
+        audioSource.Play();
+
         flagsPlaced = true;
         confirmUI.SetActive(false);
 
@@ -955,6 +1182,9 @@ public class miniGameManager : MonoBehaviour
 
     public void cancelFlags()
     {
+        audioSource.clip = sounds[CLOSE];
+        audioSource.Play();
+
         foreach (GameObject flag in flags)
         {
             flag.SetActive(false);
@@ -977,5 +1207,46 @@ public class miniGameManager : MonoBehaviour
     {
         flagButton.SetActive(true);
         infoPanel.SetActive(true);
+    }
+
+    public string getMonsterName(string buttonName)
+    {
+        string name = "";
+
+        switch (buttonName)
+        {
+            case "skeletonButton":
+                name = SKELETON;
+                break;
+            case "jackOLanternButton":
+                name = JACK_LANTERN;
+                break;
+            case "batButton":
+                name = BAT;
+                break;
+            case "goblinButton":
+                name = GOBLIN;
+                break;
+            case "ghostButton":
+                name = GHOST;
+                break;
+            case "clownButton":
+                name = CLOWN;
+                break;
+            case "zombieButton":
+                name = ZOMBIE;
+                break;
+            case "vampireButton":
+                name = VAMPIRE;
+                break;
+            case "witchButton":
+                name = WITCH;
+                break;
+            case "reaperButton":
+                name = REAPER;
+                break;
+        }
+
+        return name;
     }
 }
