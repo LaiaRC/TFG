@@ -45,13 +45,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Summoning Circle
   id: summoningCircle
-  description: idk
+  description: Summon your little monsters here! Create a lot of them to scare all
+    those annoying villagers.
   resourceText1: 50
   resourceText2: 300
   resource1Icon: {fileID: 21300000, guid: a3988f3a9e6e1a44188a1b5cc109acfa, type: 3}
   resource2Icon: {fileID: 21300000, guid: f3b77c3f639aa7847ade1511384e628c, type: 3}
   maxQuantity: 1
   type: 0
+  typeConstruction: summoningCircle
   icon: {fileID: 7206118203239918969, guid: 3c4c4eafa5d3cdf4ca803ff46ca6fc2e, type: 3}
   prefab: {fileID: 2000697655669412042, guid: 22034ca2cbeeca4408cf2c7d5ed7ee9a, type: 3}
   produces1: {fileID: 7206118203239918969, guid: 3c4c4eafa5d3cdf4ca803ff46ca6fc2e, type: 3}

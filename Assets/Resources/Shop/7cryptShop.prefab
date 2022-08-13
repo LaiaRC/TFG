@@ -45,13 +45,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Crypt
   id: crypt
-  description: idk
+  description: It's so quiet in here...Death is impregnated in the air. Very comfy
+    place to take a nap.
   resourceText1: 300
   resourceText2: 500
   resource1Icon: {fileID: 21300000, guid: 4b01609e0ef135b41880aadaba4420d8, type: 3}
   resource2Icon: {fileID: 21300000, guid: 4610e5b9c2e3902458c05c481dce2611, type: 3}
   maxQuantity: 1
   type: 0
+  typeConstruction: converter
   icon: {fileID: 21300000, guid: d8d14e49e41c130409e67c6e84014367, type: 3}
   prefab: {fileID: 2000697655669412042, guid: b31a37c8f66cdb54b9f97fcbd3db3c23, type: 3}
   produces1: {fileID: 21300000, guid: 0c75f53819b1c5940b4fec6cdd74ff83, type: 3}

@@ -364,17 +364,14 @@ MonoBehaviour:
   level: 5
   animator: {fileID: 1331844805969841850}
   tomb: {fileID: 5866804560099724069, guid: 8bd94ee69525f0842b6391c7a96c09b6, type: 3}
-  deathParticles: {fileID: 1594651801849776520, guid: 996f4c57fa6b80447ba970292d38562c, type: 3}
-  spawnParticles: {fileID: 1594651801849776520, guid: 996f4c57fa6b80447ba970292d38562c, type: 3}
-  deathSound: {fileID: 1594651801849776520, guid: 996f4c57fa6b80447ba970292d38562c, type: 3}
+  deathSound: {fileID: 2416030600784960638, guid: c8ee39e9842599047830d349d885cf34, type: 3}
   audioSource: {fileID: 1331844805969841848}
   audioSourceAux: {fileID: 1331844805969841847}
   sounds:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: bdcac643efaace348b2d55bdb3cd9c93, type: 3}
+  - {fileID: 8300000, guid: 2b368267cb5a97f4db1c827d980bfef4, type: 3}
+  - {fileID: 8300000, guid: 41d9bb3bb25cfc442b542cefbfc02411, type: 3}
+  - {fileID: 8300000, guid: c82c33f992218c44881f8ef3581a1056, type: 3}
   healthBar: {fileID: 4110335927728442690, guid: 4be1c02213a25e84bb1477354cbe9666, type: 3}
   fillColor: {r: 0, g: 1, b: 0, a: 1}
   backgroundColor: {r: 0.5882353, g: 1, b: 0.5882353, a: 1}

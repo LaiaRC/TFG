@@ -45,13 +45,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Forest
   id: forest
-  description: idk
+  description: 'The legend says there are more spiders here than trees... '
   resourceText1: 15
   resourceText2: 
   resource1Icon: {fileID: 21300000, guid: f3b77c3f639aa7847ade1511384e628c, type: 3}
   resource2Icon: {fileID: 0}
   maxQuantity: 1
   type: 0
+  typeConstruction: producer
   icon: {fileID: 21300000, guid: 4b01609e0ef135b41880aadaba4420d8, type: 3}
   prefab: {fileID: 2000697655669412042, guid: 32b0f4c3998e47145ab0ff939d450d17, type: 3}
   produces1: {fileID: 21300000, guid: d2dfe95cd9742dc4badff7f0cecea6bc, type: 3}

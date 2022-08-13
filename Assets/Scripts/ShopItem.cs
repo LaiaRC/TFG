@@ -17,6 +17,7 @@ public class ShopItem : MonoBehaviour
     //public int price;
     //public CurrencyType currency;
     public ObjectType type;
+    public string typeConstruction;
     public Sprite icon;
     public GameObject prefab;
     public Sprite produces1;

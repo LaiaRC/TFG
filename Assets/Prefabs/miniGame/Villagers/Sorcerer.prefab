@@ -477,14 +477,12 @@ MonoBehaviour:
   audioSource: {fileID: 5266004272776114136}
   audioSourceAux: {fileID: 5266004272776114136}
   sounds:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 37c1057c6b20d52419d8de1c9486e2f4, type: 3}
+  - {fileID: 8300000, guid: 43b5a92b4597c2247a6d2bd15e8d02f6, type: 3}
+  - {fileID: 8300000, guid: bffeb27dd5e70b8419ffe6bdc6694105, type: 3}
+  - {fileID: 8300000, guid: 9966ca73ca9f01c4ba071144b8cc9e7c, type: 3}
   scareBar: {fileID: 4110335927728442690, guid: 4be1c02213a25e84bb1477354cbe9666, type: 3}
-  deathParticles: {fileID: 1594651801849776520, guid: 996f4c57fa6b80447ba970292d38562c, type: 3}
-  spawnParticles: {fileID: 1594651801849776520, guid: 996f4c57fa6b80447ba970292d38562c, type: 3}
+  deathSound: {fileID: 2416030600784960638, guid: 6f0b4913da962c84f868cf604fdc5069, type: 3}
   fillColor: {r: 1, g: 0, b: 0, a: 1}
   backgroundColor: {r: 1, g: 0.5882353, b: 0.5882353, a: 1}
   canvas: {fileID: 0}

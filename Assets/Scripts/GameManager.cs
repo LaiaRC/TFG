@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
     public int isTutoDone = 0;
     public int isRestart = 0;
     public GameObject loadingScreen;
+    public AudioClip pumpkinLaugh;
+    public AudioSource audioSource;
 
     public GameObject shop;
     public GameObject allShop;
@@ -484,14 +486,77 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void fillDescriptionDialog(string title, string description, Sprite image, Sprite iconResource1, Sprite iconResource2, Sprite iconResource3)
+    public void fillDescriptionDialog(string title, string description, Sprite image, Sprite iconResource1, Sprite iconResource2, Sprite iconResource3, string constructionType)
     {
         descriptionDialog.GetComponent<Transform>().Find("Title").GetComponent<TextMeshProUGUI>().text = title;
-        descriptionDialog.GetComponent<Transform>().Find("Description").GetComponent<TextMeshProUGUI>().text = description;
+
+        //change word color if it's decoration boost
+        switch (title)
+        {
+            case "Gargoyle":
+                descriptionDialog.GetComponent<Transform>().Find("Description").GetComponent<TextMeshProUGUI>().SetText("<color=#00FFEF>Producer</color>");
+                descriptionDialog.GetComponent<Transform>().Find("Description").GetComponent<TextMeshProUGUI>().SetText(descriptionDialog.GetComponent<Transform>().Find("Description").GetComponent<TextMeshProUGUI>().text + description);
+                break;
+
+            case "Obelisk":
+                descriptionDialog.GetComponent<Transform>().Find("Description").GetComponent<TextMeshProUGUI>().SetText("<color=#FF6E00>Converter</color>");
+                descriptionDialog.GetComponent<Transform>().Find("Description").GetComponent<TextMeshProUGUI>().SetText(descriptionDialog.GetComponent<Transform>().Find("Description").GetComponent<TextMeshProUGUI>().text + description);
+                break;
+
+            case "Blood Moon Tower":
+                descriptionDialog.GetComponent<Transform>().Find("Description").GetComponent<TextMeshProUGUI>().SetText(description + "<color=#24EE00>Summoning Circle</color>");
+                break;
+
+            case "Mage Guardian":
+                descriptionDialog.GetComponent<Transform>().Find("Description").GetComponent<TextMeshProUGUI>().SetText("Gain 50% more      <sprite=4>in the restart minigame");
+                break;
+
+            default:
+                descriptionDialog.GetComponent<Transform>().Find("Description").GetComponent<TextMeshProUGUI>().SetText(description);
+                break;
+        }
+
         descriptionDialog.GetComponent<Transform>().Find("Image").GetComponent<Image>().sprite = image;
-        descriptionDialog.GetComponent<Transform>().Find("IconResource1").GetComponent<Image>().sprite = iconResource1;
-        descriptionDialog.GetComponent<Transform>().Find("IconResource2").GetComponent<Image>().sprite = iconResource2;
-        descriptionDialog.GetComponent<Transform>().Find("IconResource3").GetComponent<Image>().sprite = iconResource3;
+
+        if (constructionType.Equals("decorationBoost") || constructionType.Equals("summoningCircle"))
+        {
+            descriptionDialog.GetComponent<Transform>().Find("Produces").gameObject.SetActive(false);
+            descriptionDialog.GetComponent<Transform>().Find("IconResource1").gameObject.SetActive(false);
+            descriptionDialog.GetComponent<Transform>().Find("IconResource2").gameObject.SetActive(false);
+            descriptionDialog.GetComponent<Transform>().Find("IconResource3").gameObject.SetActive(false);
+        }
+        else
+        {
+            descriptionDialog.GetComponent<Transform>().Find("Produces").gameObject.SetActive(true);
+            descriptionDialog.GetComponent<Transform>().Find("IconResource1").gameObject.SetActive(true);
+            descriptionDialog.GetComponent<Transform>().Find("IconResource2").gameObject.SetActive(true);
+            descriptionDialog.GetComponent<Transform>().Find("IconResource3").gameObject.SetActive(true);
+
+            descriptionDialog.GetComponent<Transform>().Find("IconResource1").GetComponent<Image>().sprite = iconResource1;
+            descriptionDialog.GetComponent<Transform>().Find("IconResource2").GetComponent<Image>().sprite = iconResource2;
+            descriptionDialog.GetComponent<Transform>().Find("IconResource3").GetComponent<Image>().sprite = iconResource3;
+        }
+
+        //Type
+        descriptionDialog.GetComponent<Transform>().Find("Producer").gameObject.SetActive(false); 
+        descriptionDialog.GetComponent<Transform>().Find("Converter").gameObject.SetActive(false);
+        descriptionDialog.GetComponent<Transform>().Find("SummoningCircle").gameObject.SetActive(false);
+        descriptionDialog.GetComponent<Transform>().Find("DecorationBoost").gameObject.SetActive(false);
+
+        switch (constructionType){
+            case "producer":
+                descriptionDialog.GetComponent<Transform>().Find("Producer").gameObject.SetActive(true);
+                break;
+            case "converter":
+                descriptionDialog.GetComponent<Transform>().Find("Converter").gameObject.SetActive(true);
+                break;
+            case "summoningCircle":
+                descriptionDialog.GetComponent<Transform>().Find("SummoningCircle").gameObject.SetActive(true);
+                break;
+            case "decorationBoost":
+                descriptionDialog.GetComponent<Transform>().Find("DecorationBoost").gameObject.SetActive(true);
+                break;
+        }        
     }
 
     public void fillOfflineDialog(string timeAwayText)
@@ -589,16 +654,16 @@ public class GameManager : MonoBehaviour
             Data.Instance.INVENTORY.Add(resource.Key, 10000);
         }
 
-        /*Data.Instance.INVENTORY.Add(Data.SKELETON, 5);
-        Data.Instance.INVENTORY.Add(Data.JACK_LANTERN, 5);
-        Data.Instance.INVENTORY.Add(Data.GOBLIN, 5);
+        Data.Instance.INVENTORY.Add(Data.SKELETON, 10);
+        Data.Instance.INVENTORY.Add(Data.JACK_LANTERN, 10);
+        Data.Instance.INVENTORY.Add(Data.GOBLIN, 10);
         Data.Instance.INVENTORY.Add(Data.BAT, 10);
-        Data.Instance.INVENTORY.Add(Data.ZOMBIE, 5);
-        Data.Instance.INVENTORY.Add(Data.GHOST, 5);
-        Data.Instance.INVENTORY.Add(Data.CLOWN, 5);
-        Data.Instance.INVENTORY.Add(Data.VAMPIRE, 5);
-        Data.Instance.INVENTORY.Add(Data.WITCH, 5);
-        Data.Instance.INVENTORY.Add(Data.REAPER, 1);*/
+        Data.Instance.INVENTORY.Add(Data.ZOMBIE, 10);
+        Data.Instance.INVENTORY.Add(Data.GHOST, 10);
+        Data.Instance.INVENTORY.Add(Data.CLOWN, 10);
+        Data.Instance.INVENTORY.Add(Data.VAMPIRE, 10);
+        Data.Instance.INVENTORY.Add(Data.WITCH, 10);
+        //Data.Instance.INVENTORY.Add(Data.REAPER, 1);
     }
 
     public void buildConstructions()
@@ -875,6 +940,8 @@ public class GameManager : MonoBehaviour
         if (numMonsters > 0)
         {
             SaveManager.Instance.Save();
+            audioSource.clip = pumpkinLaugh;
+            audioSource.Play();
             loadingScreen.SetActive(true);
             Invoke("load", 3f);
         }

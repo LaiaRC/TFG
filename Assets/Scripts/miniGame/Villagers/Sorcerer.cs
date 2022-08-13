@@ -187,6 +187,9 @@ public class Sorcerer : Villager
                         attackTime += Time.deltaTime;
                         if (attackTime >= attackRate)
                         {
+                            audioSourceAux.clip = sounds[ATTACK];
+                            audioSourceAux.Play();
+
                             //play attack animation
                             if (!wasMovingRight)
                             {
@@ -272,6 +275,9 @@ public class Sorcerer : Villager
 
     public void teleport()
     {
+        audioSourceAux.clip = sounds[TELEPORT];
+        audioSourceAux.Play();
+
         teleportRange.gameObject.SetActive(false);
 
         List<GameObject> villagers = getVillagers();

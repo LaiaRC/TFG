@@ -370,7 +370,7 @@ public class SummoningCircle : Building
                     //Hide timeBar
                     timeBarGroup.SetActive(false);
                 }
-                levelImage.sprite = numbersIcons[monsterInfo.level[monsterInfo.upgradeLevel - 1] - 1];
+                levelImage.sprite = numbersIcons[monsterInfo.upgradeLevel - 1];
                 description.text = monsterInfo.description;
 
                 if (monsterInfo.isUnlocked)
@@ -427,16 +427,9 @@ public class SummoningCircle : Building
                 {
                     string aux = "";
 
-                    //Level
-                    if (monsterInfo.level[monsterInfo.upgradeLevel - 1] != monsterInfo.level[monsterInfo.upgradeLevel])
-                    {
-                        aux = "Level: " + monsterInfo.level[monsterInfo.upgradeLevel - 1] + " >> " + monsterInfo.level[monsterInfo.upgradeLevel];
-                    }
-                    else
-                    {
-                        aux = "Level: " + monsterInfo.level[monsterInfo.upgradeLevel - 1];
-                    }
-
+                    //Level                    
+                    aux = "Level: " + monsterInfo.upgradeLevel + " >> " + (monsterInfo.upgradeLevel + 1).ToString();
+                    
                     //Velocity
                     if (monsterInfo.velocity[monsterInfo.upgradeLevel - 1] != monsterInfo.velocity[monsterInfo.upgradeLevel])
                     {
@@ -495,7 +488,7 @@ public class SummoningCircle : Building
                 else
                 {
                     //don't show >>
-                    statsTextColumn1.text = "Level: " + monsterInfo.level[monsterInfo.upgradeLevel - 1] + "\nVelocity: " + monsterInfo.velocity[monsterInfo.upgradeLevel - 1] + "\nHealth: " + monsterInfo.health[monsterInfo.upgradeLevel - 1];
+                    statsTextColumn1.text = "Level: " + monsterInfo.upgradeLevel + "\nVelocity: " + monsterInfo.velocity[monsterInfo.upgradeLevel - 1] + "\nHealth: " + monsterInfo.health[monsterInfo.upgradeLevel - 1];
                     statsTextColumn2.text = "Damage: " + monsterInfo.damage[monsterInfo.upgradeLevel - 1] + "\nAttack rate: " + monsterInfo.attackRate[monsterInfo.upgradeLevel - 1] + "\nRange: " + monsterInfo.attackRange[monsterInfo.upgradeLevel - 1];
                 }
 

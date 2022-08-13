@@ -11163,7 +11163,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Villagers affected by monster:'
+  m_text: 'Lower or equal level villagers:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 61643bf50a076654db7cc48b83088443, type: 2}
   m_sharedMaterial: {fileID: -1408573379100043128, guid: 61643bf50a076654db7cc48b83088443, type: 2}

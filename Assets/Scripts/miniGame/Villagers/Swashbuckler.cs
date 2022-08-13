@@ -161,6 +161,9 @@ public class Swashbuckler : Villager
                         attackTime += Time.deltaTime;
                         if (attackTime >= attackRate)
                         {
+                            audioSourceAux.clip = sounds[ATTACK];
+                            audioSourceAux.Play();
+
                             //play attack animation
                             if (!wasMovingRight)
                             {

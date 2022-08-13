@@ -287,7 +287,7 @@ public class ShopItemHolder : MonoBehaviour
 
     public void callDescriptionDialog()
     {
-        GameManager.Instance.fillDescriptionDialog(Item.name, Item.description, Item.icon, Item.produces1, Item.produces2, Item.produces3);
+        GameManager.Instance.fillDescriptionDialog(Item.name, Item.description, Item.icon, Item.produces1, Item.produces2, Item.produces3, Item.typeConstruction);
         GameManager.Instance.showDescriptionDialog();
     }
 }

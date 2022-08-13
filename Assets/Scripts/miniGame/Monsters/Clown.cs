@@ -11,6 +11,7 @@ public class Clown : Monster
     protected float time;
     protected List<GameObject> affectedVillagers = new List<GameObject>();
     protected bool isOnList = false;
+    protected bool hasActivated = false;
 
     // Start is called before the first frame update
     private void Start()
@@ -92,8 +93,7 @@ public class Clown : Monster
             }
         }
         affectedVillagers.Clear();
-        /*Instantiate(deathParticles, transform.position, Quaternion.identity);
-        Instantiate(deathSound, transform.position, Quaternion.identity);*/
+        Instantiate(deathSound, transform.position, Quaternion.identity);
         Destroy(healthBar.gameObject);
         Destroy(this.gameObject);
     }
@@ -102,6 +102,13 @@ public class Clown : Monster
     {
         if (checkVillagersInRange())
         {
+            if (!hasActivated)
+            {
+                //laugh
+                audioSource.clip = sounds[LAUGH];
+                audioSource.Play();
+                hasActivated = true;
+            }
             isStunning = true;
             List<GameObject> villagers = getVillagersInRange();
             numAffectedVillagers = villagers.Count;

@@ -26,8 +26,6 @@ public abstract class Monster : MonoBehaviour
     protected int currentFlag = 0;
     public Animator animator;
     public GameObject tomb;
-    public GameObject deathParticles;
-    public GameObject spawnParticles;
     public GameObject deathSound;
     public AudioSource audioSource;
     public AudioSource audioSourceAux; //Perque sonin 2 a la vegada i no es talli si ha començat
@@ -44,12 +42,11 @@ public abstract class Monster : MonoBehaviour
     protected bool hasDied = false;
 
     //Variables x els sons de l'array sounds
-    protected static int ATTACK = 0;
-
-    protected static int DEFAULT = 1;
-    protected static int SPAWN = 2;
-    protected static int TAKE_DAMAGE = 3;
-    protected static int WALK = 4;
+    protected static int SPAWN = 0;
+    protected static int DIE = 1;
+    protected static int TAKE_DAMAGE = 2;
+    protected static int ATTACK = 3;
+    protected static int LAUGH = 2;
 
     protected static float SCARE_DISTANCE = 2f;
 
@@ -62,8 +59,9 @@ public abstract class Monster : MonoBehaviour
     public virtual void die()
     {
         //Instantiate tomb
-        /*Instantiate(deathParticles, transform.position, Quaternion.identity);
-        Instantiate(deathSound, transform.position, Quaternion.identity);*/
+        /*Instantiate(deathParticles, transform.position, Quaternion.identity);*/
+        Instantiate(deathSound, transform.position, Quaternion.identity);
+
         miniGameManager.Instance.numMonstersDied++;
         Destroy(healthBar.gameObject);
         GameObject g = Instantiate(tomb, transform.position, Quaternion.identity);
@@ -130,6 +128,10 @@ public abstract class Monster : MonoBehaviour
 
     public void takeDamage(int damage)
     {
+        //sound
+        audioSource.clip = sounds[TAKE_DAMAGE];
+        audioSource.Play();
+
         health -= damage;
         healthBar.setValue(health);
 
@@ -195,6 +197,10 @@ public abstract class Monster : MonoBehaviour
                     attackTime += Time.deltaTime;
                     if (attackTime >= attackRate)
                     {
+                        //audio
+                        audioSourceAux.clip = sounds[ATTACK];
+                        audioSourceAux.Play();
+
                         isAttacking = true;
 
                         //Get anim position

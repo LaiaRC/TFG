@@ -16,6 +16,7 @@ public class ShieldMan : Villager
 
     public bool wasMovingRight = false;
     public bool isMovingRight = false;
+    protected bool hasBlockedAudio = false;
 
     // Start is called before the first frame update
     private void Start()
@@ -182,6 +183,9 @@ public class ShieldMan : Villager
                         attackTime += Time.deltaTime;
                         if (attackTime >= attackRate)
                         {
+                            audioSourceAux.clip = sounds[ATTACK];
+                            audioSourceAux.Play();
+
                             //play attack animation
                             if (!wasMovingRight)
                             {
@@ -218,6 +222,13 @@ public class ShieldMan : Villager
 
     public void block()
     {
+        if (!hasBlockedAudio)
+        {
+            audioSource.clip = sounds[BLOCK];
+            audioSource.Play();
+            hasBlockedAudio = true;
+        }
+
         isBlocking = true;
         agent.speed = 0;
         isRunning = false;
@@ -240,6 +251,7 @@ public class ShieldMan : Villager
         }
         collider.radius = 0.5f;
         Invoke("enableAgent", 0.5f);
+        hasBlockedAudio = false;
     }
 
     public void enableAgent()

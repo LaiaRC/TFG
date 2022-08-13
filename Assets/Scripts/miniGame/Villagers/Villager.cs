@@ -33,8 +33,7 @@ public class Villager : MonoBehaviour
     public AudioSource audioSourceAux;
     public AudioClip[] sounds;
     public HealthBar scareBar;
-    public GameObject deathParticles;
-    public GameObject spawnParticles;
+    public GameObject deathSound;
     public Color fillColor;
     public Color backgroundColor;
 
@@ -51,13 +50,11 @@ public class Villager : MonoBehaviour
     protected int currentWaypointIndex;
 
     //Variables x els sons de l'array sounds
-    protected static int ATTACK = 0;
-
-    protected static int DEFAULT = 1;
-    protected static int SPAWN = 2;
-    protected static int TAKE_SCARE = 3;
-    protected static int DIE = 4;
-    protected static int WALK = 5;
+    protected static int TAKE_SCARE = 0;
+    protected static int DIE = 1;
+    protected static int ATTACK = 2;
+    protected static int TELEPORT = 3;
+    protected static int BLOCK = 3;
 
     //Variables x les animacions
     protected static string DIE_ANIM = "die";
@@ -76,6 +73,9 @@ public class Villager : MonoBehaviour
 
     public void die()
     {
+        audioSource.clip = sounds[DIE];
+        audioSource.Play();
+
         //Add drop to dictionary
         if (miniGameManager.Instance.DROPS.TryGetValue(drop.name, out Drop dropClass))
         {
@@ -95,9 +95,6 @@ public class Villager : MonoBehaviour
             miniGameManager.Instance.DROPS.Add(drop.name, newDrop);
         }
 
-        audioSource.clip = sounds[DIE];
-        audioSource.Play();
-        //Instantiate(deathParticles, transform.position, Quaternion.identity);
         GameObject deathParticles = miniGameManager.Instance.poolParticle(miniGameManager.VILLAGER_DEATH_PARTICLES, transform.position);
         changeAnimationState(DIE_ANIM);
         scareBar.setValue(0);
@@ -116,9 +113,6 @@ public class Villager : MonoBehaviour
     public void spawn()
     {
         canvas = GameObject.Find("Canvas").GetComponent<RectTransform>();
-        audioSource.clip = sounds[SPAWN];
-        audioSource.Play();
-        Instantiate(spawnParticles, transform.position, Quaternion.identity);
         canMove = true;
         isRunning = false;
         isScared = false;
@@ -209,6 +203,10 @@ public class Villager : MonoBehaviour
 
     public void takeScare(int scareValue)
     {
+        //audio
+        audioSource.clip = sounds[TAKE_SCARE];
+        audioSource.Play();
+
         currentScarePoints += scareValue;
         scareBar.setValue(currentScarePoints);
         isScared = true;

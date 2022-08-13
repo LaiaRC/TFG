@@ -45,13 +45,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Well
   id: well
-  description: idk
+  description: You can't imagine what people throw at the bottom of the well. At
+    this point, you could find whatever you wanted here. Too bad there aren't any
+    coins!
   resourceText1: 50
   resourceText2: 500
   resource1Icon: {fileID: 21300000, guid: bbb33cd0fe171094c8831757a8ceaae0, type: 3}
   resource2Icon: {fileID: 21300000, guid: d22a524154e65514d9f0c1c7977b8164, type: 3}
   maxQuantity: 1
   type: 0
+  typeConstruction: producer
   icon: {fileID: 21300000, guid: 81f2cf74b6dcb0343aa4aa8350a2d587, type: 3}
   prefab: {fileID: 2000697655669412042, guid: f5e3407a0ab66e24fb547da65f10e557, type: 3}
   produces1: {fileID: 21300000, guid: 81f2cf74b6dcb0343aa4aa8350a2d587, type: 3}

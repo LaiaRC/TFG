@@ -45,13 +45,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Vegetable Patch
   id: vegetablePatch
-  description: idk
+  description: 'Harvest plants and vegetables here '
   resourceText1: 10
   resourceText2: 10
   resource1Icon: {fileID: 21300000, guid: d2dfe95cd9742dc4badff7f0cecea6bc, type: 3}
   resource2Icon: {fileID: 21300000, guid: f3b77c3f639aa7847ade1511384e628c, type: 3}
   maxQuantity: 1
   type: 0
+  typeConstruction: producer
   icon: {fileID: 21300000, guid: 40042d2855ecfd540a420a83915ac3a6, type: 3}
   prefab: {fileID: 2000697655669412042, guid: 59b0e7ff66b249b47b34458b51f20f03, type: 3}
   produces1: {fileID: 21300000, guid: 110a77338cdab84449c9a16410ba4773, type: 3}

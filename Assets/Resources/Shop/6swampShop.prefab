@@ -45,13 +45,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Swamp
   id: swamp
-  description: idk
+  description: The smell here is so refreshing! It just makes you want to dive in
+    the swamp water...and never come back again.
   resourceText1: 100
   resourceText2: 250
   resource1Icon: {fileID: 21300000, guid: df172fef2538f024e80a127b749d1438, type: 3}
   resource2Icon: {fileID: 21300000, guid: 40042d2855ecfd540a420a83915ac3a6, type: 3}
   maxQuantity: 1
   type: 0
+  typeConstruction: producer
   icon: {fileID: 21300000, guid: 506f4cc2a30959a45bbc71c27dffa291, type: 3}
   prefab: {fileID: 2000697655669412042, guid: c61c3ebf58ebdeb429ad4fb7759a7394, type: 3}
   produces1: {fileID: 21300000, guid: 4610e5b9c2e3902458c05c481dce2611, type: 3}

@@ -45,13 +45,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Hell Island
   id: hellIsland
-  description: idk
+  description: There's nothing like bringing a piece of hell to warm up the cold
+    autumn weather!
   resourceText1: 400
   resourceText2: 1500
   resource1Icon: {fileID: 21300000, guid: c311d646f5e2b3e4aad3e507779ef5d7, type: 3}
   resource2Icon: {fileID: 21300000, guid: 40042d2855ecfd540a420a83915ac3a6, type: 3}
   maxQuantity: 1
   type: 0
+  typeConstruction: converter
   icon: {fileID: 21300000, guid: 30d71196dd4dcc24a9d4f3f9194a789f, type: 3}
   prefab: {fileID: 2000697655669412042, guid: 88162b9693913f644b06e103976c6796, type: 3}
   produces1: {fileID: 21300000, guid: 73faf512420d6ce45942df1929df15e9, type: 3}
