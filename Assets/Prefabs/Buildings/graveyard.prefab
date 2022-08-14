@@ -1448,16 +1448,16 @@ MonoBehaviour:
     m_Size: {x: 0, y: 0, z: 0}
   placed: 0
   area:
-    m_Position: {x: -11, y: -1, z: 0}
+    m_Position: {x: -4, y: 4, z: 0}
     m_Size: {x: 28, y: 14, z: 1}
   confirmUI: {fileID: 1688311054014621016}
   audioSource: {fileID: -6422903224428636984}
   sounds:
   - {fileID: 8300000, guid: c85f3365eb4929f4eb023b8fb7dc168a, type: 3}
-  - {fileID: 8300000, guid: 86897b9ca7cbfb2458d78f9246012fbe, type: 3}
+  - {fileID: 8300000, guid: 54cb51dc03cac3b4398c6e6c6b16be3e, type: 3}
   - {fileID: 8300000, guid: 4d5b5259590d8bd43bb56d6a8ddda583, type: 3}
   - {fileID: 8300000, guid: 0bc769a32f0953649a046605c76b0704, type: 3}
-  - {fileID: 8300000, guid: a783f8f47549d674980a1df4e86b06d7, type: 3}
+  - {fileID: 8300000, guid: 3ddaf1818785f554490cb4390bf1f501, type: 3}
   - {fileID: 8300000, guid: cc248b74d112ef445bf3855ebb55ae4b, type: 3}
   - {fileID: 8300000, guid: 86897b9ca7cbfb2458d78f9246012fbe, type: 3}
   cancelSound: {fileID: 7790940365482012250, guid: b797f12ac8e193c47a4728f7caf870fa, type: 3}
@@ -1502,8 +1502,8 @@ MonoBehaviour:
   requirement1Text: {fileID: 0}
   requirement2Text: {fileID: 0}
   extraNumResources: 0
-  isProducer: 1
-  isConverter: 0
+  isProducer: 0
+  isConverter: 1
   numResources: {fileID: 0}
   activeResource: bone
   timeLeft: 0
@@ -3913,7 +3913,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &146131272683574497
 Transform:
   m_ObjectHideFlags: 0
@@ -10370,7 +10370,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7500240430325155212
 Transform:
   m_ObjectHideFlags: 0

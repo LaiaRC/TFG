@@ -53,7 +53,7 @@ MonoBehaviour:
   maxQuantity: 3
   type: 1
   typeConstruction: decorationBoost
-  icon: {fileID: -4227435001158437254, guid: 0bc56a67443d46440baa586da6a0804e, type: 3}
+  icon: {fileID: 21300000, guid: 5405c71db4a40914aa81a0b94b5578e6, type: 3}
   prefab: {fileID: 7407920909547853337, guid: ee2ce455dd746b649be2cd2a800c0938, type: 3}
   produces1: {fileID: 21300000, guid: ec11db212ab94ff4d883b1de0d3751ea, type: 3}
   produces2: {fileID: 21300000, guid: f3b77c3f639aa7847ade1511384e628c, type: 3}

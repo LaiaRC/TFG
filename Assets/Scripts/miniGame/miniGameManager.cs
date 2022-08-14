@@ -107,6 +107,8 @@ public class miniGameManager : MonoBehaviour
     public GameObject villagerDeathParticles;
     public GameObject scareProjectile;
 
+    private Button buttonSelected;
+
     //Game variables
     public float MINIGAME_MAX_TIME = 10f; //in seconds
 
@@ -770,6 +772,25 @@ public class miniGameManager : MonoBehaviour
                                     if (UNITS_MONSTERS[monsterName] == 0)
                                     {
                                         cardsGroup.transform.GetChild(i).transform.Find("Icon").GetComponent<Image>().color = new Color32(255, 255, 255, 150);
+
+                                        //deselect card
+                                        selectedCard = NONE;
+                                        outsideSpawnIndicator.SetActive(false);
+                                        insideSpawnIndicator.SetActive(false);
+                                        sewerSpawnIndicator.SetActive(false);
+                                        foreach (GameObject s in tombs)
+                                        {
+                                            s.SetActive(false);
+                                        }
+
+                                        //reset touch position
+                                        touchPosWorld = Vector3.zero;
+
+                                        if (buttonSelected != null)
+                                        {
+                                            buttonSelected.GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                                            buttonSelected.transform.Find("NumPanel").GetComponent<Image>().color = new Color(1, 1, 1, 1);
+                                        }
                                     }
                                 }
                             }                            
@@ -805,6 +826,7 @@ public class miniGameManager : MonoBehaviour
 
     public void toggleSelectedCard(Button cardSelected)
     {
+        buttonSelected = cardSelected;
         if (selectedCard == cardSelected.name)
         {
             //check if quantity is 0

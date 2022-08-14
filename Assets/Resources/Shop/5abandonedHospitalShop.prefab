@@ -53,7 +53,7 @@ MonoBehaviour:
   resource2Icon: {fileID: 21300000, guid: 110a77338cdab84449c9a16410ba4773, type: 3}
   maxQuantity: 1
   type: 0
-  typeConstruction: producer
+  typeConstruction: converter
   icon: {fileID: 21300000, guid: 1e4b9ae3db86c3144bfc86cb88ec1c8d, type: 3}
   prefab: {fileID: 2000697655669412042, guid: 4ba091b04e7d06649be5fa2f0d0e326b, type: 3}
   produces1: {fileID: 21300000, guid: 1e4b9ae3db86c3144bfc86cb88ec1c8d, type: 3}

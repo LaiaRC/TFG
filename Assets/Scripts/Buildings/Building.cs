@@ -446,6 +446,11 @@ public class Building : Construction
                             enoughResource = true;                            
                         }
                     }
+                    else
+                    {
+                        audioSource.clip = sounds[ERROR];
+                        audioSource.Play();
+                    }
                     //Et falta algun resource!
                     if (!enoughResource) return;
                 }

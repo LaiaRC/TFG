@@ -89,6 +89,8 @@ public class SaveManager : MonoBehaviour
                 oldValue[GameManager.ACTIVE_RESOURCE_TIME] = construction.GetComponent<Building>().activeResourceTime;
                 oldValue[GameManager.IS_PRODUCER] = construction.GetComponent<Building>().isProducer;
                 oldValue[GameManager.IS_CONVERTER] = construction.GetComponent<Building>().isConverter;
+
+                //Debug.Log("SM - " + construction.GetComponent<Construction>().construction_name + " - time left - " + oldValue[GameManager.TIME_LEFT]);
             }
             /*Debug.Log(oldValue[GameManager.POS_X]);
             Debug.Log(oldValue[GameManager.POS_Y]);

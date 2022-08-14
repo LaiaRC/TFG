@@ -968,6 +968,56 @@ public class SummoningCircle : Building
         }
     }
 
+    public void setTabIndex(string selectedMonster) //Used in buildConstructions in GM
+    {
+        #region SET TAB INDEX
+
+        switch (selectedMonster)
+        {
+            case "skeleton":
+                selectedTabIndex = SKELETON_INDEX;
+                break;
+
+            case "jackOLantern":
+                selectedTabIndex = JACK_LANTERN_INDEX;
+                break;
+
+            case "bat":
+                selectedTabIndex = BAT_INDEX;
+                break;
+
+            case "zombie":
+                selectedTabIndex = ZOMBIE_INDEX;
+                break;
+
+            case "vampire":
+                selectedTabIndex = VAMPIRE_INDEX;
+                break;
+
+            case "clown":
+                selectedTabIndex = CLOWN_INDEX;
+                break;
+
+            case "ghost":
+                selectedTabIndex = GHOST_INDEX;
+                break;
+
+            case "goblin":
+                selectedTabIndex = GOBLIN_INDEX;
+                break;
+
+            case "witch":
+                selectedTabIndex = WITCH_INDEX;
+                break;
+
+            case "reaper":
+                selectedTabIndex = REAPER_INDEX;
+                break;
+        }
+
+        #endregion SET TAB INDEX
+    }
+
     public void showInfoGroup()
     {
         infoGroup.SetActive(true);

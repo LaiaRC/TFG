@@ -9,12 +9,13 @@ public class FakeProducer : MonoBehaviour
     public float activeResourceTime;
     public bool isProducing;
     public bool isPaused;
-    public float time;
+    public float time = 0;
     public float timeLeft;
     public int isProducer;
     public int isConverter;
     public int isSummoningCircle;
 
+    public bool showDebug = false;
     private bool enoughResources = false;
 
     private void Awake()
@@ -35,6 +36,11 @@ public class FakeProducer : MonoBehaviour
         {
             time += Time.deltaTime;
             timeLeft = activeResourceTime - time;
+            /*if (isSummoningCircle == 1 && showDebug)
+            {
+                Debug.Log("SC time left - " + timeLeft);
+                showDebug = false;
+            }*/
             if (timeLeft <= 0)
             {
                 if (isSummoningCircle == 1)

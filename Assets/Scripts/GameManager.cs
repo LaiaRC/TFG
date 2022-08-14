@@ -692,16 +692,16 @@ public class GameManager : MonoBehaviour
             Data.Instance.INVENTORY.Add(resource.Key, 10000);
         }
 
-        /*Data.Instance.INVENTORY.Add(Data.SKELETON, 10);
+        Data.Instance.INVENTORY.Add(Data.SKELETON, 10);
         Data.Instance.INVENTORY.Add(Data.JACK_LANTERN, 10);
         Data.Instance.INVENTORY.Add(Data.GOBLIN, 10);
         Data.Instance.INVENTORY.Add(Data.BAT, 10);
-        Data.Instance.INVENTORY.Add(Data.ZOMBIE, 10);
+        /*Data.Instance.INVENTORY.Add(Data.ZOMBIE, 10);
         Data.Instance.INVENTORY.Add(Data.GHOST, 10);
         Data.Instance.INVENTORY.Add(Data.CLOWN, 10);
         Data.Instance.INVENTORY.Add(Data.VAMPIRE, 10);
         Data.Instance.INVENTORY.Add(Data.WITCH, 10);*/
-        Data.Instance.INVENTORY.Add(Data.REAPER, 1);
+        //Data.Instance.INVENTORY.Add(Data.REAPER, 1);
     }
 
     public void buildConstructions()
@@ -762,10 +762,16 @@ public class GameManager : MonoBehaviour
                             temp.time = construction.Value[ACTIVE_RESOURCE_TIME] - construction.Value[TIME_LEFT];
                             temp.timeLeft = construction.Value[TIME_LEFT];
 
+                            //Debug.Log("GM - " + buildings[i].GetComponent<Construction>().construction_name + " time left - " + temp.timeLeft);
+
                             temp.numType = (int)construction.Value[NUM_TYPE];
                             temp.activeResourceTime = construction.Value[ACTIVE_RESOURCE_TIME];
                             temp.activeMonsterTime = construction.Value[ACTIVE_RESOURCE_TIME];
-                            temp.setSelectedTab(temp.activeMonster);
+                            //temp.setSelectedTab(temp.activeMonster); -> to avoid sound
+
+                            temp.selectedTab = temp.activeMonster;
+                            temp.setTabIndex(temp.selectedTab);
+
                             temp.setUI(temp.activeMonster);
                             Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(constructionPosition);
                             BoundsInt areaTemp = temp.area;
@@ -800,6 +806,7 @@ public class GameManager : MonoBehaviour
                             //set building values
                             temp.level = (int)construction.Value[LEVEL];
                             temp.placed = true;
+                            temp.confirmUI.SetActive(false); //just in case (it has already been confirmed)
 
                             temp.activeResource = temp.resources[(int)construction.Value[ACTIVE_RESOURCE]];
                             if (construction.Value[PRODUCING] == 0)
@@ -827,6 +834,8 @@ public class GameManager : MonoBehaviour
 
                             temp.time = construction.Value[ACTIVE_RESOURCE_TIME] - construction.Value[TIME_LEFT];
                             temp.timeLeft = construction.Value[TIME_LEFT];
+                            //Debug.Log("GM - " + buildings[i].GetComponent<Construction>().construction_name + " time left - " + temp.timeLeft);
+
 
                             temp.numType = (int)construction.Value[NUM_TYPE];
                             temp.activeResourceTime = construction.Value[ACTIVE_RESOURCE_TIME];

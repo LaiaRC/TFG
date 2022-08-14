@@ -14,7 +14,7 @@ public class Construction : MonoBehaviour
 
     public Vector3 position;
     public BoundsInt tempArea;
-    public bool placed;
+    public bool placed = false;
     public BoundsInt area;
     public GameObject confirmUI;
     protected Vector3 origin;
