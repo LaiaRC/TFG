@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
                         GameManager.Instance.closeShop();
                     }
                 }
-                else if (touchedObject.tag.Equals("portal"))
+                else if (touchedObject.tag.Equals("portal") && !dragged && !GameManager.Instance.isOnCanvas)
                 {
                     GameManager.Instance.showPortalDialog();
                 }

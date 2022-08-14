@@ -14,7 +14,7 @@ public class CamaraControl : MonoBehaviour
     public float maxY = 20;
 
     private Vector3 initialPos;
-    private bool isFirstTouch = false;
+    public bool isFirstTouch = false;
     private bool isFirstTouchZoom = false;
     private bool isTwoFingered = false;
 
@@ -45,7 +45,6 @@ public class CamaraControl : MonoBehaviour
                         touchStart = Camera.main.ScreenToWorldPoint(touch.position);
                         isFirstTouch = false;
                     }
-
 
                     Vector3 direction = touchStart - Camera.main.ScreenToWorldPoint(touch.position);
                     Camera.main.transform.position += direction;

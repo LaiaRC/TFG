@@ -260,6 +260,7 @@ public class GameManager : MonoBehaviour
             isOnBuildingMode = false;
             Invoke("hideShop", 0.4f);
             isShopOpeningOrClosing = true;
+            draggingFromShop = false;
         }
         else if (!isShopOpeningOrClosing)
         {
@@ -339,6 +340,7 @@ public class GameManager : MonoBehaviour
         canvas.GetComponent<Transform>().Find("BlackPanel").gameObject.SetActive(false);
         canvas.GetComponent<Transform>().Find("UIBlock").gameObject.SetActive(true);
         Invoke("setDialogOpen", 0.05f);
+        mainCamera.gameObject.GetComponent<CamaraControl>().isFirstTouch = true; //reset first touch
     }
 
     public void showOfflineDialog()
@@ -361,6 +363,7 @@ public class GameManager : MonoBehaviour
         canvas.GetComponent<Transform>().Find("BlackPanel").gameObject.SetActive(false);
         canvas.GetComponent<Transform>().Find("UIBlock").gameObject.SetActive(true);
         Invoke("setDialogOpen", 0.05f);
+        mainCamera.gameObject.GetComponent<CamaraControl>().isFirstTouch = true; //reset first touch
     }
 
     public void showInventoryDialog()
@@ -386,11 +389,13 @@ public class GameManager : MonoBehaviour
         canvas.GetComponent<Transform>().Find("BlackPanel").gameObject.SetActive(false);
         canvas.GetComponent<Transform>().Find("UIBlock").gameObject.SetActive(true);
         Invoke("setDialogOpen", 0.05f);
+
+        mainCamera.gameObject.GetComponent<CamaraControl>().isFirstTouch = true; //reset first touch
     }
 
     public void showPortalDialog()
     {
-        if (!isOnCanvas)
+        if (!isOnCanvas && !isDialogOpen)
         {
             audioSource.clip = sounds[DEFAULT];
             audioSource.Play();
@@ -421,6 +426,7 @@ public class GameManager : MonoBehaviour
             canvas.GetComponent<Transform>().Find("BlackPanel").gameObject.SetActive(true);
             portalDialog.SetActive(true);
             canvas.GetComponent<Transform>().Find("UIBlock").gameObject.SetActive(false);
+            GameManager.Instance.isOnCanvas = true;
         }
     }
 
@@ -433,6 +439,7 @@ public class GameManager : MonoBehaviour
         canvas.GetComponent<Transform>().Find("BlackPanel").gameObject.SetActive(false);
         canvas.GetComponent<Transform>().Find("UIBlock").gameObject.SetActive(true);
         Invoke("setDialogOpen", 0.05f);
+        mainCamera.gameObject.GetComponent<CamaraControl>().isFirstTouch = true; //reset first touch
     }
 
     public void setDialogOpen()
@@ -1683,6 +1690,8 @@ public class GameManager : MonoBehaviour
         canvas.GetComponent<Transform>().Find("BlackPanel").gameObject.SetActive(false);
         canvas.GetComponent<Transform>().Find("UIBlock").gameObject.SetActive(true);
         Invoke("setDialogOpen", 0.05f);
+
+        mainCamera.gameObject.GetComponent<CamaraControl>().isFirstTouch = true; //reset first touch
     }
 
     public string numToString(int num)
