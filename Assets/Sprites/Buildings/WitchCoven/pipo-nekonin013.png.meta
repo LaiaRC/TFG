@@ -1,0 +1,540 @@
+fileFormatVersion: 2
+guid: 7d444bf609466c049b77209c05744a2f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5111547416642693944
+    second: pipo-nekonin013_0
+  - first:
+      213: -3842349112851974538
+    second: pipo-nekonin013_1
+  - first:
+      213: -8628204728678897275
+    second: pipo-nekonin013_2
+  - first:
+      213: 5960762864136035899
+    second: pipo-nekonin013_3
+  - first:
+      213: -5495153838962734483
+    second: pipo-nekonin013_4
+  - first:
+      213: -2817885721529566731
+    second: pipo-nekonin013_5
+  - first:
+      213: -3117069008801169157
+    second: pipo-nekonin013_6
+  - first:
+      213: -6006617285996021583
+    second: pipo-nekonin013_7
+  - first:
+      213: 5014072907001230405
+    second: pipo-nekonin013_8
+  - first:
+      213: 7836171157051243250
+    second: pipo-nekonin013_9
+  - first:
+      213: -2052413555027439901
+    second: pipo-nekonin013_10
+  - first:
+      213: -8913404095851125498
+    second: pipo-nekonin013_11
+  - first:
+      213: 7589156094531993634
+    second: pipo-nekonin013_12
+  - first:
+      213: -6507694562769229633
+    second: pipo-nekonin013_13
+  - first:
+      213: 2191774483369581758
+    second: pipo-nekonin013_14
+  - first:
+      213: -4052924203906358943
+    second: pipo-nekonin013_15
+  - first:
+      213: 3713337217729080873
+    second: pipo-nekonin013_16
+  - first:
+      213: -2339731712744568987
+    second: pipo-nekonin013_17
+  - first:
+      213: 6689785342182530923
+    second: pipo-nekonin013_18
+  - first:
+      213: 808526868552236141
+    second: pipo-nekonin013_19
+  - first:
+      213: -2041696792352704739
+    second: pipo-nekonin013_20
+  - first:
+      213: -7694389533866635247
+    second: pipo-nekonin013_21
+  - first:
+      213: 2316317667905110854
+    second: pipo-nekonin013_22
+  - first:
+      213: 2914454092632463356
+    second: pipo-nekonin013_23
+  - first:
+      213: -4329380191629179747
+    second: pipo-nekonin013_24
+  - first:
+      213: 6086573806008099413
+    second: pipo-nekonin013_25
+  - first:
+      213: 443759208564332819
+    second: pipo-nekonin013_26
+  - first:
+      213: 6746440173317599052
+    second: pipo-nekonin013_27
+  - first:
+      213: 2983786278049519539
+    second: pipo-nekonin013_28
+  - first:
+      213: 7922740793684346789
+    second: pipo-nekonin013_29
+  - first:
+      213: 1538685112665870083
+    second: pipo-nekonin013_30
+  - first:
+      213: 9158350799947898305
+    second: pipo-nekonin013_31
+  - first:
+      213: -7126366797240734155
+    second: pipo-nekonin013_32
+  - first:
+      213: 4849661791169970423
+    second: pipo-nekonin013_33
+  - first:
+      213: 6060174915889062078
+    second: pipo-nekonin013_34
+  - first:
+      213: 3041098902983096234
+    second: pipo-nekonin013_35
+  - first:
+      213: 7169504927081642949
+    second: pipo-nekonin013_36
+  - first:
+      213: 2003149639606905825
+    second: pipo-nekonin013_37
+  - first:
+      213: -2507791982776303389
+    second: pipo-nekonin013_38
+  - first:
+      213: -7404878329393154109
+    second: pipo-nekonin013_39
+  - first:
+      213: -6620763484632003449
+    second: pipo-nekonin013_40
+  - first:
+      213: -876266210630781558
+    second: pipo-nekonin013_41
+  - first:
+      213: 4410828542319482890
+    second: pipo-nekonin013_42
+  - first:
+      213: -2646204267691342700
+    second: pipo-nekonin013_43
+  - first:
+      213: -932198581520764880
+    second: pipo-nekonin013_44
+  - first:
+      213: 7007261449564761706
+    second: pipo-nekonin013_45
+  - first:
+      213: 2107659435093315998
+    second: pipo-nekonin013_46
+  - first:
+      213: -5688482537671244569
+    second: pipo-nekonin013_47
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: tvOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: pipo-nekonin013_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83bad851b4ddfe640800000000000000
+      internalID: 5111547416642693944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pipo-nekonin013_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 676bb69e6db3daac0800000000000000
+      internalID: -3842349112851974538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pipo-nekonin013_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 589afb17385724880800000000000000
+      internalID: -8628204728678897275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pipo-nekonin013_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3e1b235e32e8b250800000000000000
+      internalID: 5960762864136035899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pipo-nekonin013_4
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6a8082b2ba4db3b0800000000000000
+      internalID: -5495153838962734483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pipo-nekonin013_5
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f9b596bddbd4e8d0800000000000000
+      internalID: -2817885721529566731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pipo-nekonin013_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf0070e5042fdb4d0800000000000000
+      internalID: -3117069008801169157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pipo-nekonin013_7
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b87c7e176534aca0800000000000000
+      internalID: -6006617285996021583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pipo-nekonin013_8
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 544f7b34eb0959540800000000000000
+      internalID: 5014072907001230405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pipo-nekonin013_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fa7337462cafbc60800000000000000
+      internalID: 7836171157051243250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pipo-nekonin013_10
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ee8460febc5483e0800000000000000
+      internalID: -2052413555027439901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pipo-nekonin013_11
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6052847333a3d4480800000000000000
+      internalID: -8913404095851125498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
