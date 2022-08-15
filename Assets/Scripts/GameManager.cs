@@ -739,6 +739,7 @@ public class GameManager : MonoBehaviour
                             hidenMonsterIndex = (int)construction.Value[LEVEL];
                             hidenMonster = temp.getHiddenMonster(hidenMonsterIndex);
                             temp.placed = true;
+                            temp.confirmUI.SetActive(false); //just in case (it has already been confirmed)
 
                             temp.activeMonster = temp.getStringMonster((int)construction.Value[ACTIVE_RESOURCE]);
                             if (construction.Value[PRODUCING] == 0)
@@ -802,7 +803,8 @@ public class GameManager : MonoBehaviour
                             BoundsInt areaTemp = temp.area;
                             areaTemp.position = positionInt;
                             GridBuildingSystem.current.takeArea(areaTemp);
-
+                            temp.placed = true;
+                            temp.confirmUI.SetActive(false); //just in case (it has already been confirmed)
                             #endregion DECORATION BOOST
                         }
                         else
