@@ -190,9 +190,13 @@ public class OfflineCalculator : MonoBehaviour
                     aux.time = buildingInfo.Value[Data.ACTIVE_RESOURCE_TIME] - buildingInfo.Value[Data.TIME_LEFT];
                 }
 
+                //check time left is not negative
+                if(buildingInfo.Value[Data.TIME_LEFT] < 0)
+                {
+                    buildingInfo.Value[Data.TIME_LEFT] = 0;
+                }
+
                 aux.timeLeft = buildingInfo.Value[Data.TIME_LEFT];
-                //Debug.Log("OC load- " + buildingInfo.Key.Substring(0, buildingInfo.Key.Length - 1) + " - time left - " + aux.timeLeft);
-                //Debug.Log("OC load- " + buildingInfo.Key.Substring(0, buildingInfo.Key.Length - 1) + " - time  - " + aux.time);
                 aux.activeResourceTime = buildingInfo.Value[Data.ACTIVE_RESOURCE_TIME];
                 aux.isProducer = (int)buildingInfo.Value[Data.IS_PRODUCER];
                 aux.isConverter = (int)buildingInfo.Value[Data.IS_CONVERTER];
@@ -225,8 +229,6 @@ public class OfflineCalculator : MonoBehaviour
                 building.showDebug = true;
                 building.activeResourceTime = building.activeResourceTime * REDUCTION_FACTOR;
                 building.time = building.time * REDUCTION_FACTOR;
-                //Debug.Log(building.id + " - time left setOriginal - " + building.timeLeft);
-                //Debug.Log(building.id + " - time setOriginal - " + building.time);
                 building.showDebug = true;
             }
         }
@@ -258,27 +260,9 @@ public class OfflineCalculator : MonoBehaviour
 
     public void stopOfflineProduction()
     {
-        /*foreach (FakeProducer building in constructionsBuilt)
-        {
-            if (building.isProducing && building.isSummoningCircle == 1)
-            {
-                Debug.Log(building.id + " - time left before timeScale 1 - " + building.timeLeft);
-                Debug.Log(building.id + " - time before timeScale 1 - " + building.time);
-            }
-        }*/
-
         setOriginalResourcesTime();
         Time.timeScale = 1;
         offlineBoostApplied = true;
-
-        /*foreach (FakeProducer building in constructionsBuilt)
-        {
-            if (building.isProducing && building.isSummoningCircle == 1)
-            {
-                Debug.Log(building.id + " - time left timeScale 1 - " + building.timeLeft);
-                Debug.Log(building.id + " - time timeScale 1 - " + building.time);
-            }
-        }*/
 
         //Save inventory and update time left
         SaveManager.Instance.SaveInventory();
@@ -322,9 +306,15 @@ public class OfflineCalculator : MonoBehaviour
         {
             float[] oldValue = Data.Instance.CONSTRUCTIONS[fakeProducer.id];
 
-            oldValue[Data.TIME_LEFT] = fakeProducer.activeResourceTime - fakeProducer.time; //Not directly timeLeftSave because it hasn't got the time to be recalculated
-            //Debug.Log("OC save - " + fakeProducer.id + " - time left - " + oldValue[Data.TIME_LEFT]);
-
+            //check time left is not negative
+            if (fakeProducer.activeResourceTime - fakeProducer.time < 0)
+            {
+                oldValue[Data.TIME_LEFT] = 0;
+            }
+            else
+            {
+                oldValue[Data.TIME_LEFT] = fakeProducer.activeResourceTime - fakeProducer.time; //Not directly timeLeftSave because it hasn't got the time to be recalculated
+            }
         }
 
         if (File.Exists(pathConstructions))

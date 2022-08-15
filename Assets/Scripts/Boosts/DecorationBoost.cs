@@ -26,12 +26,10 @@ public class DecorationBoost : Construction
             if (Data.Instance.BOOSTS.TryGetValue(id, out int quantity))
             {
                 Data.Instance.BOOSTS[id] += 1;
-                //Debug.Log(Data.Instance.BOOSTS[id]);
             }
             else
             {
                 Data.Instance.BOOSTS.Add(id, 1);
-                //Debug.Log(Data.Instance.BOOSTS[id]);
             }
 
             //If it's summoning circle boost update the time

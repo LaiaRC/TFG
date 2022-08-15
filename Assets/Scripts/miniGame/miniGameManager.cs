@@ -233,7 +233,7 @@ public class miniGameManager : MonoBehaviour
         pool2.setup();
         POOLS.Add(SCARE_PROJECTILE, pool2);
 
-        //Only to debug, fill units_monsters dictionary
+        //Fill units_monsters dictionary
         foreach (KeyValuePair<string, int> monster in Data.Instance.INVENTORY)
         {
             for (int i = 0; i < GameManager.Instance.monstersKeys.Count; i++)
@@ -268,33 +268,36 @@ public class miniGameManager : MonoBehaviour
             hasReaper = true;
         }
 
-        switch (maxLevel)
+        if (maxLevel > 2)
         {
-            case 3:
-                adultSpawn.SetActive(true);
-                swashbucklerSpawn.SetActive(true);
-                break;
+            switch (maxLevel)
+            {
+                case 3:
+                    adultSpawn.SetActive(true);
+                    swashbucklerSpawn.SetActive(true);
+                    break;
 
-            case 4:
-                //shieldManSpawn.SetActive(true);
-                adultSpawn.SetActive(true);
-                swashbucklerSpawn.SetActive(true);
-                elderSpawn.SetActive(true);
-                break;
+                case 4:
+                    //shieldManSpawn.SetActive(true);
+                    adultSpawn.SetActive(true);
+                    swashbucklerSpawn.SetActive(true);
+                    elderSpawn.SetActive(true);
+                    break;
 
-            case 5:
-                adultSpawn.SetActive(true);
-                swashbucklerSpawn.SetActive(true);
-                elderSpawn.SetActive(true);
-                sorcererSpawn.SetActive(true);
-                break;
+                case 5:
+                    adultSpawn.SetActive(true);
+                    swashbucklerSpawn.SetActive(true);
+                    elderSpawn.SetActive(true);
+                    sorcererSpawn.SetActive(true);
+                    break;
 
-            default:
-                adultSpawn.SetActive(true);
-                swashbucklerSpawn.SetActive(true);
-                elderSpawn.SetActive(true);
-                sorcererSpawn.SetActive(true);
-                break;
+                default:
+                    adultSpawn.SetActive(true);
+                    swashbucklerSpawn.SetActive(true);
+                    elderSpawn.SetActive(true);
+                    sorcererSpawn.SetActive(true);
+                    break;
+            }
         }
 
         /*//Add all monsters

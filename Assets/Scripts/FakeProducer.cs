@@ -36,17 +36,11 @@ public class FakeProducer : MonoBehaviour
         {
             time += Time.deltaTime;
             timeLeft = activeResourceTime - time;
-            /*if (isSummoningCircle == 1 && showDebug)
-            {
-                Debug.Log("SC time left - " + timeLeft);
-                showDebug = false;
-            }*/
             if (timeLeft <= 0)
             {
                 if (isSummoningCircle == 1)
                 {
                     produceMonster();
-                    //Debug.Log("active monster - " + activeResource); //check if works with other monsters (like num 6)
                 }
                 else
                 {

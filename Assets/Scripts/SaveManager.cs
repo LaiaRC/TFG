@@ -48,8 +48,6 @@ public class SaveManager : MonoBehaviour
         //Update buildings time
         foreach (var construction in GameManager.Instance.constructionsBuilt)
         {
-            //Debug.Log(construction.GetComponent<Building>().id + construction.GetComponent<Building>().numTypeBuildings);
-
             float[] oldValue = Data.Instance.CONSTRUCTIONS[construction.GetComponent<Construction>().id + construction.GetComponent<Construction>().numType];
             oldValue[GameManager.POS_X] = construction.transform.position.x;
             oldValue[GameManager.POS_Y] = construction.transform.position.y;
@@ -84,23 +82,19 @@ public class SaveManager : MonoBehaviour
 
                 oldValue[GameManager.ACTIVE_RESOURCE] = construction.GetComponent<Building>().getNumActiveResource(); //Check if works with summoning circle
                 oldValue[GameManager.TIME_LEFT] = (construction.GetComponent<Building>().timeLeft);
+
+                //check time left is not negative
+                if(oldValue[GameManager.TIME_LEFT] < 0)
+                {
+                    oldValue[GameManager.TIME_LEFT] = 0;
+                }
+
                 oldValue[GameManager.PRODUCING] = construction.GetComponent<Building>().isProducing ? 1 : 0;
                 oldValue[GameManager.PAUSED] = construction.GetComponent<Building>().isPaused ? 1 : 0;
                 oldValue[GameManager.ACTIVE_RESOURCE_TIME] = construction.GetComponent<Building>().activeResourceTime;
                 oldValue[GameManager.IS_PRODUCER] = construction.GetComponent<Building>().isProducer;
                 oldValue[GameManager.IS_CONVERTER] = construction.GetComponent<Building>().isConverter;
-
-                //Debug.Log("SM - " + construction.GetComponent<Construction>().construction_name + " - time left - " + oldValue[GameManager.TIME_LEFT]);
             }
-            /*Debug.Log(oldValue[GameManager.POS_X]);
-            Debug.Log(oldValue[GameManager.POS_Y]);
-            Debug.Log(oldValue[GameManager.LEVEL]);
-            Debug.Log(oldValue[GameManager.ACTIVE_RESOURCE]);
-            Debug.Log(oldValue[GameManager.TIME_LEFT]);
-            Debug.Log(oldValue[GameManager.PRODUCING]);
-            Debug.Log(oldValue[GameManager.NUM_TYPE]);
-            Debug.Log(oldValue[GameManager.ACTIVE_RESOURCE_TIME]);
-            Data.Instance.CONSTRUCTIONS[construction.GetComponent<Building>().id + construction.GetComponent<Building>().numTypeBuildings] = oldValue;*/
         }
 
         //Update current time

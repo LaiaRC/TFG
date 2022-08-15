@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour
     public int hidenMonsterIndex = 0;
     public GameObject resourcePanel;
     public GameObject inventoryContainer;
+    public bool isMerchantOpen = false;
 
     public Camera mainCamera;
 
@@ -639,7 +640,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        offlineDialog.GetComponent<Transform>().Find("InfoPanel").transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText("While you are away the productivity is " + prod + " and only works for " + timeBoost.ToString() + "h at most.\n You can upgrade this with the Spectre and the Necromancer at the shop.");
+        offlineDialog.GetComponent<Transform>().Find("InfoPanel").transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText("While you are away the productivity is " + prod + " and only works for " + timeBoost.ToString() + "h at most.\nYou can upgrade this with the Spectre and the Necromancer at the shop.");
 
         //Fill grid with offline resources
         foreach (KeyValuePair<string, int> resourceOld in Data.Instance.INVENTORY)
@@ -698,6 +699,10 @@ public class GameManager : MonoBehaviour
             }
             Data.Instance.INVENTORY.Add(resource.Key, 10000);
         }
+
+        //debug 25h summoning circle
+        Data.Instance.INVENTORY[Data.BONE] = 750;
+        Data.Instance.INVENTORY[Data.PLASMA] = 100;
 
         Data.Instance.INVENTORY.Add(Data.SKELETON, 10);
         Data.Instance.INVENTORY.Add(Data.JACK_LANTERN, 10);
@@ -767,10 +772,25 @@ public class GameManager : MonoBehaviour
                                 temp.setPlayPauseButtons();
                             }
 
-                            temp.time = construction.Value[ACTIVE_RESOURCE_TIME] - construction.Value[TIME_LEFT];
-                            temp.timeLeft = construction.Value[TIME_LEFT];
+                            
+                            //check time is not negative
+                            if(construction.Value[ACTIVE_RESOURCE_TIME] - construction.Value[TIME_LEFT] < 0)
+                            {
+                                temp.time = 0;
+                            }
+                            else{
+                                temp.time = construction.Value[ACTIVE_RESOURCE_TIME] - construction.Value[TIME_LEFT];
+                            }
 
-                            //Debug.Log("GM - " + buildings[i].GetComponent<Construction>().construction_name + " time left - " + temp.timeLeft);
+                            //check time left is not negative
+                            if (construction.Value[TIME_LEFT] < 0)
+                            {
+                                temp.timeLeft = 0;
+                            }
+                            else
+                            {
+                                temp.timeLeft = construction.Value[TIME_LEFT];
+                            }
 
                             temp.numType = (int)construction.Value[NUM_TYPE];
                             temp.activeResourceTime = construction.Value[ACTIVE_RESOURCE_TIME];
@@ -841,10 +861,25 @@ public class GameManager : MonoBehaviour
                                 temp.timeBar.fillAmount = temp.timeLeft;
                             }
 
-                            temp.time = construction.Value[ACTIVE_RESOURCE_TIME] - construction.Value[TIME_LEFT];
-                            temp.timeLeft = construction.Value[TIME_LEFT];
-                            //Debug.Log("GM - " + buildings[i].GetComponent<Construction>().construction_name + " time left - " + temp.timeLeft);
+                            //check time is not negative
+                            if (construction.Value[ACTIVE_RESOURCE_TIME] - construction.Value[TIME_LEFT] < 0)
+                            {
+                                temp.time = 0;
+                            }
+                            else
+                            {
+                                temp.time = construction.Value[ACTIVE_RESOURCE_TIME] - construction.Value[TIME_LEFT];
+                            }
 
+                            //check time left is not negative
+                            if (construction.Value[TIME_LEFT] < 0)
+                            {
+                                temp.timeLeft = 0;
+                            }
+                            else
+                            {
+                                temp.timeLeft = construction.Value[TIME_LEFT];
+                            }
 
                             temp.numType = (int)construction.Value[NUM_TYPE];
                             temp.activeResourceTime = construction.Value[ACTIVE_RESOURCE_TIME];
@@ -862,25 +897,6 @@ public class GameManager : MonoBehaviour
 
                             #endregion GENERAL BUILDING
                         }
-
-                        /*Debug.Log(
-                            "-----------Construction--------" + "\nx: " +
-                            construction.Value[GameManager.POS_X] + "\ny: " +
-                            construction.Value[GameManager.POS_Y] + "\nlvl: " +
-                            construction.Value[GameManager.LEVEL] + "\nar: " +
-                            construction.Value[GameManager.ACTIVE_RESOURCE] + "\ntl: " +
-                            construction.Value[GameManager.TIME_LEFT] + "\nip: " +
-                            construction.Value[GameManager.PRODUCING] + "\nart: " +
-                            construction.Value[GameManager.ACTIVE_RESOURCE_TIME] + "\n" +
-                            "-----------temp------------\nx: " +
-                            temp.transform.position.x + "\ny: "+
-                            temp.transform.position.y + "\nlvl: " +
-                            temp.level + "\naR: " +
-                            temp.activeResource + "\ntl: " +
-                            temp.timeLeft + "\nt: " +
-                            temp.time + "\nip: " +
-                            temp.isProducing + "\nart: " +
-                            temp.activeResourceTime + "\n");*/
 
                         //Add building to built constructions list
                         constructionsBuilt.Add(obj);

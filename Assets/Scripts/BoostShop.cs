@@ -93,6 +93,7 @@ public class BoostShop : MonoBehaviour
 
             canvas.SetActive(true);
             GameManager.Instance.isOnCanvas = true;
+            GameManager.Instance.isMerchantOpen = true;
         }
     }
 
@@ -100,12 +101,15 @@ public class BoostShop : MonoBehaviour
     {
         canvas.SetActive(true);
         GameManager.Instance.isOnCanvas = true;
+        GameManager.Instance.isMerchantOpen = true;
     }
 
     public void hideShop()
     {
         GameManager.Instance.audioSource.clip = GameManager.Instance.sounds[GameManager.CLOSE];
         GameManager.Instance.audioSource.Play();
+
+        GameManager.Instance.isMerchantOpen = false;
 
         canvas.SetActive(false);
         Invoke("isOnCanvasOff", 0.1f);

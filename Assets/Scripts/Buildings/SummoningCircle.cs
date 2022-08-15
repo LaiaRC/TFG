@@ -393,10 +393,12 @@ public class SummoningCircle : Building
                     if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.requirements[0].resourceNameKey, out int quantity))
                     {
                         summonRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(GameManager.Instance.numToString(quantity) + "/" + GameManager.Instance.numToString(monsterInfo.requirements[0].quantity));
+                        setTextColor(summonRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>(), quantity, monsterInfo.requirements[0].quantity);
                     }
                     else
                     {
                         summonRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.requirements[0].quantity));
+                        setTextColor(summonRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>(), 0, monsterInfo.requirements[0].quantity);
                     }
 
                     //Summon requirement 2
@@ -409,10 +411,13 @@ public class SummoningCircle : Building
                     if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.requirements[1].resourceNameKey, out int quantity1))
                     {
                         summonRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(GameManager.Instance.numToString(quantity1) + "/" + GameManager.Instance.numToString(monsterInfo.requirements[1].quantity));
+                        setTextColor(summonRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>(), quantity1, monsterInfo.requirements[1].quantity);
                     }
                     else
                     {
                         summonRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.requirements[1].quantity));
+                        setTextColor(summonRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>(), 0, monsterInfo.requirements[1].quantity);
+
                     }
                 }
                 else
@@ -544,10 +549,13 @@ public class SummoningCircle : Building
                         if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][0].resourceNameKey, out int upQuantity))
                         {
                             upgradeRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(GameManager.Instance.numToString(upQuantity) + "/" + GameManager.Instance.numToString(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][0].quantity));
+                            setTextColor(upgradeRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>(), upQuantity, monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][0].quantity);
                         }
                         else
                         {
                             upgradeRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][0].quantity));
+                            setTextColor(upgradeRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>(), 0, monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][0].quantity);
+
                         }
 
                         //Summon requirement 2
@@ -560,10 +568,12 @@ public class SummoningCircle : Building
                         if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][1].resourceNameKey, out int upQuantity2))
                         {
                             upgradeRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(GameManager.Instance.numToString(upQuantity2) + "/" + GameManager.Instance.numToString(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][1].quantity));
+                            setTextColor(upgradeRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>(), upQuantity2, monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][1].quantity);
                         }
                         else
                         {
                             upgradeRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][1].quantity));
+                            setTextColor(upgradeRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>(), 0, monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][1].quantity);
                         }
                     }
                     else
@@ -906,8 +916,6 @@ public class SummoningCircle : Building
 
     public void setSelectedTab(string selectedMonster)
     {
-        GameManager.Instance.debugInventoryInfo.SetText(activeMonster + " T: " + ((int)(activeMonsterTime/60)).ToString()+ "m TL: " + timeLeft.ToString());
-        
         if (selectedTab != selectedMonster) //Check if it's already in that page
         {
             selectedTab = selectedMonster;
@@ -1199,10 +1207,12 @@ public class SummoningCircle : Building
                 if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.requirements[0].resourceNameKey, out int quantity))
                 {
                     summonRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(GameManager.Instance.numToString(quantity) + "/" + GameManager.Instance.numToString(monsterInfo.requirements[0].quantity));
+                    setTextColor(summonRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>(), quantity, monsterInfo.requirements[0].quantity);
                 }
                 else
                 {
                     summonRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.requirements[0].quantity));
+                    setTextColor(summonRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>(), 0, monsterInfo.requirements[0].quantity);
                 }
 
                 //Summon requirement 2
@@ -1210,10 +1220,12 @@ public class SummoningCircle : Building
                 if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.requirements[1].resourceNameKey, out int quantity1))
                 {
                     summonRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(GameManager.Instance.numToString(quantity1) + "/" + GameManager.Instance.numToString(monsterInfo.requirements[1].quantity));
+                    setTextColor(summonRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>(), quantity1, monsterInfo.requirements[1].quantity);
                 }
                 else
                 {
                     summonRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.requirements[1].quantity));
+                    setTextColor(summonRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>(), 0, monsterInfo.requirements[1].quantity);
                 }
 
                 #endregion SUMMON COST (SELECTED TAB)
@@ -1247,10 +1259,12 @@ public class SummoningCircle : Building
                 if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][0].resourceNameKey, out int upQuantity))
                 {
                     upgradeRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(GameManager.Instance.numToString(upQuantity) + "/" + GameManager.Instance.numToString(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][0].quantity));
+                    setTextColor(upgradeRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>(), upQuantity, monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][0].quantity);
                 }
                 else
                 {
                     upgradeRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][0].quantity));
+                    setTextColor(upgradeRequirement1.transform.GetChild(1).GetComponent<TextMeshProUGUI>(), 0, monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][0].quantity);
                 }
 
                 //Upgrade requirement 2
@@ -1258,10 +1272,12 @@ public class SummoningCircle : Building
                 if (Data.Instance.INVENTORY.TryGetValue(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][1].resourceNameKey, out int upQuantity2))
                 {
                     upgradeRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(GameManager.Instance.numToString(upQuantity2) + "/" + GameManager.Instance.numToString(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][1].quantity));
+                    setTextColor(upgradeRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>(), upQuantity2, monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][1].quantity);
                 }
                 else
                 {
                     upgradeRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText("0/" + GameManager.Instance.numToString(monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][1].quantity));
+                    setTextColor(upgradeRequirement2.transform.GetChild(1).GetComponent<TextMeshProUGUI>(), 0, monsterInfo.upgradeRequirements[monsterInfo.upgradeLevel - 1][1].quantity);
                 }
             }
 
@@ -1277,10 +1293,12 @@ public class SummoningCircle : Building
             if (Data.Instance.INVENTORY.TryGetValue(mInfo.requirements[0].resourceNameKey, out int quantity))
             {
                 producingRequirementText1.SetText(GameManager.Instance.numToString(quantity) + "/" + GameManager.Instance.numToString(mInfo.requirements[0].quantity));
+                setTextColor(producingRequirementText1, quantity, mInfo.requirements[0].quantity);
             }
             else
             {
                 producingRequirementText1.SetText("0/" + GameManager.Instance.numToString(mInfo.requirements[0].quantity));
+                setTextColor(producingRequirementText1, 0, mInfo.requirements[0].quantity);
             }
 
             //Summon requirement 2
@@ -1288,10 +1306,12 @@ public class SummoningCircle : Building
             if (Data.Instance.INVENTORY.TryGetValue(mInfo.requirements[1].resourceNameKey, out int quantity1))
             {
                 producingRequirementText2.SetText(GameManager.Instance.numToString(quantity1) + "/" + GameManager.Instance.numToString(mInfo.requirements[1].quantity));
+                setTextColor(producingRequirementText2, quantity1, mInfo.requirements[1].quantity);
             }
             else
             {
                 producingRequirementText2.SetText("0/" + GameManager.Instance.numToString(mInfo.requirements[1].quantity));
+                setTextColor(producingRequirementText2, 0, mInfo.requirements[1].quantity);
             }
 
             #endregion TIMEGROUP (ACTIVE RESOURCE)

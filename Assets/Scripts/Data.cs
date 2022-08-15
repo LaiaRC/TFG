@@ -728,7 +728,7 @@ public class Data : MonoBehaviour
         List<int> levelSkeleton = new List<int>();
         levelSkeleton.Add(1);
         levelSkeleton.Add(1);
-        levelSkeleton.Add(2);
+        levelSkeleton.Add(1);
 
         #endregion STATS
 
@@ -791,8 +791,8 @@ public class Data : MonoBehaviour
 
         List<int> levelJack = new List<int>();
         levelJack.Add(1);
-        levelJack.Add(2);
-        levelJack.Add(3);
+        levelJack.Add(1);
+        levelJack.Add(1);
 
         #endregion STATS
 
@@ -857,7 +857,7 @@ public class Data : MonoBehaviour
         List<int> levelBat = new List<int>();
         levelBat.Add(2);
         levelBat.Add(2);
-        levelBat.Add(3);
+        levelBat.Add(2);
 
         #endregion STATS
 
@@ -922,7 +922,7 @@ public class Data : MonoBehaviour
         List<int> levelGoblin = new List<int>();
         levelGoblin.Add(2);
         levelGoblin.Add(2);
-        levelGoblin.Add(3);
+        levelGoblin.Add(2);
 
         #endregion STATS
 
@@ -987,7 +987,7 @@ public class Data : MonoBehaviour
         List<int> levelGhost = new List<int>();
         levelGhost.Add(3);
         levelGhost.Add(3);
-        levelGhost.Add(4);
+        levelGhost.Add(3);
 
         #endregion STATS
 
@@ -1052,7 +1052,7 @@ public class Data : MonoBehaviour
         List<int> levelClown = new List<int>();
         levelClown.Add(3);
         levelClown.Add(3);
-        levelClown.Add(4);
+        levelClown.Add(3);
 
         #endregion STATS
 
@@ -1115,7 +1115,7 @@ public class Data : MonoBehaviour
         aRangeZombie.Add(3);
 
         List<int> levelZombie = new List<int>();
-        levelZombie.Add(3);
+        levelZombie.Add(4);
         levelZombie.Add(4);
         levelZombie.Add(4);
 
@@ -1182,7 +1182,7 @@ public class Data : MonoBehaviour
         List<int> levelVampire = new List<int>();
         levelVampire.Add(4);
         levelVampire.Add(4);
-        levelVampire.Add(5);
+        levelVampire.Add(4);
 
         #endregion STATS
 
@@ -1245,7 +1245,7 @@ public class Data : MonoBehaviour
         aRangeWitch.Add(7);
 
         List<int> levelWitch = new List<int>();
-        levelWitch.Add(4);
+        levelWitch.Add(5);
         levelWitch.Add(5);
         levelWitch.Add(5);
 

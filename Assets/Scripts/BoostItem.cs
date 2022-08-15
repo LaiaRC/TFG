@@ -24,12 +24,17 @@ public class BoostItem : MonoBehaviour
 
     public void Update()
     {
-        if (!isUnlocked)
+        if (GameManager.Instance.isMerchantOpen)
         {
-            updateRequirementText();
-        }else if (!requirementText.text.Equals("Owned"))
-        {
-            requirementText.SetText("Owned");
+            if (!isUnlocked)
+            {
+                updateRequirementText();
+            }
+            else if (!requirementText.text.Equals("Owned"))
+            {
+                requirementText.SetText("Owned");
+                requirementText.color = new Color(1, 1, 1, 1);
+            }
         }
     }
 
@@ -54,10 +59,12 @@ public class BoostItem : MonoBehaviour
         if (Data.Instance.INVENTORY.TryGetValue(requirement.resourceNameKey, out int quantity))
         {
             requirementText.SetText(GameManager.Instance.numToString(quantity) + "/" + GameManager.Instance.numToString(requirement.quantity));
+            setTextColor(requirementText, quantity, requirement.quantity);
         }
         else
         {
             requirementText.SetText("0/" + GameManager.Instance.numToString(requirement.quantity));
+            setTextColor(requirementText, 0, requirement.quantity);
         }
     }
     public void setToOwned()
@@ -65,6 +72,7 @@ public class BoostItem : MonoBehaviour
         buyButton.SetActive(false);
         requirementIcon.SetActive(false);
         requirementText.SetText("Owned");
+        requirementText.color = new Color(1, 1, 1, 1);
         requirementText.alignment = TextAlignmentOptions.Center;
         isUnlocked = true;
     }
@@ -128,6 +136,18 @@ public class BoostItem : MonoBehaviour
         {
             //Player don't have the requirement resource to produce 
             return false;
+        }
+    }
+
+    public void setTextColor(TextMeshProUGUI text, int inventoryQuantity, int requirementQuantity)
+    {
+        if (inventoryQuantity >= requirementQuantity)
+        {
+            text.color = new Color(0, 1, 0, 1);
+        }
+        else
+        {
+            text.color = new Color(1, 0, 0, 1);
         }
     }
 }

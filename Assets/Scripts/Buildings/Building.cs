@@ -80,6 +80,8 @@ public class Building : Construction
 
         //Update requirement 1
         upgradeText1.text = "0/" + GameManager.Instance.numToString(upgrade_cost[0].list[0].quantity);
+        setTextColor(upgradeText1, 0, upgrade_cost[0].list[0].quantity);
+
         if (Data.Instance.RESOURCES.TryGetValue(upgrade_cost[0].list[0].resourceNameKey, out Resource resource))
         {
             upgradeIcon1.sprite = resource.icon;
@@ -89,6 +91,8 @@ public class Building : Construction
         if (upgrade_cost[0].list.Count > 1)
         {
             upgradeText2.text = "0/" + GameManager.Instance.numToString(upgrade_cost[0].list[1].quantity);
+            setTextColor(upgradeText2, 0, upgrade_cost[0].list[1].quantity);
+
             if (Data.Instance.RESOURCES.TryGetValue(upgrade_cost[0].list[1].resourceNameKey, out Resource resource2))
             {
                 upgradeIcon2.sprite = resource2.icon;
@@ -142,10 +146,13 @@ public class Building : Construction
                 if(Data.Instance.INVENTORY.TryGetValue(resource3.requirements[0].resourceNameKey, out int quantity))
                 {
                     requirement1Text.SetText(GameManager.Instance.numToString(quantity) + "/" + GameManager.Instance.numToString(resource3.requirements[0].quantity));
+                    setTextColor(requirement1Text, quantity, resource3.requirements[0].quantity);
+
                 }
                 else
                 {
                     requirementText.SetText("0/" + GameManager.Instance.numToString(resource3.requirements[0].quantity));
+                    setTextColor(requirementText, 0, resource3.requirements[0].quantity);
                 }
                 requirementText.gameObject.SetActive(false);
                 requirement1Text.gameObject.SetActive(true);
@@ -164,10 +171,13 @@ public class Building : Construction
                     if (Data.Instance.INVENTORY.TryGetValue(resource3.requirements[1].resourceNameKey, out int quantity2))
                     {
                         requirementText.SetText(GameManager.Instance.numToString(quantity2) + "/" + resource3.requirements[1].quantity);
+                        setTextColor(requirementText, quantity2, resource3.requirements[1].quantity);
+
                     }
                     else
                     {
                         requirementText.SetText("0/" + GameManager.Instance.numToString(resource3.requirements[1].quantity));
+                        setTextColor(requirementText, 0, resource3.requirements[1].quantity);
                     }
                     requirement2Text.gameObject.SetActive(true);
                 }
@@ -586,11 +596,13 @@ public class Building : Construction
             if (id.Equals("hellIsland") && level == 2 && !GameManager.Instance.isHellfireUnlocked)
             {
                 maxText.SetText("Unlock in The Merchant");
+                maxText.color = new Color(1, 1, 1, 1);
                 maxText.fontSize = 14;
             }
             else
             {
                 maxText.SetText("MAX");
+                maxText.color = new Color(1, 1, 1, 1);
                 maxText.fontSize = 36;
             }
 
@@ -660,19 +672,23 @@ public class Building : Construction
                     if (Data.Instance.INVENTORY.TryGetValue(resource3.requirements[0].resourceNameKey, out int quantity3))
                     {
                         requirement1Text.SetText(GameManager.Instance.numToString(quantity3) + "/" + GameManager.Instance.numToString(resource3.requirements[0].quantity));
+                        setTextColor(requirement1Text, quantity3, resource3.requirements[0].quantity);
                     }
                     else
                     {
                         requirement1Text.SetText("0/" + GameManager.Instance.numToString(resource3.requirements[0].quantity));
+                        setTextColor(requirement1Text, 0, resource3.requirements[0].quantity);
                     }
 
                     if (Data.Instance.INVENTORY.TryGetValue(resource3.requirements[1].resourceNameKey, out int quantity2))
                     {
                         requirement2Text.SetText(GameManager.Instance.numToString(quantity2) + "/" + resource3.requirements[1].quantity);
+                        setTextColor(requirement2Text, quantity2, resource3.requirements[1].quantity);
                     }
                     else
                     {
                         requirement2Text.SetText("0/" + GameManager.Instance.numToString(resource3.requirements[1].quantity));
+                        setTextColor(requirement2Text, 0, resource3.requirements[1].quantity);
                     }
                     requirementText.gameObject.SetActive(false);
                     requirement1Text.gameObject.SetActive(true);
@@ -693,10 +709,12 @@ public class Building : Construction
                     if (Data.Instance.INVENTORY.TryGetValue(resource3.requirements[0].resourceNameKey, out int quantity))
                     {
                         requirementText.SetText(GameManager.Instance.numToString(quantity) + "/" + GameManager.Instance.numToString(resource3.requirements[0].quantity));
+                        setTextColor(requirementText, quantity, resource3.requirements[0].quantity);
                     }
                     else
                     {
                         requirementText.SetText("0/" + GameManager.Instance.numToString(resource3.requirements[0].quantity));
+                        setTextColor(requirementText, 0, resource3.requirements[0].quantity);
                     }
                     requirementText.gameObject.SetActive(true);
                     requirement1Text.gameObject.SetActive(false);
@@ -712,6 +730,7 @@ public class Building : Construction
                 requirementIcon2.gameObject.SetActive(false);
 
                 requirementText.SetText("free");
+                requirementText.color = new Color(1, 1, 1, 1);
                 requirementText.gameObject.SetActive(true);
                 requirement1Text.gameObject.SetActive(false);
                 requirement2Text.gameObject.SetActive(false);
@@ -729,5 +748,17 @@ public class Building : Construction
     {
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireCube(area.center, area.size);
+    }
+
+    public void setTextColor(TextMeshProUGUI text, int inventoryQuantity, int requirementQuantity)
+    {
+        if(inventoryQuantity >= requirementQuantity)
+        {
+            text.color = new Color(0, 1, 0, 1);
+        }
+        else
+        {
+            text.color = new Color(1, 0, 0, 1);
+        }
     }
 }
