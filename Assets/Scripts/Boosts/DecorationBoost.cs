@@ -72,5 +72,5 @@ public class DecorationBoost : Construction
 
     public virtual bool applyBoost() {
         return boostApplied;
-    }    
+    }
 }

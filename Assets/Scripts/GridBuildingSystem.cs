@@ -162,7 +162,18 @@ public class GridBuildingSystem : MonoBehaviour
         ClearArea();
 
         Vector3Int positionInt = gridLayout.WorldToCell(temp.gameObject.transform.position);
-        temp.area.position = new Vector3Int((int)(temp.transform.position.x - temp.area.size.x/1.8), (int)(temp.transform.position.y - temp.area.size.y/5), (int)temp.transform.position.z);
+
+        if(temp.constructionType == 2)
+        {
+            //Decoration boost
+            temp.area.position = new Vector3Int((int)((temp.transform.position.x - temp.area.size.x / 1.8) + 1), (int)((temp.transform.position.y - temp.area.size.y / 5) - 3), (int)temp.transform.position.z);
+        }
+        else
+        {
+            //Building 
+            temp.area.position = new Vector3Int((int)(temp.transform.position.x - temp.area.size.x/1.8), (int)(temp.transform.position.y - temp.area.size.y/5), (int)temp.transform.position.z);
+        }
+
         BoundsInt buildingArea = temp.area;
 
         TileBase[] baseArray = GetTilesBlock(buildingArea, MainTilemap);
@@ -194,7 +205,7 @@ public class GridBuildingSystem : MonoBehaviour
         TileBase[] baseArray = GetTilesBlock(area, MainTilemap);
         foreach (var b in baseArray)
         {
-            if(b != tileBases[TileType.White])
+            if (b != tileBases[TileType.White])
             {
                 return false;
             }

@@ -744,12 +744,6 @@ public class Building : Construction
         numResources.SetText("x" + num.ToString());
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawWireCube(area.center, area.size);
-    }
-
     public void setTextColor(TextMeshProUGUI text, int inventoryQuantity, int requirementQuantity)
     {
         if(inventoryQuantity >= requirementQuantity)

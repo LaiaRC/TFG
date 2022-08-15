@@ -1212,7 +1212,7 @@ MonoBehaviour:
     m_Size: {x: 0, y: 0, z: 0}
   placed: 0
   area:
-    m_Position: {x: 20, y: -10, z: 0}
+    m_Position: {x: -13, y: -2, z: 0}
     m_Size: {x: 24, y: 13, z: 1}
   confirmUI: {fileID: 4720645458814463152}
   audioSource: {fileID: 5962049052328373309}

@@ -728,7 +728,18 @@ public class GameManager : MonoBehaviour
                     Vector3 constructionPosition = new Vector3(construction.Value[POS_X], construction.Value[POS_Y], 0);
 
                     Vector3Int positionIntAux = GridBuildingSystem.current.gridLayout.LocalToCell(constructionPosition);
-                    buildings[i].GetComponent<Construction>().area.position = new Vector3Int((int)(constructionPosition.x - buildings[i].GetComponent<Construction>().area.size.x / 1.8), (int)(constructionPosition.y - buildings[i].GetComponent<Construction>().area.size.y / 5), (int)constructionPosition.z);
+
+                    if(construction.Value[CONSTRUCTION_TYPE] == 2)
+                    {
+                        //Decoration boost
+                        buildings[i].GetComponent<Construction>().area.position = new Vector3Int((int)((constructionPosition.x - buildings[i].GetComponent<Construction>().area.size.x / 1.8) + 1), (int)((constructionPosition.y - buildings[i].GetComponent<Construction>().area.size.y / 5) - 3), (int)transform.position.z);
+                    }
+                    else
+                    {
+                        //Building
+                        buildings[i].GetComponent<Construction>().area.position = new Vector3Int((int)(constructionPosition.x - buildings[i].GetComponent<Construction>().area.size.x / 1.8), (int)(constructionPosition.y - buildings[i].GetComponent<Construction>().area.size.y / 5), (int)constructionPosition.z);
+                    }
+
                     BoundsInt areaTempAux = buildings[i].GetComponent<Construction>().area;
 
                     if (GridBuildingSystem.current.canTakeArea(areaTempAux))
@@ -801,9 +812,10 @@ public class GameManager : MonoBehaviour
                             temp.setTabIndex(temp.selectedTab);
 
                             temp.setUI(temp.activeMonster);
-                            Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(constructionPosition);
+
+                            Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(temp.gameObject.transform.position);
+                            temp.area.position = new Vector3Int((int)(temp.transform.position.x - temp.area.size.x / 1.8), (int)(temp.transform.position.y - temp.area.size.y / 5), (int)temp.transform.position.z);
                             BoundsInt areaTemp = temp.area;
-                            areaTemp.position = positionInt;
                             GridBuildingSystem.current.takeArea(areaTemp);
 
                             #endregion SUMMONING CIRCLE
@@ -819,9 +831,10 @@ public class GameManager : MonoBehaviour
                             //Set decoration boost values
                             temp.numType = (int)construction.Value[NUM_TYPE];
 
-                            Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(constructionPosition);
+                            Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(temp.gameObject.transform.position);
+                            temp.area.position = new Vector3Int((int)((temp.transform.position.x - temp.area.size.x / 1.8) + 1), (int)((temp.transform.position.y - temp.area.size.y / 5) - 3), (int)transform.position.z);
+
                             BoundsInt areaTemp = temp.area;
-                            areaTemp.position = positionInt;
                             GridBuildingSystem.current.takeArea(areaTemp);
                             temp.placed = true;
                             temp.confirmUI.SetActive(false); //just in case (it has already been confirmed)
@@ -886,14 +899,10 @@ public class GameManager : MonoBehaviour
                             temp.updateUI();
 
                             Vector3Int positionInt = GridBuildingSystem.current.gridLayout.WorldToCell(temp.gameObject.transform.position);
-                            temp.area.position = new Vector3Int((int)(temp.transform.position.x - temp.area.size.x / 1.8), (int)(temp.transform.position.y - temp.area.size.y / 5), (int)temp.transform.position.z);
+                            temp.area.position = new Vector3Int((int)(temp.transform.position.x - temp.area.size.x / 1.8), (int)(temp.transform.position.y - temp.area.size.y / 5), (int)temp.transform.position.z);                           
+
                             BoundsInt buildingArea = temp.area;
                             GridBuildingSystem.current.takeArea(buildingArea);
-
-                            /*Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(constructionPosition);
-                            BoundsInt areaTemp = temp.area;
-                            areaTemp.position = new Vector3Int((int)(temp.transform.position.x - temp.area.size.x / 1.8), (int)(temp.transform.position.y - temp.area.size.y / 5), (int)temp.transform.position.z);
-                            GridBuildingSystem.current.takeArea(areaTemp);*/
 
                             #endregion GENERAL BUILDING
                         }

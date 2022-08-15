@@ -28,11 +28,19 @@ public class Construction : MonoBehaviour
 
     #region Building Methods
 
-    public bool canBePlaced()
+    public virtual bool canBePlaced()
     {
         Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(transform.position);
         BoundsInt areaTemp = area;
-        areaTemp.position = new Vector3Int((int)(transform.position.x - area.size.x / 1.8), (int)(transform.position.y - area.size.y / 5), (int)transform.position.z);
+        if(constructionType == 2)
+        {
+            //Decoration boost
+            areaTemp.position = new Vector3Int((int)((transform.position.x - area.size.x / 1.8) + 1), (int)((transform.position.y - area.size.y / 5) - 3), (int)transform.position.z);
+        }
+        else
+        {
+            areaTemp.position = new Vector3Int((int)(transform.position.x - area.size.x / 1.8), (int)(transform.position.y - area.size.y / 5), (int)transform.position.z);
+        }
 
         if (GridBuildingSystem.current.canTakeArea(areaTemp))
         {
@@ -64,7 +72,17 @@ public class Construction : MonoBehaviour
                 Vector3Int positionInt = GridBuildingSystem.current.gridLayout.LocalToCell(transform.position);
                 BoundsInt areaTemp = area;
 
-                areaTemp.position = new Vector3Int((int)(transform.position.x - area.size.x / 1.8), (int)(transform.position.y - area.size.y / 5), (int)transform.position.z);
+                if (constructionType == 2)
+                {
+                    //Decoration boost
+                    areaTemp.position = new Vector3Int((int)((transform.position.x - area.size.x / 1.8) + 1), (int)((transform.position.y - area.size.y / 5) - 3), (int)transform.position.z);
+                }
+                else
+                {
+                    //Building
+                    areaTemp.position = new Vector3Int((int)(transform.position.x - area.size.x / 1.8), (int)(transform.position.y - area.size.y / 5), (int)transform.position.z);
+                }
+                
                 placed = true;
                 GridBuildingSystem.current.takeArea(areaTemp);
                 tempArea = areaTemp;
@@ -149,4 +167,10 @@ public class Construction : MonoBehaviour
     }
 
     #endregion
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireCube(area.center, area.size);
+    }
 }

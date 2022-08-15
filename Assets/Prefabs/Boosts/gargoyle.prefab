@@ -349,8 +349,8 @@ MonoBehaviour:
     m_Size: {x: 0, y: 0, z: 0}
   placed: 0
   area:
-    m_Position: {x: 0, y: 0, z: 0}
-    m_Size: {x: 4, y: 4, z: 0}
+    m_Position: {x: 14, y: -2, z: 0}
+    m_Size: {x: 4, y: 5, z: 1}
   confirmUI: {fileID: 8495589725111407006}
   audioSource: {fileID: 7051464757665019477}
   sounds:
