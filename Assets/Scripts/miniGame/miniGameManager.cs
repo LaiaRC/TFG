@@ -320,11 +320,6 @@ public class miniGameManager : MonoBehaviour
             }
             scareGroup.SetActive(true);
         }
-        else
-        {
-            //No scare boost
-            scareGroup.SetActive(false);
-        }
 
         if (Data.Instance.BOOSTS.TryGetValue(Data.DROPS_BOOST, out int quantity2))
         {
@@ -333,11 +328,6 @@ public class miniGameManager : MonoBehaviour
                 dropsModifier += 0.25f;
             }
             dropGroup.SetActive(true);
-        }
-        else
-        {
-            //No drop boost
-            dropGroup.SetActive(false);
         }
     }
 
@@ -1005,7 +995,7 @@ public class miniGameManager : MonoBehaviour
         scaresText.SetText((numScares + (int)(numScares * scaresModifier)).ToString()); //fer funcio minigame manager que passi a 1.3k (copiar de gameManager)
         scaresPercentText.SetText("+" + scaresModifier * 100 + "%");
         realScaresText.SetText("(" + numScares.ToString());
-        extraScaresText.SetText(" + " + ((int)(numScares * scaresModifier)).ToString() + ")");
+        extraScaresText.SetText(" + " + ((int)(numScares * scaresModifier)).ToString());
         dropPercentText.SetText("+" + dropsModifier * 100 + "% villager's drops");
         List<Drop> dropsSorted = new List<Drop>();
         foreach (KeyValuePair<string, Drop> drop in DROPS)
@@ -1018,8 +1008,8 @@ public class miniGameManager : MonoBehaviour
         for (int i = 0; i < dropsSorted.Count; i++)
         {
             GameObject itemObject = Instantiate(dropPrefab, dropsGroup.transform);
-            itemObject.transform.GetChild(0).GetComponent<Image>().sprite = dropsSorted[i].icon;
-            itemObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText((dropsSorted[i].quantity + (int)(dropsSorted[i].quantity * dropsModifier)).ToString());
+            itemObject.transform. Find("Panel").transform.GetChild(0).transform.Find("Icon").GetComponent<Image>().sprite = dropsSorted[i].icon;
+            itemObject.transform.Find("Panel").transform.GetChild(0).transform.Find("Quantity").GetComponent<TextMeshProUGUI>().SetText((dropsSorted[i].quantity + (int)(dropsSorted[i].quantity * dropsModifier)).ToString());
         }
 
         gameOverPanel.SetActive(true);

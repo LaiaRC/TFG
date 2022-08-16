@@ -700,14 +700,10 @@ public class GameManager : MonoBehaviour
             Data.Instance.INVENTORY.Add(resource.Key, 10000);
         }
 
-        //debug 25h summoning circle
-        Data.Instance.INVENTORY[Data.BONE] = 750;
-        Data.Instance.INVENTORY[Data.PLASMA] = 100;
-
         Data.Instance.INVENTORY.Add(Data.SKELETON, 10);
-        Data.Instance.INVENTORY.Add(Data.JACK_LANTERN, 10);
+        /*Data.Instance.INVENTORY.Add(Data.JACK_LANTERN, 10);
         Data.Instance.INVENTORY.Add(Data.GOBLIN, 10);
-        Data.Instance.INVENTORY.Add(Data.BAT, 10);
+        Data.Instance.INVENTORY.Add(Data.BAT, 10);*/
         /*Data.Instance.INVENTORY.Add(Data.ZOMBIE, 10);
         Data.Instance.INVENTORY.Add(Data.GHOST, 10);
         Data.Instance.INVENTORY.Add(Data.CLOWN, 10);
