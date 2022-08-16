@@ -43,6 +43,9 @@ public class Building : Construction
     public Image level1Background;
     public Image level2Background;
     public Image level3Background;
+    public GameObject level1Animation;
+    public GameObject level2Animation;
+    public GameObject level3Animation;
     public GameObject level2Grid;
     public GameObject level3Grid;
     public Image requirementIcon;
@@ -76,6 +79,21 @@ public class Building : Construction
 
     public void setCanvasInterior()
     {
+        //Backgrounds
+        level1Background.gameObject.SetActive(true);
+        level2Background.gameObject.SetActive(false);
+        level3Background.gameObject.SetActive(false);
+        
+        //Animations
+        gameObject.transform.Find("Animations").transform.Find("Level1").gameObject.SetActive(true);
+        gameObject.transform.Find("Animations").transform.Find("Level2").gameObject.SetActive(false);
+        gameObject.transform.Find("Animations").transform.Find("Level3").gameObject.SetActive(false);
+
+        //Animations canvas
+        level1Animation.gameObject.SetActive(true);
+        level2Animation.gameObject.SetActive(false);
+        level3Animation.gameObject.SetActive(false);
+
         #region UPGRADE
 
         //Update requirement 1
@@ -560,6 +578,14 @@ public class Building : Construction
             level2Grid.SetActive(true);
             level3Grid.SetActive(false);
 
+            //Animations
+            gameObject.transform.Find("Animations").transform.Find("Level2").gameObject.SetActive(true);
+
+            //Animations canvas
+            level1Animation.gameObject.SetActive(true);
+            level2Animation.gameObject.SetActive(true);
+            level3Animation.gameObject.SetActive(false);
+
             //Just in case
             if (id.Equals("hellIsland") && GameManager.Instance.isHellfireUnlocked)
             {
@@ -603,7 +629,7 @@ public class Building : Construction
             {
                 maxText.SetText("MAX");
                 maxText.color = new Color(1, 1, 1, 1);
-                maxText.fontSize = 36;
+                maxText.fontSize = 18;
             }
 
             level1Background.gameObject.SetActive(false);
@@ -612,6 +638,14 @@ public class Building : Construction
 
             level2Grid.SetActive(true);
             level3Grid.SetActive(true);
+
+            //Animations
+            gameObject.transform.Find("Animations").transform.Find("Level3").gameObject.SetActive(true);
+
+            //Animations canvas
+            level1Animation.gameObject.SetActive(true);
+            level2Animation.gameObject.SetActive(true);
+            level3Animation.gameObject.SetActive(true);
         }
 
         for (int i = 0; i < resources.Count; i++)

@@ -197,6 +197,11 @@ public class SummoningCircle : Building
 
         //Apply boost
         updateActiveMonsterBoostStart();
+
+        //Animations
+        gameObject.transform.Find("Animations").transform.Find("Level1").gameObject.SetActive(true);
+        gameObject.transform.Find("Animations").transform.Find("Level2").gameObject.SetActive(false);
+        gameObject.transform.Find("Animations").transform.Find("Level3").gameObject.SetActive(false);
     }
 
     private void Update()

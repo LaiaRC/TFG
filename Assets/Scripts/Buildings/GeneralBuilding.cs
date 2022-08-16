@@ -38,6 +38,10 @@ public class GeneralBuilding : Building
         level2Background = canvasInterior.transform.Find("level2Background").GetComponent<Image>();
         level3Background = canvasInterior.transform.Find("level3Background").GetComponent<Image>();
 
+        level1Animation = canvasInterior.transform.Find("Animations").transform.Find("Level1").gameObject;
+        level2Animation = canvasInterior.transform.Find("Animations").transform.Find("Level2").gameObject;
+        level3Animation = canvasInterior.transform.Find("Animations").transform.Find("Level3").gameObject;
+
         level2Grid = transform.Find("Grid").transform.Find("Level2").gameObject;
         level3Grid = transform.Find("Grid").transform.Find("Level3").gameObject;
 
@@ -176,11 +180,13 @@ public class GeneralBuilding : Building
                     if (Data.Instance.INVENTORY.TryGetValue(upgrade_cost[level - 1].list[0].resourceNameKey, out int quantity))
                     {
                         upgradeText1.text = GameManager.Instance.numToString(quantity) + "/" + upgrade_cost[level - 1].list[0].quantity;
+                        setTextColor(upgradeText1, quantity, upgrade_cost[level - 1].list[0].quantity);
                     }
                     else
                     {
                         //Set to 0
                         upgradeText1.text = "0/" + GameManager.Instance.numToString(upgrade_cost[level - 1].list[0].quantity);
+                        setTextColor(upgradeText1, 0, upgrade_cost[level - 1].list[0].quantity);
                     }
 
                     if (upgrade_cost[level - 1].list.Count > 1)
@@ -189,11 +195,13 @@ public class GeneralBuilding : Building
                         if (Data.Instance.INVENTORY.TryGetValue(upgrade_cost[level - 1].list[1].resourceNameKey, out int quantity2))
                         {
                             upgradeText2.text = GameManager.Instance.numToString(quantity2) + "/" + GameManager.Instance.numToString(upgrade_cost[level - 1].list[1].quantity);
+                            setTextColor(upgradeText2, quantity2, upgrade_cost[level - 1].list[1].quantity);
                         }
                         else
                         {
                             //Set to 0
                             upgradeText2.text = "0/" + GameManager.Instance.numToString(upgrade_cost[level - 1].list[1].quantity);
+                            setTextColor(upgradeText2, 0, upgrade_cost[level - 1].list[1].quantity);
                         }
                     }
                     else
