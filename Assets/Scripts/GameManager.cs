@@ -36,11 +36,20 @@ public class GameManager : MonoBehaviour
     public bool isHellfireUnlocked = false;
     public int isTutoDone = 0;
     public int isRestart = 0;
+    public int tutoMechanics = 0;
     public GameObject loadingScreen;
     public AudioClip pumpkinLaugh;
     public AudioSource audioSourceMusic;
     public AudioSource audioSource;
     public AudioClip[] sounds;
+    public AudioClip[] music;
+    public List<Sprite> tutorialImages;
+    public GameObject tutorial;
+    public GameObject narrative;
+    public TextMeshProUGUI kid1Text;
+    public TextMeshProUGUI kid2Text;
+    public TextMeshProUGUI reaperText;
+
 
     public GameObject shop;
     public GameObject allShop;
@@ -67,6 +76,17 @@ public class GameManager : MonoBehaviour
     public GameObject resourcePanel;
     public GameObject inventoryContainer;
     public bool isMerchantOpen = false;
+    public int tutorialIndex = 0;
+    public List<String> tutorialTexts = new List<string>();
+    public List<String> kid1Dialogs = new List<string>();
+    public List<String> kid2Dialogs = new List<string>();
+    public List<String> reaperDialogs = new List<string>();
+    public int kid1Index = 0;
+    public int kid2Index = 0;
+    public int reaperIndex = 0;
+    public List<int> dialogOrder = new List<int>();
+    public int dialogIndex = 0;
+    public bool fakeButtonPressed = false;
 
     public Camera mainCamera;
 
@@ -122,6 +142,11 @@ public class GameManager : MonoBehaviour
     public static int DEFAULT = 3;
     public static int DEFAULT2 = 4;
 
+    //Music variables
+    public static int DEFAULT_MUSIC = 0;
+    public static int CINEMATIC_MUSIC = 1;
+    public static int TUTO_MUSIC = 2;
+
     #region SINGLETON PATTERN
 
     public static GameManager Instance;
@@ -173,15 +198,6 @@ public class GameManager : MonoBehaviour
         SaveManager.Instance.Load();
 
         hideAllDialogs();
-
-        //Just to debug (hardcoded drops) (si ja estan afegits peta)
-        /*Data.Instance.INVENTORY.Add(Data.LOLLIPOP, 50);
-        Data.Instance.INVENTORY.Add(Data.RING, 50);
-        Data.Instance.INVENTORY.Add(Data.BEER, 50);
-        Data.Instance.INVENTORY.Add(Data.SWORD, 50);
-        Data.Instance.INVENTORY.Add(Data.SHIELD, 50);
-        Data.Instance.INVENTORY.Add(Data.STICK, 50);
-        Data.Instance.INVENTORY.Add(Data.GEM, 50);*/
     }
 
     private void Update()
@@ -699,6 +715,9 @@ public class GameManager : MonoBehaviour
             }
             Data.Instance.INVENTORY.Add(resource.Key, 10000);
         }
+
+        Data.Instance.INVENTORY[Data.DEADTREEBRANCH] = 10;
+        Data.Instance.INVENTORY[Data.SCARE] = 50;
 
         Data.Instance.INVENTORY.Add(Data.SKELETON, 10);
         /*Data.Instance.INVENTORY.Add(Data.JACK_LANTERN, 10);
@@ -1832,4 +1851,349 @@ public class GameManager : MonoBehaviour
     {
         debugInventoryInfo.SetText("");
     }
+
+    public void showTutorial()
+    {
+        audioSource.clip = sounds[DEFAULT2];
+        audioSource.Play();       
+
+        narrative.SetActive(false);
+        tutorial.SetActive(true);
+
+        canvas.GetComponent<Transform>().Find("UIBlock").gameObject.SetActive(false);
+        isOnCanvas = true;
+
+        //Set tutorial texts
+
+        tutorialTexts.Add("To build constructions open the shop by touching <sprite=0> and select the <sprite=1> tab.\nDrag the icon out of the shop to place it wherever you want.");
+        tutorialTexts.Add("Confirm the construction placement by pressing <sprite=2> or cancel with <sprite=3>");
+        tutorialTexts.Add("Tap the construction to see it's options. Pause the production of the current resource with <sprite=5> and restart with <sprite=6>");
+        tutorialTexts.Add("To unlock the other resources, upgrade the construction pressing <sprite=10>");
+        tutorialTexts.Add("Build the <color=#24EE00>Summoning Circle</color> to create your little monsters. You can also pause <sprite=11> or play <sprite=12> their production and upgrade their stats pressing <sprite=14>");
+        tutorialTexts.Add("Take the portal to go to the village and restart the game.");
+        tutorialTexts.Add("Use all the monsters you have created to scare all those annoying villagers!");
+        tutorialTexts.Add("Gain villager's drops    <sprite=6>  <sprite=2>  <sprite=5>  <sprite=8>  <sprite=3>  <sprite=7>  <sprite=1>  to spend in The Merchant  <sprite=0> and unlock powerful boosts.");
+        tutorialTexts.Add("And scare tokens    <sprite=15>  to buy special items in the Dark Market <sprite=4>");
+        //end dialog
+
+        //show first text
+        tutorial.transform.Find("InfoPanel").transform.Find("InfoTextDrops").gameObject.SetActive(false);
+        tutorial.transform.Find("InfoPanel").transform.Find("InfoText").gameObject.SetActive(true);
+        tutorial.transform.Find("InfoPanel").transform.Find("ConfirmButton").gameObject.SetActive(false);
+        tutorial.transform.Find("InfoPanel").transform.Find("NextButton").gameObject.SetActive(true);
+        setTutorial();
+    }
+
+    public void hideTutorial()
+    {
+        audioSource.clip = sounds[CONFIRM];
+        audioSource.Play();
+
+        tutorial.SetActive(false);
+        canvas.GetComponent<Transform>().Find("UIBlock").gameObject.SetActive(true);
+
+        mainCamera.gameObject.GetComponent<CamaraControl>().isFirstTouch = true; //reset first touch
+
+        tutoMechanics = 1;
+
+        SaveManager.Instance.Save();
+        SceneManager.LoadScene("loadingScene");
+    }
+
+    public void setTutorial()
+    {
+        //check it isn't drop text
+        if (tutorialIndex == 7)
+        {
+            tutorial.transform.Find("InfoPanel").transform.Find("InfoText").gameObject.SetActive(false);
+            tutorial.transform.Find("InfoPanel").transform.Find("InfoTextDrops").gameObject.SetActive(true);
+
+            tutorial.transform.Find("InfoPanel").transform.Find("InfoTextDrops").GetComponent<TextMeshProUGUI>().SetText(tutorialTexts[tutorialIndex]);
+        }
+        else
+        {
+            if(tutorialIndex == 8)
+            {
+                tutorial.transform.Find("InfoPanel").transform.Find("InfoText").gameObject.SetActive(true);
+                tutorial.transform.Find("InfoPanel").transform.Find("InfoTextDrops").gameObject.SetActive(false);
+            }
+            tutorial.transform.Find("InfoPanel").transform.Find("InfoText").GetComponent<TextMeshProUGUI>().SetText(tutorialTexts[tutorialIndex]);
+        }
+
+        tutorial.transform.Find("ImageContainer").transform.GetChild(0).GetComponent<Image>().sprite = tutorialImages[tutorialIndex];
+    }
+
+    public void nextTuto()
+    {
+        audioSource.clip = sounds[DEFAULT];
+        audioSource.Play();
+
+        tutorialIndex++;
+        setTutorial();
+        
+        if(tutorialIndex == 8)
+        {
+            tutorial.transform.Find("InfoPanel").transform.Find("NextButton").gameObject.SetActive(false);
+            tutorial.transform.Find("InfoPanel").transform.Find("ConfirmButton").gameObject.SetActive(true);
+        }
+    }
+
+    #region NARRATIVE
+
+    public void showNarrative()
+    {
+        narrative.SetActive(true);
+
+        canvas.GetComponent<Transform>().Find("UIBlock").gameObject.SetActive(false);
+        isOnCanvas = true;
+
+        //Set narrative texts
+        kid1Dialogs.Add("I'm so excited about Halloween!");
+        kid1Dialogs.Add("Do you already have a costume?");
+        kid1Dialogs.Add("!");
+        kid1Dialogs.Add("...");
+        kid1Dialogs.Add("hahahahah");
+        kid1Dialogs.Add("What a crappy costume!");
+        kid1Dialogs.Add("Whatever you say you freak...let's go Lizzy");
+
+        kid2Dialogs.Add("Me too! I can't wait to eat all the candy");
+        kid2Dialogs.Add("Yes! It's going to be very fun");
+        kid2Dialogs.Add("...");
+        kid2Dialogs.Add("emote");
+        kid2Dialogs.Add("You just put on a trash bag and grabbed the first fake weapon you found?");
+        kid2Dialogs.Add("Hahaha the old man is angry");
+
+        reaperDialogs.Add("...");
+        reaperDialogs.Add("What is this? Having fun? Candy? Costumes?");
+        reaperDialogs.Add("NO! That's not Halloween true spirit!");
+        reaperDialogs.Add("It's supposed to be a night where everyone fears me and my evil creatures!");
+        reaperDialogs.Add("I'll teach them a lesson. Once they see me they will run away...");
+        reaperDialogs.Add("Wa-wait...What?");
+        reaperDialogs.Add("I'm The Reaper! like... Death itself! Show some respect you brats!");
+        reaperDialogs.Add("Kids these days....");
+        reaperDialogs.Add("I'll show them Halloween's true spirit...");
+        reaperDialogs.Add("TO EVERYONE IN THIS VILLAGE!");
+
+        //set order
+        dialogOrder.Add(1);
+        dialogOrder.Add(2);
+        dialogOrder.Add(1);
+        dialogOrder.Add(2);
+        dialogOrder.Add(3);
+        dialogOrder.Add(3);
+        dialogOrder.Add(3);
+        dialogOrder.Add(3);
+        dialogOrder.Add(3);
+        dialogOrder.Add(1);
+        dialogOrder.Add(2);
+        dialogOrder.Add(1);
+        dialogOrder.Add(1);
+        dialogOrder.Add(2);
+        dialogOrder.Add(1);
+        dialogOrder.Add(2);
+        dialogOrder.Add(3);
+        dialogOrder.Add(3);
+        dialogOrder.Add(2);
+        dialogOrder.Add(1);
+        dialogOrder.Add(0);
+        dialogOrder.Add(3);
+        dialogOrder.Add(3);
+        dialogOrder.Add(3);
+        dialogOrder.Add(3);
+
+        dialogController();
+
+        //Set animations
+        narrative.transform.Find("Villagers").transform.Find("Child1Emote").gameObject.SetActive(false);
+        narrative.transform.Find("Villagers").transform.Find("Child2Emote1").gameObject.SetActive(false);
+        narrative.transform.Find("BlackImage").gameObject.SetActive(false);
+        narrative.transform.Find("ReaperZoom").gameObject.SetActive(false);
+
+        //Hide all dialog bubbles
+        narrative.transform.Find("Villagers").transform.Find("Child1TextContainer").gameObject.SetActive(false);
+        narrative.transform.Find("Villagers").transform.Find("Child2TextContainer").gameObject.SetActive(false);
+        narrative.transform.Find("Reaper").transform.Find("ReaperTextContainer").gameObject.SetActive(false);
+    }
+
+    public void dialogController()
+    {
+        for (int i = 1; i < dialogOrder.Count + 1; i++)
+        {
+            Invoke("setDialogText", 3.5f*i);
+        }
+    }
+
+    public void setDialogText() // 1 -> kid1 2 -> kid2 3 -> reaper
+    {
+        if (dialogIndex != dialogOrder.Count - 1)
+        {
+            if (dialogOrder[dialogIndex] == 1)
+            {
+                if(kid1Dialogs[kid1Index].Equals("What a crappy costume!"))
+                {
+                    narrative.transform.Find("Villagers").transform.Find("Child2Emote1").gameObject.SetActive(false);
+                }
+
+                if (kid1Dialogs[kid1Index].Equals("..."))
+                {
+                    narrative.transform.Find("Villagers").transform.Find("Child1Emote").gameObject.SetActive(true);
+                    narrative.transform.Find("Villagers").transform.Find("Child1TextContainer").gameObject.SetActive(false);
+                    narrative.transform.Find("Villagers").transform.Find("Child2TextContainer").gameObject.SetActive(false);
+                    narrative.transform.Find("Reaper").transform.Find("ReaperTextContainer").gameObject.SetActive(false);
+                    narrative.transform.Find("Villagers").transform.Find("Child2Emote1").gameObject.SetActive(false);
+
+
+                    narrative.transform.Find("Villagers").transform.Find("Child1Emote").GetComponent<Animator>().Play("child1_emote2");
+                }
+
+                //check if it's !
+                if (kid1Dialogs[kid1Index].Equals("!"))
+                {
+                    narrative.transform.Find("Villagers").transform.Find("Child1TextContainer").gameObject.SetActive(false);
+                    narrative.transform.Find("Villagers").transform.Find("Child2TextContainer").gameObject.SetActive(false);
+                    narrative.transform.Find("Reaper").transform.Find("ReaperTextContainer").gameObject.SetActive(false);
+                    narrative.transform.Find("Villagers").transform.Find("Child1Emote").gameObject.SetActive(true);
+                    narrative.transform.Find("Villagers").transform.Find("Child1Emote").GetComponent<Animator>().Play("child1_emote");                   
+
+                }
+                else if(!kid1Dialogs[kid1Index].Equals("..."))
+                {
+                    if (kid1Dialogs[kid1Index].Equals("hahahahah"))
+                    {
+                        narrative.transform.Find("Villagers").transform.Find("Child1Emote").gameObject.SetActive(false);
+                    }
+
+                    kid1Text.SetText(kid1Dialogs[kid1Index]);
+
+                    narrative.transform.Find("Villagers").transform.Find("Child1TextContainer").gameObject.SetActive(true);
+                    narrative.transform.Find("Villagers").transform.Find("Child2TextContainer").gameObject.SetActive(false);
+                    narrative.transform.Find("Reaper").transform.Find("ReaperTextContainer").gameObject.SetActive(false);
+                }
+                kid1Index++;
+            }
+            else if (dialogOrder[dialogIndex] == 2)
+            {
+                if (kid2Dialogs[kid2Index].Equals("...") || kid2Dialogs[kid2Index].Equals("emote"))
+                {
+                    narrative.transform.Find("Villagers").transform.Find("Child1Emote").gameObject.SetActive(false);
+                    narrative.transform.Find("Villagers").transform.Find("Child1TextContainer").gameObject.SetActive(false);
+                    narrative.transform.Find("Villagers").transform.Find("Child2TextContainer").gameObject.SetActive(false);
+                    narrative.transform.Find("Reaper").transform.Find("ReaperTextContainer").gameObject.SetActive(false);
+
+                    narrative.transform.Find("Villagers").transform.Find("Child2Emote1").gameObject.SetActive(true);
+
+                    if (kid2Dialogs[kid2Index].Equals("..."))
+                    {
+                        narrative.transform.Find("Villagers").transform.Find("Child2Emote1").GetComponent<Animator>().Play("child2_emote1");
+
+                        //change child animation to right
+                        narrative.transform.Find("Villagers").transform.Find("Child2Image").GetComponent<Animator>().Play("child2_right");
+
+                        //change bubble
+                        narrative.transform.Find("Villagers").transform.Find("Child2TextContainer").GetComponent<Image>().sprite = narrative.transform.Find("Villagers").transform.Find("Child1TextContainer").GetComponent<Image>().sprite;
+                        narrative.transform.Find("Villagers").transform.Find("Child2TextContainer").GetComponent<RectTransform>().anchoredPosition = new Vector3(-443, 0, 0);
+                    }
+                    else
+                    {
+                        narrative.transform.Find("Villagers").transform.Find("Child2Emote1").GetComponent<Animator>().Play("child2_emote2");
+                    }
+                }
+                else
+                {
+                    kid2Text.SetText(kid2Dialogs[kid2Index]);
+
+                    narrative.transform.Find("Villagers").transform.Find("Child1TextContainer").gameObject.SetActive(false);
+                    narrative.transform.Find("Villagers").transform.Find("Child2TextContainer").gameObject.SetActive(true);
+                    narrative.transform.Find("Reaper").transform.Find("ReaperTextContainer").gameObject.SetActive(false);
+                }
+                kid2Index++;
+            }
+            else if (dialogOrder[dialogIndex] == 3)
+            {
+                reaperText.SetText(reaperDialogs[reaperIndex]);
+                reaperIndex++;
+
+                narrative.transform.Find("Villagers").transform.Find("Child1TextContainer").gameObject.SetActive(false);
+                narrative.transform.Find("Villagers").transform.Find("Child2TextContainer").gameObject.SetActive(false);
+                narrative.transform.Find("Reaper").transform.Find("ReaperTextContainer").gameObject.SetActive(true);
+            }
+            else if(dialogOrder[dialogIndex] == 0)
+            {
+                //Kids go away
+                narrative.transform.Find("Villagers").transform.Find("Child1Image").GetComponent<Animator>().Play("child1_left");
+                narrative.transform.Find("Villagers").transform.Find("Child2Image").GetComponent<Animator>().Play("child2_left_walk");
+                narrative.transform.Find("Villagers").transform.Find("Child1TextContainer").gameObject.SetActive(false);
+                narrative.transform.Find("Villagers").transform.Find("Child2TextContainer").gameObject.SetActive(false);
+
+                //reaper looks front
+                narrative.transform.Find("Reaper").transform.Find("ReaperImage").GetComponent<Animator>().Play("reaper_front_idle_final");
+            }
+            dialogIndex++;
+        }
+        else
+        {
+            narrative.transform.Find("BlackImage").gameObject.SetActive(true);
+            narrative.transform.Find("BlackImage").GetComponent<Animator>().Play("fundido");
+            Invoke("showReaperZoom", 1.5f);
+        }
+
+        animationController();
+    }
+
+    public void showReaperZoom()
+    {
+        audioSourceMusic.clip = music[TUTO_MUSIC];
+        audioSourceMusic.Play();
+
+        //reaper looks front
+        narrative.transform.Find("ReaperZoom").transform.Find("ReaperImage").GetComponent<Animator>().Play("reaperZoom_idle");
+        narrative.transform.Find("ReaperZoom").gameObject.SetActive(true);
+    }
+
+
+    public void animationController()
+    {
+        if(dialogIndex == 4)
+        {
+            //reaper enters
+            narrative.transform.Find("Reaper").transform.Find("ReaperImage").GetComponent<Animator>().Play("reaper_left");
+        }else if(dialogIndex == 10)
+        {
+            //reaper moves to kids
+            narrative.transform.Find("Reaper").transform.Find("ReaperImage").GetComponent<Animator>().Play("reaper_toKids");
+
+            narrative.transform.Find("Reaper").transform.Find("ReaperTextContainer").GetComponent<RectTransform>().anchoredPosition = new Vector3(-283, -28, 0);
+        }
+    }
+
+    public void fakeCancel()
+    {
+        if (!fakeButtonPressed)
+        {
+            narrative.transform.Find("ReaperZoom").transform.Find("ReaperTextContainer").transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText("I thought the decision was easy...Apparently it wasn't easy enough for you.\nI'm gonna give you another try...don't let me down again.");
+            narrative.transform.Find("ReaperZoom").transform.Find("ConfirmButtonFake").GetComponent<Image>().sprite = narrative.transform.Find("ReaperZoom").transform.Find("ConfirmButton").GetComponent<Image>().sprite;
+            fakeButtonPressed = true;
+        }
+        else
+        {
+            //Same as confirm
+            acceptMision();
+        }
+    }
+
+    public void acceptMision()
+    {
+        narrative.transform.Find("ReaperZoom").transform.Find("ConfirmButtonFake").gameObject.SetActive(false);
+        narrative.transform.Find("ReaperZoom").transform.Find("ConfirmButton").gameObject.SetActive(false);
+        narrative.transform.Find("ReaperZoom").transform.Find("ReaperTextContainer").transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText("Good. I knew you would be a good ally.");
+        Invoke("finalDialog", 3.5f);
+    }
+
+    public void finalDialog()
+    {
+        narrative.transform.Find("ReaperZoom").transform.Find("ReaperTextContainer").transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText("Now pay attention to my explanations because I will not repeat it again");
+        Invoke(nameof(showTutorial), 4);
+    }
+
+    #endregion
 }

@@ -107,6 +107,7 @@ public class SaveManager : MonoBehaviour
         Data.Instance.PLAYER["Year"] = GameManager.Instance.localDate.Year;
         Data.Instance.PLAYER["Tuto"] = GameManager.Instance.isTutoDone;
         Data.Instance.PLAYER["isRestart"] = 0; //only 1 when coming from minigame
+        Data.Instance.PLAYER["tutoMechanics"] = GameManager.Instance.tutoMechanics;
 
         //Update inventory old value (same as current values)
         foreach (var item in Data.Instance.INVENTORY.ToList())
@@ -201,16 +202,21 @@ public class SaveManager : MonoBehaviour
 
             inputStreamPlayer.Close();
 
-            //update is tuto done
+            //update is tuto minigame done
             if (Data.Instance.PLAYER.TryGetValue("Tuto", out int isDone))
             {
                 GameManager.Instance.isTutoDone = isDone;
             }
-            //update is tuto done
+            //update is restart
             if (Data.Instance.PLAYER.TryGetValue("isRestart", out int isRestart))
             {
                 GameManager.Instance.isRestart = isRestart;
             }
+            //update is tuto done
+            if (Data.Instance.PLAYER.TryGetValue("tutoMechanics", out int tutoMechanics))
+            {
+                GameManager.Instance.tutoMechanics = tutoMechanics;
+            }            
         }
         if (File.Exists(pathMonsters))
         {
@@ -229,8 +235,23 @@ public class SaveManager : MonoBehaviour
 
             inputStreamBoosts.Close();
         }
+
         GameManager.Instance.calculateOfflineTime();
         GameManager.Instance.saved = false;
+
+        //Show tuto 
+
+        if (GameManager.Instance.tutoMechanics == 0) //player path could not exist
+        {
+            GameManager.Instance.audioSourceMusic.clip = GameManager.Instance.music[GameManager.CINEMATIC_MUSIC];
+            GameManager.Instance.audioSourceMusic.Play();
+            GameManager.Instance.showNarrative();
+        }
+        else
+        {
+            GameManager.Instance.audioSourceMusic.clip = GameManager.Instance.music[GameManager.DEFAULT_MUSIC];
+            GameManager.Instance.audioSourceMusic.Play();
+        }
     }
 
     public void Delete()
@@ -292,6 +313,9 @@ public class SaveManager : MonoBehaviour
         Data.Instance.CONSTRUCTIONS.Clear();
         Data.Instance.INVENTORY.Clear();
         //Data.Instance.PLAYER.Clear();
+        //Data.Instance.PLAYER["tutoMechanics"] = 0;
+        GameManager.Instance.tutoMechanics = 0;
+
         Data.Instance.MONSTERS_STATS.Clear();
         Data.Instance.MONSTERS.Clear();
         Data.Instance.BOOSTS.Clear();

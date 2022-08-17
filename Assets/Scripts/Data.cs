@@ -657,6 +657,7 @@ public class Data : MonoBehaviour
             PLAYER.Add("Year", GameManager.Instance.localDate.Year);
             PLAYER.Add("Tuto", GameManager.Instance.isTutoDone);
             PLAYER.Add("isRestart", GameManager.Instance.isTutoDone);
+            PLAYER.Add("TutoMechanics", GameManager.Instance.tutoMechanics);
         }
         else
         {

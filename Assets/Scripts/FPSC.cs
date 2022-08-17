@@ -21,7 +21,7 @@ public class FPSC : MonoBehaviour
         timeleft = updateInterval;
 
         textStyle.fontStyle = FontStyle.Bold;
-        textStyle.normal.textColor = Color.white;
+        textStyle.normal.textColor = new Color(0, 0, 0, 0); //Color.white;
     }
 
     // Update is called once per frame
